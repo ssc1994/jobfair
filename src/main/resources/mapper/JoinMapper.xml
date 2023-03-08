@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sungjin.jobfair.joinService.JoinMapper">
+
+    <select id="checkSameId" resultType="int" parameterType="UserVO">
+        select count(*) from user where user_id = #{user_id}
+    </select>
+
+    <insert id="uJoin" parameterType="UserVO">
+        INSERT INTO USER (USER_ID, USER_PW, MG_AUTH, USER_NAME, USER_EMAIL, USER_PHONE, USER_REGDATE)
+        VALUES (#{user_id}, #{user_pw}, '1', #{user_name}, #{user_email}, #{user_phone}, #{user_regDate})
+    </insert>
+
+</mapper>
