@@ -13,6 +13,7 @@ const app = createApp(App)
 // app 글로벌 변수 선언 실시
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$store = store
+app.config.globalProperties.$router = router
 app.use(BootstrapVue3)
 app.use(router)
 app.use(store)

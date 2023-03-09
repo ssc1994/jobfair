@@ -33,6 +33,7 @@ export default {
       auth: '1',
       id: '',
       pw: ''
+
     }
   },
   methods: {
@@ -45,9 +46,28 @@ export default {
         })
         .then((res) => {
           console.log(res.data)
+          if(res.data == '1'){
+            this.$router.push("/uMainView")
+            // location.href='/uMainView'
+
+          }else if(res.data == '2' || res.data == '3' ){
+            this.$router.push("/cMainView")
+            // location.href='/cMainView'
+
+          }else if(res.data == '4' ){
+            this.$router.push("/aMainView")
+            // location.href='/aMainView'
+
+          }else{
+            alert(res.data)
+          }
         })
         .catch((error) => {
-          console.log(error)
+          alert('에러내용 : '+error)
+          this.isChecked=false;
+          this.$router.push("/uMainView")
+
+          // location.href='/uMainView'
         })
         .finally(() => {
           console.log('로그인실행')

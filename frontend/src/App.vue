@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Header v-if="!isChecked"></Header>
+
+    <Header v-if="link == '/' "></Header>
     <router-view/>
   </div>
 </template>
@@ -10,19 +11,24 @@ import Header from './components/layout/HeaderView';
 // import Footer from './layout/FooterView';
 
 export default  {
+  link : document.location.pathname,
   isChecked: false,
   components: {
-    Header,
+    Header
     // Footer
   },
   created() {
-    if(document.location.pathname === '/') {
+    console.log(document.location.pathname)
+    if(document.location.pathname == '/') {
+
       this.isChecked = true;
-      console.log(this.isChecked)
     } else {
       this.isChecked = false;
     }
+    console.log(this.isChecked)
   }
+
+
 }
 
 
@@ -30,6 +36,7 @@ export default  {
 </script>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

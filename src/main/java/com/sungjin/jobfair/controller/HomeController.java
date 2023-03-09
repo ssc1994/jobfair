@@ -51,7 +51,7 @@ public class HomeController {
         }else {
             //실패면 메세지 전달 및 리다이렉트
             System.out.println("실패");
-            String msg = "로그인 실패";
+            String msg = "로그인 실패 / 비밀번호를 확인하세요";
             return msg;
         }
 
@@ -65,6 +65,8 @@ public class HomeController {
 //            return "비밀번호를 확인하세요";
 //        }
     }
+
+
 
 
 }
