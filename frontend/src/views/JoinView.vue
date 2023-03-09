@@ -201,6 +201,7 @@ button {cursor: pointer}
   float: left;
   box-sizing: border-box;
   background-color: rgb(95,75,229);
+  color: red;
   padding: 10px 10px;
 }
 .leftBox:hover{
