@@ -3,28 +3,30 @@
 
   <div class="wrapBox">
     <div class="centerBox">
-      <div class=" wrapBox2">
-        <div class=" qnaBox">
+      <div class="wrapBox2">
+        <div class="qnaBox">
           <h3>Q&A</h3>
         </div>
 
         <div class=" wrapBox3">
-          <div class="writer">
-            작성자  <input type="text" placeholder="내용을 입력해주세요"> <br />
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">작성자</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
           </div>
 
-          <div class="title">
-            문의 제목  <input type="text" placeholder="내용을 입력해주세요"> <br />
-          </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">문의제목</span>
+              <input type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
 
-          <div class="content">
-            문의 내용 <br/>
-            <textarea class="contentInput" placeholder="내용을 입력해주세요"></textarea>  <br />
-          </div>
+            <div class="input-group">
+              <span class="input-group-text">문의내용</span>
+              <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
+            </div>
 
-          <div>
-            <button class="askBtn">문의하기</button>
-            <button class="askBtn">목록으로</button>
+          <div class="btnBox">
+            <button type="button" class="btn btn-outline-primary">문의하기</button>
+            <button type="button" class="btn btn-outline-primary">목록으로</button>
           </div>
         </div>
       </div>
@@ -34,22 +36,20 @@
 </template>
 
 <script>
-export default {
-  name: "uQnAWriteView"
-}
+import SoftInput from "@/components/SoftInput.vue";
+import SoftButton from "@/components/SoftButton.vue";
+export default { components: { SoftInput, SoftButton}, };
+
 </script>
 
 <style scoped>
-
 
 .wrapBox {
   width: 100%;
   height: 800px;
 }
 
-.centerBox {
-  border: 1px solid red;
-}
+
 
 .wrapBox2 {
   width: 50%;
@@ -66,30 +66,24 @@ export default {
 
 }
 
-.wrapBox2 h3 {
-  font-size: 50px;
+.wrapBox2 .qnaBox h3 {
+  font-size: 200%;
+  position: relative;
+  bottom: 60px;
+  right: 150px;
 }
 
 
 .wrapBox3 .writer {
   font-size: 20px;
-  height: 50px;
+  height: 5%;
   line-height: 40px;
-  text-align: left;
+
 }
 
-.wrapBox3 .writer input {
-  height: 30px;
-  font-size: 15px;
-  position: relative;
-  left: 50px;
-}
-
-.wrapBox3 .title {
-  font-size: 20px;
-  height: 50px;
-  line-height: 40px;
-  text-align: left;
+.wrapBox3 .contentBox {
+  height: 500px;
+  resize: none;
 }
 
 .wrapBox3 .title input {
@@ -113,15 +107,16 @@ export default {
   top: 10px;
   left: 120px;
 }
-.askBtn {
-  width: 150px;
-  height: 40px;
-  background-color: rgb(95, 75, 229);
-  border: none;
-  border-radius: 5px;
-  color: white;
-  margin-top: 30px;
+
+.btnBox {
+  position: relative;
+  left: 200px;
 }
 
+.btnBox button {
+  background-color: darkblue;
+  border: none;
+  color: white;
+}
 
 </style>

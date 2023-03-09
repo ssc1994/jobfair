@@ -62,3 +62,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.table tbody tr:last-child td {
+  border-width: 1px;
+}
+</style>
