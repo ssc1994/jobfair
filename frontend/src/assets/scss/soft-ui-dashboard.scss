@@ -1,0 +1,30 @@
+// =========================================================
+// * Soft UI Dashboard Pro - v1.0.4
+// =========================================================
+//
+// * Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro
+// * Copyright 2021 Creative Tim (https://www.creative-tim.com)
+//
+// Coded by www.creative-tim.com
+//
+// =========================================================
+//
+// * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// Bootstrap Functions
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_functions.scss";
+
+// Custom Variables
+@import "@/assets/scss/soft-ui-dashboard/custom/_variables.scss";
+
+// Theme Variables
+@import "@/assets/scss/soft-ui-dashboard/_variables.scss";
+
+// Bootstrap Core
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/bootstrap.scss";
+
+// Theme Core
+@import "@/assets/scss/soft-ui-dashboard/theme.scss";
+
+// Custom Variables
+@import "@/assets/scss/soft-ui-dashboard/custom/_styles.scss";

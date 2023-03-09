@@ -1,0 +1,53 @@
+/*!
+ * Bootstrap v5.1.0 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+// scss-docs-start import-stack
+// Configuration
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_functions.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_variables.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_mixins.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_utilities.scss";
+
+// Layout & components
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_root.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_reboot.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_type.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_images.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_containers.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_grid.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_tables.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_forms.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_buttons.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_transitions.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_dropdown.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_button-group.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_nav.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_navbar.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_card.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_accordion.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_breadcrumb.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_pagination.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_badge.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_alert.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_progress.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_list-group.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_close.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_toasts.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_modal.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_tooltip.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_popover.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_carousel.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_spinners.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_offcanvas.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_placeholders.scss";
+
+// Helpers
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/_helpers.scss";
+
+// Utilities
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/utilities/_api.scss";
+// scss-docs-end import-stack
