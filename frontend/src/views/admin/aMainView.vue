@@ -1,10 +1,10 @@
 <template>
 
   <div class="adminBg" >
-    <div class="container companyWrap" >
+    <div class="container empBoxWrap" >
       <div class="row">
         <h3>참여 기업 상태</h3>
-        <div class="col-lg-3 col-sm-4  aBox" >
+        <div class="col-lg-6 col-sm-4  aBox" >
           <a href="#" style="background-color:rgb(95, 75, 229)">
             <div class="companyNumImg">
             </div>
@@ -15,7 +15,7 @@
             </div>
           </a>
         </div>
-        <div class="col-lg-3 col-sm-4  aBox" >
+        <div class="col-lg-6 col-sm-4  aBox" >
           <a href="#" style="background-color:rgb(229, 75, 75)">
             <div class="companyNumImg">
             </div>
@@ -110,7 +110,7 @@ html, body {width:100%;
 }
 
 
-.companyWrap {
+.empBoxWrap {
   max-width:1200px;
   margin:0 auto;
 }
