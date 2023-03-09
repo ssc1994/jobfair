@@ -16,6 +16,6 @@ export default createStore({
   },
   actions: { //비동기처리 함수
   },
-  modules: { // 이건 뭐지..? 스토어 분리?
+  modules: { // 이건 뭐지..? x`스토어 분리?
   }
 })
