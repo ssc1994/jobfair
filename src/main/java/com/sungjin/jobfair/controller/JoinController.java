@@ -1,5 +1,6 @@
 package com.sungjin.jobfair.controller;
 
+import com.sungjin.jobfair.command.CompanyVO;
 import com.sungjin.jobfair.command.UserVO;
 import com.sungjin.jobfair.joinService.JoinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,6 @@ public class JoinController {
     @PostMapping("/checkSameId")
     public ResponseEntity checkSameId(@RequestBody UserVO vo){
 
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        System.out.println(dateFormat.format(today));
-
         if(joinService.checkSameId(vo) == 0){
             //중복 아이디가 없음
             return new ResponseEntity<>("true", HttpStatus.OK);
@@ -43,19 +40,35 @@ public class JoinController {
 
     }
 
-    //유저 회원가입 처리
+    //유저 or 기업 회원가입 처리
     @PostMapping("/uJoin")
-    public void uJoin(@ModelAttribute UserVO vo, HttpServletResponse response) throws IOException {
+    public void uJoin(UserVO vo,
+                      CompanyVO comVO,
+                      HttpServletResponse response) throws IOException {
 
         //가입일을 user_regDate에 저장
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         vo.setUser_regDate(dateFormat.format(today));
 
+        //user 가입정보 데이터베이스 등록
         joinService.uJoin(vo);
         response.sendRedirect(
                 "http://localhost:8081/uMainView"
         );
 
+        //기업 가입정보 데이터베이스 등록
+        System.out.println(comVO.getCom_name());
+        System.out.println(comVO.getCom_ceo());
+        System.out.println(comVO.getCom_address());
+        System.out.println(comVO.getCom_email());
+        System.out.println(comVO.getCom_phone());
+        System.out.println(comVO.getCom_businessRegistration());
+        System.out.println(comVO.getCom_establishmentDate());
+        System.out.println(comVO.getCom_category());
+
     }
+
+
+
 }

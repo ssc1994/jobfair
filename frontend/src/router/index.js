@@ -19,18 +19,12 @@ const routes = [
   {//유저 & 기업 회원가입
     path: '/JoinView',
     name: 'JoinView',
-    component: () => import('../views/JoinView.vue')
-  },
-  {
-    path: '/joinView',
-    name: 'joinView',
-    component: () => import('../views/JoinView.vue'),
-    props: true
+    component: () => import('@/views/JoinView.vue')
   },
   {
     path: '/uMainView',
     name: 'uMainView',
-    component: () => import('../views/user/uMainView.vue')
+    component: () => import('@/views/user/uMainView.vue')
   },
   {//유저 Q&A 리스트화면
     path: '/uQnAView',
@@ -71,6 +65,11 @@ const routes = [
     path: '/uModifyView',
     name: 'uModifyView',
     component: () => import('../views/user/uModifyView.vue')
+  },
+  {//유저 이력서
+    path: '/uResumeView',
+    name: 'uResumeView',
+    component: () => import('../views/user/uResumeView.vue')
   },
 //*********************기업 화면*********************
   {//기업 메인화면
@@ -154,11 +153,6 @@ const routes = [
     name: 'aStatisticView',
     component: () => import('../views/admin/aStatisticView.vue')
   },
-  {//관리자 통계조회 화면
-    path: '/test',
-    name: 'test',
-    component: () => import('../views/user/test.vue')
-  },
     /////////////////// 부트스트랩////////////////////////////////////////////////////
   {
     path: "/",
@@ -205,6 +199,16 @@ const routes = [
     name: "Sign Up",
     component: SignUp,
   },
+  {//유저 채용공고 화면
+    path: '/uJobPostView',
+    name: 'uJobPostView',
+    component: () => import('../views/user/uJobPostView.vue')
+  },
+  {//유저 채용공고 화면 (테스트)
+    path: '/uJobPostView2',
+    name: 'uJobPostView2',
+    component: () => import('../views/user/uJobPostView2.vue')
+  }
 ]
 
 const router = createRouter({
