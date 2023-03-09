@@ -11,17 +11,12 @@ const routes = [
   {//유저 & 기업 회원가입
     path: '/JoinView',
     name: 'JoinView',
-    component: () => import('../views/JoinView.vue')
-  },
-  {
-    path: '/joinView',
-    name: 'joinView',
-    component: () => import('../views/JoinView.vue')
+    component: () => import('@/views/JoinView.vue')
   },
   {
     path: '/uMainView',
     name: 'uMainView',
-    component: () => import('../views/user/uMainView.vue')
+    component: () => import('@/views/user/uMainView.vue')
   },
   {//유저 Q&A 리스트화면
     path: '/uQnAView',
