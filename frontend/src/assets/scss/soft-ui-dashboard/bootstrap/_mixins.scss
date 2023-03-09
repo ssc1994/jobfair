@@ -1,0 +1,43 @@
+// Toggles
+//
+// Used in conjunction with global variables to enable certain theme features.
+
+// Vendor
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/vendor/_rfs.scss";
+
+// Deprecate
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_deprecate.scss";
+
+// Helpers
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_breakpoints.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_color-scheme.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_image.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_resize.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_visually-hidden.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_reset-text.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_text-truncate.scss";
+
+// Utilities
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_utilities.scss";
+
+// Components
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_alert.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_backdrop.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_buttons.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_caret.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_pagination.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_lists.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_list-group.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_forms.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_table-variants.scss";
+
+// Skins
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_border-radius.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_box-shadow.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_gradients.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_transition.scss";
+
+// Layout
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_clearfix.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_container.scss";
+@import "@/assets/scss/soft-ui-dashboard/bootstrap/mixins/_grid.scss";

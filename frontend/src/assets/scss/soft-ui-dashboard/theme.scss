@@ -1,0 +1,60 @@
+/*!
+
+=========================================================
+* Soft UI Dashboard Pro - v1.0.4
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro
+* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (site.license)
+
+* Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+// {{ site.product.name }} components
+
+// Variables
+@import "@/assets/scss/soft-ui-dashboard/variables/_navbar-vertical.scss";
+@import "@/assets/scss/soft-ui-dashboard/variables/_social-buttons.scss";
+@import "@/assets/scss/soft-ui-dashboard/variables/_breadcrumb.scss";
+
+// Mixin
+@import "@/assets/scss/soft-ui-dashboard/mixins/mixins.scss";
+
+// Core Components - extra styling
+@import "@/assets/scss/soft-ui-dashboard/_alert.scss";
+@import "@/assets/scss/soft-ui-dashboard/_avatars.scss";
+@import "@/assets/scss/soft-ui-dashboard/_badge.scss";
+@import "@/assets/scss/soft-ui-dashboard/_buttons.scss";
+@import "@/assets/scss/soft-ui-dashboard/_breadcrumbs.scss";
+@import "@/assets/scss/soft-ui-dashboard/_cards.scss";
+@import "@/assets/scss/soft-ui-dashboard/_dropdown.scss";
+@import "@/assets/scss/soft-ui-dashboard/_dropup.scss";
+@import "@/assets/scss/soft-ui-dashboard/_header.scss";
+@import "@/assets/scss/soft-ui-dashboard/_fixed-plugin.scss";
+@import "@/assets/scss/soft-ui-dashboard/forms/_forms.scss";
+@import "@/assets/scss/soft-ui-dashboard/_footer.scss";
+@import "@/assets/scss/soft-ui-dashboard/_gradients.scss";
+@import "@/assets/scss/soft-ui-dashboard/_info-areas.scss";
+@import "@/assets/scss/soft-ui-dashboard/_misc.scss";
+@import "@/assets/scss/soft-ui-dashboard/_navbar.scss";
+@import "@/assets/scss/soft-ui-dashboard/_navbar-vertical.scss";
+@import "@/assets/scss/soft-ui-dashboard/_nav.scss";
+@import "@/assets/scss/soft-ui-dashboard/_pagination.scss";
+@import "@/assets/scss/soft-ui-dashboard/_popovers.scss";
+@import "@/assets/scss/soft-ui-dashboard/_progress.scss";
+@import "@/assets/scss/soft-ui-dashboard/_rtl.scss";
+@import "@/assets/scss/soft-ui-dashboard/_social-buttons.scss";
+@import "@/assets/scss/soft-ui-dashboard/_tables.scss";
+@import "@/assets/scss/soft-ui-dashboard/_timeline.scss";
+@import "@/assets/scss/soft-ui-dashboard/_tilt.scss";
+@import "@/assets/scss/soft-ui-dashboard/_tooltips.scss";
+@import "@/assets/scss/soft-ui-dashboard/_typography.scss";
+
+// Plugins
+@import "@/assets/scss/soft-ui-dashboard/plugins/free/plugins.scss";

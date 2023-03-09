@@ -3,10 +3,12 @@
     <div class="UserBox">
       <div class="select">
         <div class="leftBox" @click="clickHandler">
-          <input type="radio" id="userType" name="selectType" @change="radioChange($event)" checked><label for="userType">개인회원</label>
+          <input type="radio" id="userType" name="selectType" @change="radioChange($event)" :checked="userRadio">
+          <label for="userType">개인회원</label>
         </div>
         <div class="rightBox">
-          <input type="radio" id="companyType" name="selectType" @change="radioChange($event)"><label for="companyType">기업회원</label>
+          <input type="radio" id="companyType" name="selectType" @change="radioChange($event)" :checked="comRadio">
+          <label for="companyType">기업회원</label>
         </div>
 
         <p>
@@ -85,8 +87,6 @@
           </div>
         </div>
         <br>
-
-
         <hr>
       </div>
     </div>
@@ -114,6 +114,9 @@ export default {
       hasError: false,
       class2: ['active', 'hasError'],
       show: false,
+      mg_auth: this.$store.getters.getMg_auth,
+      userRadio: true,
+      comRadio: false,
       idBoxCheck : true, //id 값이 있는지 여부에 따라 id 중복확인 버튼 활성화 조절하기 위한 변수
       idPassCheck: false, //id 중복확인 통과했는지 여부 체크 , 통과하면 true 로 바꿔줌.
       phCertifPassCheck: false, //핸드폰인증 확인했는지 여부 체크, 통과했으면 true
@@ -128,7 +131,16 @@ export default {
       com_ced: '',
       com_businessRegistration: '',
       com_establishmentDate: ''
-
+    }
+  },
+  created () {
+    if(this.$store.getters.getMg_auth === '1') {
+      this.userRadio = true
+      this.comRadio = false
+    }else{
+      this.userRadio = false
+      this.comRadio = true
+      this.show = true
     }
   },
   methods: {
@@ -143,13 +155,6 @@ export default {
       this.$axios.post('/jobfair/checkSameId', { user_id: this.id })
           .then(function (response) {
             console.log(response)
-            self.idPassCheck = response.data
-            if(self.idPassCheck === true){
-              self.msg = '사용가능한 id 입니다'
-            } else {
-              self.msg = '이미 사용하고 있는 id 입니다'
-            }
-            alert(self.msg)
           })
           .catch(function (error) {
             console.log(error)
@@ -229,17 +234,9 @@ export default {
       this.hasError = !this.hasError
       this.isActive = !this.isActive
     },
-    radioChange (event) {
-      var selected = event.target.value
-      console.log(selected)
-      if(selected == "on"){
-        this.hasError = !this.hasError
-        this.isActive = !this.isActive
-        this.show = !this.show
-        // radio 버튼의 value 값이 1이라면 활성화
-      }else if(selected == "off"){
-        // radio 버튼의 value 값이 0이라면 비활성화
-      }
+    radioChange (e) {
+      if(e.target.id === 'userType') this.show = false
+      else this.show = true
     }
   }
 }

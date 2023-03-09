@@ -1,60 +1,64 @@
 <template>
-  <div>
-
-    <Header v-if="link == '/' "></Header>
-    <router-view/>
-  </div>
+  <sidenav
+      :custom_class="this.$store.state.mcolor"
+      :class="[
+      this.$store.state.isTransparent,
+      this.$store.state.isRTL ? 'fixed-end' : 'fixed-start',
+    ]"
+      v-if="this.$store.state.showSidenav"
+  />
+  <main
+      class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
+      :style="this.$store.state.isRTL ? 'overflow-x: hidden' : ''"
+  >
+    <!-- nav -->
+    <navbar
+        :class="[navClasses]"
+        :textWhite="this.$store.state.isAbsolute ? 'text-white opacity-8' : ''"
+        :minNav="navbarMinimize"
+        v-if="this.$store.state.showNavbar"
+    />
+    <router-view />
+    <app-footer v-show="this.$store.state.showFooter" />
+    <configurator
+        :toggle="toggleConfigurator"
+        :class="[
+        this.$store.state.showConfig ? 'show' : '',
+        this.$store.state.hideConfigButton ? 'd-none' : '',
+      ]"
+    />
+  </main>
 </template>
-
 <script>
-import Header from './components/layout/HeaderView';
-// import Footer from './layout/FooterView';
-
-export default  {
-  link : document.location.pathname,
-  isChecked: false,
+import Sidenav from "./examples/Sidenav";
+import Configurator from "@/examples/Configurator.vue";
+import Navbar from "@/examples/Navbars/Navbar.vue";
+import AppFooter from "@/examples/Footer.vue";
+import { mapMutations } from "vuex";
+export default {
+  name: "App",
   components: {
-    Header
-    // Footer
+    Sidenav,
+    Configurator,
+    Navbar,
+    AppFooter,
   },
-  created() {
-    console.log(document.location.pathname)
-    if(document.location.pathname == '/') {
-
-      this.isChecked = true;
-    } else {
-      this.isChecked = false;
-    }
-    console.log(this.isChecked)
-  }
-
-
-}
-
-
-
+  methods: {
+    ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
+  },
+  computed: {
+    navClasses() {
+      return {
+        "position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky": this
+            .$store.state.isNavFixed,
+        "position-absolute px-4 mx-0 w-100 z-index-2": this.$store.state
+            .isAbsolute,
+        "px-0 mx-4 mt-4": !this.$store.state.isAbsolute,
+      };
+    },
+  },
+  beforeMount() {
+    this.$store.state.isTransparent = "bg-transparent";
+  },
+};
 </script>
-
-<style>
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
