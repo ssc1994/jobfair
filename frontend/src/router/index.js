@@ -58,6 +58,11 @@ const routes = [
     name: 'uModifyView',
     component: () => import('../views/user/uModifyView.vue')
   },
+  {//유저 이력서
+    path: '/uResumeView',
+    name: 'uResumeView',
+    component: () => import('../views/user/uResumeView.vue')
+  },
 //*********************기업 화면*********************
   {//기업 메인화면
     path: '/cMainView',
