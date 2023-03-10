@@ -1,10 +1,10 @@
 <template>
-  <navbar btn-background="bg-gradient-primary"/>
+<!--  <navbar btn-background="bg-gradient-primary"/>-->
   <div
       class="pt-5 m-3 page-header align-items-start min-vh-50 pb-11 border-radius-lg"
       :style="{
       backgroundImage:
-        'url(' + require('@/assets/img/curved-images/curved6.jpg') + ')',
+        'url(' + require('@/assets/img/curved-images/sign-up-bg1.jpg') + ')',
     }"
   >
     <span class="mask bg-gradient-dark opacity-6"></span>
@@ -67,7 +67,7 @@
                     <div style="padding-bottom: 0px">
                       <input type="text" ref="phNumBox" name="user_phone" placeholder="휴대폰번호 -없이" v-model="phoneNum"
                              class="PersonUnder data_insert_box"/>
-                      <button type="button" class="PersonTop btn bg-gradient-dark" style="margin-top: 5px">인증번호 전송</button>
+                      <button type="button" class="btn bg-gradient-dark" style="margin-top: 5px">인증번호 전송</button>
                     </div>
                     <div style="padding: 0px 5px">
                       <input type="text" ref="certifNumBox" name="" placeholder="인증번호 입력" v-model="certification_num"
