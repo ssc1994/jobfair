@@ -9,6 +9,8 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 import "./assets/css/nucleo-icons.css";
 import "./assets/css/nucleo-svg.css";
 import SoftUIDashboard from "./soft-ui-dashboard";
+import "bootstrap/dist/css/bootstrap.min.css" // [bootstrap]
+import "bootstrap" // [bootstrap]
 
 // Vue.use(BootstrapVue)
 

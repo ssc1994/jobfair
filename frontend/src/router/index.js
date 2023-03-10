@@ -10,11 +10,11 @@ import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 
 const routes = [
-  // { //메인화면 - 로그인페이지
-  //   path: '/',
-  //   name: 'Main',
-  //   component: MainView
-  // },
+  { //메인화면 - 로그인페이지
+    path: '/',
+    name: 'Main',
+    component: MainView
+  },
 //*********************유저 화면*********************
   {//유저 & 기업 회원가입
     path: '/JoinView',
@@ -24,7 +24,8 @@ const routes = [
   {
     path: '/uMainView',
     name: 'uMainView',
-    component: () => import('@/views/user/uMainView.vue')
+    component: () => import('@/views/user/uMainView.vue'),
+    props: true
   },
   {//유저 Q&A 리스트화면
     path: '/uQnAView',
@@ -154,11 +155,11 @@ const routes = [
     component: () => import('../views/admin/aStatisticView.vue')
   },
     /////////////////// 부트스트랩////////////////////////////////////////////////////
-  {
-    path: "/",
-    name: "/",
-    redirect: "/dashboard",
-  },
+  // {
+  //   path: "/",
+  //   name: "/",
+  //   redirect: "/dashboard",
+  // },
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -198,16 +199,6 @@ const routes = [
     path: "/sign-up",
     name: "Sign Up",
     component: SignUp,
-  },
-  {//유저 채용공고 화면
-    path: '/uJobPostView',
-    name: 'uJobPostView',
-    component: () => import('../views/user/uJobPostView.vue')
-  },
-  {//유저 채용공고 화면 (테스트)
-    path: '/uJobPostView2',
-    name: 'uJobPostView2',
-    component: () => import('../views/user/uJobPostView2.vue')
   }
 ]
 

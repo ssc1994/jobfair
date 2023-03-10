@@ -21,16 +21,22 @@
                   <h3 class="font-weight-bolder text-success text-gradient">
                     Welcome back
                   </h3>
-                  <p class="mb-0">Enter your email and password to sign in</p>
+                  <p class="mb-0">Enter your id and password to sign in</p>
+                  <br>
+                  <div class="radioBox">
+                    <input type="radio" name="radioBtn" value="1" v-model="auth"><span>개인회원</span>
+                    <input type="radio" name="radioBtn" value="2" v-model="auth"><span>기업회원</span>
+                  </div>
                 </div>
                 <div class="card-body">
-                  <form role="form" class="text-start">
-                    <label>Email</label>
+                  <form action="#" class="text-start">
+                    <label>id</label>
                     <soft-input
-                      id="email"
-                      type="email"
-                      placeholder="Email"
-                      name="email"
+                      id="id"
+                      type="text"
+                      placeholder="username"
+                      name="id"
+                      v-model="id"
                     />
                     <label>Password</label>
                     <soft-input
@@ -38,29 +44,30 @@
                       type="password"
                       placeholder="Password"
                       name="password"
+                      v-model="pw"
                     />
                     <soft-switch id="rememberMe" name="rememberMe" checked>
                       Remember me
                     </soft-switch>
-                    <div class="text-center">
-                      <soft-button
-                        class="my-4 mb-2"
-                        variant="gradient"
-                        color="success"
-                        full-width
-                        >Sign in
-                      </soft-button>
-                    </div>
+<!--                    <div class="text-center">-->
+<!--                      <soft-button-->
+<!--                        class="my-4 mb-2"-->
+<!--                        variant="gradient"-->
+<!--                        color="success"-->
+<!--                        full-width-->
+<!--                        @click="logInBtn"-->
+<!--                        >Sign in-->
+<!--                      </soft-button>-->
+<!--                    </div>-->
                   </form>
                 </div>
+                <button type="submit" id="loginBtn" @click="logInBtn"
+                class="btn mb-0 bg-gradient-success w-100"
+                >로그인</button>
+
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
-                  <p class="mx-auto mb-4 text-sm">
-                    Don't have an account?
-                    <router-link
-                      :to="{ name: 'Sign Up' }"
-                      class="text-success text-gradient font-weight-bold"
-                      >Sign up</router-link
-                    >
+                  <p>좋은 직업을 찾고싶으신가요? <br>가입하시고 다양한 정보를 얻어가세요!<br>
+                    <router-link to="/Sign-Up"  class="text-success text-gradient font-weight-bold">회원가입</router-link>
                   </p>
                 </div>
               </div>
@@ -99,12 +106,25 @@ import { mapMutations } from "vuex";
 
 export default {
   name: "SignIn",
+  data () {
+    return {
+      auth: this.$store.getters.getMg_auth,
+      id: '',
+      pw: '',
+      curAuth: '',
+
+    }
+  },
+  updated() {
+    this.$store.commit("setMg_auth", this.auth)
+    console.log(this.auth)
+  },
   components: {
     Navbar,
     AppFooter,
     SoftInput,
     SoftSwitch,
-    SoftButton,
+    SoftButton
   },
   created() {
     this.toggleEveryDisplay();
@@ -118,6 +138,43 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+    logInBtn () {
+      this.$axios
+          .post('/login', {
+            auth: this.auth,
+            id: this.id,
+            pw: this.pw
+          })
+          .then((res) => {
+            console.log(res.data)
+            if(res.data == '1'){
+              //페이지 이동전에 세션에 값을 넣어야함
+              this.$router.push("/uMainView")
+
+            }else if(res.data == '2' || res.data == '3' ){
+              //페이지 이동전에 세션에 값을 넣어야함
+              this.$router.push("/cMainView")
+
+            }else if(res.data == '4' ){
+              //페이지 이동전에 세션에 값을 넣어야함
+              this.$router.push("/aMainView")
+
+            }else{
+              alert(res.data)
+              this.$router.push("/uMainView")
+            }
+          })
+          .catch((error) => {
+            alert('에러내용 : '+error)
+            //서버랑 연결이 안된상태라 틀리면 자동으로 umainView로 보냄
+            this.$router.push({name : "uMainView", params:{id:this.id}})
+
+            // location.href='/uMainView'
+          })
+          .finally(() => {
+            console.log('로그인시도')
+          })
+    },
   },
 };
 </script>
