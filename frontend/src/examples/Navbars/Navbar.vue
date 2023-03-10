@@ -27,7 +27,7 @@
                 this.$store.state.isRTL ? 'أكتب هنا...' : 'Type here...'
               "
             />
-          </div>
+        </div>
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">

@@ -2,7 +2,7 @@
   <div class="mainBox">
     <div class="UserBox">
       <div class="select">
-        <div class="leftBox" @click="clickHandler">
+        <div class="leftBox">
           <input type="radio" id="userType" name="selectType" @change="radioChange($event)" :checked="userRadio">
           <label for="userType">개인회원</label>
         </div>
@@ -230,10 +230,6 @@ export default {
       }
     },
     //개인회원,기업회원 버튼 클릭 시 맞는 폼태그 화면보이기 이벤트
-    clickHandler () {
-      this.hasError = !this.hasError
-      this.isActive = !this.isActive
-    },
     radioChange (e) {
       if(e.target.id === 'userType') this.show = false
       else this.show = true
