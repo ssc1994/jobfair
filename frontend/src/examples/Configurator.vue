@@ -7,19 +7,23 @@
       <i class="py-2 fa fa-cog"> </i>
     </a>
     <div class="shadow-lg card blur">
+
+      <!-- Soft UI Configurator -->
       <div class="pt-3 pb-0 bg-transparent card-header">
         <div class="float-start">
           <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
           <p>See our dashboard options.</p>
         </div>
+
+        <!--   X 버튼     -->
         <div class="mt-4 float-end" @click="toggle">
           <button class="p-0 btn btn-link text-dark fixed-plugin-close-button">
             <i class="fa fa-close"></i>
           </button>
         </div>
-        <!-- End Toggle Button -->
       </div>
       <hr class="my-1 horizontal dark" />
+      <!-- /////////////밑으로 다 필요없는 부분 삭제//////////////// -->
       <div class="pt-0 card-body pt-sm-3">
         <!-- Sidebar Backgrounds -->
         <div>
@@ -104,6 +108,7 @@
           />
         </div>
         <hr class="horizontal dark my-sm-4" />
+        <!-- Buy Now 이하 버튼들 -->
         <a
           class="btn bg-gradient-info w-100"
           href="https://www.creative-tim.com/product/vue-soft-ui-dashboard-pro"
