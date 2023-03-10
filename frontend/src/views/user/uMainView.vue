@@ -268,7 +268,7 @@ html, body {width:100%;
 }
 
 .table {
-  width: 80%;
+  width: 75%;
   margin: 0 auto;
   border: 1px solid grey;
 }
