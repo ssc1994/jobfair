@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div style="overflow: hidden">
     <main class="resume left">
     <div class="TopBox">
       <div class="left PostImg tbList">
@@ -8,7 +8,7 @@
         <p>(주)카카오</p>
       </div>
       <div class="left PostText">
-        <span style="font-size: 35px; font-weight: bolder;">UIUX디자이너 모집</span> <br/>
+        <span style="font-size: 35px; font-weight: bolder;">UIUX디자이너 모집합니다</span> <br/>
         <span style="color: #999; font-weight: bold">경력무관</span>
         <div class="tdCol">
           <dl class="tbList left">
@@ -26,11 +26,11 @@
             </dd>
             <dt>연봉</dt>
             <dd>
-              <strong>학력무관</strong>
+              <strong>얼만데.......</strong>
             </dd>
             <dt>위치</dt>
             <dd>
-              <strong>학력무관</strong>
+              <strong>하기싫다..</strong>
             </dd>
           </dl>
         </div>
@@ -39,7 +39,7 @@
     <div class="contents">
       <div class="recruitment">
         <b>업무소개</b> <br/>
-        <p>블라블라블라~~</p><br/>
+        <p>블라블라블라 ~~fnoifoifeoifhewoifheoiwfo eiwfhoewihfoewihfoiewhfoiewhfoiewhfoiefenfoewnfoewnfonofewnofewnoifnowncowncownecowneconwecoewncowencoewnoewnoiewncoiewncoiencoiewncowencoiewncownecoiewnconfiheoreoifneimdcdcmdslkcmldknvkndvvowecodcjdbcdbdbcodjjcpocdcdocnodscndncbbcdbdubcdiucb</p><br/>
       </div>
       <p><br></p>
       <p>&nbsp;</p>
@@ -57,8 +57,8 @@
       <p>&nbsp;</p>
     </div>
     </main>
-
-    <div class="right">
+<div style="position: fixed; right: 50px">
+    <div>
       <div class="marginTime">
         <span style="color: #0064ff; font-weight: bolder">남은 시간</span>
       <div class="Time">
@@ -70,17 +70,17 @@
       </div>
     </div>
 
-    <div class="marginTime right">
+    <div class="marginTime">
       <span style="color: #0064ff; font-weight: bolder">지원자 현황 통계</span>
-      <div>
-        <ul>
-          <li>지원자 수</li>
-          <li>5</li>
-        </ul>
-        <ul>
-          <li>모집 인원</li>
-          <li>1</li>
-        </ul>
+      <div class="applicant">
+        <div class="left">
+          <p>지원자 수</p>
+          <span>5</span>
+        </div>
+        <div class="right">
+          <p>모집 인원</p>
+          <span>1</span>
+        </div>
       </div>
 
       <div>
@@ -104,6 +104,7 @@
         </ul>
       </div>
     </div>
+</div>
   </div>
 
 </template>
@@ -163,10 +164,10 @@ dl {
 }
 /* 채용공고 상세내역 정보 */
 .resume {
-  width: 900px;
+  width: 800px;
   height: 1200px;
   color: #1E1E1E;
-  background-color: #efefef;
+  border: 2px solid #efefef;
   padding: 50px 30px;
 }
 .left {
@@ -179,6 +180,8 @@ dl {
 /* 남은시간 */
 .marginTime {
   width: 280px;
+  border: 1px solid #d2d6da;
+  padding: 30px;
 }
 .Time {
   text-align: center;
@@ -189,14 +192,33 @@ dl {
 }
 .marginTime button {
   width: 200px;
+  height: 50px;
   border: none;
-  margin: 10px 0px 10px 50px;
+  border-radius: 25px;
+  margin: 10px;
   background-color: #0064ff;
   color: white;
+
+}
+/* 지원자 현황 통계 */
+.applicant {
+  width: 100%;
+  height: 90px;
+  padding: 10px;
+  text-align: center;
+}
+.applicant .left {
+  padding-right: 40px;
+  border-right: 2px solid #d2d6da;
+}
+.applicant .left span,
+.applicant .right span {
+    font-size: 28px;
+  font-weight: bolder;
+  color: #0064ff;
 }
 /* post 전체 틀 */
 .TopBox {
-  border: 3px #42b983;
   height: 25%;
 }
 /* post 왼쪽 창 */
@@ -214,6 +236,12 @@ dl {
 .PostText {
   width: 60%;
 }
+.PostText span {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* 채용공고 상세내역 정보 */
 .contents {
@@ -222,12 +250,17 @@ dl {
 }
 /* 채용공고 업무소개, 전형절차, 혜택 및 복지란 */
 .recruitment {
-  background-color: rgb(181,183,186,0.5);
+  border: 1px solid rgb(181,183,186,0.5);
   width: 100%;
   height: 35%;
   padding: 10px;
 }
 .recruitment b {
-  font-size: 26px;
+  font-size: 20px;
+}
+.recruitment p {
+  line-height: 1.2;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 </style>
