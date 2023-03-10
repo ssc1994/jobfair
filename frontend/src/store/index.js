@@ -19,6 +19,7 @@ export default createStore({
     navbarFixed:
         "position-sticky blur shadow-blur left-auto top-1 z-index-sticky px-0 mx-4",
     absolute: "position-absolute px-4 mx-0 w-100 z-index-2"
+
   },
   getters: { //state 변수들을 사용할 때 사용하는 getter 함수 정의
     getMg_auth(state) {

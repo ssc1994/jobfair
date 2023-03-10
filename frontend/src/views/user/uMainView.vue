@@ -66,6 +66,7 @@
         <div class="userInfoFirstLine">
           <div>
             <img src="#">
+
             <h3>OOO님의 <br/>입사 지원 현황</h3>
             <a href="#">쪽지(3)</a>
           </div>
@@ -90,7 +91,67 @@
 
         <div class="btnBox">
           <button type="button" class="btn btn-outline-primary btn1">이력서 관리</button>
-          <button type="button" class="btn btn-outline-primary btn2">mypage</button>
+
+          <button type="button" class="btn btn-outline-primary btn2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            mypage 수정하기
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">개인정보수정</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="content">
+                    <div>
+                      <div class="modalImg">
+                        <img src="" alt="프로필사진">
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">아이디</span>
+                        <input type="text" class="form-control" placeholder="UserId" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">이름</span>
+                        <input type="text" class="form-control" placeholder="Name" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">생년월일</span>
+                        <input type="text" class="form-control" placeholder="BirthDate" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">번호</span>
+                        <input type="text" class="form-control" placeholder="PhoneNum" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">이메일</span>
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">주소</span>
+                        <input type="text" class="form-control" placeholder="Address" aria-label="Username" aria-describedby="basic-addon1">
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
 
       </div>
@@ -143,7 +204,7 @@
 
 <script>
 export default {
-  name: 'uMainView'
+  name: 'uMainView',
 }
 </script>
 
@@ -323,4 +384,6 @@ export default {
   font-size:  20px;
   margin-bottom: 20px;
 }
+
+
 </style>
