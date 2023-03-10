@@ -143,6 +143,7 @@
 
               </div>
 
+
             </div>
           </div>
 
@@ -192,7 +193,7 @@
 
 <script>
 export default {
-  name: 'uMainView'
+  name: 'uMainView',
 }
 </script>
 
@@ -277,23 +278,4 @@ html, body {width:100%;
   border-width: 1px;
 }
 
-/*.qnaBox .writer {*/
-/*  width: 200px;*/
-/*  padding: 5px;*/
-/*  text-align: center;*/
-/*}*/
-/*.qnaBox .title {*/
-/*  width: 500px;*/
-/*  height: 40px;*/
-/*  padding: 5px;*/
-/*  text-align: left;*/
-/*}*/
-/*.qnaBox .regdate {*/
-/*  width: 200px;*/
-/*  text-align: center;*/
-/*}*/
-/*.qnaBox h3 {*/
-/*  font-size:  20px;*/
-/*  margin-bottom: 20px;*/
-/*}*/
 </style>
