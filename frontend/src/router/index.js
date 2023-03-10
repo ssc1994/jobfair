@@ -199,16 +199,6 @@ const routes = [
     path: "/sign-up",
     name: "Sign Up",
     component: SignUp,
-  },
-  {//유저 채용공고 화면
-    path: '/uJobPostView',
-    name: 'uJobPostView',
-    component: () => import('../views/user/uJobPostView.vue')
-  },
-  {//유저 채용공고 화면 (테스트)
-    path: '/uJobPostView2',
-    name: 'uJobPostView2',
-    component: () => import('../views/user/uJobPostView2.vue')
   }
 ]
 
