@@ -12,5 +12,12 @@
     </select>
 
 
+    <select id="info" resultType="UserVO">
+        select *
+        from User
+        where user_id = #{id}
+    </select>
+
+
 
 </mapper>

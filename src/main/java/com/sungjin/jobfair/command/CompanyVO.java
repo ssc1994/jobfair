@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CompanyVO {
 
-    private String com_id; //기업번호
+    private String com_num; //기업번호
     private String com_name;
     private String com_phone;
     private String com_email;

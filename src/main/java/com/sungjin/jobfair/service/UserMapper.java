@@ -9,6 +9,9 @@ public interface UserMapper {
     //로그인 확인
     public UserVO login(UserVO vo);
 
+    //Current User 정보 불러오기
+    public UserVO info(String id);
+
 
 
 

@@ -12,7 +12,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserVO login(UserVO vo) {
-
         return userMapper.login(vo);
+    }
+
+    @Override
+    public UserVO info(String id) {
+        return userMapper.info(id);
     }
 }

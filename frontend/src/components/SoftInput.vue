@@ -10,9 +10,10 @@
         class="form-control"
         :class="getClasses(size, success, error)"
         :name="name"
-        :value="value"
+        :value="model"
         :placeholder="placeholder"
         :isRequired="isRequired"
+        @input="$emit('update:model', $event.target.value)"
       />
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>
@@ -69,7 +70,12 @@ export default {
       type: Boolean,
       default: false,
     },
+    model: {
+      type: String,
+      default: '',
+    }
   },
+  emits:['update:model'],
   methods: {
     getClasses: (size, success, error) => {
       let sizeValue, isValidValue;
