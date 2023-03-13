@@ -19,7 +19,7 @@
         <span>로그인상태 유지하기</span><br/>
         <a href="#">아이디찾기</a> /
         <a href="#">비밀번호찾기</a>
-        <p>좋은 직업을 찾고싶으신가요? 가입하시고 다양한 정보를 얻어가세요!<router-link to="/joinView">회원가입</router-link></p>
+        <p>좋은 직업을 찾고싶으신가요? 가입하시고 다양한 정보를 얻어가세요!<router-link to="/Sign-up">회원가입</router-link></p>
       </div>
     </div>
   </div>

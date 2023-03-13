@@ -8,27 +8,48 @@
     display: inline-block;
     width: 50%;
 }
-.choice_joinTypeWrap > li:first-child{
-}
 .choice_joinTypeWrap li label{
-    width: 50%;
+    width: 100%;
     margin: 0;
-    background-color: #0064ff;
 }
 .choice_joinTypeWrap > li:first-child label{
-    border-radius: 0.5rem 0 0 0 ;
+    border-radius: 0.375rem 0 0 0 ;
 }
 .choice_joinTypeWrap > li:last-child label{
-    border-radius: 0 0.5rem 0 0 ;
+    border-radius: 0 0.375rem 0 0 ;
 }
 .choice_joinTypeWrap li label:hover{
-    background-image: linear-gradient(310deg, #141727 0%, #0d6efd 100%);
+    background-image: linear-gradient(310deg, #1AB7EA 0%, #0d6efd 100%);
+    /*background-image: linear-gradient(310deg, #141727 0%, #0d6efd 100%);*/
+}
+.selected_joinType{
+    background-image: linear-gradient(310deg, #1AB7EA 0%, #0d6efd 100%);
+    color: #FFFFFF;
+    font-weight: 400;
+
+}
+
+/*입력 컨테이너 크기 조절*/
+.col-md-7{
+    width: 65%;
 }
 
 /*form 태그 안 css*/
 .data_insert_box{
+    /* data 입력되는 input 태그들*/
     display: block;
     width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .userBox > div{
     padding: 5px;
@@ -70,4 +91,21 @@
     margin-right: 10px;
 }
 
+.form-bottom{
+    padding: 0px 5px;
+}
 
+/*기업 설립일 작성부분*/
+.esDateWrap{
+    overflow: hidden;
+}
+.esDateWrap div{
+    display: inline-block;
+    float: left;
+    padding: 6px 12px 6px 0;
+}
+.esDateWrap input {
+    display: inline-block;
+    float: right;
+    width: 80%;
+}
