@@ -50,8 +50,15 @@
       <p><br></p>
       <p>&nbsp;</p>
       <div class="recruitment">
-        <b>혜택 및 복지</b><br/>
-        <p>블라블라블라~~</p><br/>
+        <b>기업정보</b><br/>
+        <img src="@/assets/kakao.png">
+        <span>기업명 :</span><br/>
+        <span>기업전화번호 :</span><br/>
+        <span>기업이메일 :</span><br/>
+        <span>기업주소 :</span><br/>
+        <span>업종 :</span><br/>
+        <span>대표자 :</span><br/>
+        <span>사업자등록번호 :</span><br/>
       </div>
       <p><br></p>
       <p>&nbsp;</p>
@@ -325,9 +332,14 @@ dl {
   font-size: 20px;
 }
 .recruitment p {
-  line-height: 1.2;
+  line-height: 1.3;
   white-space: pre-line;
   word-wrap: break-word;
-
+}
+.recruitment img {
+  float: left;
+  width: 40%;
+  height: 160px;
+  margin-right: 30px;
 }
 </style>
