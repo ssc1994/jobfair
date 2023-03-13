@@ -11,6 +11,4 @@
           and user_pw=#{user_pw}
     </select>
 
-
-
 </mapper>
