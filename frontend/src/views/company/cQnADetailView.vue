@@ -35,19 +35,14 @@
 
         <div class=" wrapBox5">
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">작성자</span>
+            <span class="input-group-text" id="basic-addon1">담당자</span>
             <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                    aria-describedby="basic-addon1" disabled>
           </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">문의제목</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled>
-          </div>
 
           <div class="input-group">
-            <span class="input-group-text">문의내용</span>
+            <span class="input-group-text">답변</span>
             <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
           </div>
 
@@ -69,7 +64,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content ">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Q&A수정</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">답변수정</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="height: 100%">
@@ -77,22 +72,15 @@
 
               <div class=" wrapBox3">
                 <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">작성자</span>
+                  <span class="input-group-text" id="basic-addon1">담당자</span>
                   <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                         aria-describedby="basic-addon1">
-                </div>
-
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">문의제목</span>
-                  <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                         aria-describedby="basic-addon1">
+                         aria-describedby="basic-addon1" disabled>
                 </div>
 
                 <div class="input-group">
-                  <span class="input-group-text">문의내용</span>
+                  <span class="input-group-text">답변</span>
                   <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
                 </div>
-                <!--답변있을경우 수정하기 버튼 안보이게 설정해야함-->
                 <div class="btnModalBox">
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     수정하기
