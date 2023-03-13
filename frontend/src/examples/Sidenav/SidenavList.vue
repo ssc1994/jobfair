@@ -29,28 +29,25 @@
         <button type="button" class="btn">이력서 관리</button>
         <button type="button" class="btn">mypage</button>
       </div>
-
     </div>
   </div>
   <hr>
 
   <!-- 아코디언 -->
-  <div id="app">
-
-  </div>
+  <Test menuTitle='메뉴 1'/>
+  <Test menuTitle='메뉴 2'/>
+  <Test menuTitle='메뉴 3'/>
 
 </template>
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
 import SidenavCard from "./SidenavCard.vue";
 import Shop from "../../components/Icon/Shop.vue";
-import Office from "../../components/Icon/Office.vue";
-import CreditCard from "../../components/Icon/CreditCard.vue";
 import Box3d from "../../components/Icon/Box3d.vue";
-import CustomerSupport from "../../components/Icon/CustomerSupport.vue";
 import Document from "../../components/Icon/Document.vue";
 import Spaceship from "../../components/Icon/Spaceship.vue";
 import Settings from "../../components/Icon/Settings.vue";
+import Test from "@/components/myComponent/SideMenuList";
 
 export default {
   name: "SidenavList",
@@ -73,6 +70,7 @@ export default {
     Document,
     Spaceship,
     Settings,
+    Test
   },
   methods: {
     getRoute() {

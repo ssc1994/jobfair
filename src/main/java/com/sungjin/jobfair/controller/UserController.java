@@ -4,10 +4,12 @@ import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/jobfair")
@@ -35,5 +37,14 @@ public class UserController {
         return "success";
     }
 
+    //큐앤에이 목록
+    @PostMapping(value = "/getQnAList")
+    public  ArrayList<QnAVO> getQnAList(Model model) {
 
+        ArrayList<QnAVO> list = userService.getQnAList();
+        model.addAttribute("list", list);
+        System.out.println(list.toString());
+
+        return list;
+    }
 }

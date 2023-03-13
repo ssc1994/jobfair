@@ -24,27 +24,27 @@
                   <p class="mb-0">Enter your id and password to sign in</p>
                   <br>
                   <div class="radioBox">
-                    <input type="radio" name="radioBtn" value="1" v-model="auth"><span>개인회원</span>
-                    <input type="radio" name="radioBtn" value="2" v-model="auth"><span>기업회원</span>
+                    <input type="radio" name="radioBtn" value="1" v-model="mg_auth"><span>개인회원</span>
+                    <input type="radio" name="radioBtn" value="2" v-model="mg_auth"><span>기업회원</span>
                   </div>
                 </div>
                 <div class="card-body">
-                  <form action="#" class="text-start">
-                    <label>id</label>
+                  <div class="text-start loginBox">
+                    <label>id</label><br>
                     <soft-input
-                      id="id"
+                      id="user_id"
                       type="text"
                       placeholder="username"
-                      name="id"
-                      v-model="id"
+                      name="user_id"
+                      v-model:model="user_id"
                     />
-                    <label>Password</label>
+                    <label>Password</label><br>
                     <soft-input
                       id="password"
                       type="password"
                       placeholder="Password"
                       name="password"
-                      v-model="pw"
+                      v-model:model="user_pw"
                     />
                     <soft-switch id="rememberMe" name="rememberMe" checked>
                       Remember me
@@ -59,10 +59,10 @@
 <!--                        >Sign in-->
 <!--                      </soft-button>-->
 <!--                    </div>-->
-                  </form>
+                  </div>
                 </div>
                 <button type="submit" id="loginBtn" @click="logInBtn"
-                class="btn mb-0 bg-gradient-success w-100"
+                class="btn mb-0 bg-gradient-success w-80"
                 >로그인</button>
 
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
@@ -108,16 +108,17 @@ export default {
   name: "SignIn",
   data () {
     return {
-      auth: this.$store.getters.getMg_auth,
-      id: '',
-      pw: '',
-      curAuth: '',
+      mg_auth: this.$store.getters.getMg_auth,
+      user_id: '',
+      user_pw: ''
 
     }
   },
   updated() {
-    this.$store.commit("setMg_auth", this.auth)
-    console.log(this.auth)
+    this.$store.commit("setMg_auth", this.mg_auth)
+    console.log(this.mg_auth)
+    console.log(this.user_id)
+    console.log(this.user_pw)
   },
   components: {
     Navbar,
@@ -138,18 +139,40 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+
     logInBtn () {
+      console.log(this.mg_auth)
+      console.log(this.user_id)
+      console.log(this.user_pw)
+      let self = this;
+
       this.$axios
-          .post('/login', {
-            auth: this.auth,
-            id: this.id,
-            pw: this.pw
+          .post('/jobfair/login', {
+            mg_auth: this.mg_auth,
+            user_id: this.user_id,
+            user_pw: this.user_pw
           })
           .then((res) => {
             console.log(res.data)
             if(res.data == '1'){
-              //페이지 이동전에 세션에 값을 넣어야함
-              this.$router.push("/uMainView")
+              sessionStorage.setItem('sessionId',JSON.stringify(this.user_id))
+              sessionStorage.setItem('sessionAuth',JSON.stringify(this.mg_auth))
+
+
+              //sesionStorage에서 값 가져오는법
+              let sessionId = sessionStorage.getItem('sessionId')
+              let sessionAuth = sessionStorage.getItem('sessionAuth')
+              if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
+                let SessionJsonId = JSON.parse(sessionId)
+                console.log(SessionJsonId)
+              }
+              if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
+                let SessionJsonAuth = JSON.parse(sessionAuth)
+                console.log(SessionJsonAuth)
+              }
+
+              // //페이지 이동전에 세션에 값을 넣어야함
+              // this.$router.push("/uMainView")
 
             }else if(res.data == '2' || res.data == '3' ){
               //페이지 이동전에 세션에 값을 넣어야함
@@ -161,15 +184,11 @@ export default {
 
             }else{
               alert(res.data)
-              this.$router.push("/uMainView")
             }
           })
           .catch((error) => {
-            alert('에러내용 : '+error)
-            //서버랑 연결이 안된상태라 틀리면 자동으로 umainView로 보냄
-            this.$router.push({name : "uMainView", params:{id:this.id}})
+            alert('에러내용 : ' + error)
 
-            // location.href='/uMainView'
           })
           .finally(() => {
             console.log('로그인시도')
@@ -178,3 +197,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+.loginBox input {
+  height: 40px;
+  width: 250px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+.loginBtn{
+  justify-content: center;
+  position: relative;
+  left: 25px;
+}
+
+</style>

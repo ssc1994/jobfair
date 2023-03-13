@@ -1,36 +1,46 @@
 <template>
-
-
   <div class="wrapBox">
     <div class="centerBox">
       <div class="wrapBox2">
         <div class="qnaBox">
-          <h3>Q&A</h3>
+          <h3>Q.</h3>
         </div>
 
-        <div class=" wrapBox3">
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">작성자</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
+        <form action="qnaRegist">
+          <div class=" wrapBox3">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">작성자</span>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled>
+            </div>
 
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">문의제목</span>
-              <input type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+              <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                     aria-describedby="basic-addon1" v-model="qa_title" >
             </div>
 
             <div class="input-group">
               <span class="input-group-text">문의내용</span>
-              <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
+              <textarea class="form-control contentBox" aria-label="With textarea" v-model="qa_content"></textarea>
             </div>
 
-          <div class="btnBox">
-            <button type="button" class="btn btn-outline-primary">문의하기</button>
-            <button type="button" class="btn btn-outline-primary">목록으로</button>
+
           </div>
-        </div>
+        </form>
+
+
       </div>
+
+
     </div>
+
+    <div class="btnBox">
+      <button type="button" class="btn btn-primary" @click.stop="qnaRegist">등록하기</button>
+      <button type="button" class="btn btn-outline-primary">목록으로</button>
+    </div>
+
+
 
   </div>
 </template>
@@ -38,24 +48,56 @@
 <script>
 import SoftInput from "@/components/SoftInput.vue";
 import SoftButton from "@/components/SoftButton.vue";
-export default { components: { SoftInput, SoftButton}, };
+import axios from "axios";
+export default {components: {SoftInput, SoftButton},
+
+data: function () {
+  return {
+    user_id: 'user123',
+    qa_title: '',
+    qa_content: ''
+  }
+},
+  methods: {
+    qnaRegist() {
+      let self = this;
+      this.$axios
+          .post('/jobfair/qnaRegist', {
+            user_id: this.user_id,
+            qa_title: this.qa_title,
+            qa_content: this.qa_content
+          })
+          .then((res) => {
+            if(res.status === 200) {
+              console.log(res.data)
+              self.$router.push("/uQnAView")
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            alert('에러: ' + error )
+
+          })
+          .finally(() => {
+            console.log('큐앤에이등록')
+          })
+    }
+  }
+}
 
 </script>
 
 <style scoped>
-
 .wrapBox {
   width: 100%;
-  height: 800px;
+  height: 100%;
 }
 
 
-
 .wrapBox2 {
-  width: 50%;
-  height: 700px;
+  width: 80%;
+  height: 50%;
   margin: 0 auto;
-  margin-top: 5%;
 }
 
 .wrapBox2 .qnaBox {
@@ -66,11 +108,11 @@ export default { components: { SoftInput, SoftButton}, };
 
 }
 
-.wrapBox2 .qnaBox h3 {
-  font-size: 200%;
+.qnaBox h3 {
+  font-size: 70px;
   position: relative;
-  bottom: 60px;
-  right: 150px;
+  right: 100px;
+  top: 60px;
 }
 
 
@@ -81,8 +123,8 @@ export default { components: { SoftInput, SoftButton}, };
 
 }
 
-.wrapBox3 .contentBox {
-  height: 500px;
+.contentBox {
+  height: 300px;
   resize: none;
 }
 
@@ -108,15 +150,27 @@ export default { components: { SoftInput, SoftButton}, };
   left: 120px;
 }
 
-.btnBox {
-  position: relative;
-  left: 200px;
+.wrapBox4 {
+  width: 80%;
+  height: 50%;
+  margin: 0 auto;
 }
 
-.btnBox button {
-  background-color: darkblue;
-  border: none;
-  color: white;
+.btnBox {
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+}
+
+.btnModalBox {
+  text-align: center;
+  margin-top: 30px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.modal {
+  --bs-modal-width: 800px
 }
 
 </style>

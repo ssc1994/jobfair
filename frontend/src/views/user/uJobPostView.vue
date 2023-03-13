@@ -29,6 +29,27 @@
               <input placeholder="채용공고명 또는 기관명을 입력해주세요." >
             </div>
           </div>
+          <!--#################################-->
+          <!--  지역 또는 직무 클릭시 나오는 div -->
+          <div v-if="fold!=false" class="showLocal">
+            <!--  지역 검색 -->
+            <div>
+              <input placeholder="지역을 입력해주세요." >
+            </div>
+
+            <div class="empBoxLabel">
+              <!--시-->
+              <div v-for="(city, index) in city" :key="city.cityCode">
+                <input type="checkbox" :id="city.cityCode" name="city" @change="plus" :value="city.cityCode" v-model="selectedCity">
+                <label :for="city.cityCode">{{ city.cityName }}</label>
+              </div>
+              <!--구-->
+              <div v-for="goo in cityGoo.filter(x => x.cityCode === selectedCity.cityCode )" :key="goo.gooCode">
+                <input type="checkbox" :id="goo.gooCode" name="goo" @change="plus" :value="goo.gooName">
+                <label :for="goo.gooCode">{{ goo.gooName }}</label>
+              </div>
+            </div>
+          </div>
 
 
           <!--#################################-->
@@ -53,12 +74,9 @@
             </div>
           </div>
 
+          <div class="row">
             <div class="row">
-
               <div class="row">
-
-
-
                 <div class="col-sm-3 empSearchBoxWrap">
                   <div class="empBoxTitle">경력</div>
                   <div class="empBoxLabel">
@@ -73,7 +91,8 @@
                     </div>
                   </div>
                 </div>
-
+              </div>
+                
                 <div class="col-sm-3 empSearchBoxWrap">
                   <div class="empBoxTitle">학력</div>
                   <div class="empBoxLabel">
@@ -88,7 +107,8 @@
                     </div>
                   </div>
                 </div>
-
+              </div>
+              
                 <div class="col-sm-3 empSearchBoxWrap">
                   <div class="empBoxTitle">연봉</div>
                   <div class="empBoxLabel">
@@ -103,6 +123,7 @@
                     </div>
                   </div>
                 </div>
+              </div>
 
                 <div class="col-sm-3 empSearchBoxWrap">
                   <div class="empBoxTitle">자격증</div>
@@ -122,24 +143,22 @@
               <div class="empSearchTag">
                 <button type="button" class="btn btn-primary searchBtn">선택된 120건 검색</button>
                 <span v-if="job!=''">{{job}}
+
                   <button class="del" @click="del">
 
                   </button>
                 </span>
-                <span v-if="local!=''">{{local }}<button class="del">X</button></span>
-                <span v-if="career!=''">{{career }}<button class="del">X</button></span>
-                <span v-if="education!=''">{{education }}<button class="del">X</button></span>
-                <span v-if="salary!=''">{{salary }}<button class="del">X</button></span>
-                <span v-if="certi!=''">{{certi }}<button class="del" @click="del">X</button></span>
-              </div>
-
+              <span v-if="local!=''">{{local }}<button class="del">X</button></span>
+              <span v-if="career!=''">{{career }}<button class="del">X</button></span>
+              <span v-if="education!=''">{{education }}<button class="del">X</button></span>
+              <span v-if="salary!=''">{{salary }}<button class="del">X</button></span>
+              <span v-if="certi!=''">{{certi }}<button class="del" @click="del">X</button></span>
             </div>
+
+          </div>
 
         </form>
       </div>
-
-
-
 
       <div class="row empListBox">
 
@@ -444,7 +463,7 @@ html, body {width:100%;
 
 }
 .applied {background-color: #dedede;
-          color:black;
+  color:black;
 }
 
 .empBoxText {padding-left: 5px;color:black;display: inline-block;  cursor: pointer;
@@ -492,16 +511,14 @@ h3{font-weight: bold;
 .empSearchWrap {overflow: hidden;}
 
 .empSearchWrap > div {
-              float: left;
-              width:33.33%;
-
-
-  }
+  float: left;
+  width:33.33%;
+}
 
 .empSearchWrap > div > div {width:100%;}
 
 .empSearchWrap > div > button {
-              width:100%;
+  width:100%;
   height:50px;
   border: 2px solid #dedede;
   text-align: left;
@@ -525,10 +542,10 @@ h3{font-weight: bold;
 
 
 .empSearchInput input {
-                width:100%;
-                height:50px;
-                border:0;
-                border-bottom: 2px solid black;
+  width:100%;
+  height:50px;
+  border:0;
+  border-bottom: 2px solid black;
 }
 
 .empSearchLocal img, .empSearchJob img{border:0;
@@ -538,7 +555,7 @@ h3{font-weight: bold;
 
 /* 공고 검색 */
 .showLocal {height: 200px;
-            border: 1px solid #dedede;
+  border: 1px solid #dedede;
 }
 .showLocal .empBoxLabel {border:0;}
 
@@ -555,21 +572,21 @@ h3{font-weight: bold;
 .empSearchTag {margin-top:20px;}
 
 .empSearchTag span {
-      margin-top:20px;
-      background-color: #efefef;
-      border-radius: 20px;
-      padding:10px;
-      border : 1px solid #dedede;
-      color: #0064ff;}
+  margin-top:20px;
+  background-color: #efefef;
+  border-radius: 20px;
+  padding:10px;
+  border : 1px solid #dedede;
+  color: #0064ff;}
 
 .del {
-      margin-left: 5px;
-      padding:0 5px;
-      border:0;
+  margin-left: 5px;
+  padding:0 5px;
+  border:0;
 }
 
 .searchBtn {width:13%;
-                      height:40px;
+  height:40px;
   background-color: #dedede;
   float: right;
   margin-top:10px;
