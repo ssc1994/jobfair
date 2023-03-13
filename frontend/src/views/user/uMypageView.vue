@@ -9,36 +9,36 @@
           <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>
         </button>
       </div>
+
       <div v-if="fold!=false">
-      <div class="resumeBoxWrap" >
-        <div class="resumeBox">
-          <div class="left">
-            <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
-            <p>2023.03.09</p>
+        <div class="resumeBoxWrap" >
+          <div class="resumeBox">
+            <div class="left">
+              <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
+              <p>2023.03.09</p>
+            </div>
+            <div class="right">
+              <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정</button>
+              <button type="button" class="btn btn-outline-primary" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제</button>
+            </div>
           </div>
-          <div class="right">
-            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정</button>
-            <button type="button" class="btn btn-outline-primary" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제</button>
+        </div>
+
+        <div class="resumeBoxWrap">
+          <div class="resumeBox">
+            <div class="left">
+              <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
+              <p>2023.03.09</p>
+            </div>
+            <div class="right">
+              <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정</button>
+              <button type="button" class="btn btn-outline-primary" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="resumeBoxWrap">
-      <div class="resumeBox">
-        <div class="left">
-          <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
-          <p>2023.03.09</p>
-        </div>
-        <div class="right">
-          <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정</button>
-          <button type="button" class="btn btn-outline-primary" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제</button>
-        </div>
-      </div>
       </div>
     </div>
-
-
     <hr>
-
 
     <div class="aplBoxCon">
       <div>
@@ -73,42 +73,41 @@
             <div>
               <table class="aplTable">
                 <thead>
-                <tr class="aplTableTitle">
-                  <td>지원 회사</td>
-                  <td>공고명</td>
-                  <td>지원 포지션</td>
-                  <td>진행상태</td>
-                </tr>
+                  <tr class="aplTableTitle">
+                    <td>지원 회사</td>
+                    <td>공고명</td>
+                    <td>지원 포지션</td>
+                    <td>진행상태</td>
+                  </tr>
                 </thead>
+
                 <tbody>
-                <tr>
-                  <td ><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                  <td>UI/UX 디자이너</td>
-                  <td class="allPass">최종합격</td>
-                </tr>
-                <tr>
-                  <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                  <td>UI/UX 디자이너</td>
-                  <td class="noPass">불합격</td>
-                </tr>
-                <tr>
-                  <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                  <td>UI/UX 디자이너</td>
-                  <td class="pass">서류통과</td>
-                </tr>
-                <tr>
-                  <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                  <td>UI/UX 디자이너</td>
-                  <td class="applied">지원완료</td>
-                </tr>
+                  <tr>
+                    <td ><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                    <td>UI/UX 디자이너</td>
+                    <td class="allPass">최종합격</td>
+                  </tr>
+                  <tr>
+                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                    <td>UI/UX 디자이너</td>
+                    <td class="noPass">불합격</td>
+                  </tr>
+                  <tr>
+                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                    <td>UI/UX 디자이너</td>
+                    <td class="pass">서류통과</td>
+                  </tr>
+                  <tr>
+                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                    <td>UI/UX 디자이너</td>
+                    <td class="applied">지원완료</td>
+                  </tr>
                 </tbody>
               </table>
-
-
             </div>
           </div>
         </div>
@@ -116,8 +115,6 @@
       </div>
 
     </div>
-
-
 
   </div>
 

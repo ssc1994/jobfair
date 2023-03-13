@@ -14,19 +14,6 @@
                 </li>
               </ul>
             </div>
-
-    <main class="resume">
-      <section>
-        <img class="headline-image" src="#" alt="프로필 사진">
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">인적사항</h4>
-                </div>
-              </li>
-            </ul>
           </div>
 
           <div class="profile">
@@ -37,7 +24,6 @@
             <p class="headline-title">주소 :<input type="text" class="headline-input"></p>
             <p class="headline-title">생년월일 :<input type="date" class="headline-input"></p>
           </div>
-        </div>
       </section>
 
       <section>
@@ -51,6 +37,7 @@
               </li>
             </ul>
           </div>
+
           <div class="profile">
             <p class="fs-medium fc-gray"></p>
             <p class="headline-title">학교구분 :</p>
@@ -86,6 +73,7 @@
               </li>
             </ul>
           </div>
+
           <div class="profile">
             <p class="fs-medium fc-gray"></p>
             <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
@@ -93,8 +81,7 @@
             <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
             <p class="headline-title">입사일 :<input type="date" class="headline-input"></p>
             <p class="headline-title">퇴사일 :<input type="date" class="headline-input"></p>
-
-            </div>
+          </div>
           </div>
         </section>
 
@@ -109,6 +96,7 @@
                 </li>
               </ul>
             </div>
+
             <div class="profile">
               <p class="fs-medium fc-gray"></p>
               <p class="headline-title">자격증명 :<input type="text" class="headline-input"></p>
@@ -116,6 +104,7 @@
             </div>
           </div>
         </section>
+
         <section>
           <div class="introduce">
             <div class="introduce-contact">
@@ -127,6 +116,7 @@
                 </li>
               </ul>
             </div>
+
             <div class="profile">
               <p class="fs-medium fc-gray"></p>
               <div class="container">
