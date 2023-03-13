@@ -13,7 +13,7 @@
 
             <div class="empSearchLocal">
               <button @click="upDown">지역을 선택하세요
-                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)"/>
+                <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)"/>-->
               </button>
 
 
@@ -21,7 +21,7 @@
             </div>
             <div class="empSearchJob">
               <button>직무를 선택하세요
-<!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>-->
+                <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>-->
               </button>
             </div>
 
@@ -29,27 +29,6 @@
               <input placeholder="채용공고명 또는 기관명을 입력해주세요." >
             </div>
           </div>
-          <!--#################################-->
-          <!--  지역 또는 직무 클릭시 나오는 div -->
-          <div v-if="fold!=false" class="showLocal">
-            <!--  지역 검색 -->
-            <div>
-              <input placeholder="지역을 입력해주세요." >
-            </div>
-
-            <div class="empBoxLabel">
-              <!--시-->
-              <div v-for="(city, index) in city" :key="city.cityCode">
-                <input type="checkbox" :id="city.cityCode" name="city" @change="plus" :value="city.cityCode" v-model="selectedCity">
-                <label :for="city.cityCode">{{ city.cityName }}</label>
-              </div>
-              <!--구-->
-              <div v-for="goo in cityGoo.filter(x => x.cityCode === selectedCity.cityCode )" :key="goo.gooCode">
-                <input type="checkbox" :id="goo.gooCode" name="goo" @change="plus" :value="goo.gooName">
-                <label :for="goo.gooCode">{{ goo.gooName }}</label>
-              </div>
-            </div>
-          </div>
 
 
           <!--#################################-->
@@ -62,12 +41,12 @@
 
             <div class="empBoxLabel">
               <!--시-->
-              <div v-for="(city, index) in city" :key="city.cityCode">
+              <div  class="left"  v-for="(city, index) in city" :key="city.cityCode">
                 <input type="checkbox" :id="city.cityCode" name="city" @change="plus" :value="city.cityCode" v-model="selectedCity">
                 <label :for="city.cityCode">{{ city.cityName }}</label>
               </div>
               <!--구-->
-              <div v-for="goo in cityGoo.filter(x => x.cityCode === selectedCity.cityCode )" :key="goo.gooCode">
+              <div class="left" v-for="goo in cityGoo.filter( gc => gc.cityCode == detailGoocode)" :key="goo.gooCode">
                 <input type="checkbox" :id="goo.gooCode" name="goo" @change="plus" :value="goo.gooName">
                 <label :for="goo.gooCode">{{ goo.gooName }}</label>
               </div>
@@ -75,75 +54,74 @@
           </div>
 
           <div class="row">
+
             <div class="row">
-              <div class="row">
-                <div class="col-sm-3 empSearchBoxWrap">
-                  <div class="empBoxTitle">경력</div>
-                  <div class="empBoxLabel">
-                    <div>
-                      <input type="radio" id="careerCate1" name="careerCate"><label for="careerCate1">1</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="careerCate2" name="careerCate"><label for="careerCate2">2</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="careerCate3" name="careerCate"><label for="careerCate3">3</label>
-                    </div>
+
+
+
+              <div class="col-sm-3 empSearchBoxWrap">
+                <div class="empBoxTitle">경력</div>
+                <div class="empBoxLabel">
+                  <div>
+                    <input type="radio" id="careerCate1" name="careerCate"><label for="careerCate1">1</label>
                   </div>
-                </div>
-              </div>
-                
-                <div class="col-sm-3 empSearchBoxWrap">
-                  <div class="empBoxTitle">학력</div>
-                  <div class="empBoxLabel">
-                    <div>
-                      <input type="radio" id="eduCate1" name="eduCate"><label for="eduCate1">1</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="eduCate2" name="eduCate"><label for="eduCate2">2</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="eduCate3" name="eduCate"><label for="eduCate3">3</label>
-                    </div>
+                  <div>
+                    <input type="radio" id="careerCate2" name="careerCate"><label for="careerCate2">2</label>
                   </div>
-                </div>
-              </div>
-              
-                <div class="col-sm-3 empSearchBoxWrap">
-                  <div class="empBoxTitle">연봉</div>
-                  <div class="empBoxLabel">
-                    <div>
-                      <input type="radio" id="salaryCate1" name="salaryCate"><label for="salaryCate1">1</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="salaryCate2" name="salaryCate"><label for="salaryCate2">2</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="salaryCate3" name="salaryCate"><label for="salaryCate3">3</label>
-                    </div>
+                  <div>
+                    <input type="radio" id="careerCate3" name="careerCate"><label for="careerCate3">3</label>
                   </div>
                 </div>
               </div>
 
-                <div class="col-sm-3 empSearchBoxWrap">
-                  <div class="empBoxTitle">자격증</div>
-                  <div class="empBoxLabel">
-                    <div>
-                      <input type="radio" id="certiCate1" name="certiCate" @click="plus" value="정보처리기사"><label for="certiCate1">정보처리기사</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="certiCate2" name="certiCate"><label for="certiCate2">2</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="certiCate3" name="certiCate"><label for="certiCate3">3</label>
-                    </div>
+              <div class="col-sm-3 empSearchBoxWrap">
+                <div class="empBoxTitle">학력</div>
+                <div class="empBoxLabel">
+                  <div>
+                    <input type="radio" id="eduCate1" name="eduCate"><label for="eduCate1">1</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="eduCate2" name="eduCate"><label for="eduCate2">2</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="eduCate3" name="eduCate"><label for="eduCate3">3</label>
                   </div>
                 </div>
               </div>
-              <div class="empSearchTag">
-                <button type="button" class="btn btn-primary searchBtn">선택된 120건 검색</button>
-                <span v-if="job!=''">{{job}}
 
+              <div class="col-sm-3 empSearchBoxWrap">
+                <div class="empBoxTitle">연봉</div>
+                <div class="empBoxLabel">
+                  <div>
+                    <input type="radio" id="salaryCate1" name="salaryCate"><label for="salaryCate1">1</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="salaryCate2" name="salaryCate"><label for="salaryCate2">2</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="salaryCate3" name="salaryCate"><label for="salaryCate3">3</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3 empSearchBoxWrap">
+                <div class="empBoxTitle">자격증</div>
+                <div class="empBoxLabel">
+                  <div>
+                    <input type="radio" id="certiCate1" name="certiCate" @click="plus" value="정보처리기사"><label for="certiCate1">정보처리기사</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="certiCate2" name="certiCate"><label for="certiCate2">2</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="certiCate3" name="certiCate"><label for="certiCate3">3</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="empSearchTag">
+              <button type="button" class="btn btn-primary searchBtn">선택된 120건 검색</button>
+              <span v-if="job!=''">{{job}}
                   <button class="del" @click="del">
 
                   </button>
@@ -159,6 +137,9 @@
 
         </form>
       </div>
+
+
+
 
       <div class="row empListBox">
 
@@ -285,7 +266,7 @@ export default {
   data() {
     return {
       selectedCity : [],
-
+      detailGoocode: 'noshow',
       //지역 배열
       city : [
         { cityCode : 1, cityName : "서울특별시"},
@@ -296,11 +277,19 @@ export default {
         // { "대구광역시"  : ["중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군"]},
       ],
       cityGoo : [
-        { cityCode: 1, gooCode : 1, gooName : "종로구"},
-        { cityCode: 1, gooCode : 2, gooName : "중구"},
-        { cityCode: 1, gooCode : 3, gooName : "용산구"}
-      ],
+        { cityCode: 1, gooCode: 1, gooName: "종로구"},
+        { cityCode: 1, gooCode: 2, gooName: "중구"},
+        { cityCode: 1, gooCode: 3, gooName: "용산구"},
+        { cityCode: 2, gooCode: 26, gooName: "중구" },
+        { cityCode: 2, gooCode: 27, gooName: "서구" },
+        { cityCode: 2, gooCode: 28, gooName: "동구" },
+        { cityCode: 2, gooCode: 29, gooName: "영도구" },
+        { cityCode: 2, gooCode: 30, gooName: "부산진구" },
+        { cityCode: 2, gooCode: 30, gooName: "동래구" },
+        { cityCode: 2, gooCode: 31, gooName: "남구" },
+        { cityCode: 2, gooCode: 32, gooName: "북구" },
 
+      ],
       fold : true,
       arrSrc : "up",
 
@@ -343,7 +332,6 @@ export default {
 
     // radio 태그 함수
     plus : function(e){
-
       if(e.target.name=="job"){
         this.job = e.target.value;
       } else if(e.target.name=="local"){
@@ -354,6 +342,12 @@ export default {
         this.education = e.target.value;
       } else if(e.target.name=="salary"){
         this.salary = e.target.value;
+      } else if (e.target.value === this.detailGoocode) {
+        this.detailGoocode = 'noshow'
+        console.log(this.detailGoocode)
+      } else if (e.target.value != this.detailGoocode){
+        this.detailGoocode = e.target.value
+        console.log(this.detailGoocode)
       } else{
         this.certi = e.target.value;
       }
@@ -371,7 +365,13 @@ export default {
       } else {
         this.arrSrc = "down";
       }
+    },
+    //사용자가 클릭한 시만 필터링
+    makeFilterCity (e) {
+      if(this.detailGoocode === e.target.value) this.detailGoocode = 'noshow'
+      else this.detailGoocode = e.target.value
 
+      console.log(this.detailGoocode)
     }
   }
 }
@@ -513,6 +513,8 @@ h3{font-weight: bold;
 .empSearchWrap > div {
   float: left;
   width:33.33%;
+
+
 }
 
 .empSearchWrap > div > div {width:100%;}
