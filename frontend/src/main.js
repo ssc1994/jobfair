@@ -11,16 +11,20 @@ import "./assets/css/nucleo-svg.css";
 import SoftUIDashboard from "./soft-ui-dashboard";
 import "bootstrap/dist/css/bootstrap.min.css" // [bootstrap]
 import "bootstrap" // [bootstrap]
+import session from 'vue-session'
 
 // Vue.use(BootstrapVue)
+
 
 const app = createApp(App)
 // app 글로벌 변수 선언 실시
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$store = store
 app.config.globalProperties.$router = router
+app.config.globalProperties.$session = session
 app.use(SoftUIDashboard)
 app.use(BootstrapVue3)
 app.use(router)
 app.use(store)
+
 app.mount('#app')

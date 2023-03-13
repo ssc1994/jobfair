@@ -3,18 +3,20 @@
     <div class="centerBox">
       <div class="wrapBox2">
         <div class="qnaBox">
-          <h3>Q&A</h3>
+          <h3>Q.</h3>
         </div>
 
         <div class=" wrapBox3">
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1" >작성자</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <span class="input-group-text" id="basic-addon1">작성자</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">문의제목</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group">
@@ -22,11 +24,91 @@
             <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
           </div>
 
-          <div class="btnBox">
-            <button type="button" class="btn btn-outline-primary">목록으로</button>
+
+        </div>
+      </div>
+
+      <div class="wrapBox4">
+        <div class="qnaBox">
+          <h3>A.</h3>
+        </div>
+
+        <div class=" wrapBox5">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">작성자</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">문의제목</span>
+            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-text">문의내용</span>
+            <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="btnBox">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        수정하기
+      </button>
+      <button type="button" class="btn btn-outline-primary">목록으로</button>
+    </div>
+
+    <!--지원하기 모달창 설정-->
+    <!--state 적용해서 데이터 넣어야해유-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Q&A수정</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="height: 100%">
+            <div class="infoModalBox">
+
+              <div class=" wrapBox3">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">작성자</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                         aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">문의제목</span>
+                  <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                         aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group">
+                  <span class="input-group-text">문의내용</span>
+                  <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
+                </div>
+                <!--답변있을경우 수정하기 버튼 안보이게 설정해야함-->
+                <div class="btnModalBox">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    수정하기
+                  </button>
+
+                </div>
+              </div>
+
+            </div>
+
+
           </div>
         </div>
       </div>
+
+
     </div>
 
   </div>
@@ -35,22 +117,21 @@
 <script>
 import SoftInput from "@/components/SoftInput.vue";
 import SoftButton from "@/components/SoftButton.vue";
-export default { components: { SoftInput, SoftButton}, };
+
+export default {components: {SoftInput, SoftButton},};
 </script>
 
 <style scoped>
 .wrapBox {
   width: 100%;
-  height: 800px;
+  height: 100%;
 }
 
 
-
 .wrapBox2 {
-  width: 50%;
-  height: 700px;
+  width: 80%;
+  height: 50%;
   margin: 0 auto;
-  margin-top: 5%;
 }
 
 .wrapBox2 .qnaBox {
@@ -61,11 +142,11 @@ export default { components: { SoftInput, SoftButton}, };
 
 }
 
-.wrapBox2 .qnaBox h3 {
-  font-size: 200%;
+.qnaBox h3 {
+  font-size: 70px;
   position: relative;
-  bottom: 60px;
-  right: 150px;
+  right: 100px;
+  top: 60px;
 }
 
 
@@ -76,8 +157,8 @@ export default { components: { SoftInput, SoftButton}, };
 
 }
 
-.wrapBox3 .contentBox {
-  height: 500px;
+.contentBox {
+  height: 300px;
   resize: none;
 }
 
@@ -103,14 +184,27 @@ export default { components: { SoftInput, SoftButton}, };
   left: 120px;
 }
 
-.btnBox {
-  position: relative;
-  left: 400px;
+.wrapBox4 {
+  width: 80%;
+  height: 50%;
+  margin: 0 auto;
 }
 
-.btnBox button {
-  background-color: darkblue;
-  border: none;
-  color: white;
+.btnBox {
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
 }
+
+.btnModalBox {
+  text-align: center;
+  margin-top: 30px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.modal {
+  --bs-modal-width: 800px
+}
+
 </style>

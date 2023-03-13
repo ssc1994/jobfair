@@ -39,6 +39,8 @@ export default {
   updated() {
     this.$store.commit("setMg_auth", this.auth)
     console.log(this.auth)
+    console.log(this.id)
+    console.log(this.pw)
   },
   methods: {
     logInBtn () {
