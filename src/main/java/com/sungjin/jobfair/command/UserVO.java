@@ -20,9 +20,6 @@ public class UserVO {
     private String user_regDate; //가입일
     private String user_gender;
     private String user_address;
-    private String com_id; //기업id
+    private String com_num; //기업 번호
 
-    public void setUser_regDate(String user_regDate) {
-        this.user_regDate = user_regDate;
-    }
 }
