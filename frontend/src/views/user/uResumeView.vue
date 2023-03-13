@@ -1,45 +1,58 @@
 <template>
   <div>
+    <form :action.stop="doAction">
+      <main class="resume">
+        <section>
+          <img class="headline-image" src="#" alt="프로필 사진">
+          <div class="introduce">
+            <div class="introduce-contact">
+              <ul>
+                <li class="introduce-cotact_list">
+                  <div>
+                    <h4 class="fs-medium">인적사항</h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
 
-    <main class="resume">
-      <section>
-        <img class="headline-image" src="#" alt="프로필 사진">
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">인적사항</h4>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <p class="headline-title">성별 :
-              <select
-                  class="sel"
-                  v-model="signup.gender"
-                  @focus="checkFlag = false"
-              >
-                <option
-                    v-for="(item, index) in genderList"
-                    :key="index"
-                    :value="item.value"
+            <!-- 인적사항 작성하는 공간 (성별, 이름, 이메일, 전화번호, 주소, 생년월일) -->
+            <div class="profile">
+              <!-- 성별 선택란 -->
+              <p class="fs-medium fc-gray"></p>
+              <p class="headline-title">성별 :
+                <select
+                    class="sel"
+                    v-model="signup.gender"
+                    @focus="checkFlag = false"
                 >
-                  {{ item.text }}
-                </option>
-              </select>
-            </p>
+                  <option value="none">성별 선택</option>
+                  <option
+                      v-for="(item, index) in genderList"
+                      :key="index"
+                      :value="item.value"
+                  >
+                    {{ item.text }}
+                  </option>
+                </select>
+              </p>
 
-            <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요."></p>
-            <p class="headline-title">이메일 :<input type="email" class="headline-input"></p>
-            <p class="headline-title">전화번호 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">주소 :<input type="text" class="headline-input"></p>
-            <div class="headline-title">
-              <p>생년월일 :</p>
-              <div class="bir_yy">
+              <!-- 이름, 이메일, 전화번호, 주소 입력란 -->
+              <div class="form-floating mb-3 mt-3">
+                <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+                <label for="email">Email</label>
+              </div>
+
+              <div class="form-floating mt-3 mb-3">
+                <input type="text" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                <label for="pwd">Password</label>
+              </div>
+<!--              <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름"></p>-->
+<!--              <p class="headline-title">이메일 :<input type="email" class="headline-input" placeholder="이메일(Email)"></p>-->
+<!--              <p class="headline-title">전화번호 :<input type="text" class="headline-input"></p>-->
+<!--              <p class="headline-title">주소 :<input type="text" class="headline-input"></p>-->
+              <div class="headline-title">
+                <p>생년월일 :</p>
+                <div class="bir_yy">
             <span class="ps_box">
               <select
                   id="mm"
@@ -57,8 +70,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class="bir_mm">
+                </div>
+                <div class="bir_mm">
             <span class="ps_box">
               <select
                   id="mm"
@@ -76,8 +89,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class=" bir_dd">
+                </div>
+                <div class=" bir_dd">
             <span class="ps_box">
               <input
                   v-model="signup.dd"
@@ -89,37 +102,37 @@
                   @focus="checkFlag = false"
               />
             </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section>
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">학력</h4>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <p class="headline-title">학교구분 :</p>
-            <select class="form-select school" aria-label="Default select example">
-              <option selected>선택</option>
-              <option value="1">중학교 졸업</option>
-              <option value="2">고등학교 졸업</option>
-              <option value="3">대학교(2년제) 졸업</option>
-              <option value="3">대학교(4년제) 졸업</option>
-            </select>
-            <p class="headline-title">학교명 :<input type="text" class="headline-input" placeholder="학교명을 입력하세요."></p>
-            <p class="headline-title">입학년월/졸업년월</p>
-            <div class="headline-title start">
-              <div class="bir_yy">
+        <section>
+          <div class="introduce">
+            <div class="introduce-contact">
+              <ul>
+                <li class="introduce-cotact_list">
+                  <div>
+                    <h4 class="fs-medium">학력</h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile">
+              <p class="fs-medium fc-gray"></p>
+              <p class="headline-title">학교구분 :</p>
+              <select class="form-select school" aria-label="Default select example">
+                <option selected>선택</option>
+                <option value="1">중학교 졸업</option>
+                <option value="2">고등학교 졸업</option>
+                <option value="3">대학교(2년제) 졸업</option>
+                <option value="3">대학교(4년제) 졸업</option>
+              </select>
+              <p class="headline-title">학교명 :<input type="text" class="headline-input" placeholder="학교명을 입력하세요."></p>
+              <p class="headline-title">입학년월/졸업년월</p>
+              <div class="headline-title start">
+                <div class="bir_yy">
             <span class="ps_box">
               <select
                   id="mm"
@@ -137,8 +150,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class="bir_mm">
+                </div>
+                <div class="bir_mm">
             <span class="ps_box">
               <select
                   id="mm"
@@ -156,8 +169,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class=" bir_dd">
+                </div>
+                <div class=" bir_dd">
             <span class="ps_box">
               <input
                   v-model="signup.dd"
@@ -169,10 +182,10 @@
                   @focus="checkFlag = false"
               />~
             </span>
+                </div>
               </div>
-            </div>
-            <div class="headline-title end">
-              <div class="bir_yy">
+              <div class="headline-title end">
+                <div class="bir_yy">
             <span class="ps_box">
               <select
                   id="mm"
@@ -190,8 +203,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class="bir_mm">
+                </div>
+                <div class="bir_mm">
             <span class="ps_box">
               <select
                   id="mm"
@@ -209,8 +222,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class=" bir_dd">
+                </div>
+                <div class=" bir_dd">
             <span class="ps_box">
               <input
                   v-model="signup.dd"
@@ -222,38 +235,38 @@
                   @focus="checkFlag = false"
               />
             </span>
-              </div>
-            </div>
-            <select class="form-select finish" aria-label="Default select example">
-              <option selected>졸업여부</option>
-              <option value="1">졸업</option>
-              <option value="2">재학중</option>
-              <option value="3">자퇴</option>
-            </select>
-            <p class="headline-title">전공명 :<input type="text" class="headline-input" placeholder="전공을 입력하세요."></p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">경력</h4>
                 </div>
-              </li>
-            </ul>
+              </div>
+              <select class="form-select finish" aria-label="Default select example">
+                <option selected>졸업여부</option>
+                <option value="1">졸업</option>
+                <option value="2">재학중</option>
+                <option value="3">자퇴</option>
+              </select>
+              <p class="headline-title">전공명 :<input type="text" class="headline-input" placeholder="전공을 입력하세요."></p>
+            </div>
           </div>
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">입사일/퇴사일 :</p>
-            <div class="headline-title start">
-              <div class="bir_yy">
+        </section>
+
+        <section>
+          <div class="introduce">
+            <div class="introduce-contact">
+              <ul>
+                <li class="introduce-cotact_list">
+                  <div>
+                    <h4 class="fs-medium">경력</h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile">
+              <p class="fs-medium fc-gray"></p>
+              <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
+              <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
+              <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
+              <p class="headline-title">입사일/퇴사일 :</p>
+              <div class="headline-title start">
+                <div class="bir_yy">
             <span class="ps_box">
               <select
                   id="mm"
@@ -271,8 +284,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class="bir_mm">
+                </div>
+                <div class="bir_mm">
             <span class="ps_box">
               <select
                   id="mm"
@@ -290,8 +303,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class=" bir_dd">
+                </div>
+                <div class=" bir_dd">
             <span class="ps_box">
               <input
                   v-model="signup.dd"
@@ -303,10 +316,10 @@
                   @focus="checkFlag = false"
               />~
             </span>
+                </div>
               </div>
-            </div>
-            <div class="headline-title end">
-              <div class="bir_yy">
+              <div class="headline-title end">
+                <div class="bir_yy">
             <span class="ps_box">
               <select
                   id="mm"
@@ -324,8 +337,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class="bir_mm">
+                </div>
+                <div class="bir_mm">
             <span class="ps_box">
               <select
                   id="mm"
@@ -343,8 +356,8 @@
                 </option>
               </select>
             </span>
-              </div>
-              <div class=" bir_dd">
+                </div>
+                <div class=" bir_dd">
             <span class="ps_box">
               <input
                   v-model="signup.dd"
@@ -356,22 +369,22 @@
                   @focus="checkFlag = false"
               />
             </span>
+                </div>
               </div>
-            </div>
-            <p>
-              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                      aria-expanded="false" aria-controls="collapseExample">
-                +
-              </button>
-            </p>
-            <div class="collapse" id="collapseExample">
-              <div class="card">
-                <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
-                <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
-                <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
-                <p class="headline-title">입사일/퇴사일 :</p>
-                <div class="headline-title start">
-                  <div class="bir_yy">
+              <p>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample">
+                  +
+                </button>
+              </p>
+              <div class="collapse" id="collapseExample">
+                <div class="card">
+                  <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
+                  <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
+                  <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
+                  <p class="headline-title">입사일/퇴사일 :</p>
+                  <div class="headline-title start">
+                    <div class="bir_yy">
             <span class="ps_box">
               <select
                   id="mm"
@@ -389,8 +402,8 @@
                 </option>
               </select>
             </span>
-                  </div>
-                  <div class="bir_mm">
+                    </div>
+                    <div class="bir_mm">
             <span class="ps_box">
               <select
                   id="mm"
@@ -408,8 +421,8 @@
                 </option>
               </select>
             </span>
-                  </div>
-                  <div class=" bir_dd">
+                    </div>
+                    <div class=" bir_dd">
             <span class="ps_box">
               <input
                   v-model="signup.dd"
@@ -421,10 +434,10 @@
                   @focus="checkFlag = false"
               />~
             </span>
+                    </div>
                   </div>
-                </div>
-                <div class="headline-title end">
-                  <div class="bir_yy">
+                  <div class="headline-title end">
+                    <div class="bir_yy">
             <span class="ps_box">
               <select
                   id="mm"
@@ -442,8 +455,8 @@
                 </option>
               </select>
             </span>
-                  </div>
-                  <div class="bir_mm">
+                    </div>
+                    <div class="bir_mm">
             <span class="ps_box">
               <select
                   id="mm"
@@ -461,8 +474,8 @@
                 </option>
               </select>
             </span>
-                  </div>
-                  <div class=" bir_dd">
+                    </div>
+                    <div class=" bir_dd">
             <span class="ps_box">
               <input
                   v-model="signup.dd"
@@ -474,60 +487,60 @@
                   @focus="checkFlag = false"
               />
             </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">자격증</h4>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <p class="headline-title">자격증명 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">발행일 :<input type="text" class="headline-input"></p>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">자기소개서</h4>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <div class="container">
-              <textarea class="form-control col-sm-5" rows="5"></textarea>
-            </div>
-            <div class="input-group mb-3">
-              <input type="file" class="form-control" id="inputGroupFile02">
-              <label class="input-group-text" for="inputGroupFile02">Upload</label>
             </div>
           </div>
-        </div>
-      </section>
-      <button>이력서 저장</button>
+        </section>
 
-    </main>
+        <section>
+          <div class="introduce">
+            <div class="introduce-contact">
+              <ul>
+                <li class="introduce-cotact_list">
+                  <div>
+                    <h4 class="fs-medium">자격증</h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile">
+              <p class="fs-medium fc-gray"></p>
+              <p class="headline-title">자격증명 :<input type="text" class="headline-input"></p>
+              <p class="headline-title">발행일 :<input type="text" class="headline-input"></p>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="introduce">
+            <div class="introduce-contact">
+              <ul>
+                <li class="introduce-cotact_list">
+                  <div>
+                    <h4 class="fs-medium">자기소개서</h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile">
+              <p class="fs-medium fc-gray"></p>
+              <div class="container">
+                <textarea class="form-control col-sm-5" rows="5"></textarea>
+              </div>
+              <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile02">
+                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+              </div>
+            </div>
+          </div>
+        </section>
+        <input type="submit" value="이력서 저장">
 
+      </main>
+    </form>
   </div>
 </template>
 
@@ -557,7 +570,7 @@ export default {
         yyyy: "2000",
         mm: "",
         dd: "",
-        gender: "",
+        gender: "none",
         email: "",
         address: "",
         phoneNum: "",
