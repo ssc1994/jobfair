@@ -10,8 +10,22 @@
     </select>
 
     <insert id="uJoin" parameterType="UserVO">
-        INSERT INTO USER (USER_ID, USER_PW, MG_AUTH, USER_NAME, USER_EMAIL, USER_PHONE, USER_REGDATE)
-        VALUES (#{user_id}, #{user_pw}, '1', #{user_name}, #{user_email}, #{user_phone}, #{user_regDate})
+        INSERT INTO USER (USER_ID, USER_PW, MG_AUTH, USER_NAME, USER_EMAIL, USER_PHONE, USER_REGDATE, com_num)
+        VALUES ( #{user_id}, #{user_pw}, '1', #{user_name}, #{user_email}, #{user_phone}, now(), 0 )
     </insert>
+
+    <insert id="cJoin" parameterType="CompanyVO">
+        insert into Company (com_name, com_phone, com_email, com_address, com_category, com_ceo, com_businessRegistration, com_establishmentDate)
+        values ( #{com_name}, #{com_phone}, #{com_email}, #{com_address}, #{com_category}, #{com_ceo}, #{com_businessRegistration}, #{com_establishmentDate} )
+    </insert>
+
+    <update id="insertComNum" parameterType="UserVO">
+        update user
+        set com_num = (select com_num
+                       from company
+                       order by com_num desc
+            limit 1)
+        where user_id = #{user_id};
+    </update>
 
 </mapper>

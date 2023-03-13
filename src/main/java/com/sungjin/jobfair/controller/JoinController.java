@@ -42,27 +42,38 @@ public class JoinController {
             return new ResponseEntity<>("false", HttpStatus.OK);
         }
 
-
     }
 
     //유저 or 기업 회원가입 처리
     @PostMapping("/uJoin")
-    public String uJoin(@RequestBody ObjectNode node,
+    public String uJoin(@RequestBody ObjectNode saveObj,
                         UserVO uv,
                         CompanyVO cv) {
 
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            uv = mapper.treeToValue(node.get("userData"), UserVO.class);
-            cv = mapper.treeToValue(node.get("comData"), CompanyVO.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            uv = mapper.treeToValue(saveObj.get("userData"), UserVO.class);
+            cv = mapper.treeToValue(saveObj.get("comData"), CompanyVO.class);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println("uv = " + uv);
-        System.out.println("cv = " + cv);
-        System.out.println(uv.getMg_auth().equals("2"));
-        System.out.println(uv.getMg_auth().equals("1"));
+
+        //user 가입자 정보 등록처리
+        System.out.println(uv.toString());
+        joinService.uJoin(uv);
+
+        //mg_auth 가 2이면 기업가입자 이므로 기업정보 등록처리
+        if(uv.getMg_auth().equals("2")){
+            System.out.println(cv.toString());
+            joinService.cJoin(cv);
+
+            //user 테이블에서 company 테이블의 com_num을 참조하므로
+            //현재 생성된 company 테이블 행의 com_num 을 다시 방금생성된
+            //user테이블의 가입자 id에 해당하는 행의 com_num에 넣어주는 처리.
+            joinService.insertComNum(uv);
+
+        }
 
         return "success";
 
