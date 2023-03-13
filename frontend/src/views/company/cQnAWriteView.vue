@@ -35,20 +35,15 @@
 
         <div class=" wrapBox5">
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">작성자</span>
+            <span class="input-group-text" id="basic-addon1">담당자</span>
             <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                    aria-describedby="basic-addon1" disabled>
           </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">문의제목</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled>
-          </div>
 
           <div class="input-group">
-            <span class="input-group-text">문의내용</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
+            <span class="input-group-text">답변</span>
+            <textarea class="form-control contentBox" aria-label="With textarea" ></textarea>
           </div>
 
 
@@ -57,59 +52,11 @@
     </div>
 
     <div class="btnBox">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        수정하기
-      </button>
+      <button type="button" class="btn btn-primary">등록하기</button>
       <button type="button" class="btn btn-outline-primary">목록으로</button>
     </div>
 
-    <!--지원하기 모달창 설정-->
-    <!--state 적용해서 데이터 넣어야해유-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Q&A수정</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" style="height: 100%">
-            <div class="infoModalBox">
 
-              <div class=" wrapBox3">
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">작성자</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                         aria-describedby="basic-addon1">
-                </div>
-
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">문의제목</span>
-                  <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                         aria-describedby="basic-addon1">
-                </div>
-
-                <div class="input-group">
-                  <span class="input-group-text">문의내용</span>
-                  <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
-                </div>
-                <!--답변있을경우 수정하기 버튼 안보이게 설정해야함-->
-                <div class="btnModalBox">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    수정하기
-                  </button>
-
-                </div>
-              </div>
-
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
-    </div>
 
   </div>
 </template>

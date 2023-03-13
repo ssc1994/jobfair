@@ -118,6 +118,21 @@ const routes = [
     name: 'cMngApplyView',
     component: () => import('../views/company/cMngApplyView.vue')
   },
+  {//기업 큐앤에이 목록 화면
+    path: '/cQnAView',
+    name: 'cQnAView',
+    component: () => import('../views/company/cQnAView.vue')
+  },
+  {//기업 큐앤에이 상세페이지
+    path: '/cQnADetailView',
+    name: 'cQnADetailView',
+    component: () => import('../views/company/cQnADetailView.vue')
+  },
+  {//기업 큐앤에이 답변 작성페이지
+    path: '/cQnAWriteView',
+    name: 'cQnAWriteView',
+    component: () => import('../views/company/cQnAWriteView.vue')
+  },
   //*********************관리자 화면*********************
   {//관리자 메인화면
     path: '/aMainView',

@@ -7,32 +7,24 @@
 
           <div class="qnaBox">
             <h3>Q&A</h3>
-            <button>+ 질의 등록</button>
+            <button @click.stop="addQnA">+ 질의 등록</button>
           </div>
 
-          <table class="table table-bordered">
+          <table class="table table-bordered" @click.stop="clickQnA">
             <thead>
             <tr>
-              <td>Firstname</td>
-              <td>Lastname</td>
-              <td>Email</td>
+              <td>No</td>
+              <td>작성자</td>
+              <td>질문제목</td>
+              <td>등록시간</td>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@example.com</td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@example.com</td>
+            <tr v-for="(row, idx) in list" :key="idx">
+              <td>{{row.idx}}</td>
+              <td>{{ row.user_id }}</td>
+              <td><a v-on:click="clickQnA('${row.idx}')">{{row.title}}</a></td>
+              <td>{{ row.qa_regdate }}</td>
             </tr>
             </tbody>
           </table>
@@ -47,8 +39,45 @@
 
 <script>
 export default {
-  name: "uQnAView"
+  name: "uQnAView",
+
+  data() {
+    return {
+      list: {
+        qa_num: 'list[]',
+        user_id: '',
+        qa_title: '',
+        qa_regdate: ''
+      },
+      items: [],
+    }
+  },
+  created() {
+    this.$axios
+        .post("/jobfair/getQnAList")
+        .then((res) => {
+
+        })
+        .catch((error) => {
+
+    })
+
+  },
+  methods: {
+    addQnA() {
+      this.$router.push("/uQnAWriteView")
+
+    },
+    getQnAList() {
+      this.axios.get('/getQnAList',
+          {
+            params: {}
+          })
+    }
+
+  }
 }
+
 </script>
 
 <style scoped>
