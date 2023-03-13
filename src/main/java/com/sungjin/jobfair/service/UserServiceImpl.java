@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserVO login(UserVO vo) {
-
         return userMapper.login(vo);
     }
 
@@ -23,12 +22,15 @@ public class UserServiceImpl implements UserService{
     public void qnaRegist(QnAVO vo) {
         System.out.println(vo.toString());
         userMapper.qnaRegist(vo);
-
     }
-
 
     @Override
     public ArrayList<QnAVO> getQnAList() {
         return userMapper.getQnAList();
+    
+    @Override
+    public UserVO info(String id) {
+        return userMapper.info(id);
+
     }
 }

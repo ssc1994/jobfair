@@ -11,15 +11,18 @@
           and user_pw=#{user_pw}
     </select>
 
-
     <insert id="qnaRegist" parameterType="QnAVO">
         insert into QnA(user_id, qa_title, qa_content)
         values (#{user_id}, #{qa_title}, #{qa_content})
     </insert>
 
-
     <select id="getQnAList" resultType="QnAVO">
         select * from QnA order by qa_num desc
     </select>
 
+    <select id="info" resultType="UserVO">
+        select *
+        from User
+        where user_id = #{id}
+    </select>
 </mapper>
