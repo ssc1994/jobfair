@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sungjin.jobfair.service.CompanyMapper">
+
+    <insert id="empRegist" parameterType="EmpVO">
+     insert into
+         JobPostingList(com_num,
+                        jpl_title,
+                        jpl_content,
+                        jpl_startDate,
+                        jpl_endDate,
+                        jpl_regDate,
+                        jpl_workPosition,
+                        jpl_duty,
+                        jpl_workHistory,
+                        jpl_workForm,
+                        jpl_education,
+                        jpl_conditions,
+                        jpl_certificate,
+                        jpl_gender,
+                        jpl_salary,
+                        jpl_locationSi,
+                        jpl_locationGu,
+                        jpl_address,
+                        jpl_workDay,
+                        jpl_workTime,
+                        jpl_name,
+                        jpl_departmentName,
+                        jpl_contact,
+                        jpl_phoneNum,
+                        jpl_email,
+                        jpl_fileName,
+                        jpl_filePath,
+                        jpl_fileUuid)
+        values (#{com_num},
+                   #{jpl_title},
+                   #{jpl_content},
+                   #{jpl_startDate},
+                   #{jpl_endDate},
+                date_format(now(), '%Y-%m-%d'),
+                   #{jpl_workPosition},
+                   #{jpl_duty},
+                   #{jpl_workHistory},
+                   #{jpl_workForm},
+                   #{jpl_education},
+                   #{jpl_conditions},
+                   #{jpl_certificate},
+                   #{jpl_gender},
+                   #{jpl_salary},
+                   #{jpl_locationSi},
+                   #{jpl_locationGu},
+                   #{jpl_address},
+                   #{jpl_workDay},
+                   #{jpl_workTime},
+                   #{jpl_name},
+                   #{jpl_departmentName},
+                   #{jpl_contact},
+                   #{jpl_phoneNum},
+                   #{jpl_email},
+                   #{jpl_fileName},
+                   #{jpl_filePath},
+                   #{jpl_fileUuid}
+                )
+
+    </insert>
+
+
+</mapper>
