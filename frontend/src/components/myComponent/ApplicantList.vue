@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>등록한 채용공고 목록</h6>
+      <h6>우리 회사가 등록한 채용공고</h6>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -61,6 +61,10 @@ export default {
 <style scoped>
 .align-middle label {
   font-size: 15px;
+}
+.card {
+  width:95%;
+  margin-top: 50px;
 }
 
 </style>
