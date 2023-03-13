@@ -15,482 +15,84 @@
               </ul>
             </div>
 
-            <!-- 인적사항 작성하는 공간 (성별, 이름, 이메일, 전화번호, 주소, 생년월일) -->
-            <div class="profile">
-              <!-- 성별 선택란 -->
-              <p class="fs-medium fc-gray"></p>
-              <p class="headline-title">성별 :
-                <select
-                    class="sel"
-                    v-model="signup.gender"
-                    @focus="checkFlag = false"
-                >
-                  <option value="none">성별 선택</option>
-                  <option
-                      v-for="(item, index) in genderList"
-                      :key="index"
-                      :value="item.value"
-                  >
-                    {{ item.text }}
-                  </option>
-                </select>
-              </p>
-
-              <!-- 이름, 이메일, 전화번호, 주소 입력란 -->
-              <div class="form-floating mb-3 mt-3">
-                <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
-                <label for="email">Email</label>
-              </div>
-
-              <div class="form-floating mt-3 mb-3">
-                <input type="text" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
-                <label for="pwd">Password</label>
-              </div>
-<!--              <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름"></p>-->
-<!--              <p class="headline-title">이메일 :<input type="email" class="headline-input" placeholder="이메일(Email)"></p>-->
-<!--              <p class="headline-title">전화번호 :<input type="text" class="headline-input"></p>-->
-<!--              <p class="headline-title">주소 :<input type="text" class="headline-input"></p>-->
-              <div class="headline-title">
-                <p>생년월일 :</p>
-                <div class="bir_yy">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.yyyy"
-                  @focus="checkFlag = false"
-              >
-                <option value="">년</option>
-                <option
-                    v-for="(item, index) in yyyyList"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
+    <main class="resume">
+      <section>
+        <img class="headline-image" src="#" alt="프로필 사진">
+        <div class="introduce">
+          <div class="introduce-contact">
+            <ul>
+              <li class="introduce-cotact_list">
+                <div>
+                  <h4 class="fs-medium">인적사항</h4>
                 </div>
-                <div class="bir_mm">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.mm"
-                  @focus="checkFlag = false"
-              >
-                <option value="">월</option>
-                <option
-                    v-for="(item, index) in mmlist"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                </div>
-                <div class=" bir_dd">
-            <span class="ps_box">
-              <input
-                  v-model="signup.dd"
-                  placeholder="일"
-                  type="text"
-                  class="int"
-                  maxlength="2"
-                  oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                  @focus="checkFlag = false"
-              />
-            </span>
-                </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
-        </section>
 
-        <section>
-          <div class="introduce">
-            <div class="introduce-contact">
-              <ul>
-                <li class="introduce-cotact_list">
-                  <div>
-                    <h4 class="fs-medium">학력</h4>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="profile">
-              <p class="fs-medium fc-gray"></p>
-              <p class="headline-title">학교구분 :</p>
-              <select class="form-select school" aria-label="Default select example">
-                <option selected>선택</option>
-                <option value="1">중학교 졸업</option>
-                <option value="2">고등학교 졸업</option>
-                <option value="3">대학교(2년제) 졸업</option>
-                <option value="3">대학교(4년제) 졸업</option>
-              </select>
-              <p class="headline-title">학교명 :<input type="text" class="headline-input" placeholder="학교명을 입력하세요."></p>
-              <p class="headline-title">입학년월/졸업년월</p>
-              <div class="headline-title start">
-                <div class="bir_yy">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.yyyy"
-                  @focus="checkFlag = false"
-              >
-                <option value="">년</option>
-                <option
-                    v-for="(item, index) in yyyyList"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                </div>
-                <div class="bir_mm">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.mm"
-                  @focus="checkFlag = false"
-              >
-                <option value="">월</option>
-                <option
-                    v-for="(item, index) in mmlist"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                </div>
-                <div class=" bir_dd">
-            <span class="ps_box">
-              <input
-                  v-model="signup.dd"
-                  placeholder="일"
-                  type="text"
-                  class="int"
-                  maxlength="2"
-                  oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                  @focus="checkFlag = false"
-              />~
-            </span>
-                </div>
-              </div>
-              <div class="headline-title end">
-                <div class="bir_yy">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.yyyy"
-                  @focus="checkFlag = false"
-              >
-                <option value="">년</option>
-                <option
-                    v-for="(item, index) in yyyyList"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                </div>
-                <div class="bir_mm">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.mm"
-                  @focus="checkFlag = false"
-              >
-                <option value="">월</option>
-                <option
-                    v-for="(item, index) in mmlist"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                </div>
-                <div class=" bir_dd">
-            <span class="ps_box">
-              <input
-                  v-model="signup.dd"
-                  placeholder="일"
-                  type="text"
-                  class="int"
-                  maxlength="2"
-                  oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                  @focus="checkFlag = false"
-              />
-            </span>
-                </div>
-              </div>
-              <select class="form-select finish" aria-label="Default select example">
-                <option selected>졸업여부</option>
-                <option value="1">졸업</option>
-                <option value="2">재학중</option>
-                <option value="3">자퇴</option>
-              </select>
-              <p class="headline-title">전공명 :<input type="text" class="headline-input" placeholder="전공을 입력하세요."></p>
-            </div>
+          <div class="profile">
+            <p class="fs-medium fc-gray"></p>
+            <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요."></p>
+            <p class="headline-title">이메일 :<input type="email" class="headline-input"></p>
+            <p class="headline-title">전화번호 :<input type="text" class="headline-input"></p>
+            <p class="headline-title">주소 :<input type="text" class="headline-input"></p>
+            <p class="headline-title">생년월일 :<input type="date" class="headline-input"></p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section>
-          <div class="introduce">
-            <div class="introduce-contact">
-              <ul>
-                <li class="introduce-cotact_list">
-                  <div>
-                    <h4 class="fs-medium">경력</h4>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="profile">
-              <p class="fs-medium fc-gray"></p>
-              <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
-              <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
-              <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
-              <p class="headline-title">입사일/퇴사일 :</p>
-              <div class="headline-title start">
-                <div class="bir_yy">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.yyyy"
-                  @focus="checkFlag = false"
-              >
-                <option value="">년</option>
-                <option
-                    v-for="(item, index) in yyyyList"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
+      <section>
+        <div class="introduce">
+          <div class="introduce-contact">
+            <ul>
+              <li class="introduce-cotact_list">
+                <div>
+                  <h4 class="fs-medium">학력</h4>
                 </div>
-                <div class="bir_mm">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.mm"
-                  @focus="checkFlag = false"
-              >
-                <option value="">월</option>
-                <option
-                    v-for="(item, index) in mmlist"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
+              </li>
+            </ul>
+          </div>
+          <div class="profile">
+            <p class="fs-medium fc-gray"></p>
+            <p class="headline-title">학교구분 :</p>
+            <select class="form-select school" aria-label="Default select example">
+              <option selected>선택</option>
+              <option value="1">중학교 졸업</option>
+              <option value="2">고등학교 졸업</option>
+              <option value="3">대학교(2년제) 졸업</option>
+              <option value="3">대학교(4년제) 졸업</option>
+            </select>
+            <p class="headline-title">학교명 :<input type="text" class="headline-input" placeholder="학교명을 입력하세요."></p>
+            <p class="headline-title">입학년월 :<input type="date" class="headline-input"></p>
+            <p class="headline-title">졸업년월 :<input type="date" class="headline-input"></p>
+            <select class="form-select finish" aria-label="Default select example">
+              <option selected>졸업여부</option>
+              <option value="1">졸업</option>
+              <option value="2">재학중</option>
+              <option value="3">자퇴</option>
+            </select>
+            <p class="headline-title">전공명 :<input type="text" class="headline-input" placeholder="전공을 입력하세요."></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="introduce">
+          <div class="introduce-contact">
+            <ul>
+              <li class="introduce-cotact_list">
+                <div>
+                  <h4 class="fs-medium">경력</h4>
                 </div>
-                <div class=" bir_dd">
-            <span class="ps_box">
-              <input
-                  v-model="signup.dd"
-                  placeholder="일"
-                  type="text"
-                  class="int"
-                  maxlength="2"
-                  oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                  @focus="checkFlag = false"
-              />~
-            </span>
-                </div>
-              </div>
-              <div class="headline-title end">
-                <div class="bir_yy">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.yyyy"
-                  @focus="checkFlag = false"
-              >
-                <option value="">년</option>
-                <option
-                    v-for="(item, index) in yyyyList"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                </div>
-                <div class="bir_mm">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.mm"
-                  @focus="checkFlag = false"
-              >
-                <option value="">월</option>
-                <option
-                    v-for="(item, index) in mmlist"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                </div>
-                <div class=" bir_dd">
-            <span class="ps_box">
-              <input
-                  v-model="signup.dd"
-                  placeholder="일"
-                  type="text"
-                  class="int"
-                  maxlength="2"
-                  oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                  @focus="checkFlag = false"
-              />
-            </span>
-                </div>
-              </div>
-              <p>
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                        aria-expanded="false" aria-controls="collapseExample">
-                  +
-                </button>
-              </p>
-              <div class="collapse" id="collapseExample">
-                <div class="card">
-                  <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
-                  <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
-                  <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
-                  <p class="headline-title">입사일/퇴사일 :</p>
-                  <div class="headline-title start">
-                    <div class="bir_yy">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.yyyy"
-                  @focus="checkFlag = false"
-              >
-                <option value="">년</option>
-                <option
-                    v-for="(item, index) in yyyyList"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                    </div>
-                    <div class="bir_mm">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.mm"
-                  @focus="checkFlag = false"
-              >
-                <option value="">월</option>
-                <option
-                    v-for="(item, index) in mmlist"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                    </div>
-                    <div class=" bir_dd">
-            <span class="ps_box">
-              <input
-                  v-model="signup.dd"
-                  placeholder="일"
-                  type="text"
-                  class="int"
-                  maxlength="2"
-                  oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                  @focus="checkFlag = false"
-              />~
-            </span>
-                    </div>
-                  </div>
-                  <div class="headline-title end">
-                    <div class="bir_yy">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.yyyy"
-                  @focus="checkFlag = false"
-              >
-                <option value="">년</option>
-                <option
-                    v-for="(item, index) in yyyyList"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                    </div>
-                    <div class="bir_mm">
-            <span class="ps_box">
-              <select
-                  id="mm"
-                  class="sel"
-                  v-model="signup.mm"
-                  @focus="checkFlag = false"
-              >
-                <option value="">월</option>
-                <option
-                    v-for="(item, index) in mmlist"
-                    :key="index"
-                    :value="item.value"
-                >
-                  {{ item.text }}
-                </option>
-              </select>
-            </span>
-                    </div>
-                    <div class=" bir_dd">
-            <span class="ps_box">
-              <input
-                  v-model="signup.dd"
-                  placeholder="일"
-                  type="text"
-                  class="int"
-                  maxlength="2"
-                  oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');"
-                  @focus="checkFlag = false"
-              />
-            </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </li>
+            </ul>
+          </div>
+          <div class="profile">
+            <p class="fs-medium fc-gray"></p>
+            <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
+            <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
+            <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
+            <p class="headline-title">입사일 :<input type="date" class="headline-input"></p>
+            <p class="headline-title">퇴사일 :<input type="date" class="headline-input"></p>
 
             </div>
           </div>
@@ -546,115 +148,7 @@
 
 <script>
 export default {
-  name: 'uResumeView',
-  filters: {
-    comma(val) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-  },
-  props: {
-    propSignup: {
-      type: Object,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      checkFlag: false,
-      signup: {
-        // id: this.propSignup.id,
-        // password: this.propSignup.password,
-        // pwhint: this.propSignup.pwhint,
-        // pwhintans: this.propSignup.pwhintans,
-        name: "",
-        yyyy: "2000",
-        mm: "",
-        dd: "",
-        gender: "none",
-        email: "",
-        address: "",
-        phoneNum: "",
-      },
-      genderList: [
-        {
-          value: "M",
-          text: "남성",
-        },
-        {
-          value: "F",
-          text: "여성",
-        },
-      ],
-      yyyyList: [],
-      mmlist: []
-    }
-  },
-  computed: {
-    idValid() {
-      return /^[A-Za-z0-9]+$/.test(this.email)
-    },
-    computeOnlyNum() {
-      if (this.person.age > 18) {
-        return "Adult"
-      } else {
-        return "Minor"
-      }
-    },
-    nextPageDisabledFlag() {
-      let flag = true
-      if (this.email !== '') {
-        flag = false
-      }
-      return flag
-    }
-  },
-  watch: {
-    onlyNum() {
-      this.onlyNum = this.onlyNum.replace(/[^0-9]/g, "")
-    }
-  },
-  created() {
-    // console.log(this.$store.state.todos.list[0]);
-    const nowYear = new Date().getFullYear()
-    for (let i = 0; i < 100; i++) {
-      const date = nowYear - i
-      this.yyyyList.push({value: date, text: date})
-    }
-    for (let i = 1; i < 13; i++) {
-      this.mmlist.push({
-        value: i,
-        text: i
-      })
-    }
-  },
-  mounted() {
-    // this.test = this.$store.state.todos.list[0].text
-  },
-  methods: {
-    // 데이터 empty 체크
-    isEmpty(data) {
-      if (data === '' || data === null || data === undefined) {
-        return true
-      } else {
-        return false
-      }
-    },
-    goNextPage() {
-      this.checkFlag = true
-      if (
-          !this.isEmpty(this.signup.name) &&
-          !this.isEmpty(this.signup.yyyy) &&
-          !this.isEmpty(this.signup.mm) &&
-          !this.isEmpty(this.signup.dd) &&
-          !this.isEmpty(this.signup.gender) &&
-          !this.isEmpty(this.signup.email) &&
-          !this.isEmpty(this.signup.address) &&
-          !this.isEmpty(this.signup.phoneNum)
-      ) {
-        this.$router.push({name: "signup3", params: {signup: this.signup}})
-      }
-    }
-  }
+  name: 'uResumeView'
 }
 </script>
 
@@ -737,8 +231,8 @@ body {
 /* 입학여부 select*/
 .finish {
   position: absolute;
-  left: 290px;
-  top: 251px;
+  left: 90px;
+  top: 345px;
 }
 
 .headline-image {

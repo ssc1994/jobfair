@@ -229,7 +229,7 @@ export default {
         e.preventDefault()
       }
     },
-    //개인회원,기업회원 버튼 클릭 시 맞는 폼태그 화면보이기 이벤트
+    //개인회원,기업회원 버튼 클릭 시 맞는 폼태그 화면보이기 이벤트원
     radioChange (e) {
       if(e.target.id === 'userType') this.show = false
       else this.show = true
