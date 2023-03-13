@@ -21,12 +21,33 @@
             </div>
             <div class="empSearchJob">
               <button>직무를 선택하세요
-                <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>-->
+<!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>-->
               </button>
             </div>
 
             <div class="empSearchInput">
               <input placeholder="채용공고명 또는 기관명을 입력해주세요." >
+            </div>
+          </div>
+          <!--#################################-->
+          <!--  지역 또는 직무 클릭시 나오는 div -->
+          <div v-if="fold!=false" class="showLocal">
+            <!--  지역 검색 -->
+            <div>
+              <input placeholder="지역을 입력해주세요." >
+            </div>
+
+            <div class="empBoxLabel">
+              <!--시-->
+              <div v-for="(city, index) in city" :key="city.cityCode">
+                <input type="checkbox" :id="city.cityCode" name="city" @change="plus" :value="city.cityCode" v-model="selectedCity">
+                <label :for="city.cityCode">{{ city.cityName }}</label>
+              </div>
+              <!--구-->
+              <div v-for="goo in cityGoo.filter(x => x.cityCode === selectedCity.cityCode )" :key="goo.gooCode">
+                <input type="checkbox" :id="goo.gooCode" name="goo" @change="plus" :value="goo.gooName">
+                <label :for="goo.gooCode">{{ goo.gooName }}</label>
+              </div>
             </div>
           </div>
 
@@ -54,74 +75,75 @@
           </div>
 
           <div class="row">
-
             <div class="row">
-
-
-
-              <div class="col-sm-3 empSearchBoxWrap">
-                <div class="empBoxTitle">경력</div>
-                <div class="empBoxLabel">
-                  <div>
-                    <input type="radio" id="careerCate1" name="careerCate"><label for="careerCate1">1</label>
+              <div class="row">
+                <div class="col-sm-3 empSearchBoxWrap">
+                  <div class="empBoxTitle">경력</div>
+                  <div class="empBoxLabel">
+                    <div>
+                      <input type="radio" id="careerCate1" name="careerCate"><label for="careerCate1">1</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="careerCate2" name="careerCate"><label for="careerCate2">2</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="careerCate3" name="careerCate"><label for="careerCate3">3</label>
+                    </div>
                   </div>
-                  <div>
-                    <input type="radio" id="careerCate2" name="careerCate"><label for="careerCate2">2</label>
+                </div>
+              </div>
+                
+                <div class="col-sm-3 empSearchBoxWrap">
+                  <div class="empBoxTitle">학력</div>
+                  <div class="empBoxLabel">
+                    <div>
+                      <input type="radio" id="eduCate1" name="eduCate"><label for="eduCate1">1</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="eduCate2" name="eduCate"><label for="eduCate2">2</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="eduCate3" name="eduCate"><label for="eduCate3">3</label>
+                    </div>
                   </div>
-                  <div>
-                    <input type="radio" id="careerCate3" name="careerCate"><label for="careerCate3">3</label>
+                </div>
+              </div>
+              
+                <div class="col-sm-3 empSearchBoxWrap">
+                  <div class="empBoxTitle">연봉</div>
+                  <div class="empBoxLabel">
+                    <div>
+                      <input type="radio" id="salaryCate1" name="salaryCate"><label for="salaryCate1">1</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="salaryCate2" name="salaryCate"><label for="salaryCate2">2</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="salaryCate3" name="salaryCate"><label for="salaryCate3">3</label>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-3 empSearchBoxWrap">
-                <div class="empBoxTitle">학력</div>
-                <div class="empBoxLabel">
-                  <div>
-                    <input type="radio" id="eduCate1" name="eduCate"><label for="eduCate1">1</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="eduCate2" name="eduCate"><label for="eduCate2">2</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="eduCate3" name="eduCate"><label for="eduCate3">3</label>
+                <div class="col-sm-3 empSearchBoxWrap">
+                  <div class="empBoxTitle">자격증</div>
+                  <div class="empBoxLabel">
+                    <div>
+                      <input type="radio" id="certiCate1" name="certiCate" @click="plus" value="정보처리기사"><label for="certiCate1">정보처리기사</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="certiCate2" name="certiCate"><label for="certiCate2">2</label>
+                    </div>
+                    <div>
+                      <input type="radio" id="certiCate3" name="certiCate"><label for="certiCate3">3</label>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="empSearchTag">
+                <button type="button" class="btn btn-primary searchBtn">선택된 120건 검색</button>
+                <span v-if="job!=''">{{job}}
 
-              <div class="col-sm-3 empSearchBoxWrap">
-                <div class="empBoxTitle">연봉</div>
-                <div class="empBoxLabel">
-                  <div>
-                    <input type="radio" id="salaryCate1" name="salaryCate"><label for="salaryCate1">1</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="salaryCate2" name="salaryCate"><label for="salaryCate2">2</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="salaryCate3" name="salaryCate"><label for="salaryCate3">3</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-3 empSearchBoxWrap">
-                <div class="empBoxTitle">자격증</div>
-                <div class="empBoxLabel">
-                  <div>
-                    <input type="radio" id="certiCate1" name="certiCate" @click="plus" value="정보처리기사"><label for="certiCate1">정보처리기사</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="certiCate2" name="certiCate"><label for="certiCate2">2</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="certiCate3" name="certiCate"><label for="certiCate3">3</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="empSearchTag">
-              <button type="button" class="btn btn-primary searchBtn">선택된 120건 검색</button>
-              <span v-if="job!=''">{{job}}
                   <button class="del" @click="del">
 
                   </button>
@@ -137,9 +159,6 @@
 
         </form>
       </div>
-
-
-
 
       <div class="row empListBox">
 
@@ -494,8 +513,6 @@ h3{font-weight: bold;
 .empSearchWrap > div {
   float: left;
   width:33.33%;
-
-
 }
 
 .empSearchWrap > div > div {width:100%;}

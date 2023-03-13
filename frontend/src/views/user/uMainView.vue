@@ -8,144 +8,119 @@
 
 
       <div class="container empBoxWrap">
-        <div style="position: relative; top: 35px">
-          <h4 style="font-size: 30px">최근 인기있는 공고</h4>
+        <div>
+          <h3>HOT 채용공고</h3>
         </div>
-        <div class="row" style="margin-top: 60px">
-
-
-          <div class="empBoxConWrap col-6">
-            <div class="empBoxCon">
-              <router-link to="" class="left empBoxCompany">
-                <p>(주) 카카오</p>
-                <img src="2.jpg" >
-              </router-link>
-              <div class="left empBoxText">
-                <router-link to="">
-                  <p class="empTitle">UIUX 디자이너</p>
-
-                  <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-                </router-link>
-                <div style="padding-top:20px;">
-                  <p class="left empBoxDday">D-27</p>
-                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-                </div>
-
-              </div>
-
+        <div class="row" style="margin-top: 20px">
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
             </div>
-          </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
 
-          <div class="empBoxConWrap col-6">
-            <div class="empBoxCon ">
-              <router-link to="" class="left empBoxCompany">
-                <p>(주) 카카오</p>
-                <img src="2.jpg" >
-              </router-link>
-              <div class="left empBoxText">
-                <router-link to="">
-                  <p class="empTitle">UIUX 디자이너</p>
-
-                  <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-                </router-link>
-                <div style="padding-top:20px;">
-                  <p class="left empBoxDday">D-27</p>
-                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-                </div>
-
-              </div>
-
+                <span class="hotDday">D-9</span>
             </div>
-          </div>
+          </router-link>
 
-          <div class="empBoxConWrap col-6" >
-            <div class="empBoxCon ">
-              <router-link to="" class="left empBoxCompany">
-                <p>(주) 카카오</p>
-                <img src="2.jpg" >
-              </router-link>
-              <div class="left empBoxText">
-                <router-link to="">
-                  <p class="empTitle">UIUX 디자이너</p>
-
-                  <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-                </router-link>
-                <div style="padding-top:20px;">
-                  <p class="left empBoxDday">D-27</p>
-                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-                </div>
-
-              </div>
-
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
             </div>
-          </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
 
-          <div class="empBoxConWrap col-6" >
-            <div class="empBoxCon ">
-              <router-link to="" class="left empBoxCompany">
-                <p>(주) 카카오</p>
-                <img src="2.jpg" >
-              </router-link>
-              <div class="left empBoxText">
-                <router-link to="">
-                  <p class="empTitle">UIUX 디자이너</p>
-
-                  <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-                </router-link>
-                <div style="padding-top:20px;">
-                  <p class="left empBoxDday">D-27</p>
-                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-                </div>
-
-              </div>
-
+              <span class="hotDday">D-9</span>
             </div>
-          </div>
-
-          <div class="empBoxConWrap col-6">
-            <div class="empBoxCon ">
-              <router-link to="" class="left empBoxCompany">
-                <p>(주) 카카오</p>
-                <img src="2.jpg" >
-              </router-link>
-              <div class="left empBoxText">
-                <router-link to="">
-                  <p class="empTitle">UIUX 디자이너</p>
-
-                  <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-                </router-link>
-                <div style="padding-top:20px;">
-                  <p class="left empBoxDday">D-27</p>
-                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-                </div>
-
-              </div>
-
+          </router-link>
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
             </div>
-          </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
 
-          <div class="empBoxConWrap col-6">
-            <div class="empBoxCon ">
-              <router-link to="" class="left empBoxCompany">
-                <p>(주) 카카오</p>
-                <img src="2.jpg" >
-              </router-link>
-              <div class="left empBoxText">
-                <router-link to="">
-                  <p class="empTitle">UIUX 디자이너</p>
-
-                  <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-                </router-link>
-                <div style="padding-top:20px;">
-                  <p class="left empBoxDday">D-27</p>
-                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-                </div>
-
-              </div>
-
-
+              <span class="hotDday">D-9</span>
             </div>
-          </div>
+          </router-link>
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
+            </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
+
+              <span class="hotDday">D-9</span>
+            </div>
+          </router-link>
+
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
+            </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
+
+              <span class="hotDday">D-9</span>
+            </div>
+          </router-link>
+
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
+            </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
+
+              <span class="hotDday">D-9</span>
+            </div>
+          </router-link>
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
+            </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
+
+              <span class="hotDday">D-9</span>
+            </div>
+          </router-link>
+          <router-link to="" class="hotBoxWrap">
+            <div>
+              <img src="@/assets/kakao.png"/>
+            </div>
+            <div class="hotText">
+              <div>(주)카카오</div>
+              <p class="hotTitle">
+                채용전환형 인턴 공개채용
+              </p>
+
+              <span class="hotDday">D-9</span>
+            </div>
+          </router-link>
+
+
 
         </div>
       </div>
@@ -212,45 +187,61 @@ html, body {width:100%;
 .left{float: left;}
 .right {float:right;}
 
+h3{font-weight: bold;
+  font-size: 20px;
+
+}
 .empBoxWrap {
-  max-width:1200px;
+  max-width:1560px;
   margin:0 auto;
   height: 100%;
 }
 
-.empTitle {
-  font-size: 18px;
-  font-weight: bold
+/*hot 채용정보*/
+.hotBoxWrap {
+            border:1px solid #dedede;
+            border-radius: 20px;
+            width:23%;
+            color:black;
+            text-decoration: none;
+            padding:20px;
+            margin-left: 1%;
+            margin-bottom: 1%;
 }
-.empBoxTag {color:#838383;}
+.hotBoxWrap:hover {
+            border:1px solid #0064ff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 
-
-.empBoxConWrap {
-  padding:5px;
-}
-
-.empBoxCon {
-  padding:25px;
-  overflow: hidden;
-  background-color: white;
-  border-radius: 20px;
-  border: 1px solid #dedede;
-  display:inline-block;
-  height: 200px;
 }
 
-.empBoxCon:hover { border: 1px solid #0064ff;}
+.hotBoxWrap img {
+            width:100%;
+            padding:40px;
+}
 
-/*.wrapBox {*/
-/*  min-height: 100vh;*/
-/*  overflow: hidden;*/
-/*}*/
+.hotTitle {font-size: 18px;
+           font-weight: bold;
+
+}
+
+.hotText {border-top:1px solid #dedede;
+          padding-top:10px;
+}
+
+.hotDday {font-weight: bold;
+          padding:5px 15px;
+          color:rgb(229, 75, 75);
+          border:1px solid rgb(229, 75, 75);
+          border-radius:20px;
+}
 
 .wrapBox2 {
   display: flex;
   justify-content: center;
   height: 500px;
 }
+
+/*큐앤에이*/
 
 .qnaBox {
   font-family: 'MICEGothic Bold';
