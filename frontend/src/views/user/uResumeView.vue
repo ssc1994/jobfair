@@ -4,45 +4,36 @@
       <main class="resume">
         <!--이력서 제목 -->
         <div class="">
-          <h3 class="fs-medium resumeTitle">이력서제목 :
-            <input type="text">
-          </h3>
+          <h3 class="fs-medium resumeTitle">이력서제목 : <input type="text"></h3>
         </div>
-
-        <!-- 프로필 사진 등록 -->
+        <!-- 인적사항 작성 -->
         <section>
-          <img class="headline-image" :src="viewImg" alt="프로필 사진" ref="previewImg">
-          <div class="input-group mb-3 profileSubmit">
-            <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg" accept="image/*" ref="inputImg">
-            <input type="button" value="사진 선택" @click="clickFile">
-          </div>
-          <div class="introduce">
-            <div class="introduce-contact">
-              <ul>
-                <li class="introduce-cotact_list">
-                  <div>
-                    <h4 class="fs-medium">인적사항</h4>
-                  </div>
-                </li>
-              </ul>
 
-              <!-- 인적사항 작성 -->
+  <div class="introduce">
+    <div class="introduce-contact">
+      <ul>
+        <li class="introduce-cotact_list">
+          <div>
+            <h4 class="fs-medium">인적사항</h4>
+          </div>
+        </li>
+      </ul>
+    </div>
               <div class="profile">
-                <p class="fs-medium fc-gray"></p>
-                <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요."
-                                                     v-model="resInfo.res_name"></p>
-                <p class="headline-title">이메일 :<input type="email" class="headline-input" v-model="resInfo.res_email">
-                </p>
-                <p class="headline-title">전화번호 :<input type="text" class="headline-input" v-model="resInfo.res_phone">
-                </p>
-                <p class="headline-title">주소 :<input type="text" class="headline-input" v-model="resInfo.res_address">
-                </p>
-                <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth">
-                </p>
+                <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요." v-model="resInfo.res_name"></p>
+                <p class="headline-title">이메일 :<input type="email" class="headline-input" v-model="resInfo.res_email"></p>
+                <p class="headline-title">전화번호 :<input type="text" class="headline-input" v-model="resInfo.res_phone"></p>
+                <p class="headline-title">주소 :<input type="text" class="headline-input" v-model="resInfo.res_address"></p>
+                <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth"></p>
               </div>
-
-            </div>
-          </div>
+              <!-- 프로필 사진 등록 -->
+              
+                <img class="headline-image" :src="viewImg" alt="프로필 사진" ref="previewImg">
+                <div class="input-group mb-3 profileSubmit">
+                  <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg" accept="image/*" ref="inputImg">
+                  <input type="button" value="사진 선택" @click="clickFile">
+                </div>
+  </div>
         </section>
 
         <section>
@@ -282,7 +273,7 @@ body {
 }
 
 .resumeTitle input {
-  width: 98%;
+  width: 650px;
   margin: 10px;
 }
 
@@ -292,7 +283,6 @@ body {
   width: 800px;
   height: 3px;
   background-color: #A4A4A4;
-  margin-left: 10px;
 }
 
 .resumeTitle::after {
@@ -301,7 +291,6 @@ body {
   width: 800px;
   height: 1px;
   background-color: #A4A4A4;
-  margin-left: 10px;
 }
 
 /* 이력서 양식 제일 바깥 css*/
@@ -318,10 +307,6 @@ body {
   display: flex;
   position: relative;
   margin-bottom: 70px;
-}
-
-.resume section:first-child {
-  margin-left: 0px;
 }
 
 .headline-title {
@@ -362,10 +347,11 @@ body {
 }
 
 .headline-image {
-  margin-top: 60px;
   width: 150px;
   height: 200px;
   border: 1px solid #A4A4A4;
+  position: absolute;
+  margin-left: 100px;
 }
 
 .introduce {
@@ -381,7 +367,7 @@ body {
 .introduce-contact::before {
   content: "";
   display: block;
-  width: 600px;
+  width: 800px;
   height: 3px;
   background-color: #A4A4A4;
   margin-left: 10px;
@@ -390,7 +376,7 @@ body {
 .introduce-contact::after {
   content: "";
   display: block;
-  width: 600px;
+  width: 800px;
   height: 1px;
   background-color: #A4A4A4;
   margin-left: 10px;
@@ -425,9 +411,6 @@ body {
   background-size: contain;
 }
 
-.profile h2 {
-  margin-bottom: 10px;
-}
 
 .part-content_list--title .date,
 .part-content_list--content .title {
@@ -437,7 +420,7 @@ body {
 /* 자기소개서 박스 크기 */
 textarea.form-control {
   min-height: calc(1.5em + 0.75rem + 2px);
-  width: 600px;
+  width: 800px;
   height: 250px;
 }
 
@@ -453,14 +436,12 @@ input.int {
 select.sel {
   margin-left: 55px;
 }
-
 /* 프로필사진 파일 선택하는 인풋태그 스타일 */
 .profileSubmit {
   width: 130px;
   height: 30px;
   position: absolute;
-  top: 270px;
-  text-align: center;
+  top: 320px;
+  left: 640px;
 }
-
 </style>

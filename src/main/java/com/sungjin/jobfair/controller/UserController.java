@@ -73,6 +73,15 @@ public class UserController {
         return list;
     }
 
+    //이력서 내용가져오기
+    @PostMapping(value = "/resumeInfo")
+    public ArrayList<ResumeVO> resumeInfo(Model model) {
+
+        ArrayList<ResumeVO> list = userService.resumeInfo();
+        model.addAttribute("list", list);
+
+        return list;
+
     //이력서 등록
     @PostMapping(value = "/regResume",
                 consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})

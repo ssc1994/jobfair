@@ -26,5 +26,4 @@ public class ResumeVO {
     private String res_phone;       //연락처
     private String res_address;     //주소
     private Date res_birth;         //생년월일
-
 }
