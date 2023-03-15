@@ -27,11 +27,20 @@
     </select>
 
 
+    <select id="getJobPostList" resultType="EmpVO">
+        select * from jobpostinglist j left join company c on j.com_num = c.com_num order by jpl_num desc
+    </select>
+
+    <select id="getJobPostSrc" resultType="EmpVO">
+        select * from jobpostinglist
+
+
     <select id="getQnADetail" resultType="QnAVO">
         select * from QnA where qa_num = #{qa_num}
     </select>
 
     <select id="resumeInfo" resultType="ResumeVO">
         select * from ResumeList
+
     </select>
 </mapper>

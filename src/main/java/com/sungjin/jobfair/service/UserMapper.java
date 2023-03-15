@@ -1,5 +1,6 @@
 package com.sungjin.jobfair.service;
 
+import com.sungjin.jobfair.command.EmpVO;
 import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.command.ResumeVO;
 import com.sungjin.jobfair.command.UserVO;
@@ -19,6 +20,13 @@ public interface UserMapper {
     public UserVO info(String id);
     //큐앤에이 목록 가져오기
     public ArrayList<QnAVO> getQnAList();
+
+    //채용공고 목록 가져오기
+    public ArrayList<EmpVO> getJobPostList();
+    //채용공고 검색 목록 가져오기
+    public ArrayList<EmpVO> getJobPostSrc(String str);
+    
+    
     //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo();
 

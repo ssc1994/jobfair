@@ -1,5 +1,6 @@
 package com.sungjin.jobfair.service;
 
+import com.sungjin.jobfair.command.EmpVO;
 import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.command.ResumeVO;
 import com.sungjin.jobfair.command.UserVO;
@@ -43,4 +44,13 @@ public class UserServiceImpl implements UserService {
     public QnAVO getQnADetail(int qa_num) {
         return userMapper.getQnADetail(qa_num);
     }
+    @Override
+    public ArrayList<EmpVO> getJobPostList() {
+        return userMapper.getJobPostList();
+    }
+    @Override
+    public ArrayList<EmpVO> getJobPostSrc(String str) {
+        return userMapper.getJobPostSrc(str);
+    }
+
 }

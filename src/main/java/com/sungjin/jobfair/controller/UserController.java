@@ -1,5 +1,7 @@
 package com.sungjin.jobfair.controller;
 
+import org.springframework.boot.Banner;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sungjin.jobfair.command.*;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -53,13 +56,6 @@ public class UserController {
         return "success";
     }
 
-    //채용공고 상세 검색 폼 요청
-    @PostMapping(value = "/uJobPost")
-    public String uJobPost() {
-        System.out.println("잡포스트 시작");
-        return "success";
-    }
-
     //큐앤에이 목록
     @PostMapping (value = "/getQnAList")
     public  ArrayList<QnAVO> getQnAList(Model model) {
@@ -70,6 +66,30 @@ public class UserController {
 
         return list;
     }
+
+    //채용공고 목록
+    @PostMapping(value = "/getJobPostList")
+    public ArrayList<EmpVO> getJobPostList(Model model) {
+
+        ArrayList<EmpVO> list = userService.getJobPostList();
+        model.addAttribute("list", list);
+        System.out.println(list.toString());
+
+        return list;
+    }
+
+    //채용공고 검색
+
+    @GetMapping(value="/getJobPostSrc")
+    public ArrayList<EmpVO> getJobPostSrc(@RequestParam("jpl_Form") Model model, String str) {
+
+        ArrayList<EmpVO> list = userService.getJobPostSrc(str);
+        model.addAttribute("list", list);
+        System.out.println(list.toString());
+
+        return list;
+    }
+
 
     //큐앤에이 상세페이지 데이터 불러오기
     @GetMapping(value = "/uQnADetailView")

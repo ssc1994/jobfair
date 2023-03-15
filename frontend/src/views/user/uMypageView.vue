@@ -11,8 +11,6 @@
       </div>
 
       <div v-if="fold!=false">
-
-
         <div class="resumeBoxWrap" >
           <routerLink to="">
             <div class="resumeBox">
@@ -269,7 +267,8 @@ h3{font-weight: bold;
   margin-left:5px;
   height:100px;
   line-height: 50px;
-}
+ }
+    
 .resumeBox p {margin:0;padding: 0;}
 .resumeBox button {margin:5px;}
 
@@ -277,6 +276,7 @@ h3{font-weight: bold;
 .resumeTitle {font-weight: bold;
   font-size: 18px;
 }
+
 
 
 /*지원현황*/

@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class EmpVO {
+
     private String jpl_num;
     private String com_num;
     private String jpl_title;
