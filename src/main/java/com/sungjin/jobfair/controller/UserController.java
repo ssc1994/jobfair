@@ -5,10 +5,8 @@ import com.sungjin.jobfair.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 
 @RestController
@@ -21,12 +19,10 @@ public class UserController {
     private UserService userService;
 
 
-    //큐앤에이 등록 폼요청
+    //큐앤에이 등록
     @PostMapping(value = "/qnaRegist")
     public String qnaRegist(@RequestBody QnAVO vo) {
-        System.out.println("유저컨트롤러 시작");
         userService.qnaRegist(vo);
-        System.out.println("유저컨트롤러 종료");
         return "success";
     }
 
@@ -38,7 +34,7 @@ public class UserController {
     }
 
     //큐앤에이 목록
-    @PostMapping(value = "/getQnAList")
+    @PostMapping (value = "/getQnAList")
     public  ArrayList<QnAVO> getQnAList(Model model) {
 
         ArrayList<QnAVO> list = userService.getQnAList();
@@ -47,4 +43,17 @@ public class UserController {
 
         return list;
     }
+
+    //큐앤에이 상세페이지 데이터 불러오기
+    @GetMapping(value = "/uQnADetailView")
+    public QnAVO getQnADetail(@RequestParam("qa_num") int qa_num) {
+
+        QnAVO vo = userService.getQnADetail(qa_num);
+        System.out.println("유저VO");
+        System.out.println(vo.toString());
+
+
+        return vo;
+    }
+
 }

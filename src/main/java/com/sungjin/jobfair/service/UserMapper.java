@@ -19,4 +19,7 @@ public interface UserMapper {
     //큐앤에이 목록 가져오기
     public ArrayList<QnAVO> getQnAList();
 
+    //큐앤에이 상세페이지 데이터 가져오기
+    public QnAVO getQnADetail(int qa_num);
+
 }
