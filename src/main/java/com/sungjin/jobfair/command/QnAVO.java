@@ -20,4 +20,6 @@ public class QnAVO {
     private String qa_title;
     private String qa_content;
     private Date qa_regDate;
+
+    private int qa_reply;
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sungjin.jobfair.command.CompanyVO;
 import com.sungjin.jobfair.command.EmpVO;
+import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.command.UserVO;
 import com.sungjin.jobfair.service.CompanyService;
 import org.apache.ibatis.javassist.Loader;
@@ -12,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
+
+import org.springframework.ui.Model;
+import java.util.ArrayList;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/jobfair")
@@ -53,6 +57,7 @@ public class CompanyController {
     @Autowired
     @Qualifier("companyService")
     private CompanyService companyService;
+
 
     @PostMapping(value = "/EmpRegist", consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
     public String EmpRegist(@RequestPart("empData") String empData, @RequestParam(value="files", required = false) MultipartFile file){
@@ -108,6 +113,14 @@ public class CompanyController {
 
         return map;
     }
+    @GetMapping("/getQnAReply")
+    public QnAVO getQnAReply(@RequestParam("qa_num") int qa_num) {
+        QnAVO vo = companyService.getQnAReply(qa_num);
+
+        return vo;
+    }
+
+
 
     @GetMapping(value="/empData")
     public EmpVO getEmpData(@RequestParam("num") int jpl_num){

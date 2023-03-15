@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
     public ArrayList<QnAVO> getQnAList() {
         return userMapper.getQnAList();
     }
-    
     @Override
     public UserVO info(String id) {
         return userMapper.info(id);
@@ -40,5 +39,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.resumeInfo();
     }
 
-
+    @Override
+    public QnAVO getQnADetail(int qa_num) {
+        return userMapper.getQnADetail(qa_num);
+    }
 }
