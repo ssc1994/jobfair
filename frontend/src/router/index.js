@@ -59,7 +59,7 @@ const routes = [
   },  
   {//유저 채용공고 리스트 화면 테스트
     path: '/uJobPostView2',
-    name: 'uJobPostView',
+    name: 'uJobPostView2',
     component: () => import('../views/user/uJobPostView2.vue')
   },
   {//유저 마이페이지 화면

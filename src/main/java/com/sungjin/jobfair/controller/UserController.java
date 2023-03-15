@@ -1,20 +1,44 @@
 package com.sungjin.jobfair.controller;
 
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.ResumeVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/jobfair")
 public class UserController {
+
+    @Value("${project.uploadpath}")
+    private String uploadpath;
+
+    //파일 생성 시 날짜 별로 폴더 생성 후 저장할 경로 생성
+    public String makeDir() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+        String now = sdf.format(date);
+
+        System.out.println("uploadpath = " + uploadpath);
+        String path = uploadpath + "\\" + now;
+        File file = new File(path);
+        if (file.exists() == false) {
+            file.mkdir();
+        }
+        return path;
+    }
 
     //인터페이스 타입 선언
     @Autowired
@@ -57,5 +81,62 @@ public class UserController {
         model.addAttribute("list", list);
 
         return list;
+
+    //이력서 등록
+    @PostMapping(value = "/regResume",
+                consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String regResume (@RequestPart("res_img") MultipartFile file,
+                             @RequestPart("resData") ObjectNode node,
+                             ResumeVO resumeVO,
+                             EduVO eduVO,
+                             CertVO certVO,
+                             ArrayList<WeVO> weList) {
+
+        //파일 객체 분해 및 경로+이름 지정
+        String pic_name = file.getOriginalFilename();
+        String pic_path = makeDir();
+        String pic_uuid = UUID.randomUUID().toString();
+        String saveName = pic_path + "/" + pic_uuid + "_" + pic_name;
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            //넘어온 이미지파일 먼저 생성
+            File save = new File(saveName);
+            file.transferTo(save);
+            //Json을 객체로 변환
+            resumeVO = mapper.treeToValue(node.get("resInfo"), ResumeVO.class);
+            resumeVO.setRes_picName(pic_name);
+            resumeVO.setRes_picPath(pic_path);
+            resumeVO.setRes_picUuid(pic_uuid);
+            eduVO = mapper.treeToValue(node.get("eduInfo"), EduVO.class);
+            certVO = mapper.treeToValue(node.get("certInfo"), CertVO.class);
+            weList = mapper.treeToValue(node.get("weInfo"), ArrayList.class);
+            System.out.println("weList = " + weList);
+//            for(WeVO we : weList){
+//                service(we)
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "success";
+    }
+
+    @PostMapping(value = "/uploadImg")
+    public String uploadImg (@RequestParam("res_img") MultipartFile file) {
+
+
+        String pic_name = file.getOriginalFilename();
+        String pic_path = makeDir();
+        String pic_uuid = UUID.randomUUID().toString();
+        String saveName = pic_path + "/" + pic_uuid + "_" + pic_name;
+
+        try {
+            File save = new File(saveName);
+            file.transferTo(save);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "success";
     }
 }

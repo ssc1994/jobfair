@@ -15,7 +15,7 @@ public class ResumeVO {
 
     private int res_num;            //이력서 번호
     private String user_id;         //아이디
-    private String res_title;       //자기소개서 제목
+    private String res_title;       //자기소개서 제목 
     private String res_content;     //자기소개서 내용
     private Date res_regDate;       //자기소개서 작성일
     private String res_picName;     //사진 이름
@@ -26,5 +26,4 @@ public class ResumeVO {
     private String res_phone;       //연락처
     private String res_address;     //주소
     private Date res_birth;         //생년월일
-
 }

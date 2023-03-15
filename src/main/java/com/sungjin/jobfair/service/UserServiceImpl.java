@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     public ArrayList<QnAVO> getQnAList() {
         return userMapper.getQnAList();
     }
-
+    
     @Override
     public UserVO info(String id) {
         return userMapper.info(id);
