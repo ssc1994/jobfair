@@ -20,7 +20,6 @@ public class UserController {
     @Qualifier("userService")
     private UserService userService;
 
-
     //큐앤에이 등록 폼요청
     @PostMapping(value = "/qnaRegist")
     public String qnaRegist(@RequestBody QnAVO vo) {

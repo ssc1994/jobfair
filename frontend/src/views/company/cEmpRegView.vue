@@ -11,7 +11,7 @@
         <div class="input-group mt-3 mb-3">
           <span class="input-group-text" id="basic-addon1">공고명</span>
           <input type="text" class="form-control" placeholder="내용을 입력하세요." aria-label="Username"
-                 aria-describedby="basic-addon1" v-model="jpl_title">
+                 aria-describedby="basic-addon1" v-model="jpl_title" required>
         </div>
 
       </div>
@@ -26,11 +26,11 @@
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">공고시작일</span>
             <input type="date" class="form-control" placeholder="2023.03.03." aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="jpl_startDate">
+                   aria-describedby="basic-addon1" v-model="jpl_startDate" required>
             &nbsp; ~ &nbsp;
             <span class="input-group-text" id="basic-addon1">공고종료일</span>
             <input type="date" class="form-control" placeholder="2023.06.05." aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="jpl_endDate">
+                   aria-describedby="basic-addon1" v-model="jpl_endDate" required>
           </div>
         </div>
       </div>
@@ -121,20 +121,19 @@
               <input type="text" class="form-control" id="card" placeholder="자격증명을 입력하세요." name="card" v-model="jpl_certificate">
             </div>
 
-
             <div class="mb-5 mt-3">
               <label for="">성별 :</label>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="genderRadio1" name="genderRadio" value="male" checked v-model="jpl_gender">
-                <label class="form-check-label" for="genderRadio1">남자</label>
+                <input type="radio" class="form-check-input" id="genderRadio1" name="genderRadio" value="nah" checked v-model="jpl_gender">
+                <label class="form-check-label" for="genderRadio1">성별무관</label>
               </div>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="genderRadio2" name="genderRadio" value="female" v-model="jpl_gender">
-                <label class="form-check-label" for="genderRadio2">여자</label>
+                <input type="radio" class="form-check-input" id="genderRadio2" name="genderRadio" value="male"  v-model="jpl_gender">
+                <label class="form-check-label" for="genderRadio2">남자</label>
               </div>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="genderRadio3" name="genderRadio" value="nah" v-model="jpl_gender">
-                <label class="form-check-label" for="genderRadio3">성별무관</label>
+                <input type="radio" class="form-check-input" id="genderRadio3" name="genderRadio" value="female" v-model="jpl_gender">
+                <label class="form-check-label" for="genderRadio3">여자</label>
               </div>
             </div>
 
@@ -160,7 +159,7 @@
               </select>
             </div>
             <div class="mb-5 mt-5">
-              <div action="/action_page.php">
+              <div >
                 <label for="appt">근무시간 :</label>
                 <div>
                   <input type="time" id="appt" name="appt" v-model="workingHourS"> ~
@@ -199,7 +198,7 @@
                   <textarea class="form-control col-sm-5" rows="5" v-model="jpl_content"></textarea>
                 </div>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
+                  <input type="file" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert">
                   <label class="input-group-text" for="inputGroupFile02" >Upload</label>
                 </div>
               </div>
@@ -230,20 +229,20 @@ export default {
       jpl_regDate:'',
       jpl_workPosition:'',
       jpl_duty:'',
-      jpl_workHistory:'',
-      jpl_workForm:'',
-      jpl_education:'',
-      jpl_conditions:'',
+      jpl_workHistory:'신입',
+      jpl_workForm:'정규직',
+      jpl_education:'학력무관',
+      jpl_conditions:'없음',
       jpl_certificate:'',
-      jpl_gender:'',
-      jpl_salary:'',
+      jpl_gender:'성별무관',
+      jpl_salary:'0',
       jpl_locationSi:'',
       jpl_locationGu:'',
       jpl_address:'',
-      jpl_workDay:'',
+      jpl_workDay:'회사내규에 따름',
       jpl_workTime:'',
       jpl_name:'',
-      jpl_departmentName:'',
+      jpl_comPanyName:'',
       jpl_contact:'',
       jpl_phoneNum:'',
       jpl_email:'',
@@ -257,25 +256,44 @@ export default {
   },
   beforeCreate() {
     this.$axios.post('/jobfair/userInfo', {
-      id:'cc123'
+      user_id:JSON.parse(sessionStorage.getItem('sessionId'))
     }).then(res=>{
       this.jpl_name=res.data.user_name
       this.jpl_phoneNum=res.data.user_phone
       this.jpl_email=res.data.user_email
-      // com_num으로 변경해야됨
-      this.com_num=res.data.com_id
+      this.com_num=res.data.com_num
 
+      this.$axios
+          .post('/jobfair/compInfo', {
+            com_num:this.com_num})
+          .then(res=>{
+            this.jpl_comPanyName=res.data.com_name
+            this.jpl_contact=res.data.com_phone
+            console.log("comData")
+            console.log(res)
+          }).catch(err=>{
+        console.log(err)
+      })
+      console.log("userData")
+      console.log(res)
     }).catch(err=>{
          console.log(err)
     })
+
+
+
   },
   methods:{
-    empRegist(){
-      // console.log(this.jpl_name)
-      // console.log(this.jpl_phoneNum)
-      // console.log(this.jpl_email)
+    fileChange(){
+      this.jpl_fileName = this.$refs.fileInsert.files[0]
+    },
 
-      this.$axios.post('/jobfair/EmpRegist', {
+    empRegist(){
+      if(this.salaryType=='undecided'){
+        this.jpl_salary=0;
+      }
+
+      const empData = {
         com_num:this.com_num,
         jpl_title:this.jpl_title,
         jpl_content:this.jpl_content,
@@ -300,13 +318,24 @@ export default {
         jpl_name:this.jpl_name,
         jpl_phoneNum:this.jpl_phoneNum,
         jpl_email:this.jpl_email,
-        jpl_departmentName:'com테이블에서 불러오기',
-        jpl_contact:'com테이블에서 불러오기',
+        jpl_companyName:this.jpl_comPanyName,
+        jpl_contact:this.jpl_contact,
         jpl_fileName:'',
         jpl_filePath:'',
         jpl_fileUuid:'',
-            salaryType:this.salaryType,
-      }).then((res)=>{
+      };
+      const formData = new FormData();
+
+      formData.append('files', this.jpl_fileName);
+      formData.append("empData", new Blob([JSON.stringify(empData)], { type: "application/json" }));
+
+      this.$axios.post('/jobfair/EmpRegist'
+          ,formData
+      ,{
+        headers:{
+          "Content-Type": `multipart/form-data`
+        }
+          }).then((res)=>{
         console.log('성공')
         console.log(res)
 
