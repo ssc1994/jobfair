@@ -14,6 +14,7 @@ import java.util.Date;
 public class EmpVO {
     private int jpl_num;
     private int com_num;
+    private String com_name; //기업명
     private String jpl_title;
     private String jpl_content;
     private Date jpl_startDate;

@@ -25,4 +25,12 @@
         from User
         where user_id = #{id}
     </select>
+
+    <select id="getJobPostList" resultType="EmpVO">
+        select * from jobpostinglist j left join company c on j.com_num = c.com_num order by jpl_num desc
+    </select>
+
+    <select id="getJobPostSrc" resultType="EmpVO">
+        select * from jobpostinglist
+    </select>
 </mapper>

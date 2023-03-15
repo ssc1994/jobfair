@@ -11,6 +11,23 @@
       </div>
 
       <div v-if="fold!=false">
+
+        <div class="resumeBoxWrap" >
+          <routerLink to="">
+          <div class="resumeBox">
+            <div class="left">
+              <span class="newResumeIcon" style="font-size: 40px;">
+                +
+              </span>
+              <p class="newResume" style="display: inline-block;font-size: 19px;margin-left:10px;">이력서 작성하기</p>
+            </div>
+            <div class="right">
+
+            </div>
+          </div>
+          </routerLink>
+        </div>
+
         <div class="resumeBoxWrap" >
           <div class="resumeBox">
             <div class="left">
@@ -179,6 +196,8 @@ width:98%;
   margin-bottom:10px;
   display:inline-block;
   margin-left:5px;
+  height:100px;
+  line-height: 50px;
     }
 .resumeBox p {margin:0;padding: 0;}
 .resumeBox button {margin:5px;}
@@ -187,6 +206,7 @@ width:98%;
     .resumeTitle {font-weight: bold;
                   font-size: 18px;
     }
+
 
 /*지원현황*/
 .aplBtnBox {margin-top:20px;

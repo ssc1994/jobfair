@@ -1,5 +1,6 @@
 package com.sungjin.jobfair.service;
 
+import com.sungjin.jobfair.command.EmpVO;
 import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.command.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,19 @@ public class UserServiceImpl implements UserService{
     @Override
     public ArrayList<QnAVO> getQnAList() {
         return userMapper.getQnAList();
-    
+    }
     @Override
     public UserVO info(String id) {
         return userMapper.info(id);
 
     }
+    @Override
+    public ArrayList<EmpVO> getJobPostList() {
+        return userMapper.getJobPostList();
+    }
+    @Override
+    public ArrayList<EmpVO> getJobPostSrc(String str) {
+        return userMapper.getJobPostSrc(str);
+    }
+
 }
