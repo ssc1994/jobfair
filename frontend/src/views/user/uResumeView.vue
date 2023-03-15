@@ -2,86 +2,123 @@
   <div>
     <form :action.stop="doAction">
       <main class="resume">
+        <!--이력서 제목 -->
+        <div class="">
+          <h3 class="fs-medium resumeTitle">이력서제목 : <input type="text"></h3>
+        </div>
+        <!-- 인적사항 작성 -->
         <section>
-          <img class="headline-image" src="#" alt="프로필 사진">
+
+  <div class="introduce">
+    <div class="introduce-contact">
+      <ul>
+        <li class="introduce-cotact_list">
+          <div>
+            <h4 class="fs-medium">인적사항</h4>
+          </div>
+        </li>
+      </ul>
+    </div>
+              <div class="profile">
+                <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요." v-model="resInfo.res_name"></p>
+                <p class="headline-title">이메일 :<input type="email" class="headline-input" v-model="resInfo.res_email"></p>
+                <p class="headline-title">전화번호 :<input type="text" class="headline-input" v-model="resInfo.res_phone"></p>
+                <p class="headline-title">주소 :<input type="text" class="headline-input" v-model="resInfo.res_address"></p>
+                <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth"></p>
+              </div>
+              <!-- 프로필 사진 등록 -->
+              <img class="headline-image" src="#" alt="프로필 사진">
+              <div class="input-group mb-3 profileSubmit">
+                <input type="file" class="form-control" id="inputGroupFile02">
+                <button class="input-group-text" for="inputGroupFile02">사진등록</button>
+              </div>
+  </div>
+        </section>
+
+        <section>
           <div class="introduce">
             <div class="introduce-contact">
               <ul>
                 <li class="introduce-cotact_list">
                   <div>
-                    <h4 class="fs-medium">인적사항</h4>
+                    <h4 class="fs-medium">학력</h4>
                   </div>
                 </li>
               </ul>
             </div>
-          </div>
 
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요."></p>
-            <p class="headline-title">이메일 :<input type="email" class="headline-input"></p>
-            <p class="headline-title">전화번호 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">주소 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">생년월일 :<input type="date" class="headline-input"></p>
+            <div class="profile">
+              <p class="fs-medium fc-gray"></p>
+              <p class="headline-title">학교구분 :</p>
+              <select class="form-select school" v-model="eduInfo.edu_degree">
+                <option selected value="none">선택</option>
+                <option value="high">고등학교</option>
+                <option value="college">대학교(2, 3년)</option>
+                <option value="university">대학교(4년)</option>
+                <option value="graduate">대학원</option>
+              </select>
+              <p class="headline-title">학교명 :
+                <input type="text" class="headline-input" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName">
+              </p>
+              <p class="headline-title">입학년월 :
+                <input type="date" class="headline-input" v-model="eduInfo.edu_entranceDate">
+              </p>
+              <p class="headline-title">졸업년월 :
+                <input type="date" class="headline-input" v-model="eduInfo.edu_graduationDate">
+              </p>
+              <select class="form-select finish" v-model="eduInfo.edu_state">
+                <option selected value="none">졸업상태 선택</option>
+                <option value="1">졸업</option>
+                <option value="2">졸업예정</option>
+                <option value="3">재학중</option>
+                <option value="4">휴학</option>
+                <option value="5">자퇴</option>
+              </select>
+              <p class="headline-title">전공명 :
+                <input type="text" class="headline-input" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major">
+              </p>
+            </div>
           </div>
-      </section>
+        </section>
 
-      <section>
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">학력</h4>
-                </div>
-              </li>
-            </ul>
-          </div>
+        <section>
+          <div class="introduce">
+            <div class="introduce-contact">
+              <ul>
+                <li class="introduce-cotact_list">
+                  <div>
+                    <h4 class="fs-medium">경력</h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
 
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <p class="headline-title">학교구분 :</p>
-            <select class="form-select school" aria-label="Default select example">
-              <option selected>선택</option>
-              <option value="1">중학교 졸업</option>
-              <option value="2">고등학교 졸업</option>
-              <option value="3">대학교(2년제) 졸업</option>
-              <option value="3">대학교(4년제) 졸업</option>
-            </select>
-            <p class="headline-title">학교명 :<input type="text" class="headline-input" placeholder="학교명을 입력하세요."></p>
-            <p class="headline-title">입학년월 :<input type="date" class="headline-input"></p>
-            <p class="headline-title">졸업년월 :<input type="date" class="headline-input"></p>
-            <select class="form-select finish" aria-label="Default select example">
-              <option selected>졸업여부</option>
-              <option value="1">졸업</option>
-              <option value="2">재학중</option>
-              <option value="3">자퇴</option>
-            </select>
-            <p class="headline-title">전공명 :<input type="text" class="headline-input" placeholder="전공을 입력하세요."></p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="introduce">
-          <div class="introduce-contact">
-            <ul>
-              <li class="introduce-cotact_list">
-                <div>
-                  <h4 class="fs-medium">경력</h4>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div class="profile">
-            <p class="fs-medium fc-gray"></p>
-            <p class="headline-title">업종 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">회사명 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">부서명 :<input type="text" class="headline-input"></p>
-            <p class="headline-title">입사일 :<input type="date" class="headline-input"></p>
-            <p class="headline-title">퇴사일 :<input type="date" class="headline-input"></p>
-          </div>
+            <div class="profile">
+              <p class="headline-title">업종 :
+                <input type="text" class="headline-input">
+              </p>
+              <p class="headline-title">회사명 :
+                <input type="text" class="headline-input" v-model="weInfo.we_company">
+              </p>
+              <p class="headline-title">부서명 :
+                <input type="text" class="headline-input" v-model="weInfo.we_department">
+              </p>
+              <p class="headline-title">직급/직책 :
+                <input type="text" class="headline-input"  v-model="weInfo.we_position">
+              </p>
+              <p class="headline-title">담당직무 :
+                <input type="text" class="headline-input" v-model="weInfo.we_job">
+              </p>
+              <p class="headline-title">입사일 :
+                <input type="date" class="headline-input" v-model="weInfo.we_emplDate">
+              </p>
+              <p class="headline-title">퇴사일 :
+                <input type="date" class="headline-input" v-model="weInfo.we_departureDate">
+              </p>
+              <p class="headline-title">연봉 :
+                <input type="text" class="headline-input" v-model="weInfo.we_salary">
+              </p>
+            </div>
           </div>
         </section>
 
@@ -99,8 +136,9 @@
 
             <div class="profile">
               <p class="fs-medium fc-gray"></p>
-              <p class="headline-title">자격증명 :<input type="text" class="headline-input"></p>
-              <p class="headline-title">발행일 :<input type="text" class="headline-input"></p>
+              <p class="headline-title">자격증명 :<input type="text" class="headline-input" v-model="certInfo.cert_name"></p>
+              <p class="headline-title">발행일 :<input type="date" class="headline-input" v-model="certInfo.cert_gainDate"></p>
+              <p class="headline-title">발행처 :<input type="text" class="headline-input" v-model="certInfo.cert_issueInstitute"></p>
             </div>
           </div>
         </section>
@@ -120,25 +158,72 @@
             <div class="profile">
               <p class="fs-medium fc-gray"></p>
               <div class="container">
-                <textarea class="form-control col-sm-5" rows="5"></textarea>
-              </div>
-              <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02">
-                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                <textarea class="form-control col-sm-5" rows="5" v-model="resInfo.res_content"></textarea>
               </div>
             </div>
           </div>
         </section>
-        <input type="submit" value="이력서 저장">
-
+        <input type="button" value="이력서 저장">
       </main>
     </form>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: 'uResumeView'
+  name: 'uResumeView',
+  data () {
+    return {
+      //이력서 Table 변수
+      resInfo: {
+        res_title: '',
+        res_content: '',
+        res_regDate: '',
+        res_picName: '',
+        res_picPath: '',
+        res_picUuid: '',
+        res_name: '',
+        res_email: '',
+        res_phone: '',
+        res_address: '',
+        res_birth: '',
+      },
+      //학력 Table 변수
+      eduInfo: {
+        edu_degree: 'none',
+        edu_schoolName: '',
+        edu_major: '',
+        edu_entranceDate: '',
+        edu_graduationDate: '',
+        edu_state: 'none',
+        edu_grades: '',
+        edu_totalGrades: '',
+      },
+      //자격증 Table 변수
+      certInfo: {
+        cert_name: '',
+        cert_gainDate: '',
+        cert_issueInstitute: '',
+      },
+      //경력 Table 변수
+      weInfo: {
+        we_company: '',
+        we_department: '',
+        we_position: '',
+        we_job: '',
+        we_emplDate: '',
+        we_departureDate: '',
+        we_salary: ''
+      }
+    }
+  },
+  methods: {
+    doAction () {
+      this.$axios.post("")
+    }
+  }
 }
 </script>
 
@@ -165,7 +250,28 @@ body {
   background-color: #fbfbfb;
   word-break: keep-all;
 }
-
+/* 이력서 제목 입력 css */
+.resumeTitle {
+  padding: 20px;
+}
+.resumeTitle input {
+  width: 650px;
+  margin: 10px;
+}
+.resumeTitle::before {
+  content: "";
+  display: block;
+  width: 800px;
+  height: 3px;
+  background-color: #A4A4A4;
+}
+.resumeTitle::after {
+  content: "";
+  display: block;
+  width: 800px;
+  height: 1px;
+  background-color: #A4A4A4;
+}
 /* 이력서 양식 제일 바깥 css*/
 .resume {
   width: 900px;
@@ -179,14 +285,8 @@ body {
 .resume section {
   display: flex;
   position: relative;
-  margin-left: 135px;
   margin-bottom: 70px;
 }
-
-.resume section:first-child {
-  margin-left: 0px;
-}
-
 
 .headline-title {
   margin: 0px 10px 10px 20px;
@@ -226,10 +326,11 @@ body {
 }
 
 .headline-image {
-  margin-top: 70px;
   width: 150px;
   height: 200px;
   border: 1px solid #A4A4A4;
+  position: absolute;
+  margin-left: 100px;
 }
 
 .introduce {
@@ -238,23 +339,22 @@ body {
 }
 
 .introduce-contact {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .introduce-contact::before {
   content: "";
   display: block;
-  width: 600px;
+  width: 800px;
   height: 3px;
   background-color: #A4A4A4;
   margin-left: 10px;
 }
 
-
 .introduce-contact::after {
   content: "";
   display: block;
-  width: 600px;
+  width: 800px;
   height: 1px;
   background-color: #A4A4A4;
   margin-left: 10px;
@@ -289,35 +389,19 @@ body {
   background-size: contain;
 }
 
-.profile h2 {
-  margin-bottom: 10px;
-}
 
 .part-content_list--title .date,
 .part-content_list--content .title {
   margin-bottom: 5px;
 }
 
-/* 버튼, 경력추가시 누르면 나오는 박스 */
-.btn {
-  width: 50px;
-  height: 30px;
-}
-.card {
-  width: 600px;
-}
-
 /* 자기소개서 박스 크기 */
 textarea.form-control {
   min-height: calc(1.5em + 0.75rem + 2px);
-  width: 600px;
+  width: 800px;
   height: 250px;
 }
 
-/* 생년월일 */
-.bir_yy,.bir_mm,.bir_dd {
-  display: inline;
-}
 select#mm.sel {
   margin-left: 0px;
 }
@@ -328,6 +412,13 @@ input.int {
 select.sel {
   margin-left: 55px;
 }
+/* 프로필사진 파일 선택하는 인풋태그 스타일 */
+.profileSubmit {
+  width: 130px;
+  height: 30px;
+  position: absolute;
+  top: 320px;
+  left: 640px;
+}
 
 </style>
-

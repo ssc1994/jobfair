@@ -2,7 +2,8 @@
   <div>
   <div class="comBoxWrap">
     <section class="comMiddle col-xl-12">
-        <button type="button" class="comBtn1 btn btn-primary">공고등록하기</button>
+<!--      공고 등록하기 버튼 클릭시 페이지 이동하는 메서드 추가 + 스크립트 -->
+        <button type="button" class="comBtn1 btn btn-primary" v-on:click="goRegView()">공고등록하기</button>
 
       <div class="comList">
         <div class="comTopBox">
@@ -41,7 +42,7 @@
           </div>
           <div class="comNewComer">
               <div class="comTopBox">
-                <p>최근 지원자</p>
+                <p>최근 지원자1</p>
               </div>
               <div class="ResentInfo">
               <!-- 이력서 사진 넣기 -->
@@ -71,7 +72,12 @@
 
 <script>
 export default {
-  name: 'cMainView'
+  name: 'cMainView',
+  methods: {
+    goRegView() {
+      this.$router.push({path: "cEmpRegView"})
+    }
+  }
 }
 </script>
 
@@ -163,7 +169,7 @@ a {
   width: 100%;
   height: 150px;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
 }
 .comRecStatus a {
   margin: 25px 20px 0px 10px;

@@ -25,4 +25,8 @@
         from User
         where user_id = #{id}
     </select>
+
+    <select id="resumeInfo" resultType="ResumeVO">
+        select * from ResumeList
+    </select>
 </mapper>

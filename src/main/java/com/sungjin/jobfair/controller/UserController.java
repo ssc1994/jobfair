@@ -1,6 +1,7 @@
 package com.sungjin.jobfair.controller;
 
 import com.sungjin.jobfair.command.QnAVO;
+import com.sungjin.jobfair.command.ResumeVO;
 import com.sungjin.jobfair.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,6 +45,16 @@ public class UserController {
         ArrayList<QnAVO> list = userService.getQnAList();
         model.addAttribute("list", list);
         System.out.println(list.toString());
+
+        return list;
+    }
+
+    //이력서 내용가져오기
+    @PostMapping(value = "/resumeInfo")
+    public ArrayList<ResumeVO> resumeInfo(Model model) {
+
+        ArrayList<ResumeVO> list = userService.resumeInfo();
+        model.addAttribute("list", list);
 
         return list;
     }
