@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -12,9 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class EmpVO {
-    private int jpl_num;
-    private int com_num;
-    private String com_name; //기업명
+
+    private String jpl_num;
+    private String com_num;
     private String jpl_title;
     private String jpl_content;
     private Date jpl_startDate;
@@ -35,7 +36,7 @@ public class EmpVO {
     private String jpl_workDay;
     private String jpl_workTime;
     private String jpl_name;
-    private String jpl_departmentName;
+    private String jpl_companyName;
     private String jpl_contact;
     private String jpl_phoneNum;
     private String jpl_email;

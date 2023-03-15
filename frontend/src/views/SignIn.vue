@@ -110,15 +110,16 @@ export default {
     return {
       mg_auth: this.$store.getters.getMg_auth,
       user_id: '',
-      user_pw: ''
+      user_pw: '',
+
 
     }
   },
   updated() {
     this.$store.commit("setMg_auth", this.mg_auth)
-    console.log(this.mg_auth)
-    console.log(this.user_id)
-    console.log(this.user_pw)
+    // console.log(this.mg_auth)
+    // console.log(this.user_id)
+    // console.log(this.user_pw)
   },
   components: {
     Navbar,
@@ -153,37 +154,41 @@ export default {
             user_pw: this.user_pw
           })
           .then((res) => {
+            //sessionStorage에 id / auth 추가
+            sessionStorage.setItem('sessionId',JSON.stringify(res.data.user_id))
+            sessionStorage.setItem('sessionAuth',JSON.stringify(res.data.mg_auth))
+            if(res.data.com_num != null){
+              sessionStorage.setItem('sessionComp',JSON.stringify(res.data.com_num))
+            }
             console.log(res.data)
-            if(res.data == '1'){
-              sessionStorage.setItem('sessionId',JSON.stringify(this.user_id))
-              sessionStorage.setItem('sessionAuth',JSON.stringify(this.mg_auth))
 
-
+            if(res.data.mg_auth == '1'){
               //sesionStorage에서 값 가져오는법
-              let sessionId = sessionStorage.getItem('sessionId')
-              let sessionAuth = sessionStorage.getItem('sessionAuth')
-              if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
-                let SessionJsonId = JSON.parse(sessionId)
-                console.log(SessionJsonId)
-              }
-              if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
-                let SessionJsonAuth = JSON.parse(sessionAuth)
-                console.log(SessionJsonAuth)
-              }
+              // let sessionId = sessionStorage.getItem('sessionId')
+              // let sessionAuth = sessionStorage.getItem('sessionAuth')
+              // if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
+              //   let SessionJsonId = JSON.parse(sessionId)
+              //   console.log(SessionJsonId)
+              // }
+              // if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
+              //   let SessionJsonAuth = JSON.parse(sessionAuth)
+              //   console.log(SessionJsonAuth)
+              // }
 
               // //페이지 이동전에 세션에 값을 넣어야함
-              // this.$router.push("/uMainView")
+              this.$router.push("/uMainView")
 
-            }else if(res.data == '2' || res.data == '3' ){
+            }else if(res.data.mg_auth == '2' || res.data.mg_auth == '3' ){
               //페이지 이동전에 세션에 값을 넣어야함
               this.$router.push("/cMainView")
 
-            }else if(res.data == '4' ){
+            }else if(res.data.mg_auth == '4' ){
               //페이지 이동전에 세션에 값을 넣어야함
               this.$router.push("/aMainView")
 
             }else{
-              alert(res.data)
+              var msg='로그인 실패 / 비밀번호를 확인하세요'
+              alert(msg)
             }
           })
           .catch((error) => {

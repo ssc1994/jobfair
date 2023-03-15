@@ -9,19 +9,19 @@
         <div class=" wrapBox3">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">작성자</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled>
+            <input type="text" v-model="QnADetail.user_id" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled >
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">문의제목</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+            <input type="text" v-model="QnADetail.qa_title" class="form-control" placeholder="Title" aria-label="Username"
                    aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group">
             <span class="input-group-text">문의내용</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
+            <textarea class="form-control contentBox" v-model="QnADetail.qa_content" aria-label="With textarea" disabled></textarea>
           </div>
 
 
@@ -60,7 +60,7 @@
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         수정하기
       </button>
-      <button type="button" class="btn btn-outline-primary">목록으로</button>
+      <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
     </div>
 
     <!--지원하기 모달창 설정-->
@@ -93,7 +93,7 @@
                   <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
                 </div>
                 <!--답변있을경우 수정하기 버튼 안보이게 설정해야함-->
-                <div class="btnModalBox">
+                <div class="btnModalBox" v-if="QnADetail.com_num !== 0">
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     수정하기
                   </button>
@@ -117,8 +117,48 @@
 <script>
 import SoftInput from "@/components/SoftInput.vue";
 import SoftButton from "@/components/SoftButton.vue";
+export default {components: {SoftInput, SoftButton},
+  data() {
+    return {
+      QnADetail: {
+        user_id: '',
+        qa_title: '',
+        qa_content: '',
 
-export default {components: {SoftInput, SoftButton},};
+      }
+    };
+  },
+
+
+  beforeCreate() {
+
+      this.$axios.get('/jobfair/uQnADetailView/' , {params:{qa_num: this.$route.params.qa_num}} )
+          .then((res) => {
+            this.QnADetail = res.data
+            console.log(res.data);
+          }
+          )
+          .catch((error) => this.QnADetail = error.date)
+
+
+
+  },
+  methods: {
+    getQnADetail() {
+      this.$axios.get('/jobfair/getQnADetail')
+          .then((res) => this.QnADetail = res.data)
+          .catch((error) => this.QnADetail = error.date)
+
+    },
+    goBackToList() {
+      this.$router.push("/uQnAView")
+    }
+
+  }
+};
+
+
+
 </script>
 
 <style scoped>

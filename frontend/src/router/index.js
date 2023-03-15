@@ -38,7 +38,7 @@ const routes = [
     component: () => import('../views/user/uQnAWriteView.vue')
   },
   {//유저 Q&A 디테일 화면
-    path: '/uQnADetailView',
+    path: '/uQnADetailView/:qa_num',
     name: 'uQnADetailView',
     component: () => import('../views/user/uQnADetailView.vue')
   },
@@ -56,6 +56,11 @@ const routes = [
     path: '/uJobPostView',
     name: 'uJobPostView',
     component: () => import('../views/user/uJobPostView.vue')
+  },  
+  {//유저 채용공고 리스트 화면 테스트
+    path: '/uJobPostView2',
+    name: 'uJobPostView2',
+    component: () => import('../views/user/uJobPostView2.vue')
   },
   {//유저 마이페이지 화면
     path: '/uMypageView',
@@ -124,12 +129,12 @@ const routes = [
     component: () => import('../views/company/cQnAView.vue')
   },
   {//기업 큐앤에이 상세페이지
-    path: '/cQnADetailView',
+    path: '/cQnADetailView/:qa_num',
     name: 'cQnADetailView',
     component: () => import('../views/company/cQnADetailView.vue')
   },
   {//기업 큐앤에이 답변 작성페이지
-    path: '/cQnAWriteView',
+    path: '/cQnAWriteView/:qa_num',
     name: 'cQnAWriteView',
     component: () => import('../views/company/cQnAWriteView.vue')
   },
