@@ -5,10 +5,8 @@ import com.sungjin.jobfair.service.TokenUtils;
 import com.sungjin.jobfair.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +20,7 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping(value = "/login")
-    public String login(@RequestBody Map<String,String> param){
+    public UserVO login(@RequestBody Map<String,String> param, Model model){
 
         // 입력받은 아이디 / 비밀번호 / auth
         String id = param.get("user_id");
@@ -45,34 +43,39 @@ public class LoginController {
 
 
         if(vo!=null){
-            //세션에 넣을 jwt 생성
+
+            //토큰 보류
+            /*//세션에 넣을 jwt 생성
             String token = TokenUtils.generateToken(vo);
             System.out.println("token :" +token);
             System.out.println("성공");
 
             String tokenInfo =TokenUtils.getUserIdFromJWT(token);
             System.out.println("토큰정보");
-            System.out.println(token);
-            return vo.getMg_auth();
+            System.out.println(token);*/
+
+            return vo;
+
 
         }else {
             //실패면 메세지 전달 및 리다이렉트
             System.out.println("실패");
             String msg = "로그인 실패 / 비밀번호를 확인하세요";
-            return msg;
+            model.addAttribute("msg",msg);
+        return null;
         }
     }
 
     @PostMapping(value = "/userInfo")
     public Map<String, String> userInfo(@RequestBody Map<String,String> param){
-        String id = param.get("id");
+        String id = param.get("user_id");
         UserVO vo =  userService.info(id);
         System.out.println(vo);
         Map<String, String> map = new HashMap<>();
         map.put("user_name",vo.getUser_name());
         map.put("user_email",vo.getUser_email());
         map.put("user_phone",vo.getUser_phone());
-        map.put("com_id",vo.getCom_num());
+        map.put("com_num",vo.getCom_num());
 
         return map;
     }
