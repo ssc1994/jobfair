@@ -72,7 +72,7 @@ public class LoginController {
         map.put("user_name",vo.getUser_name());
         map.put("user_email",vo.getUser_email());
         map.put("user_phone",vo.getUser_phone());
-        map.put("com_id",vo.getCom_id());
+        map.put("com_id",vo.getCom_num());
 
         return map;
     }

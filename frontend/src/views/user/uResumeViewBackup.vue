@@ -103,9 +103,8 @@
                 </li>
               </ul>
             </div>
-              <WE :weCount=0  v-model="weInfo[0]" @inputWE="changeWeInfo"/>
             <div  v-for="we in weCount">
-              <WE :weCount="we" v-model="weInfo[we]" @inputWE="changeWeInfo"/>
+              <WE :weCount="weCount" v-model="prop_weInfo" @inputWE="changeWeInfo"/>
             </div>
           </div>
         </section>
@@ -203,7 +202,17 @@ export default {
         cert_issueInstitute: '',
       },
       //경력 Table 변수
-      weInfo: [],
+      weInfo: {
+        we_company: [
+          {we_company: 1}
+        ],
+        we_department: [],
+        we_position: '',
+        we_job: '',
+        we_emplDate: '',
+        we_departureDate: '',
+        we_salary: ''
+      },
       weCount: 0,
       res_img: '',
       viewImg: ''
@@ -241,8 +250,9 @@ export default {
       }
       reader.readAsDataURL(this.res_img);
     },
-    changeWeInfo (weData) {
-      this.weInfo.splice(weData.weCount, 1, weData.weInfo)
+    changeWeInfo (weInfo) {
+      this.weInfo = weInfo
+      console.log("부모 컴포넌트")
       console.log(this.weInfo)
     },
     addWE () {

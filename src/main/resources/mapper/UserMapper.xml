@@ -25,4 +25,8 @@
         from User
         where user_id = #{id}
     </select>
+
+    <insert id="">
+
+    </insert>
 </mapper>
