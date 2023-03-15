@@ -11,9 +11,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="mx-auto text-center col-lg-5">
-          <h1 class="mt-5 mb-2 text-white">Welcome!</h1>
+          <h1 class="mt-5 mb-2 text-white">회원가입</h1>
           <p class="text-white text-lead">
-            할 수 있다 할 수 있다 할 수 있따!!
+            회원가입하고 다양한 혜택을 누리세요!
           </p>
         </div>
       </div>
@@ -21,19 +21,23 @@
   </div>
   <div class="container">
     <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-      <div class="mx-auto col-xl-4 col-lg-5 col-md-7">
+      <div class="mx-auto col-xl-4 col-lg-5 col-md-7" style="width: 40%">
         <div class="card z-index-0" style="border-width: 0; border-radius: 0.5rem ">
           <div class="choice_joinTypeWrap">
             <li>
               <input type="radio" name="selectType" id="userType" style="display: none" @change="changeJoinType($event)"
                      :checked="userRadio"/>
-              <label for="userType" class="btn mb-0 btn-md w-100" :class="[ mg_auth === '1' ? 'selected_joinType' : 'bg-gradient-dark' ]" style="color: #FFFFFF">개인회원</label>
+              <label for="userType" class="btn mb-0 btn-md w-100"
+                     :class="[ mg_auth === '1' ? 'selected_joinType' : 'bg-gradient-dark' ]"
+                     style="color: #FFFFFF">개인회원</label>
               <!--              <label class="btn mb-0 bg-gradient-dark btn-md w-100" for="userType">개인회원</label>-->
             </li>
             <li>
               <input type="radio" name="selectType" style="display: none" id="companyType"
                      @change="changeJoinType($event)" :checked="comRadio">
-              <label for="companyType" class="btn mb-0 btn-md w-100" :class="[ mg_auth === '2' ? 'selected_joinType' : 'bg-gradient-dark' ]" style="color: #FFFFFF">기업회원</label>
+              <label for="companyType" class="btn mb-0 btn-md w-100"
+                     :class="[ mg_auth === '2' ? 'selected_joinType' : 'bg-gradient-dark' ]"
+                     style="color: #FFFFFF">기업회원</label>
               <!--              <label class="btn mb-0 bg-gradient-dark btn-md w-100" for="companyType">기업회원</label>-->
             </li>
           </div>
@@ -47,77 +51,206 @@
                   <div class="userBox">
 
                     <div>
+                      <div class="data_title_wrap">
+                        <span>이름</span><span :hidden="userName_errorMsg === ''"
+                                             class="pass_error">{{ userName_errorMsg }}</span>
+                      </div>
                       <input type="text" class="data_insert_box" ref="nameBox" name="user_name" placeholder="이름 (실명)"
                              v-model="user_name" id="name"/>
                     </div>
 
-                    <div style="padding-bottom: 0px">
-                      <input type="text" ref="idBox" name="user_id" placeholder="아이디 (길이4~14 영어 대소문자,숫자만)"
-                             @keydown.enter="sameIdCheck" v-model="user_id" class="PersonUnder data_insert_box"/>
-                      <button type="button" @click="sameIdCheck($event)" class="btn bg-gradient-dark"
-                              style="margin-top: 5px">중복확인
-                      </button>
-                      <span :hidden="msg === 'id 중복확인을 먼저 해주세요'" style="margin-left: 10px">{{ msg }}</span>
+                    <div>
+                      <div class="data_title_wrap">
+                        <span>아이디</span>
+                        <span :hidden="id_errorMsg === 'id 중복확인을 먼저 해주세요'"
+                              :class="[id_errorMsg === '사용가능한 id 입니다' ? 'pass_color':'pass_error']">
+                          {{ id_errorMsg }}</span>
+                      </div>
+                      <div class="id_input_wrap">
+                        <input type="text" ref="idBox" name="user_id" placeholder="아이디 (길이4~14 영어 대소문자,숫자만)"
+                               @keydown.enter="sameIdCheck" v-model="user_id" class="PersonUnder data_insert_box"/>
+                        <button type="button" @click="sameIdCheck($event)" class="btn bg-gradient-dark">
+                          중복확인
+                        </button>
+                      </div>
+
                     </div>
-                    <div style="padding-top: 0px">
+                    <div>
+                      <div class="data_title_wrap">
+                        <span>비밀번호</span><span :hidden="userPw_errorMsg === ''"
+                                               :class="[userPw_errorMsg === '사용가능한 패스워드입니다' ? 'pass_color':'pass_error']">
+                          {{ userPw_errorMsg }}
+                        </span>
+                      </div>
                       <input type="password" class="data_insert_box" ref="pwBox" name="user_pw" autoComplete="off"
                              placeholder="비밀번호 (8~20자의 영문,숫자,특수기호 포함)" v-model="user_pw"/>
                     </div>
                     <div>
+                      <div class="data_title_wrap">
+                        <span>비밀번호 확인</span><span :hidden="userPwCheck_errorMsg === ''"
+                                                  :class="[userPwCheck_errorMsg === '확인' ? 'pass_color':'pass_error']">
+                          {{ userPwCheck_errorMsg }}
+                        </span>
+                      </div>
+                      <input type="password" class="data_insert_box" ref="pwCheckBox" autoComplete="off"
+                             placeholder="비밀번호 재입력" v-model="user_pwCheck"/>
+                    </div>
+
+<!--                성별 위치    -->
+                    <div>
+                      <div class="data_title_wrap">
+                        <span>성별</span>
+                        <span :hidden="userGender_errorMsg === ''"
+                                             class="pass_error">
+                          {{ userGender_errorMsg }}
+                        </span>
+                      </div>
+                      <div class="gender_type_wrap">
+                        <div>
+                          <input type="radio" id="man" name="gender" @click="user_gender = '남자'" value="남자"
+                                 :checked="gender === '남자'">
+                          <label for="man">남자</label>
+                        </div>
+                        <div>
+                          <input type="radio" id="woman" name="gender" @click="user_gender = '여자'" value="여자"
+                                 :checked="gender === '여자'">
+                          <label for="woman">여자</label>
+                        </div>
+                      </div>
+
+                    </div>
+
+<!--                    생년월일 위치-->
+                    <div>
+                      <div class="data_title_wrap">
+                        <span>생년월일</span><span :hidden="userBirth_errorMsg === ''"
+                                                  class="pass_error">
+                          {{ userBirth_errorMsg }}
+                        </span>
+                      </div>
+                      <div class="birth_select_wrap">
+                        <select  v-model="birth_yyyy">
+                          <option value="">년</option>
+                          <option v-for="(item, key) in yyyyList" :key="key" :value="item.value">{{item.value}}</option>
+                        </select>
+                        <select  v-model="birth_MM">
+                          <option value="">월</option>
+                          <option v-for="(item, key) in mmlist" :key="key" :value="item.value">{{item.value}}</option>
+                        </select>
+                        <select  v-model="birth_dd">
+                          <option value="">일</option>
+                          <option v-for="(item, key) in ddlist" :key="key" :value="item.value">{{item.value}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="data_title_wrap">
+                        <span>이메일</span><span :hidden="userEmail_errorMsg === ''"
+                                              class="pass_error">{{ userEmail_errorMsg }}</span>
+                      </div>
                       <input type="email" class="data_insert_box" ref="emailBox" name="user_email" placeholder="이메일"
                              v-model="user_email"/>
                     </div>
                     <div style="padding-bottom: 0px">
-                      <input type="text" ref="phNumBox" name="user_phone" placeholder="휴대폰번호 -없이" v-model="user_phone"
-                             class="PersonUnder data_insert_box" maxlength="11"/>
-                      <button type="button" class="btn bg-gradient-dark" style="margin-top: 5px">인증번호 전송</button>
+                      <div class="data_title_wrap">
+                        <span>전화번호</span><span :hidden="userPh_errorMsg === ''"
+                                               class="pass_error">{{ userPh_errorMsg }}</span>
+                      </div>
+                      <div class="userPh_input_wrap">
+                        <input type="text" ref="phNumBox" name="user_phone" placeholder="휴대폰번호 -없이 입력"
+                               v-model="user_phone"
+                               class="PersonUnder data_insert_box" maxlength="11"/>
+                        <button type="button" class="btn bg-gradient-dark" style="margin: 0">인증번호 전송</button>
+                      </div>
                     </div>
-                    <div style="padding: 0px 5px">
-                      <input type="text" ref="certifNumBox" name="" placeholder="인증번호 입력" v-model="certification_num"
-                             class="PersonUnder data_insert_box">
-                      <button type="button" class="btn bg-gradient-dark" id="leftBtn" style="margin-top: 5px">확인
-                      </button>
-                      <button type="button" class="btn bg-gradient-dark" id="rightBtn"
-                              style="margin-top: 5px; margin-left: 5px">재전송
-                      </button>
+                    <div style="padding:5px">
+                      <div class="data_title_wrap">
+                        <span>인증번호</span><span></span>
+                      </div>
+                      <div class=" certif_input_wrap">
+                        <input type="text" ref="certifNumBox" name="" placeholder="인증번호 입력" v-model="certification_num"
+                               class="PersonUnder data_insert_box">
+                        <button type="button" class="btn bg-gradient-dark" id="leftBtn" style="margin: 0">확인</button>
+                        <button type="button" class="btn bg-gradient-dark" id="rightBtn" style="margin: 0">재전송</button>
+                      </div>
                     </div>
                   </div>
 
                   <div class="CompanyBox" :class="{ 'PeopleForm' : hasError, active : isActive }">
                     <div>
                       <div class="MemberInfo companyContent" :class="class2" v-if="show">
-                        <div style="padding-bottom: 0px">
+                        <div>
+                          <div class="data_title_wrap">
+                            <span>기업명</span><span :hidden="comName_errorMsg === ''"
+                                                  class="pass_error">{{ comName_errorMsg }}</span>
+                          </div>
                           <input type="text" class="data_insert_box" ref="com_nameBox" placeholder="기업명"
                                  v-model="com_name"/>
                         </div>
                         <div>
-                          <input type="tel" class="data_insert_box" ref="com_phBox" placeholder="기업 전화번호 -없이"
+                          <div class="data_title_wrap">
+                            <span>기업 전화번호</span>
+                            <span :hidden="comPh_errorMsg === ''"
+                                                  class="pass_error">{{ comPh_errorMsg }}</span>
+                          </div>
+                          <input type="tel" class="data_insert_box" ref="com_phBox" placeholder="기업전화번호 -없이 입력"
                                  maxlength="11" v-model="com_phone"/>
                         </div>
                         <div>
+                          <div class="data_title_wrap">
+                            <span>기업 이메일</span>
+                            <span :hidden="comEmail_errorMsg === ''"
+                                  class="pass_error">{{ comEmail_errorMsg }}</span>
+                          </div>
                           <input type="email" class="data_insert_box" ref="com_emailBox" placeholder="기업 이메일"
                                  v-model="com_email"/>
                         </div>
                         <div>
-                          <input type="text" id="address" class="data_insert_box" ref="com_addressBox" placeholder="기업 주소"
+                          <div class="data_title_wrap">
+                            <span>기업 주소</span>
+                            <span :hidden="comAddress_errorMsg === ''"
+                                  class="pass_error">{{ comAddress_errorMsg }}</span>
+                          </div>
+                          <input type="text" id="address" class="data_insert_box" ref="com_addressBox"
+                                 placeholder="기업 주소"
                                  v-model="com_address" @click="execDaumPostcode" @keydown="execDaumPostcode"/>
                         </div>
                         <div>
+                          <div class="data_title_wrap">
+                            <span>업종</span>
+                            <span :hidden="comCategory_errorMsg === ''"
+                                  class="pass_error">{{ comCategory_errorMsg }}</span>
+                          </div>
                           <input type="text" class="data_insert_box" ref="com_categoryBox" placeholder="업종"
                                  v-model="com_category"/>
                         </div>
                         <div>
+                          <div class="data_title_wrap">
+                            <span>대표자</span>
+                            <span :hidden="comCeo_errorMsg === ''"
+                                  class="pass_error">{{ comCeo_errorMsg }}</span>
+                          </div>
                           <input type="text" class="data_insert_box" ref="com_ceoBox" placeholder="대표자"
                                  v-model="com_ceo"/>
                         </div>
                         <div>
-                          <input type="text" class="data_insert_box" ref="com_regBox" placeholder="사업자등록번호 - 포함"
+                          <div class="data_title_wrap">
+                            <span>사업자 등록번호</span>
+                            <span :hidden="comBizReg_errorMsg === ''"
+                                  class="pass_error">{{ comBizReg_errorMsg }}</span>
+                          </div>
+                          <input type="text" class="data_insert_box" ref="com_regBox" placeholder="사업자등록번호 - 포함해서 입력"
                                  v-model="com_businessRegistration" maxlength="12"/>
                         </div>
                         <div class="esDateWrap">
-                          <div>설립일: </div>
+                          <div class="data_title_wrap">
+                            <span>설립일</span>
+                            <span :hidden="comEsDate_errorMsg === ''"
+                                  class="pass_error">{{ comEsDate_errorMsg }}</span>
+                          </div>
                           <input type="date" class="data_insert_box" ref="com_esDateBox" placeholder="설립일"
-                                 v-model="com_establishmentDate">
+                                 @change="comEsDate_errorMsg = ''" v-model="com_establishmentDate">
                         </div>
                       </div>
 
@@ -131,7 +264,8 @@
                           <input type="checkbox" id="agree2" value="checkedBox" v-model="checkbox">
                         </div>
 
-                        <input type="submit" @click.prevent="checkSubmit($event)" class="btn bg-gradient-dark" value="가입하기"
+                        <input type="submit" @click.prevent="checkSubmit($event)" class="btn bg-gradient-dark"
+                               value="가입하기"
                                style="margin-top: 5px">
                       </div>
 
@@ -178,10 +312,18 @@ export default {
       user_name: '',
       user_id: '',
       user_pw: '',
+      user_pwCheck: '', // 비밀번호 확인 (비밀번호 동일한지 체크할 변수)
+      user_gender: '',
+      user_rrn: this.birth_yyyy + '-' + this.birth_MM + '-' + this.birth_dd, //생년월일
+      birth_yyyy: '',
+      birth_MM: '',
+      birth_dd: '',
+      yyyyList: [],
+      mmlist: [],
+      ddlist: [],
       user_email: '',
       user_phone: '',
       certification_num: '',
-      msg: '', // id 중복확인 하고나서 화면에 뿌려줄 것.
       checkedBox: [],
       errorMsg: [],
       sampleData: '',
@@ -201,6 +343,25 @@ export default {
       emailRule: /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/, //이메일 형식 유호성 검사 정규표현식
       phoneNumRule: /^[0-9]{8,13}$/, //휴대폰 번호 숫자만 가능
       businessRegisRule: /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/, //사업자 등록번호 정규식 3글자-2글자-5글자
+      //유효성 검사 후 에러 메세지
+      //유저 쪽
+      userName_errorMsg: '',
+      id_errorMsg: '', // id 중복확인 하고나서 화면에 뿌려줄 것.
+      userPw_errorMsg: '',
+      userPwCheck_errorMsg: '',
+      userGender_errorMsg: '',
+      userBirth_errorMsg: '',
+      userEmail_errorMsg: '',
+      userPh_errorMsg: '',
+      //기업 쪽
+      comName_errorMsg: '',
+      comPh_errorMsg: '',
+      comEmail_errorMsg: '',
+      comAddress_errorMsg: '',
+      comCategory_errorMsg: '',
+      comCeo_errorMsg: '',
+      comBizReg_errorMsg: '', //사업자등록번호 입력 오류 메시지
+      comEsDate_errorMsg: '', //회사 설립일 지정 오류 메시지
       //여기서부턴 기업가입 정보 입력 부분
       com_name: '',
       com_phone: '',
@@ -231,6 +392,40 @@ export default {
   created() {
     this.toggleEveryDisplay();
     this.toggleHideConfig();
+
+    const nowYear = new Date().getFullYear();
+    for(let i = 0; i <100; i++) {
+      let date = nowYear - i
+      this.yyyyList.push({value: date})
+    }
+    for (let i = 1; i < 13; i++) {
+      if (i < 10) {
+        this.mmlist.push({
+          value: "0" + i,
+          text: "0" + i,
+        });
+      } else {
+
+        this.mmlist.push({
+          value: i,
+          text: i,
+        });
+      }
+    }
+    for (let i = 1; i <= 31; i++) {
+      if (i < 10) {
+        this.ddlist.push({
+          value: "0" + i,
+          text: "0" + i,
+        });
+      } else {
+
+        this.ddlist.push({
+          value: i,
+          text: i,
+        });
+      }
+    }
   },
   beforeUnmount() {
     this.toggleEveryDisplay();
@@ -246,7 +441,7 @@ export default {
 
         //아이디 중복확인 전 id 유효성 검사
         if (this.idRule.test(this.user_id.trim()) === false) {
-          alert('아이디는 4~12글자 이내로 영어 대소문자,숫자만 가능합니다')
+          this.id_errorMsg = '아이디는 4~12글자 이내로 영어 대소문자,숫자만 가능합니다'
         } else {
 
           //id 중복확인 요청 보내기
@@ -255,11 +450,11 @@ export default {
                 console.log(response)
                 self.idPassCheck = response.data
                 if (self.idPassCheck === true) {
-                  self.msg = '사용가능한 id 입니다'
+                  self.id_errorMsg = '사용가능한 id 입니다'
                 } else {
-                  self.msg = '이미 사용하고 있는 id 입니다'
+                  self.id_errorMsg = '이미 사용하고 있는 id 입니다'
                 }
-                alert(self.msg)
+                this.id_errorMsg = self.id_errorMsg
               })
               .catch(error => {
                 console.log(error)
@@ -267,16 +462,18 @@ export default {
 
         }
       } else {
-        this.msg = "Id를 입력해주세요"
+        this.id_errorMsg = "Id를 입력해주세요"
       }
     },
     // 가입하기 등록 전 유효성 검사 ( + 필수항목 체크했는지 확인) , 검사 통과 후 가입 메서드 호출.
     checkSubmit(e) {
       //이름 유효성 검사
       if (!this.nameRule.test(this.user_name.trim())) {
-        alert('이름을 다시 입력해주세요')
+        this.userName_errorMsg = '이름을 확인해주세요'
         this.$refs.nameBox.focus()
         return
+      } else{
+        this.userName_errorMsg = ''
       }
       //아이디 중복확인 통과했는지 체크
       if (this.idPassCheck === false) {
@@ -287,28 +484,76 @@ export default {
       // 아이디 중복확인 후 id 값 null값 되면 다시 중복확인 하게끔 처리
       if (this.user_id === '') {
         this.idPassCheck = false
-        this.msg = 'id를 입력해주세요.'
+        this.id_errorMsg = 'id를 입력해주세요.'
         this.$refs.idBox.focus()
         return
       }
       // password 유효성 검사 -> 8~20자의 영문,숫자,특수기호 포함 체크
       if (this.passwordRule.test(this.user_pw.trim()) === false) {
         this.$refs.pwBox.focus()
-        alert('비밀번호는 영문,숫자,특수기호 포함 8~20자 이내어야 합니다.')
+        this.userPw_errorMsg = '비밀번호는 영문,숫자,특수기호 포함 8~20자 이내어야 합니다.'
         return
+      } else {
+        this.userPw_errorMsg = '사용가능한 패스워드입니다'
       }
-      // email 형식 유효성 검사
-      if (this.emailRule.test(this.user_email.trim()) === false) {
-        this.$refs.emailBox.focus()
-        alert('이메일을 다시 확인해 주세요.')
+      // 비밀번호 확인 검사
+      if (this.user_pw !== this.user_pwCheck) {
+        if(this.user_pwCheck === ''){
+          this.$refs.pwCheckBox.focus()
+          return
+        }
+        this.$refs.pwCheckBox.focus()
+        this.userPwCheck_errorMsg = '비밀번호가 일치하지 않습니다'
         return
+      } else {
+        this.userPwCheck_errorMsg = '확인'
+      }
+      // 회원 성별 검사
+      if (this.user_gender === '') {
+        this.userGender_errorMsg = '성별을 지정해주세요'
+        return
+      } else {
+        this.userGender_errorMsg = ''
+      }
+      //생년월일 체크
+      if(this.birth_yyyy === ''){
+        this.userBirth_errorMsg = '생년월일을 입력해주세요'
+        return
+      } else if(this.birth_MM === ''){
+        this.userBirth_errorMsg = '생년월일을 입력해주세요'
+        return
+      } else if(this.birth_dd === ''){
+        this.userBirth_errorMsg = '생년월일을 입력해주세요'
+        return
+      } else {
+        this.userBirth_errorMsg = ''
+      }
+
+      // user email 형식 유효성 검사
+      if (this.emailRule.test(this.user_email.trim()) === false) {
+        if(this.user_email === ''){
+          this.$refs.emailBox.focus()
+          return
+        }
+        this.userEmail_errorMsg = '이메일을 다시 확인해 주세요.'
+        this.$refs.emailBox.focus()
+        return
+      } else {
+        this.userEmail_errorMsg = ''
       }
       //휴대폰 번호 유효성 검사 - 숫자만 입력.
       if (this.phoneNumRule.test(this.user_phone.trim()) === false) {
-        alert('휴대폰 번호를 다시 입력해주세요')
+        if(this.user_phone === ''){
+          this.$refs.phNumBox.focus()
+          return
+        }
+        this.userPh_errorMsg = '휴대폰 번호를 -없이 다시 입력해주세요'
         this.$refs.phNumBox.focus()
         return
+      } else {
+        this.userPh_errorMsg = ''
       }
+
       // // 휴대폰 인증 통과여부 확인
       // if(this.phCertifPassCheck === false){
       //   this.$refs.certifNumBox.focus()
@@ -318,23 +563,36 @@ export default {
       // }
 
       //기업가입시 기업가입정보 유효성 검사
-      //기업명 체크
       if (this.mg_auth === '2') {
+        //기업명 체크
         if (this.com_name === '') {
           this.$refs.com_nameBox.focus()
           return
         }
         //기업 전화번호 체크
         if (this.phoneNumRule.test(this.com_phone.trim()) === false) {
-          alert('기업 전화번호를 다시 확인해주세요')
+          if(this.com_phone === ''){
+            this.$refs.com_phBox.focus()
+            return
+          }
+          this.comPh_errorMsg = '번호를 -없이 다시 입력해주세요'
           this.$refs.com_phBox.focus()
           return
+        } else {
+          this.comPh_errorMsg = ''
         }
         //기업 이메일 체크
         if (this.emailRule.test(this.com_email.trim()) === false) {
-          alert('기업 이메일을 다시 확인해주세요')
+          if(this.com_email === ''){
+            this.comEmail_errorMsg = ''
+            this.$refs.com_emailBox.focus()
+            return
+          }
+          this.comEmail_errorMsg = '기업 이메일을 다시 확인해주세요'
           this.$refs.com_emailBox.focus()
           return
+        } else {
+          this.comEmail_errorMsg = ''
         }
         //기업 주소 체크
         if (this.com_address === '') {
@@ -355,26 +613,35 @@ export default {
         //사업자 등록번호 체크
         //사업자 등록번호 정규식 3글자-2글자-5글자
         if (this.businessRegisRule.test(this.com_businessRegistration.trim()) === false) {
-          alert('사업자 등록 번호가 잘못 되었습니다')
+          if(this.com_businessRegistration === ''){
+            this.$refs.com_regBox.focus()
+            return
+          }
+          this.comBizReg_errorMsg = '사업자 등록 번호가 잘못 되었습니다'
           this.$refs.com_regBox.focus()
           return
+        } else {
+          this.comBizReg_errorMsg = ''
         }
         //회사 설립일 체크
         if (this.com_establishmentDate === '') {
-          alert('회사 설립일을 지정해주세요')
+          this.comEsDate_errorMsg = '회사 설립일을 지정해주세요'
           this.$refs.com_esDateBox.focus()
           return
+        } else {
+          this.comEsDate_errorMsg = ''
         }
       }
+
       //필수동의 체크여부 확인
       if (document.getElementById('agree1').checked === false) {
-        alert("필수 항목을 확인해 주세요.")
+        alert("필수동의 항목을 확인해 주세요.")
         this.errorMsg.push({msg: '필수 항목입니다.'}) //에러메시지 담기
         console.log(this.errorMsg)
         return
       }
       if (document.getElementById('agree2').checked === false) {
-        alert("필수 항목을 확인해 주세요.")
+        alert("개인정보 동의 항목을 확인해 주세요.")
         this.errorMsg.push({msg: '필수 항목입니다.'}) //에러메시지 담기
         console.log(this.errorMsg)
         return
@@ -392,6 +659,8 @@ export default {
           user_name: this.user_name,
           user_id: this.user_id,
           user_pw: this.user_pw,
+          user_gender: this.user_gender,
+          user_rrn: this.birth_yyyy + '-' + this.birth_MM + '-' + this.birth_dd, //생년월일
           user_email: this.user_email,
           user_phone: this.user_phone,
           mg_auth: this.mg_auth
@@ -410,7 +679,7 @@ export default {
       this.$axios.post(url, data)
           .then(response => {
             if (response.status === 200) {
-              this.$router.push('/uMainView')
+              this.$router.push('/sign-in')
             }
           })
           .catch(error => {
@@ -429,14 +698,6 @@ export default {
         this.$store.commit("setMg_auth", "2")
       }
       console.log(this.mg_auth)
-    },
-    //화면 로드시 권한에 따라 회원가입인지 기업가입인지 버튼 색 활성화 메서드
-    joinTypeView(){
-      if(this.mg_auth === '1'){
-        this.userTypeOn = true
-      } else if (this.mg_auth === '2'){
-        this.comTypeOn === true
-      }
     },
     execDaumPostcode() {
       new window.daum.Postcode({
@@ -477,6 +738,13 @@ export default {
           this.postcode = data.zonecode;
         },
       }).open();
+    },
+    testBirth () {
+      console.log('testBirth 실행')
+      console.log('yyyy:', this.birth_yyyy)
+      console.log('MM:', this.birth_MM)
+      console.log('dd:', this.birth_dd)
+      console.log('user_rrn:', this.user_rrn)
     }
 
   }

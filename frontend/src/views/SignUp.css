@@ -26,12 +26,28 @@
     background-image: linear-gradient(310deg, #1AB7EA 0%, #0d6efd 100%);
     color: #FFFFFF;
     font-weight: 400;
-
 }
 
-/*입력 컨테이너 크기 조절*/
-.col-md-7{
-    width: 65%;
+/*데이터 입력 폼 css*/
+.data_title_wrap span{
+    display: inline-block;
+    height: 100%;
+}
+
+.data_title_wrap span:first-child{
+    margin-right: 10px;
+}
+.data_title_wrap span:last-child{
+    font-size: 12px;
+}
+
+/*유효성 검사 에러메세지 css*/
+.pass_error{
+    color: red;
+}
+/*유효성 검사 통과 시 글자색 초록색*/
+.pass_color{
+    color: green;
 }
 
 /*form 태그 안 css*/
@@ -75,37 +91,96 @@
 }
 
 /*id 입력 , 중복확인 부분*/
-.id_part button{
+.id_input_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+.id_input_wrap input{
+    display: inline-block;
+    width: 80%;
+}
+.id_input_wrap button{
+    display: inline-block;
     margin: 0;
 }
-.id_part span{
-    margin-left: 10px;
+/*핸드폰 입력, 인증번호 전송버튼 부분*/
+.userPh_input_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+.userPh_input_wrap input{
+    display: inline-block;
+    width: 72%;
+}
+.userPh_input_wrap button{
+    display: inline-block;
 }
 
-/*핸드폰 입력 부분*/
-.phoneWrap button{
-    margin: 0;
+/*성별타입 부분*/
+.gender_type_wrap{
+
 }
+.gender_type_wrap > div{
+    display: inline-block;
+    margin-right: 10px ;
+}
+
+/*생년월일 입력부분*/
+.birth_select_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+.birth_select_wrap select{
+    display: block;
+    width: 33%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    text-align: right;
+}
+
 /*인증번호 확인 부분*/
-.certifWrap .certif_btn{
-    margin-right: 10px;
+.certif_input_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+.certif_input_wrap input{
+    display: inline-block;
+    width: 70%;
+}
+.certif_input_wrap button:first-child{
+    display: inline-block;
 }
 
+/*동의항목, 가입하기 버튼 부분*/
 .form-bottom {
-    padding: 0px 5px;
+    padding: 10px 5px;
+    overflow: hidden;
+}
+.form-bottom > input{
+    display:block;
+    margin: auto;
 }
 
 /*기업 설립일 작성부분*/
-.esDateWrap{
-    overflow: hidden;
-}
-.esDateWrap div{
-    display: inline-block;
-    float: left;
-    padding: 6px 12px 6px 0;
-}
-.esDateWrap input {
-    display: inline-block;
-    float: right;
-    width: 80%;
-}
+/*.esDateWrap{*/
+/*    overflow: hidden;*/
+/*}*/
+/*.esDateWrap div{*/
+/*    display: inline-block;*/
+/*    float: left;*/
+/*    padding: 6px 12px 6px 0;*/
+/*}*/
+/*.esDateWrap input {*/
+/*    display: inline-block;*/
+/*    float: right;*/
+/*    width: 80%;*/
+/*}*/

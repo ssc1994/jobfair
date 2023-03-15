@@ -16,7 +16,7 @@ public class UserVO {
     private String user_pw;
     private String mg_auth; //권한 1: 구직자, 2: 기업(승인 전), 3: 기업(승인 완료), 4: admin
     private String user_name;
-    private String user_rrn; //주민등록번호
+    private String user_rrn; //주민등록번호 x -> 생년월일로 대체
     private String user_email;
     private String user_phone;
     private String user_regDate; //가입일

@@ -10,8 +10,8 @@
     </select>
 
     <insert id="uJoin" parameterType="UserVO">
-        INSERT INTO USER (USER_ID, USER_PW, MG_AUTH, USER_NAME, USER_EMAIL, USER_PHONE, USER_REGDATE, com_num)
-        VALUES ( #{user_id}, #{user_pw}, '1', #{user_name}, #{user_email}, #{user_phone}, now(), 0 )
+        INSERT INTO USER (USER_ID, USER_PW, MG_AUTH, USER_NAME, USER_RRN, USER_EMAIL, USER_PHONE, USER_REGDATE, USER_GENDER, com_num)
+        VALUES ( #{user_id}, #{user_pw}, '1', #{user_name}, #{user_rrn}, #{user_email}, #{user_phone}, now(), #{user_gender}, 0 )
     </insert>
 
     <insert id="cJoin" parameterType="CompanyVO">
