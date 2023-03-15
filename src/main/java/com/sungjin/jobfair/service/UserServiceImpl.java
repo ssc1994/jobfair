@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public ArrayList<QnAVO> getQnAList() {
         return userMapper.getQnAList();
+    }
     
     @Override
     public UserVO info(String id) {
