@@ -15,8 +15,6 @@
       <button>수정하기</button>
       <button>취소하기</button>
     </form>
-
-
   </div>
 </template>
 

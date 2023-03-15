@@ -1,7 +1,7 @@
 <template>
 
   <div class="container" style="max-width:1560px;">
-  <!--이력서 관리-->
+    <!--이력서 관리-->
     <div class="resumeBoxCon">
       <div>
         <h3>이력서 관리</h3>
@@ -11,6 +11,23 @@
       </div>
 
       <div v-if="fold!=false">
+
+        <div class="resumeBoxWrap" >
+          <routerLink to="">
+            <div class="resumeBox">
+              <div class="left">
+              <span class="newResumeIcon" style="font-size: 40px;">
+                +
+              </span>
+                <p class="newResume" style="display: inline-block;font-size: 19px;margin-left:10px;">이력서 작성하기</p>
+              </div>
+              <div class="right">
+
+              </div>
+            </div>
+          </routerLink>
+        </div>
+
         <div class="resumeBoxWrap" >
           <div class="resumeBox">
             <div class="left">
@@ -73,39 +90,39 @@
             <div>
               <table class="aplTable">
                 <thead>
-                  <tr class="aplTableTitle">
-                    <td>지원 회사</td>
-                    <td>공고명</td>
-                    <td>지원 포지션</td>
-                    <td>진행상태</td>
-                  </tr>
+                <tr class="aplTableTitle">
+                  <td>지원 회사</td>
+                  <td>공고명</td>
+                  <td>지원 포지션</td>
+                  <td>진행상태</td>
+                </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td ><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="allPass">최종합격</td>
-                  </tr>
-                  <tr>
-                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="noPass">불합격</td>
-                  </tr>
-                  <tr>
-                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="pass">서류통과</td>
-                  </tr>
-                  <tr>
-                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="applied">지원완료</td>
-                  </tr>
+                <tr>
+                  <td ><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                  <td>UI/UX 디자이너</td>
+                  <td class="allPass">최종합격</td>
+                </tr>
+                <tr>
+                  <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                  <td>UI/UX 디자이너</td>
+                  <td class="noPass">불합격</td>
+                </tr>
+                <tr>
+                  <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                  <td>UI/UX 디자이너</td>
+                  <td class="pass">서류통과</td>
+                </tr>
+                <tr>
+                  <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
+                  <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
+                  <td>UI/UX 디자이너</td>
+                  <td class="applied">지원완료</td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -162,31 +179,34 @@ h3{font-weight: bold;
 .resumeBoxWrap { display: inline-block;width:50%;}
 
 .arrDown{border:0;
-      margin-left:10px;
+  margin-left:10px;
   background: transparent;
 }
 .arrDown img{border:0;
-          width:20px;
+  width:20px;
   height:30px;
   object-fit: contain;
 }
 
 .resumeBox {border: 1px solid #dedede;
-                border-radius: 20px;
+  border-radius: 20px;
   overflow: hidden;
   padding:20px;
-width:98%;
+  width:98%;
   margin-bottom:10px;
   display:inline-block;
   margin-left:5px;
-    }
+  height:100px;
+  line-height: 50px;
+}
 .resumeBox p {margin:0;padding: 0;}
 .resumeBox button {margin:5px;}
 
 .resumeBox:hover {border:1px solid #0064ff;}
-    .resumeTitle {font-weight: bold;
-                  font-size: 18px;
-    }
+.resumeTitle {font-weight: bold;
+  font-size: 18px;
+}
+
 
 /*지원현황*/
 .aplBtnBox {margin-top:20px;
@@ -213,30 +233,30 @@ width:98%;
 
 .aplBtnNum {
 
-    font-size: 25px;
-    font-weight: bold;
-    margin:0;
-    padding:30px;
+  font-size: 25px;
+  font-weight: bold;
+  margin:0;
+  padding:30px;
 }
 
 .aplTable {width:1560px;
-           padding:20px;
+  padding:20px;
   text-align: center;
   margin-top:30px;
 }
 
 tr td:nth-child(4){border-right:0;
-                    height:80px;
+  height:80px;
 }
 
 tr {border-radius: 20px;
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 tr td:hover {border-bottom: 2px solid #0064ff;}
 
 tr td {
-      padding:10px;
+  padding:10px;
   border-left: 0;
   border-bottom: 2px solid #dedede;
 }
@@ -244,13 +264,13 @@ tr td {
 
 
 .aplTableTitle td{border:0;
-                padding:10px;
+  padding:10px;
   font-weight: bold;
- font-size: 20px;
+  font-size: 20px;
 }
 
 .pass {color:#202632;
-       font-weight: bold;
+  font-weight: bold;
 
 }
 .noPass {color:rgb(229, 75, 75);
