@@ -26,7 +26,12 @@
         where user_id = #{id}
     </select>
 
+
     <select id="getQnADetail" resultType="QnAVO">
         select * from QnA where qa_num = #{qa_num}
+    </select>
+
+    <select id="resumeInfo" resultType="ResumeVO">
+        select * from ResumeList
     </select>
 </mapper>

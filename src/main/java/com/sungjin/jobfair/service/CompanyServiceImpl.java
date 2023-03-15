@@ -1,5 +1,6 @@
 package com.sungjin.jobfair.service;
 
+import com.sungjin.jobfair.command.CompanyVO;
 import com.sungjin.jobfair.command.EmpVO;
 import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.command.UserVO;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 public class CompanyServiceImpl implements CompanyService{
     @Autowired
     CompanyMapper companyMapper;
-
 
     @Override
     public int empRegist(EmpVO vo) {
@@ -46,6 +46,12 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
 
+    public CompanyVO info(String com_num) {
+        return companyMapper.info(com_num);
+    }
 
-
+    @Override
+    public EmpVO getEmpData(int jpl_num) {
+        return companyMapper.getEmpData(jpl_num);
+    }
 }

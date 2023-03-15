@@ -1,5 +1,6 @@
 package com.sungjin.jobfair.service;
 
+import com.sungjin.jobfair.command.CompanyVO;
 import com.sungjin.jobfair.command.EmpVO;
 import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.command.UserVO;
@@ -22,6 +23,9 @@ public interface CompanyService {
     public UserVO getComQnADetail(String user_id);
 
     public QnAVO getQnAReply(int qa_num);
+    public CompanyVO info(String com_num);
+
+    public EmpVO getEmpData(int jpl_num);
 
 
 }
