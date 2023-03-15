@@ -6,18 +6,17 @@
           <h3>Q.</h3>
         </div>
 
-        <form action="qnaRegist">
           <div class=" wrapBox3">
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">작성자</span>
               <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                     aria-describedby="basic-addon1" disabled>
+                     aria-describedby="basic-addon1" v-model="user_id">
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">문의제목</span>
               <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                     aria-describedby="basic-addon1" v-model="qa_title" >
+                     aria-describedby="basic-addon1" v-model="qa_title">
             </div>
 
             <div class="input-group">
@@ -27,7 +26,6 @@
 
 
           </div>
-        </form>
 
 
       </div>
@@ -36,8 +34,8 @@
     </div>
 
     <div class="btnBox">
-      <button type="button" class="btn btn-primary" @click.stop="qnaRegist">등록하기</button>
-      <button type="button" class="btn btn-outline-primary">목록으로</button>
+      <button type="button" class="btn btn-primary" @click.prevent="qnaRegist">등록하기</button>
+      <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
     </div>
 
 
@@ -55,7 +53,8 @@ data: function () {
   return {
     user_id: 'user123',
     qa_title: '',
-    qa_content: ''
+    qa_content: '',
+    qa_type: 'q'
   }
 },
   methods: {
@@ -65,7 +64,8 @@ data: function () {
           .post('/jobfair/qnaRegist', {
             user_id: this.user_id,
             qa_title: this.qa_title,
-            qa_content: this.qa_content
+            qa_content: this.qa_content,
+            qa_type: this.qa_type
           })
           .then((res) => {
             if(res.status === 200) {
@@ -81,6 +81,9 @@ data: function () {
           .finally(() => {
             console.log('큐앤에이등록')
           })
+    },
+    goBackToList() {
+      this.$router.push("/uQnAView")
     }
   }
 }

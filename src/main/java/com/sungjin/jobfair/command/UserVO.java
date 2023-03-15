@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,5 +23,8 @@ public class UserVO {
     private String user_gender;
     private String user_address;
     private String com_num; //기업 번호
+
+
+
 
 }

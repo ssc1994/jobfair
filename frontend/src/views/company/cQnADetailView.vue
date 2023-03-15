@@ -9,26 +9,26 @@
         <div class=" wrapBox3">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">작성자</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+            <input type="text" v-model="uQnADetail.user_id" class="form-control" placeholder="Username" aria-label="Username"
                    aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">문의제목</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+            <input type="text" v-model="uQnADetail.qa_title" class="form-control" placeholder="Title" aria-label="Username"
                    aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group">
             <span class="input-group-text">문의내용</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
+            <textarea class="form-control contentBox" v-model="uQnADetail.qa_content" aria-label="With textarea" disabled></textarea>
           </div>
 
 
         </div>
       </div>
 
-      <div class="wrapBox4">
+      <div class="wrapBox4" v-if="cQnADetail.user_id != null">
         <div class="qnaBox">
           <h3>A.</h3>
         </div>
@@ -37,13 +37,13 @@
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">담당자</span>
             <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled>
+                   aria-describedby="basic-addon1" disabled v-model="cQnADetail.user_id">
           </div>
 
 
           <div class="input-group">
             <span class="input-group-text">답변</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
+            <textarea class="form-control contentBox" aria-label="With textarea" disabled v-model="cQnADetail.qa_content"></textarea>
           </div>
 
 
@@ -52,52 +52,13 @@
     </div>
 
     <div class="btnBox">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        수정하기
+      <button type="button" class="btn btn-primary" @click.prevent="addAnswer">
+        답변 등록하기
       </button>
-      <button type="button" class="btn btn-outline-primary">목록으로</button>
+      <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
     </div>
 
-    <!--지원하기 모달창 설정-->
-    <!--state 적용해서 데이터 넣어야해유-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">답변수정</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" style="height: 100%">
-            <div class="infoModalBox">
 
-              <div class=" wrapBox3">
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">담당자</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                         aria-describedby="basic-addon1" disabled>
-                </div>
-
-                <div class="input-group">
-                  <span class="input-group-text">답변</span>
-                  <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
-                </div>
-                <div class="btnModalBox">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    수정하기
-                  </button>
-
-                </div>
-              </div>
-
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
-    </div>
 
   </div>
 </template>
@@ -106,7 +67,78 @@
 import SoftInput from "@/components/SoftInput.vue";
 import SoftButton from "@/components/SoftButton.vue";
 
-export default {components: {SoftInput, SoftButton},};
+export default {
+  components: {SoftInput, SoftButton},
+  data() {
+    return {
+      uQnADetail: {
+        user_id: '',
+        qa_title: '',
+        qa_content: '',
+        com_num: '',
+        qa_type: ''
+      },
+      cQnADetail: {
+        user_id: 'testCom5',
+        com_num: '',
+        qa_content: '',
+        qa_type: 'a'
+      },
+    };
+  },
+
+
+  beforeCreate() {
+
+    this.$axios.get('/jobfair/uQnADetailView/', {params: {qa_num: this.$route.params.qa_num}})
+        .then((res) => {
+          console.log('유저시작')
+
+              this.uQnADetail = res.data
+              console.log(res.data);
+          this.$axios.get('/jobfair/getQnAReply/' , {params: {qa_num: this.$route.params.qa_num}} )
+              .then((res) => {
+                    console.log('기업시작')
+
+                    this.cQnADetail = res.data
+                    console.log(res.data);
+
+
+                console.log(this.$route.params.qa_num)
+                    .catch((error) => console.log(error))
+                  }
+
+              )
+              .catch((error) => this.uQnADetail = error.date)
+              .finally(()=>{
+                console.log('기업완료')
+              })
+
+            }
+        )
+        .catch((error) => this.uQnADetail = error.date)
+
+
+  },
+  methods: {
+
+    addAnswer() {
+      this.$router.push({
+        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
+        name: 'cQnAWriteView',
+        params: {
+          qa_num: this.$route.params.qa_num
+        }
+      })
+
+    },
+    goBackToList() {
+      this.$router.push("/cQnAView")
+    },
+
+  }
+}
+
 </script>
 
 <style scoped>

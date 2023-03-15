@@ -10,7 +10,7 @@
             <button @click.stop="addQnA">+ 질의 등록</button>
           </div>
 
-          <table class="table table-bordered" @click.stop="clickQnA">
+          <table class="table table-bordered">
             <thead>
             <tr>
               <td>No</td>
@@ -20,11 +20,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(row, idx) in list" :key="idx">
-              <td>{{row.idx}}</td>
+            <tr v-for="(row, idx) in QnAList" :key=idx @click="detail(row.qa_num)">
+              <td>{{idx + 1}}</td>
               <td>{{ row.user_id }}</td>
-              <td><a v-on:click="clickQnA('${row.idx}')">{{row.title}}</a></td>
-              <td>{{ row.qa_regdate }}</td>
+              <td>{{row.qa_title}}</td>
+              <td>{{ row.qa_regDate }}</td>
             </tr>
             </tbody>
           </table>
@@ -40,27 +40,17 @@
 <script>
 export default {
   name: "uQnAView",
+  user_id: 'user123',
+  qa_num: '',
 
   data() {
     return {
-      list: {
-        qa_num: 'list[]',
-        user_id: '',
-        qa_title: '',
-        qa_regdate: ''
-      },
-      items: [],
-    }
+      QnAList: [],
+      QnADetailList: [],
+    };
   },
   created() {
-    this.$axios
-        .post("/jobfair/getQnAList")
-        .then((res) => {
-
-        })
-        .catch((error) => {
-
-    })
+    this.getQnAList();
 
   },
   methods: {
@@ -69,12 +59,28 @@ export default {
 
     },
     getQnAList() {
-      this.axios.get('/getQnAList',
-          {
-            params: {}
-          })
-    }
+      this.$axios.post('/jobfair/getQnAList')
+          .then((res) => this.QnAList = res.data)
+          .catch((error) => this.QnAList = error.date)
 
+    },
+    // getQnADetailList() {
+    //   this.$axios.get('/jobfair/getQnADetailList?qa_num=' + this.qa_num)
+    //       .then((res) => {
+    //
+    //         self.$router.push("/uQnADetailView")
+    //       })
+    //       .catch((error) => this.QnADetailList = error.date)
+    // }
+    detail(idx) {
+      this.$router.push({
+        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
+        name: 'uQnADetailView',
+        params: {
+          qa_num: idx
+        }
+      })
+    }
   }
 }
 

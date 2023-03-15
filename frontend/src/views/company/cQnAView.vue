@@ -12,27 +12,20 @@
           <table className="table table-bordered">
             <thead>
             <tr>
+              <td>No</td>
               <td>작성자</td>
               <td>질문제목</td>
               <td>등록시간</td>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
+            <tr v-for="(row, idx) in QnAList" :key=idx @click.prevent="detail(row.qa_num)">
+              <td>{{idx + 1}}</td>
+              <td>{{ row.user_id }}</td>
+              <td>{{row.qa_title}}</td>
+              <td>{{ row.qa_regDate }}</td>
             </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@example.com</td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@example.com</td>
-            </tr>
+
             </tbody>
           </table>
 
@@ -46,7 +39,34 @@
 
 <script>
 export default {
-  name: "uQnAView"
+  name: "uQnAView",
+  com_num: 'com456',
+
+  data() {
+    return {
+      QnAList: []
+    };
+  },
+  created() {
+    this.cgetQnAList();
+  },
+  methods: {
+    cgetQnAList() {
+      this.$axios.post('/jobfair/cgetQnAList')
+          .then((res) => this.QnAList = res.data)
+          .catch((error) => this.QnAList = error.date)
+
+    },
+    detail(idx) {
+      this.$router.push({
+        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
+        name: 'cQnADetailView',
+        params: {
+          qa_num: idx
+        }
+      })
+    }
+  }
 }
 </script>
 
