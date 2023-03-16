@@ -125,6 +125,7 @@ public class CompanyController {
     @GetMapping(value="/empData")
     public EmpVO getEmpData(@RequestParam("num") int jpl_num){
         EmpVO vo = companyService.getEmpData(jpl_num);
+        System.out.println(vo);
         return vo;
     }
 

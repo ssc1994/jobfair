@@ -33,7 +33,7 @@
 
     <select id="getJobPostSrc" resultType="EmpVO">
         select * from jobpostinglist
-
+    </select>
 
     <select id="getQnADetail" resultType="QnAVO">
         select * from QnA where qa_num = #{qa_num}

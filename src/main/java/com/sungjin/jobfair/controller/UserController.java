@@ -111,6 +111,7 @@ public class UserController {
         model.addAttribute("list", list);
 
         return list;
+    }
 
     //이력서 등록
     @PostMapping(value = "/regResume",

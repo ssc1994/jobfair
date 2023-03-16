@@ -34,7 +34,7 @@
             <span class="input-group-text" id="basic-addon1">공고종료일</span>
             <input type="date" class="form-control" placeholder="2023.06.05." aria-label="Username"
                    aria-describedby="basic-addon1" v-model="jpl_endDate" required>
-
+            </div>
           </div>
         </div>
       </section>
@@ -201,8 +201,10 @@
               <div >
                 <label for="appt">근무시간 :</label>
                 <div>
-                  <input type="time" id="appt" name="appt" v-model="workingHourS"> ~
-                  <input type="time" id="appt" name="appt" v-model="workingHourE">
+                  <b-form-timepicker v-model="jpl_workTimeS" locale="en"></b-form-timepicker>
+                  <div class="mt-2">Value: '{{ value }}'</div>
+                  <input type="time" id="appt" name="appt" v-model="jpl_workTimeS"> ~
+                  <input type="time" id="appt" name="appt" v-model="jpl_workTimeE">
                 </div>
               </div>
             </div>
@@ -241,13 +243,20 @@
                 </div>
                 <div class="input-group mb-3">
 
-                  <input type="file" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert">
-                  <label class="input-group-text" for="inputGroupFile02" >Upload</label>
+                  <input type="file" style="display: none" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert">
+                  <input type="button" value="채용공고 이미지선택" @click="clickFile">
 
                 </div>
+
+                <div>
+                  <img class="headline-image" :src="viewImg" alt="이미지 미리보기" ref="previewImg">
+
+                </div>
+
               </div>
             </div>
           </section>
+
           <button type="submit" class="btn btn-primary" @click="empRegist">등록</button>
         </div>
       </div>
@@ -260,7 +269,6 @@
 </template>
 
 <script>
-
 export default {
   name: "cEmpRegView",
 
@@ -285,17 +293,16 @@ export default {
       jpl_locationGu:'',
       jpl_address:'',
       jpl_workDay:'회사내규에 따름',
-      jpl_workTime:'',
+      jpl_workTimeS:'',
+      jpl_workTimeE:'',
       jpl_name:'',
-      jpl_comPanyName:'',
+      jpl_companyName:'',
       jpl_contact:'',
       jpl_phoneNum:'',
       jpl_email:'',
       jpl_fileName:'',
       jpl_filePath:'',
       jpl_fileUuid:'',
-      workingHourS:'',
-      workingHourE:'',
       salaryType:'',
       checkedCity: 0,
       city: [
@@ -363,7 +370,8 @@ export default {
         },
         {cityCode: 17, gooName: ["제주시", "서귀포시"]}
       ]
-
+,
+      viewImg: ''
     }
   },
   beforeCreate() {
@@ -396,8 +404,15 @@ export default {
 
   },
   methods:{
-    fileChange(){
+    fileChange(e){
       this.jpl_fileName = this.$refs.fileInsert.files[0]
+      this.res_img = e.target.files[0]
+      //이미지 업로드 시 화면에서 미리보기 기능
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.viewImg = event.target.result;
+      }
+      reader.readAsDataURL(this.res_img);
     },
 
     empRegist(){
@@ -425,7 +440,8 @@ export default {
         jpl_locationGu:this.jpl_locationGu,
         jpl_address:this.jpl_address,
         jpl_workDay:this.jpl_workDay,
-        jpl_workTime:this.workingHourS+this.workingHourE,
+        jpl_workTimeS:this.jpl_workTimeS,
+        jpl_workTimeE:this.jpl_workTimeE,
 
         jpl_name:this.jpl_name,
         jpl_phoneNum:this.jpl_phoneNum,
@@ -458,6 +474,18 @@ export default {
 
       })
 
+    },
+    clickFile () {  //버튼 클릭 시 input:file 클릭으로 연동하는 함수
+      this.$refs.fileInsert.click();
+    },
+    previewImg(e) {  //이미지 미리보기
+      this.res_img = e.target.files[0]
+      //이미지 업로드 시 화면에서 미리보기 기능
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.viewImg = event.target.result;
+      }
+      reader.readAsDataURL(this.res_img);
     },
     plus(e) {
       this.checkedCity = e.target.id
@@ -564,6 +592,12 @@ textarea.form-control {
   width: 60%;
   height: 100%;
   display: inline-block;
+}
+.headline-image {
+  width: 500px;
+  height: 300px;
+  border: 1px solid #A4A4A4;
+  /*position: absolute;*/
 }
 
 </style>
