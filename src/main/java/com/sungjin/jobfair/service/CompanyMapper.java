@@ -20,7 +20,7 @@ public interface CompanyMapper {
     //큐앤에이 상세페이지 데이터 가져오기 - 유저꺼
     public QnAVO getUserQnADetail(int qa_num);
     //큐앤에이 상세페이지 데이터 가져오기 - 기업꺼
-    public UserVO getComQnADetail(String user_id);
+    public UserVO cQnAInfo(String user_id);
 
     public QnAVO getQnAReply(int qa_num);
 
@@ -31,5 +31,7 @@ public interface CompanyMapper {
     public EmpVO getEmpData(int jpl_num);
 
 
+    //기업 큐앤에이 디테일 정보 가져오기
+    public QnAVO getComQnADetail(int qa_num);
 
 }

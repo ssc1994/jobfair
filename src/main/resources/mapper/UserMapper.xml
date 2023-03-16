@@ -13,7 +13,7 @@
 
     <insert id="qnaRegist" parameterType="QnAVO">
         insert into QnA(user_id, qa_title, qa_content, qa_regDate, qa_type)
-        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d'), #{qa_type})
+        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d') , #{qa_type})
     </insert>
 
     <select id="getQnAList" resultType="QnAVO">
@@ -33,7 +33,7 @@
 
     <select id="getJobPostSrc" resultType="EmpVO">
         select * from jobpostinglist
-
+    </select>
 
     <select id="getQnADetail" resultType="QnAVO">
         select * from QnA where qa_num = #{qa_num}
@@ -43,4 +43,14 @@
         select * from ResumeList
 
     </select>
+
+    <update id="uQnAModi" parameterType="QnAVO">
+        update QnA set qa_title = #{qa_title} , qa_content = #{qa_content}
+            where qa_num = #{qa_num}
+    </update>
+
+<!--    <select id="uQnABtnClick" resultType="QnAVO">-->
+<!--        select * from JOBPOSTINGLIST where jpl_num = #{jpl_num}-->
+<!--    </select>-->
+
 </mapper>

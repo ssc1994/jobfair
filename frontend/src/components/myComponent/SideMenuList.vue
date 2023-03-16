@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "Test",
+  name: "SideMenuList",
   props: [
     'menuTitle'
   ],

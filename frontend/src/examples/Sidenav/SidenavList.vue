@@ -134,9 +134,9 @@
   <hr>
 
   <!-- 아코디언 -->
-  <Test menuTitle='메뉴 1'/>
-  <Test menuTitle='메뉴 2'/>
-  <Test menuTitle='메뉴 3'/>
+  <SideMenuList menuTitle='메뉴 1'/>
+  <SideMenuList menuTitle='메뉴 2'/>
+  <SideMenuList menuTitle='메뉴 3'/>
 
 </template>
 <script>
@@ -186,7 +186,7 @@ export default {
     Document,
     Spaceship,
     Settings,
-    Test
+    SideMenuList: Test
   },
   methods: {
     getRoute() {

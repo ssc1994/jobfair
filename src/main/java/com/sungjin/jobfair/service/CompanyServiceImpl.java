@@ -36,8 +36,8 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public UserVO getComQnADetail(String user_id) {
-        return companyMapper.getComQnADetail(user_id);
+    public UserVO cQnAInfo(String user_id) {
+        return companyMapper.cQnAInfo(user_id);
     }
 
     @Override
@@ -53,5 +53,10 @@ public class CompanyServiceImpl implements CompanyService{
     @Override
     public EmpVO getEmpData(int jpl_num) {
         return companyMapper.getEmpData(jpl_num);
+    }
+
+    @Override
+    public QnAVO getComQnADetail(int qa_num) {
+        return companyMapper.getComQnADetail(qa_num);
     }
 }

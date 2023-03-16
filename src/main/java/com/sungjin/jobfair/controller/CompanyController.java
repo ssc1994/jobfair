@@ -128,4 +128,45 @@ public class CompanyController {
         return vo;
     }
 
+
+    //큐앤에이 답변 등록
+    @PostMapping(value = "/cqnaRegist")
+    public String cqnaRegist(@RequestBody QnAVO vo) {
+        companyService.cqnaRegist(vo);
+        return "success";
+    }
+
+    //큐앤에이 목록 - done
+    @PostMapping(value = "/cgetQnAList")
+    public ArrayList<QnAVO> cgetQnAList() {
+
+        ArrayList<QnAVO> list = companyService.cgetQnAList();
+        System.out.println(list.toString());
+
+        return list;
+    }
+
+    //QnA에서 기업정보 데이터 가져오기
+    @GetMapping(value = "/cQnAInfo")
+    public UserVO cQnAInfo(@RequestParam("user_id") String user_id) {
+
+        System.out.println("유저아이디:" + user_id);
+        UserVO vo = companyService.cQnAInfo(user_id);
+        System.out.println("기업VO");
+        System.out.println(vo.toString());
+
+        return vo;
+    }
+
+    @GetMapping(value = "/getComQnADetail")
+    public QnAVO getComQnADetail(@RequestParam("qa_num") int qa_num) {
+
+        System.out.println("기업 QnA 디테일데이터");
+        QnAVO vo = companyService.getComQnADetail(qa_num);
+        System.out.println(vo);
+        System.out.println("야호");
+
+        return vo;
+    }
+
 }

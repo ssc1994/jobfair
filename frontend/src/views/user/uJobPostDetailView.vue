@@ -52,42 +52,23 @@
         <p><br></p>
         <p>&nbsp;</p>
         <div class="recruitment">
-          <b>혜택 및 복지</b><br/>
-          <p>블라블라블라~~</p><br/>
+          <b>기업정보</b><br/>
+          <img src="@/assets/kakao.png">
+          <span>기업명 :</span><br/>
+          <span>기업전화번호 :</span><br/>
+          <span>기업이메일 :</span><br/>
+          <span>기업주소 :</span><br/>
+          <span>업종 :</span><br/>
+          <span>대표자 :</span><br/>
+          <span>사업자등록번호 :</span><br/>
         </div>
         <p><br></p>
         <p>&nbsp;</p>
+        <p><br></p>
+        <p>&nbsp;</p>
       </div>
-      
-    <div class="contents">
-      <div class="recruitment">
-        <b>업무소개</b> <br/>
-        <p>블라블라블라 ~~fnoifoifeoifhewoifheoiwfo eiwfhoewihfoewihfoiewhfoiewhfoiewhfoiefenfoewnfoewnfonofewnofewnoifnowncowncownecowneconwecoewncowencoewnoewnoiewncoiewncoiencoiewncowencoiewncownecoiewnconfiheoreoifneimdcdcmdslkcmldknvkndvvowecodcjdbcdbdbcodjjcpocdcdocnodscndncbbcdbdubcdiucb</p><br/>
-      </div>
-      <p><br></p>
-      <p>&nbsp;</p>
-      <div class="recruitment">
-        <b>전형절차</b><br/>
-        <p>서류 지원 - 1차 면접 - 2차 면접 - 합격</p><br/>
-      </div>
-      <p><br></p>
-      <p>&nbsp;</p>
-      <div class="recruitment">
-        <b>기업정보</b><br/>
-        <img src="@/assets/kakao.png">
-        <span>기업명 :</span><br/>
-        <span>기업전화번호 :</span><br/>
-        <span>기업이메일 :</span><br/>
-        <span>기업주소 :</span><br/>
-        <span>업종 :</span><br/>
-        <span>대표자 :</span><br/>
-        <span>사업자등록번호 :</span><br/>
-      </div>
-      <p><br></p>
-      <p>&nbsp;</p>
-    </div>
     </main>
-    
+
     <div style="position: fixed; right: 50px">
       <div>
         <div class="marginTime">
@@ -99,6 +80,9 @@
           </div>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             지원하기
+          </button>
+          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick">
+            Q&A 질문하기
           </button>
 
         </div>
@@ -196,13 +180,38 @@ export default {
   name: "uJobPostDetailView",
   data() {
     return {
-      a: ''
+
+      QnAComInfo: {
+        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+        com_num: ''
+      }
+
     }
 
   },
-  updated() {
-    console.log(this.a)
+  methods: {
+    // uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
+    //   let self = this;
+    //   this.$axios
+    //       .get('/jobfair/uQnABtnClick', {params: {com_num: this.$route.params.com_num}
+    //
+    //   })
+    //       .then((res) => {
+    //         console.log("데이터: " + res.data)
+    //         self.$router.push({
+    //           name: 'cQnAView',
+    //           params: {
+    //             com_num: this.$route.params.com_num
+    //           }
+    //         })
+    //         self.$router.push('/uQnAWriteView')
+    //       })
+    //       .catch((error) => {
+    //         console.log(error)
+    //       })
+    // }
   }
+
 }
 </script>
 
