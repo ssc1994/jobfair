@@ -52,7 +52,8 @@
     </div>
 
     <div class="btnBox">
-      <button type="button" class="btn btn-primary" @click.prevent="addAnswer">
+      <!--답변은 하나만 달 수 있게 설정-->
+      <button type="button" class="btn btn-primary" @click.prevent="addAnswer" v-if="cQnADetail.user_id == null">
         답변 등록하기
       </button>
       <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
@@ -72,7 +73,7 @@ export default {
   data() {
     return {
       uQnADetail: {
-        user_id: '',
+        user_id: 'user123',
         qa_title: '',
         qa_content: '',
         com_num: '',
@@ -80,7 +81,7 @@ export default {
       },
       cQnADetail: {
         user_id: 'testCom5',
-        com_num: '',
+        com_num: '2',
         qa_content: '',
         qa_type: 'a'
       },
@@ -90,33 +91,37 @@ export default {
 
   beforeCreate() {
 
-    this.$axios.get('/jobfair/uQnADetailView/', {params: {qa_num: this.$route.params.qa_num}})
+    this.$axios.get('/jobfair/getQnADetail/', {params: {qa_num: this.$route.params.qa_num}})
         .then((res) => {
           console.log('유저시작')
-
               this.uQnADetail = res.data
               console.log(res.data);
-          this.$axios.get('/jobfair/getQnAReply/' , {params: {qa_num: this.$route.params.qa_num}} )
-              .then((res) => {
-                    console.log('기업시작')
+          // this.$axios.get('/jobfair/cQnAInfo/' , {params: {qa_num: this.$route.params.qa_num}} )
+          //     .then((res) => {
+          //
+          //         console.log("successsss")
+          //
+          //         }
+          //
+          //     )
+          //     .catch((error) => this.uQnADetail = error.date)
+          //     .finally(()=>{
+          //       console.log('기업완료')
+          //       this.cQnADetail = res.data
+          //       console.log(res.data);
+          //     })
 
-                    this.cQnADetail = res.data
-                    console.log(res.data);
-
-
-                console.log(this.$route.params.qa_num)
-                    .catch((error) => console.log(error))
-                  }
-
-              )
-              .catch((error) => this.uQnADetail = error.date)
-              .finally(()=>{
-                console.log('기업완료')
+          this.$axios.get('/jobfair/getComQnADetail', {params: {qa_num: this.$route.params.qa_num}} )
+              .then((response) => {
+                console.log('기업시작')
+                this.cQnADetail = response.data
+                console.log(response.data);
               })
+              .catch((err) => console.log(err))
 
             }
         )
-        .catch((error) => this.uQnADetail = error.date)
+        .catch((error) => console.log(error))
 
 
   },

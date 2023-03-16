@@ -9,46 +9,40 @@
         <div class=" wrapBox3">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">작성자</span>
-            <input type="text" v-model="QnADetail.user_id" class="form-control" placeholder="Username" aria-label="Username"
+            <input type="text" v-model="uQnADetail.user_id" class="form-control" aria-label="Username"
                    aria-describedby="basic-addon1" disabled >
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">문의제목</span>
-            <input type="text" v-model="QnADetail.qa_title" class="form-control" placeholder="Title" aria-label="Username"
+            <input type="text" v-model="uQnADetail.qa_title" class="form-control" placeholder="Title" aria-label="Username"
                    aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group">
             <span class="input-group-text">문의내용</span>
-            <textarea class="form-control contentBox" v-model="QnADetail.qa_content" aria-label="With textarea" disabled></textarea>
+            <textarea class="form-control contentBox" v-model="uQnADetail.qa_content" aria-label="With textarea" disabled></textarea>
           </div>
 
 
         </div>
       </div>
 
-      <div class="wrapBox4">
+      <div class="wrapBox4" v-if="cQnADetail.user_id != null">
         <div class="qnaBox">
           <h3>A.</h3>
         </div>
 
         <div class=" wrapBox5">
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">작성자</span>
+            <span class="input-group-text" id="basic-addon1">담당자</span>
             <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled>
-          </div>
-
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">문의제목</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled>
+                   aria-describedby="basic-addon1" disabled v-model="cQnADetail.user_id">
           </div>
 
           <div class="input-group">
             <span class="input-group-text">문의내용</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" disabled></textarea>
+            <textarea class="form-control contentBox" aria-label="With textarea" disabled v-model="cQnADetail.qa_content"></textarea>
           </div>
 
 
@@ -57,7 +51,9 @@
     </div>
 
     <div class="btnBox">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <!--답변있을경우 수정하기 버튼 안보이게 설정해야함-->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              v-if="cQnADetail.user_id == null && sessionUser_id === uQnADetail.user_id">
         수정하기
       </button>
       <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
@@ -79,23 +75,23 @@
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="basic-addon1">작성자</span>
                   <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                         aria-describedby="basic-addon1">
+                         aria-describedby="basic-addon1" v-model="uQnADetail.user_id" disabled>
                 </div>
 
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="basic-addon1">문의제목</span>
                   <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                         aria-describedby="basic-addon1">
+                         aria-describedby="basic-addon1" v-model="uQnADetail.qa_title">
                 </div>
 
                 <div class="input-group">
                   <span class="input-group-text">문의내용</span>
-                  <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
+                  <textarea class="form-control contentBox" aria-label="With textarea" v-model="uQnADetail.qa_content"></textarea>
                 </div>
-                <!--답변있을경우 수정하기 버튼 안보이게 설정해야함-->
-                <div class="btnModalBox" v-if="QnADetail.com_num !== 0">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    수정하기
+
+                <div class="btnModalBox">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click.prevent="uQnAModi">
+                    수정완료
                   </button>
 
                 </div>
@@ -120,38 +116,79 @@ import SoftButton from "@/components/SoftButton.vue";
 export default {components: {SoftInput, SoftButton},
   data() {
     return {
-      QnADetail: {
+
+      sessionUser_id: JSON.parse(sessionStorage.getItem('sessionId')),
+
+      uQnADetail: {
         user_id: '',
         qa_title: '',
         qa_content: '',
 
-      }
+      },
+      cQnADetail: {
+        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+        com_num: JSON.parse(sessionStorage.getItem('sessionComp')),
+        qa_content: '',
+        qa_type: 'a',
+      },
+      // uQnAModiList: {
+      //   user_id: '',
+      //   qa_title: '',
+      //   qa_content: ''
+      // }
     };
   },
 
 
   beforeCreate() {
 
-      this.$axios.get('/jobfair/uQnADetailView/' , {params:{qa_num: this.$route.params.qa_num}} )
+      this.$axios.get('/jobfair/getQnADetail/' , {params:{qa_num: this.$route.params.qa_num}} )
           .then((res) => {
-            this.QnADetail = res.data
+            this.uQnADetail = res.data
             console.log(res.data);
-          }
+
+            this.$axios.get('/jobfair/getComQnADetail', {params: {qa_num: this.$route.params.qa_num}} )
+                .then((response) => {
+                  this.cQnADetail = response.data
+                })
+                .catch((error) => console.log(error))
+            }
           )
-          .catch((error) => this.QnADetail = error.date)
+          .catch((error) => console.log(error))
 
 
 
   },
   methods: {
     getQnADetail() {
-      this.$axios.get('/jobfair/getQnADetail')
-          .then((res) => this.QnADetail = res.data)
-          .catch((error) => this.QnADetail = error.date)
+      this.$axios.get('/jobfair/getQnADetail', {params: {qa_num: this.$route.params.qa_num}})
+          .then((res) => this.uQnADetail = res.data)
+          .catch((error) => console.log(error))
 
     },
     goBackToList() {
       this.$router.push("/uQnAView")
+    },
+    uQnAModi() {
+      this.$axios.post('/jobfair/uQnAModi', {
+        qa_num: this.$route.params.qa_num,
+        user_id: this.uQnADetail.user_id,
+        qa_title: this.uQnADetail.qa_title,
+        qa_content: this.uQnADetail.qa_content
+      })
+          .then((res)=> {
+            this.uQnADetail = res.data
+            this.$router.push({
+              name: 'uQnADetailView',
+              params: {
+                qa_num: this.$route.params.qa_num
+              }
+            })
+            this.$router.push('/uQnAView')
+          })
+          .catch((error) => {
+            console.log(error)
+          })
     }
 
   }

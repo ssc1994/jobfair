@@ -24,11 +24,10 @@
               <td>{{idx + 1}}</td>
               <td>{{ row.user_id }}</td>
               <td>{{row.qa_title}}</td>
-              <td>{{ row.qa_regDate }}</td>
+              <td>{{ row.qa_regDate.substring(0,10) }}</td>
             </tr>
             </tbody>
           </table>
-
 
         </div>
       </div>
