@@ -1,0 +1,260 @@
+## 23.03.15 ResumeList 수정
+## 23.03.16 company 테이블에 com_detail_address 컬럼 추가
+
+CREATE TABLE User (
+   user_id   varchar(30)   primary key,
+   user_pw   varchar(30),
+   mg_auth   varchar(1)   NOT NULL,
+   user_name   varchar(10),
+   user_rrn   varchar(10),
+   user_email   varchar(30),
+   user_phone   varchar(20),
+   user_regDate date,
+   user_gender   varchar(1),
+   user_address varchar(100),
+   com_num int
+);
+
+CREATE TABLE Company (
+   com_num   int   primary key auto_increment,
+   com_name varchar(20),
+   com_phone varchar(30),
+   com_email varchar(50),
+   com_address   varchar(100),
+   com_detail_address varchar(100),
+   com_category varchar(10),
+   com_ceo   varchar(10),
+   com_businessRegistration varchar(30),
+   com_establishmentDate Date
+);
+
+CREATE TABLE JobPostingList (
+   jpl_num   int   primary key auto_increment,
+   com_num   int, 
+   jpl_title   varchar(100)   NULL,
+   jpl_content   varchar(1500)   NULL,
+   jpl_startDate   Date   NULL,
+   jpl_endDate   Date   NULL,
+   jpl_regDate   Date   NULL,
+   jpl_workPosition   varchar(30)   NULL,
+   jpl_duty   varchar(30)   NULL,
+   jpl_workHistory   varchar(30)   NULL,
+   jpl_workForm   varchar(30)   NULL,
+   jpl_education   varchar(50)   NULL,
+   jpl_conditions   varchar(50)   NULL,
+   jpl_certificate   varchar(50)   NULL,
+   jpl_gender   varchar(10)   NULL,
+   jpl_salary   varchar(50)   NULL,
+   jpl_locationSi   varchar(20)   NULL,
+   jpl_locationGu   varchar(20)   NULL,
+   jpl_locationDong   varchar(20)   NULL,
+   jpl_address   varchar(100)   NULL,
+   jpl_workDay   varchar(30)   NULL,
+   jpl_workTime   varchar(30)   NULL,
+   jpl_name   varchar(10)   NULL,
+   jpl_departmentName   varchar(30)   NULL,
+   jpl_contact   varchar(20)   NULL,
+   jpl_phoneNum   varchar(20)   NULL,
+   jpl_email   varchar(50)   NULL
+);
+
+CREATE TABLE ApplyList (
+   al_num   int   primary key auto_increment,
+   user_id   varchar(20)   NOT NULL,
+   jpl_num   int   NOT NULL,
+   res_num   int   NOT NULL,
+   al_state   varchar(10)   NULL,
+   al_interviewDate   Date   NULL
+);
+
+CREATE TABLE ResumeList (
+   res_num   int   primary key auto_increment,
+   user_id   varchar(20)   NOT NULL,
+   res_title   varchar(100)   NULL,
+   res_content   varchar(1500)   NULL,
+   res_regDate   Date   NULL,
+   res_picName   varchar(100)   NULL,
+   res_picPath   varchar(200)   NULL,
+   res_picUuid   varchar(300)   NULL,
+   res_picRegDate   Date   NULL,
+   res_name   varchar(20)   NULL,
+   res_email   varchar(30)   NULL,
+   res_phone   varchar(20)   NULL,
+   res_address   varchar(100)   NULL,
+   res_birth   Date   NULL
+);
+
+CREATE TABLE Message (
+   m_num   int   primary key auto_increment,
+   user_id   varchar(30)   NOT NULL,
+   m_receiver   varchar(30)   NOT NULL,
+   m_sendTime   timestamp   NULL,
+   m_title   varchar(200)   NULL,
+   m_content   varchar(1500)   NULL,
+   m_read   varchar(1)   NULL,
+   m_readTime   Date   NULL
+);
+
+CREATE TABLE Education (
+   edu_num   int   primary key auto_increment,
+   res_num   int  NOT NULL,
+   user_id   varchar(20)   NOT NULL,
+   edu_degree   varchar(30)   NULL,
+   edu_schoolName   varchar(30)   NULL,
+   edu_major   varchar(30)   NULL,
+   edu_entranceDate   Date   NULL,
+   edu_graduationDate   Date   NULL,
+   edu_state   varchar(30)   NULL,
+   edu_grades   varchar(30)   NULL,
+   edu_totalGrades   varchar(30)   NULL
+);
+
+CREATE TABLE QnA (
+   qa_num   int primary key auto_increment,
+   user_id   varchar(30)   NOT NULL,
+   com_num   int   NULL,
+   qa_type   varchar(30)   NULL,
+   qa_title   varchar(200)   NULL,
+   qa_content   varchar(1500)   NULL,
+   qa_regDate   Date   NULL,
+   qa_reply int NULL
+);
+
+CREATE TABLE WorkExperiences (
+   we_num   int   primary key auto_increment,
+   res_num   int   NOT NULL,
+   user_id   varchar(20)   NOT NULL,
+   we_company   varchar(30)   NULL,
+   we_department   varchar(30)   NULL,
+   we_position   varchar(30)   NULL,
+   we_job   varchar(30)   NULL,
+   we_emplDate   Date   NULL,
+   we_departureDate   Date   NULL,
+   we_salary   varchar(30)   NULL
+);
+
+CREATE TABLE Certificate (
+   cert_num      int   primary key auto_increment,
+   res_num   int   NOT NULL,
+   user_id   varchar(20)   NOT NULL,
+   cert_name   varchar(30)   NULL,
+   cert_gainDate   varchar(30)   NULL,
+   cert_issueInstitute   varchar(30)   NULL
+);
+
+CREATE TABLE Menu (
+   menu_id   varchar(10)   primary key,
+   menu_name   varchar(100)   NULL,
+   menu_URL   varchar(200)   NULL,
+   menu_upperId   varchar(10)   NULL,
+   menu_auth   varchar(1)   NULL,
+   menu_order   int(3)   NULL
+);
+
+CREATE TABLE MenuGroup (
+   mg_auth   varchar(1)   primary key,
+   menu_id   varchar(10)   NOT NULL
+);
+
+ALTER TABLE `JobPostingList` ADD CONSTRAINT `FK_Company_TO_JobPostingList_1` FOREIGN KEY (
+   `com_num`
+)
+REFERENCES `Company` (
+   `com_num`
+);
+
+ALTER TABLE `ApplyList` ADD CONSTRAINT `FK_User_TO_ApplyList_1` FOREIGN KEY (
+   `user_id`
+)
+REFERENCES `User` (
+   `user_id`
+);
+
+ALTER TABLE `ApplyList` ADD CONSTRAINT `FK_JobPostingList_TO_ApplyList_1` FOREIGN KEY (
+   `jpl_num`
+)
+REFERENCES `JobPostingList` (
+   `jpl_num`
+);
+
+ALTER TABLE `ApplyList` ADD CONSTRAINT `FK_ResumeList_TO_ApplyList_1` FOREIGN KEY (
+   `res_num`
+)
+REFERENCES `ResumeList` (
+   `res_num`
+);
+
+ALTER TABLE `ResumeList` ADD CONSTRAINT `FK_User_TO_ResumeList_1` FOREIGN KEY (
+   `user_id`
+)
+REFERENCES `User` (
+   `user_id`
+);
+
+ALTER TABLE `Message` ADD CONSTRAINT `FK_User_TO_Message_1` FOREIGN KEY (
+   `user_id`
+)
+REFERENCES `User` (
+   `user_id`
+);
+
+ALTER TABLE `Education` ADD CONSTRAINT `FK_ResumeList_TO_Education_1` FOREIGN KEY (
+   `res_num`
+)
+REFERENCES `ResumeList` (
+   `res_num`
+);
+
+ALTER TABLE `Education` ADD CONSTRAINT `FK_ResumeList_TO_Education_2` FOREIGN KEY (
+   `user_id`
+)
+REFERENCES `ResumeList` (
+   `user_id`
+);
+
+ALTER TABLE `QnA` ADD CONSTRAINT `FK_User_TO_QnA_1` FOREIGN KEY (
+   `user_id`
+)
+REFERENCES `User` (
+   `user_id`
+);
+
+ALTER TABLE `QnA` ADD CONSTRAINT `FK_Company_TO_QnA_1` FOREIGN KEY (
+   `com_num`
+)
+REFERENCES `Company` (
+   `com_num`
+);
+
+ALTER TABLE `WorkExperiences` ADD CONSTRAINT `FK_ResumeList_TO_WorkExperiences_1` FOREIGN KEY (
+   `res_num`
+)
+REFERENCES `ResumeList` (
+   `res_num`
+);
+
+ALTER TABLE `WorkExperiences` ADD CONSTRAINT `FK_ResumeList_TO_WorkExperiences_2` FOREIGN KEY (
+   `user_id`
+)
+REFERENCES `ResumeList` (
+   `user_id`
+);
+
+ALTER TABLE `Certificate` ADD CONSTRAINT `FK_ResumeList_TO_Certificate_1` FOREIGN KEY (
+   `res_num`
+)
+REFERENCES `ResumeList` (
+   `res_num`
+);
+
+ALTER TABLE `Certificate` ADD CONSTRAINT `FK_ResumeList_TO_Certificate_2` FOREIGN KEY (
+   `user_id`
+)
+REFERENCES `ResumeList` (
+   `user_id`
+);
+
+# 03-14 user_rrn 을 user의 birth 칼럼으로 사용하기로 함. 생년월일 들어오는데 안들어가서 varchar(10) -> varchar(20) 으로 변경
+alter table user change user_rrn user_rrn varchar(20);
+# 03-14  user_gender   varchar(1) -> varchar (10) 으로 변경 
+alter table user change user_gender user_gender varchar(10);
