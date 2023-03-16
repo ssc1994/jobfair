@@ -67,7 +67,7 @@
                           {{ id_errorMsg }}</span>
                       </div>
                       <div class="id_input_wrap">
-                        <input type="text" ref="idBox" name="user_id" placeholder="아이디 (길이4~14 영어 대소문자,숫자만)"
+                        <input type="text" ref="idBox" name="user_id" placeholder="아이디 (길이4~14 영어 소문자,숫자만)"
                                @keydown.enter="sameIdCheck" v-model="user_id" class="PersonUnder data_insert_box"/>
                         <button type="button" @click="sameIdCheck($event)" class="btn bg-gradient-dark">
                           중복확인
@@ -218,6 +218,17 @@
                         </div>
                         <div>
                           <div class="data_title_wrap">
+                            <span>기업 상세주소</span>
+                            <span :hidden="comDeAddress_errorMsg=== ''"
+                                  class="pass_error">{{ comDeAddress_errorMsg }}</span>
+                          </div>
+                          <input type="text" id="address" class="data_insert_box"
+                                 placeholder="기업 상세주소"
+                                 ref="com_deAddressBox"
+                                 v-model="com_detail_address"/>
+                        </div>
+                        <div>
+                          <div class="data_title_wrap">
                             <span>업종</span>
                             <span :hidden="comCategory_errorMsg === ''"
                                   class="pass_error">{{ comCategory_errorMsg }}</span>
@@ -338,7 +349,7 @@ export default {
       phCertifPassCheck: false, //핸드폰인증 확인했는지 여부 체크, 통과했으면 true
       //유효성 검사 정규식
       nameRule: /^[가-힣a-zA-Z]+$/, //한글,영문만 입력가능
-      idRule: /^[a-z0-9]{4,12}$/, // 영문 대소문자, 숫자만 사용가능 길이는 4~12 글자
+      idRule: /^[a-z0-9]{4,12}$/, // 영문 소문자, 숫자만 사용가능 길이는 4~12 글자
       passwordRule: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,  //비밀번호 유효성 검사 정규표현식
       emailRule: /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/, //이메일 형식 유호성 검사 정규표현식
       phoneNumRule: /^[0-9]{8,13}$/, //휴대폰 번호 숫자만 가능
@@ -358,6 +369,7 @@ export default {
       comPh_errorMsg: '',
       comEmail_errorMsg: '',
       comAddress_errorMsg: '',
+      comDeAddress_errorMsg: '', //기업 상세주소 에러메세지
       comCategory_errorMsg: '',
       comCeo_errorMsg: '',
       comBizReg_errorMsg: '', //사업자등록번호 입력 오류 메시지
@@ -367,6 +379,7 @@ export default {
       com_phone: '',
       com_email: '',
       com_address: '',
+      com_detail_address: '',
       com_category: '',
       com_ceo: '',
       com_businessRegistration: '',
@@ -441,7 +454,7 @@ export default {
 
         //아이디 중복확인 전 id 유효성 검사
         if (this.idRule.test(this.user_id.trim()) === false) {
-          this.id_errorMsg = '아이디는 4~12글자 이내로 영어 대소문자,숫자만 가능합니다'
+          this.id_errorMsg = '아이디는 4~12글자 이내로 영어 소문자,숫자만 가능합니다'
         } else {
 
           //id 중복확인 요청 보내기
@@ -532,6 +545,7 @@ export default {
       // user email 형식 유효성 검사
       if (this.emailRule.test(this.user_email.trim()) === false) {
         if(this.user_email === ''){
+          this.userEmail_errorMsg = '필수 입력 정보 입니다'
           this.$refs.emailBox.focus()
           return
         }
@@ -544,6 +558,7 @@ export default {
       //휴대폰 번호 유효성 검사 - 숫자만 입력.
       if (this.phoneNumRule.test(this.user_phone.trim()) === false) {
         if(this.user_phone === ''){
+          this.userPh_errorMsg = '필수 입력 정보입니다'
           this.$refs.phNumBox.focus()
           return
         }
@@ -567,11 +582,15 @@ export default {
         //기업명 체크
         if (this.com_name === '') {
           this.$refs.com_nameBox.focus()
+          this.comName_errorMsg = '필수 입력 정보입니다'
           return
+        } else {
+          this.comName_errorMsg = ''
         }
         //기업 전화번호 체크
         if (this.phoneNumRule.test(this.com_phone.trim()) === false) {
           if(this.com_phone === ''){
+            this.comPh_errorMsg = '필수 입력 정보입니다'
             this.$refs.com_phBox.focus()
             return
           }
@@ -584,7 +603,7 @@ export default {
         //기업 이메일 체크
         if (this.emailRule.test(this.com_email.trim()) === false) {
           if(this.com_email === ''){
-            this.comEmail_errorMsg = ''
+            this.comEmail_errorMsg = '필수 입력 정보입니다'
             this.$refs.com_emailBox.focus()
             return
           }
@@ -597,23 +616,47 @@ export default {
         //기업 주소 체크
         if (this.com_address === '') {
           this.$refs.com_addressBox.focus()
+          this.comAddress_errorMsg = '필수 입력 정보입니다'
           return
+        } else {
+          this.comAddress_errorMsg = ''
         }
+        //기업 상세주소 체크
+        if (this.com_detail_address === '') {
+          this.$refs.com_deAddressBox.focus()
+          this.comDeAddress_errorMsg = '필수 입력 정보입니다'
+          return
+        } else {
+          this.comDeAddress_errorMsg = ''
+        }
+
         // 업종 체크
         if (this.com_category === '') {
           this.$refs.com_categoryBox.focus()
+          this.comCategory_errorMsg = '필수 입력 정보입니다'
           return
+        } else {
+          this.comCategory_errorMsg = ''
         }
         // 기업 대표 체크
         // 한글, 영문만 입력가능
         if (this.nameRule.test(this.com_ceo.trim()) === false) {
+          if(this.com_ceo === ''){
+            this.comCeo_errorMsg = '필수 입력 정보입니다'
+            this.$refs.com_ceoBox.focus()
+            return
+          }
+          this.comCeo_errorMsg = '대표자 이름을 확인해주세요'
           this.$refs.com_ceoBox.focus()
           return
+        } else {
+          this.comCeo_errorMsg = ''
         }
         //사업자 등록번호 체크
         //사업자 등록번호 정규식 3글자-2글자-5글자
         if (this.businessRegisRule.test(this.com_businessRegistration.trim()) === false) {
           if(this.com_businessRegistration === ''){
+            this.comBizReg_errorMsg = '필수 입력 정보입니다'
             this.$refs.com_regBox.focus()
             return
           }
@@ -625,7 +668,7 @@ export default {
         }
         //회사 설립일 체크
         if (this.com_establishmentDate === '') {
-          this.comEsDate_errorMsg = '회사 설립일을 지정해주세요'
+          this.comEsDate_errorMsg = '필수 입력 정보입니다'
           this.$refs.com_esDateBox.focus()
           return
         } else {
@@ -670,6 +713,7 @@ export default {
           com_phone: this.com_phone,
           com_email: this.com_email,
           com_address: this.com_address,
+          com_detail_address: this.com_detail_address,
           com_category: this.com_category,
           com_ceo: this.com_ceo,
           com_businessRegistration: this.com_businessRegistration,

@@ -4,11 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sungjin.jobfair.service.UserMapper">
+
+    <select id = "getEncodePw" resultType="String" parameterType="UserVO">
+        select user_pw from User where user_id = #{user_id}
+    </select>
+
     <select id="login" resultType="UserVO">
         select *
         from User
         where user_id = #{user_id}
-          and user_pw=#{user_pw}
     </select>
 
     <insert id="qnaRegist" parameterType="QnAVO">
@@ -33,7 +37,7 @@
 
     <select id="getJobPostSrc" resultType="EmpVO">
         select * from jobpostinglist
-
+    </select>
 
     <select id="getQnADetail" resultType="QnAVO">
         select * from QnA where qa_num = #{qa_num}

@@ -16,6 +16,7 @@ public class CompanyVO {
     private String com_phone;
     private String com_email;
     private String com_address;
+    private String com_detail_address;
     private String com_category; //업종
     private String com_ceo;
     private String com_businessRegistration; //사업자 등록번호

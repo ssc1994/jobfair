@@ -37,6 +37,7 @@
 
           </div>
         </div>
+      </div>
       </section>
       <div class=" mt-3 mb-3">
         <h2>채용조건</h2>

@@ -111,7 +111,7 @@ public class UserController {
         model.addAttribute("list", list);
 
         return list;
-
+    }
     //이력서 등록
     @PostMapping(value = "/regResume",
                 consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})

@@ -15,8 +15,8 @@
     </insert>
 
     <insert id="cJoin" parameterType="CompanyVO">
-        insert into Company (com_name, com_phone, com_email, com_address, com_category, com_ceo, com_businessRegistration, com_establishmentDate)
-        values ( #{com_name}, #{com_phone}, #{com_email}, #{com_address}, #{com_category}, #{com_ceo}, #{com_businessRegistration}, #{com_establishmentDate} )
+        insert into Company (com_name, com_phone, com_email, com_address, com_detail_address, com_category, com_ceo, com_businessRegistration, com_establishmentDate)
+        values ( #{com_name}, #{com_phone}, #{com_email}, #{com_address}, #{com_detail_address}, #{com_category}, #{com_ceo}, #{com_businessRegistration}, #{com_establishmentDate} )
     </insert>
 
     <update id="insertComNum" parameterType="UserVO">
