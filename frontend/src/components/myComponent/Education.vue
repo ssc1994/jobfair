@@ -13,7 +13,7 @@
             <option value="graduate">대학원</option>
           </select>
           <label for="">학교명 :</label>
-          <input type="text" class="form-control" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName" @change="inputEduData>
+          <input type="text" class="form-control" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName" @change="inputEduData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">입학년월 :</label>
@@ -32,7 +32,8 @@
         </div>
         <div class="mb-3 mt-3">
           <label for="">전공명 :</label>
-          <input type="text" class="form-control" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major" @change="inputEduData">
+          <input type="text" class="form-control" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major"
+                 @change="inputEduData">
         </div>
       </section>
     </div>
@@ -45,7 +46,7 @@ export default {
   props: [
     'eduCount'
   ],
-  data () {
+  data() {
     return {
       eduInfo: {
         user_id: '',
@@ -61,8 +62,8 @@ export default {
     }
   },
   methods: {
-    inputEduData () {
-      let eduData= {
+    inputEduData() {
+      let eduData = {
         eduInfo: this.eduInfo,
         eduCount: this.eduCount
       };

@@ -10,6 +10,7 @@ public class UserModiServiceImpl implements UserModiService {
     @Autowired
     public UserModiMapper userModiMapper;
 
+    //user 정보 조회
     @Override
     public UserVO getUserInfo(UserVO vo) {
         return userModiMapper.getUserInfo(vo);

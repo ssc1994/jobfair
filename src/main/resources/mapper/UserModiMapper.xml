@@ -5,6 +5,7 @@
 
 <mapper namespace="com.sungjin.jobfair.userInfoModiService.UserModiMapper">
 
+    <!-- 개인정보 수정 모달창 열릴 때 로그인 한 회원의 정보를 모달창에서 뿌려주기위해 회원정보 요청   -->
     <select id="getUserInfo" resultType="UserVO" parameterType="UserVO" >
         select * from user where user_id = #{user_id}
     </select>

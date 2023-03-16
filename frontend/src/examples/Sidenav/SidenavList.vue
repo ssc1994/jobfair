@@ -331,10 +331,11 @@ export default {
         e.target.focus();
         e.target.value = e.target.value.replace(' ', ''); // 공백제거
         return false;
-      console.log(this.gender)
+        console.log(this.gender)
+      }
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -400,7 +401,7 @@ export default {
   left: 200px;
   width: 40%;
   height: 40%;
-
+}
 .menu01 {
   border: 3px solid;
 }

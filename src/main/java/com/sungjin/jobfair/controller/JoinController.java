@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+//회원가입 컨트롤러
 @RestController
 @RequestMapping("/jobfair")
 public class JoinController {
@@ -90,8 +91,4 @@ public class JoinController {
         return "success";
 
     }
-
-
-
-
 }

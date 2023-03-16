@@ -14,49 +14,49 @@ public class CompanyServiceImpl implements CompanyService{
     @Autowired
     CompanyMapper companyMapper;
 
-    @Override
-    public int empRegist(EmpVO vo) {
-        return companyMapper.empRegist(vo);
-    }
 
+    //################## QnA Service #######################
     @Override
     public void cqnaRegist(QnAVO vo) {
         System.out.println(vo.toString());
         companyMapper.cqnaRegist(vo);
     }
-
     @Override
     public ArrayList<QnAVO> cgetQnAList() {
         return companyMapper.cgetQnAList();
     }
-
     @Override
     public QnAVO getUserQnADetail(int qa_num) {
         return companyMapper.getUserQnADetail(qa_num);
     }
-
     @Override
     public UserVO cQnAInfo(String user_id) {
         return companyMapper.cQnAInfo(user_id);
     }
-
     @Override
     public QnAVO getQnAReply(int qa_num) {
         return companyMapper.getQnAReply(qa_num);
     }
-
-
-    public CompanyVO info(String com_num) {
-        return companyMapper.info(com_num);
+    @Override
+    public QnAVO getComQnADetail(int qa_num) {
+        return companyMapper.getComQnADetail(qa_num);
     }
 
+
+    //################## JobPost Service #######################
+    @Override
+    public int empRegist(EmpVO vo) {
+        return companyMapper.empRegist(vo);
+    }
     @Override
     public EmpVO getEmpData(int jpl_num) {
         return companyMapper.getEmpData(jpl_num);
     }
 
-    @Override
-    public QnAVO getComQnADetail(int qa_num) {
-        return companyMapper.getComQnADetail(qa_num);
+
+    //################## Login Service #######################
+        //회사 번호를 가지고 회사정보 가져오기
+    public CompanyVO info(String com_num) {
+        return companyMapper.info(com_num);
     }
 }
