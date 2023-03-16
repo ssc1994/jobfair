@@ -18,9 +18,9 @@ public class EmpVO {
     private String com_num;
     private String jpl_title;
     private String jpl_content;
-    private Date jpl_startDate;
-    private Date jpl_endDate;
-    private Date jpl_regDate;
+    private String jpl_startDate;
+    private String jpl_endDate;
+    private String jpl_regDate;
     private String jpl_workPosition;
     private String jpl_duty;
     private String jpl_workHistory;
@@ -34,7 +34,8 @@ public class EmpVO {
     private String jpl_locationGu;
     private String jpl_address;
     private String jpl_workDay;
-    private String jpl_workTime;
+    private String jpl_workTimeS;
+    private String jpl_workTimeE;
     private String jpl_name;
     private String jpl_companyName;
     private String jpl_contact;

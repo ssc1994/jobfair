@@ -1,9 +1,6 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.ResumeVO;
-import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,7 +32,19 @@ public interface UserMapper {
     //큐앤에이 상세페이지 데이터 가져오기
     public QnAVO getQnADetail(int qa_num);
 
+
     //################## MyPage Service #######################
     //이력서 삭제버튼 누르면 데이터 삭제하기
     public void deleteResume(int res_num);
+    
+    //이력서 등록
+        // 1) 이력서 -인적사항- 등록
+    public void regResume(ResumeVO resVO);
+        // 2) 이력서 -학력- 등록
+    public void regResEdu(EduVO eduVO);
+        // 3) 이력서 -경력- 등록
+    public void regResWe(WeVO weVO);
+        // 4) 이력서 -자격증- 등록
+    public void regResCert(CertVO certVO);
+
 }

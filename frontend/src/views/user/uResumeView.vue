@@ -4,7 +4,7 @@
       <main class="resume">
         <!--이력서 제목 -->
         <div class="">
-          <h3 class="fs-medium resumeTitle">이력서제목 : <input type="text"></h3>
+          <h3 class="fs-medium resumeTitle">이력서제목 : <input type="text" v-model="resInfo.res_title"></h3>
         </div>
         <!-- 인적사항 작성 -->
         <section>
@@ -140,10 +140,23 @@ export default {
     EDU, //학력 컴포넌트
     CERT //자격증 컴포넌트
   },
+  created() {
+    //sesionStorage에서 값 가져오는법
+    let sessionId = sessionStorage.getItem('sessionId')
+    let sessionAuth = sessionStorage.getItem('sessionAuth')
+    if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
+      let SessionJsonId = JSON.parse(sessionId)
+      this.resInfo.user_id = SessionJsonId
+    }
+    if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
+      let SessionJsonAuth = JSON.parse(sessionAuth)
+    }
+  },
   data() {
     return {
       //이력서 Table 변수
       resInfo: {
+        user_id: '',
         res_title: '',
         res_content: '',
         res_regDate: '',
@@ -187,7 +200,8 @@ export default {
 
       this.$axios.post("/jobfair/regResume", formData)
           .then(response => {
-            if (response.status === 200) alert("성공")
+            if (response.status === 200) alert("작성한 이력서가 등록되었습니다.")
+            this.$router.push('/uMypageView')
           })
           .catch(error => {
             console.log(error)
@@ -195,6 +209,7 @@ export default {
     },
     //*********버튼 클릭 시 input:file 클릭으로 연동시키는 함수
     clickFile() {
+      console.log(this.resInfo.user_id)
       this.$refs.inputImg.click();
     },
     //*********업로드시킬 사진 미리보기 함수
@@ -210,13 +225,15 @@ export default {
     //splice: 첫 번째 인자: 변경시킬 인덱스,  두 번째 인자 : 삭제시킬 개수, 세 번째 인자: 인덱스에 들어갈 값
     //변경 시 기존 인덱스에 들어있는 값을 삭제 후 변경된 데이터를 집어넣는다.
     getEduData(eduData) {
+      eduData.eduInfo.user_id = this.resInfo.user_id
       this.eduInfo.splice(eduData.eduCount, 1, eduData.eduInfo);
-      console.log(this.eduInfo)
     },
     getWeData(weData) {
+      weData.weInfo.user_id = this.resInfo.user_id
       this.weInfo.splice(weData.weCount, 1, weData.weInfo);
     },
     getCertData(certData) {
+      certData.certInfo.user_id = this.resInfo.user_id
       this.certInfo.splice(certData.certCount, 1, certData.certInfo);
     },
     //*********자식 컴포넌트 추가 함수

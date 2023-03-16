@@ -134,7 +134,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">수정 완료</button>
+          <button type="button" class="btn btn-primary" :data-bs-dismiss="testtext" @click.prevent="test">수정 완료</button>
         </div>
       </div>
     </div>
@@ -153,7 +153,6 @@
   <div v-if="userInfo.mg_auth === '4'">
     <SideMenuList menuTitle='4'/>
   </div>
-
 
 </template>
 <script>
@@ -193,7 +192,8 @@ export default {
       checkNewPw: '',
       man: 'false',
       woman: 'false',
-      gender: ''
+      gender: '',
+      testtext: ''
     }
   },
   components: {
@@ -259,6 +259,11 @@ export default {
         this.woman = true
       }
       console.log(this.gender)
+    },
+    test () {
+      if(this.userInfo.user_name) {
+        this.testtext = 'modal'
+      }
     }
   },
 };

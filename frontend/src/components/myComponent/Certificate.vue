@@ -5,19 +5,19 @@
       <section>
         <div class="mb-3 mt-3">
           <label for="">자격증명 :</label>
-          <input type="text" class="form-control" placeholder="자격증을 입력하세요." v-model="certInfo.cert_name">
+          <input type="text" class="form-control" placeholder="자격증을 입력하세요." v-model="certInfo.cert_name" @change="inputCertData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">발행일 :</label>
-          <input type="date" class="form-control" v-model="certInfo.cert_gainDate">
+          <input type="date" class="form-control" v-model="certInfo.cert_gainDate" @change="inputCertData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">발행처 :</label>
-          <input type="text" class="form-control"
-                 placeholder="발행처를 입력하세요." v-model="certInfo.cert_issueInstitute">
+          <input type="text" class="form-control" placeholder="발행처를 입력하세요."
+                 v-model="certInfo.cert_issueInstitute" @change="inputCertData"></p>  
         </div>
       </section>
-  </div>
+    </div>
   </div>
 </template>
 
@@ -25,11 +25,12 @@
 export default {
   name: "Certificate",
   props: [
-    'certCount'
+      'certCount'
   ],
   data () {
     return {
       certInfo: {
+        user_id: '',
         cert_name: '',
         cert_gainDate: '',
         cert_issueInstitute: '',
@@ -112,6 +113,7 @@ body {
   align-content: center;
   margin: 15px 0;
 }
+
 .empReg {
   width: 860px;
 }

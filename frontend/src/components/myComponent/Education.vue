@@ -5,7 +5,7 @@
       <section>
         <div class="mb-3 mt-3">
           <label for="">학교구분 :</label>
-          <select class="form-select" v-model="eduInfo.edu_degree">
+          <select class="form-select" v-model="eduInfo.edu_degree" @change="inputEduData">
             <option selected value="none">선택</option>
             <option value="high">고등학교</option>
             <option value="college">대학교(2, 3년)</option>
@@ -13,15 +13,15 @@
             <option value="graduate">대학원</option>
           </select>
           <label for="">학교명 :</label>
-          <input type="text" class="form-control" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName">
+          <input type="text" class="form-control" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName" @change="inputEduData>
         </div>
         <div class="mb-3 mt-3">
           <label for="">입학년월 :</label>
-          <input type="date" class="form-control" v-model="eduInfo.edu_entranceDate">
+          <input type="date" class="form-control" v-model="eduInfo.edu_entranceDate" @change="inputEduData">
           <label for="">졸업년월 :</label>
-          <input type="date" class="form-control" v-model="eduInfo.edu_graduationDate">
+          <input type="date" class="form-control" v-model="eduInfo.edu_graduationDate" @change="inputEduData">
           <label for="">졸업상태 :</label>
-          <select class="form-select" v-model="eduInfo.edu_state">
+          <select class="form-select" v-model="eduInfo.edu_state" @change="inputEduData">
             <option selected value="none">졸업상태 선택</option>
             <option value="1">졸업</option>
             <option value="2">졸업예정</option>
@@ -32,7 +32,7 @@
         </div>
         <div class="mb-3 mt-3">
           <label for="">전공명 :</label>
-          <input type="text" class="form-control" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major">
+          <input type="text" class="form-control" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major" @change="inputEduData">
         </div>
       </section>
     </div>
@@ -48,6 +48,7 @@ export default {
   data () {
     return {
       eduInfo: {
+        user_id: '',
         edu_degree: 'none',
         edu_schoolName: '',
         edu_major: '',
@@ -157,6 +158,7 @@ body {
   align-content: center;
   margin: 15px 0;
 }
+
 .empReg {
   width: 860px;
 }
