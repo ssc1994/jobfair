@@ -38,10 +38,8 @@
     </select>
 
     <select id="getJobPostSrc" resultType="EmpVO">
-        select *
-        from jobpostinglist
+        select * from jobpostinglist
     </select>
-
 
     <select id="getQnADetail" resultType="QnAVO">
         select *
