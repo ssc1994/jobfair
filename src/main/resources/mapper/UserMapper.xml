@@ -13,7 +13,7 @@
 
     <insert id="qnaRegist" parameterType="QnAVO">
         insert into QnA(user_id, qa_title, qa_content, qa_regDate, qa_type)
-        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d'), #{qa_type})
+        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d') , #{qa_type})
     </insert>
 
     <select id="getQnAList" resultType="QnAVO">
@@ -50,6 +50,15 @@
     <select id="resumeInfo" resultType="ResumeVO">
         select * from ResumeList
     </select>
+
+    <update id="uQnAModi" parameterType="QnAVO">
+        update QnA set qa_title = #{qa_title} , qa_content = #{qa_content}
+            where qa_num = #{qa_num}
+    </update>
+
+<!--    <select id="uQnABtnClick" resultType="QnAVO">-->
+<!--        select * from JOBPOSTINGLIST where jpl_num = #{jpl_num}-->
+<!--    </select>-->
 
     <delete id="deleteResume">
         delete from ResumeList where res_num = #{res_num}
@@ -88,5 +97,4 @@
         insert into Certificate (res_num, user_id, cert_name, cert_gainDate, cert_issueInstitute)
         values (#{res_num}, #{user_id}, #{cert_name}, #{cert_gainDate}, #{cert_issueInstitute})
     </insert>
-
 </mapper>

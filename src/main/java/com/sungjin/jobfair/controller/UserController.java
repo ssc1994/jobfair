@@ -93,15 +93,24 @@ public class UserController {
 
 
     //큐앤에이 상세페이지 데이터 불러오기
-    @GetMapping(value = "/uQnADetailView")
+    @GetMapping(value = "/getQnADetail")
     public QnAVO getQnADetail(@RequestParam("qa_num") int qa_num) {
 
         QnAVO vo = userService.getQnADetail(qa_num);
         System.out.println("유저VO");
-        System.out.println(vo.toString());
+        System.out.println(vo);
 
 
         return vo;
+    }
+
+    @PostMapping ( "/uQnAModi")
+    public int uQnAModi(@RequestBody QnAVO vo) {
+        int a = userService.uQnAModi(vo);
+        System.out.println("글수정");
+        System.out.println(vo.toString());
+
+        return a;
     }
 
     //이력서 내용가져오기

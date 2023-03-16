@@ -9,19 +9,19 @@
         <div class=" wrapBox3">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">작성자</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="uQnADetail.user_id" disabled>
+            <input type="text" class="form-control" aria-label="Username"
+                   aria-describedby="basic-addon1" v-model="uQnADetail.user_id" >
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">문의제목</span>
             <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="uQnADetail.qa_title" disabled>
+                   aria-describedby="basic-addon1" v-model="uQnADetail.qa_title" >
           </div>
 
           <div class="input-group">
             <span class="input-group-text">문의내용</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" v-model="uQnADetail.qa_content" disabled></textarea>
+            <textarea class="form-control contentBox" aria-label="With textarea" v-model="uQnADetail.qa_content" ></textarea>
           </div>
 
 
@@ -36,7 +36,7 @@
         <div class=" wrapBox5">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">담당자</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+            <input type="text" class="form-control" aria-label="Username"
                    aria-describedby="basic-addon1" disabled v-model="cQnADetail.user_id">
           </div>
 
@@ -55,7 +55,7 @@
       <button type="button" class="btn btn-primary" @click.prevent="cqnaRegist">등록하기</button>
       <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
     </div>
-    <input type="button" value="test" @click="test">
+    <input type="button">
 
 
   </div>
@@ -76,45 +76,55 @@ export default {components: {SoftInput, SoftButton},
         com_num: ''
       },
       cQnADetail: {
-        user_id: 'testCom5',
-        com_num: '',
+        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+        com_num: JSON.parse(sessionStorage.getItem('sessionComp')),
         qa_content: '',
         qa_type: 'a',
-        qa_reply: ''
+        qa_reply: this.$route.params.qa_num
       }
 
-      ,
+
     }
   },
   beforeCreate() {
 
-    this.$axios.get('/jobfair/uQnADetailView/' , {params:{qa_num: this.$route.params.qa_num}} )
+  // this.cQnADetail.user_id=JSON.parse(sessionStorage.getItem('sessionId'),
+
+
+
+    this.$axios.get('/jobfair/getQnADetail/' , {params:{qa_num: this.$route.params.qa_num}} )
         .then((res) => {
           console.log('유저시작')
               this.uQnADetail = res.data
               console.log(res.data);
-          this.$axios.get('/jobfair/cQnAInfo/' , {params:{user_id: this.cQnADetail.user_id}} )
-              .then((res) => {
-                    console.log('기업시작')
+          console.log(this.cQnADetail.user_id)
+          console.log(this.cQnADetail.com_num)
+          console.log(this.cQnADetail.qa_reply)
 
-                    this.cQnADetail = res.data
-                    this.cQnADetail.qa_type = 'a'
-                    console.log(res.data);
-                  }
-              )
-              .catch((error) => this.uQnADetail = error.date)
-              .finally(()=>{
-                console.log('기업완료')
-              })
-
+          // this.$axios.get('/jobfair/cQnAInfo/' , {params:{user_id: JSON.parse(sessionStorage.getItem('sessionId'))}} )
+          //     .then((res) => {
+          //           console.log('기업시작')
+          //
+          // //           this.cQnADetail = res.data
+          //     this.cQnADetail.qa_type = 'a'
+          // this.cQnADetail.user_id = JSON.parse(sessionStorage.getItem('sessionId'))
+          // this.cQnADetail.com_num = JSON.parse(sessionStorage.getItem('sessionComp'))
+          // this.cQnADetail.qa_reply = this.$route.params.qa_num
+          //   //
+            //         console.log(res.data);
+            //       }
+            //   )
+            //   .catch((error) => this.uQnADetail = error.date)
+            //   .finally(()=>{
+            //     console.log('기업완료')
+            //   })
+            //
             }
         )
-        .catch((error) => this.uQnADetail = error.date)
+        .catch((error) => console.log(error))
         .finally(()=>{
           console.log('유저완료')
         })
-
-console.log(this.user_id)
 
   },
     methods: {
@@ -127,7 +137,6 @@ console.log(this.user_id)
           qa_type: this.cQnADetail.qa_type,
           qa_reply: this.$route.params.qa_num
         }
-        console.log("test")
         console.log(myData)
 
         this.$axios
@@ -152,21 +161,19 @@ console.log(this.user_id)
               console.log('기업답변등록')
             })
       },
-      getComQnADetail() {
-        this.$axios.get('/jobfair/cQnADetailView')
-            .then((res)=> {
-              this.cQnADetail = res.data
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-      },
+      // getComQnADetail() {
+      //   this.$axios.get('/jobfair/cQnADetailView')
+      //       .then((res)=> {
+      //         this.cQnADetail = res.data
+      //       })
+      //       .catch((error) => {
+      //         console.log(error)
+      //       })
+      // },
       goBackToList() {
         this.$router.push("/cQnAView")
       },
-      test () {
-        console.log(this.cQnADetail.qa_type)
-      }
+
 
     },
 

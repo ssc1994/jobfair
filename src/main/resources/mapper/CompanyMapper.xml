@@ -82,7 +82,7 @@
         select * from QnA where qa_num = #{qa_num}
     </select>
 
-    <select id="getComQnADetail" resultType="UserVO">
+    <select id="cQnAInfo" resultType="UserVO">
         select * from User where user_id = #{user_id}
     </select>
 
@@ -108,6 +108,13 @@
         from JobPostingList
         where jpl_num = #{jpl_num};
 
+    </select>
+
+    <select id="getComQnADetail" resultType="QnAVO">
+        select c.* from qna u
+                            inner join qna c
+                                       on u.qa_num = c.qa_reply
+        where u.qa_num=#{qa_num}
     </select>
 
 

@@ -68,7 +68,7 @@
         <p>&nbsp;</p>
       </div>
     </main>
-    
+
     <div style="position: fixed; right: 50px">
       <div>
         <div class="marginTime">
@@ -80,6 +80,9 @@
           </div>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             지원하기
+          </button>
+          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick">
+            Q&A 질문하기
           </button>
 
         </div>
@@ -177,13 +180,38 @@ export default {
   name: "uJobPostDetailView",
   data() {
     return {
-      a: ''
+
+      QnAComInfo: {
+        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+        com_num: ''
+      }
+
     }
 
   },
-  updated() {
-    console.log(this.a)
+  methods: {
+    // uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
+    //   let self = this;
+    //   this.$axios
+    //       .get('/jobfair/uQnABtnClick', {params: {com_num: this.$route.params.com_num}
+    //
+    //   })
+    //       .then((res) => {
+    //         console.log("데이터: " + res.data)
+    //         self.$router.push({
+    //           name: 'cQnAView',
+    //           params: {
+    //             com_num: this.$route.params.com_num
+    //           }
+    //         })
+    //         self.$router.push('/uQnAWriteView')
+    //       })
+    //       .catch((error) => {
+    //         console.log(error)
+    //       })
+    // }
   }
+
 }
 </script>
 

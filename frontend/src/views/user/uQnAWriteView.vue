@@ -1,3 +1,4 @@
+QNAWRITEVIEW
 <template>
   <div class="wrapBox">
     <div class="centerBox">
@@ -6,26 +7,26 @@
           <h3>Q.</h3>
         </div>
 
-          <div class=" wrapBox3">
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">작성자</span>
-              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                     aria-describedby="basic-addon1" v-model="user_id">
-            </div>
-
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">문의제목</span>
-              <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                     aria-describedby="basic-addon1" v-model="qa_title">
-            </div>
-
-            <div class="input-group">
-              <span class="input-group-text">문의내용</span>
-              <textarea class="form-control contentBox" aria-label="With textarea" v-model="qa_content"></textarea>
-            </div>
-
-
+        <div class=" wrapBox3">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">작성자</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" v-model="uQnADetail.user_id">
           </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">문의제목</span>
+            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                   aria-describedby="basic-addon1" v-model="uQnADetail.qa_title">
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-text">문의내용</span>
+            <textarea class="form-control contentBox" aria-label="With textarea" v-model="uQnADetail.qa_content"></textarea>
+          </div>
+
+
+        </div>
 
 
       </div>
@@ -39,7 +40,6 @@
     </div>
 
 
-
   </div>
 </template>
 
@@ -47,35 +47,41 @@
 import SoftInput from "@/components/SoftInput.vue";
 import SoftButton from "@/components/SoftButton.vue";
 import axios from "axios";
-export default {components: {SoftInput, SoftButton},
 
-data: function () {
-  return {
-    user_id: 'user123',
-    qa_title: '',
-    qa_content: '',
-    qa_type: 'q'
-  }
-},
+export default {
+  components: {SoftInput, SoftButton},
+
+  data() {
+    return {
+
+      uQnADetail: {
+        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+        qa_title: '',
+        qa_content: '',
+        qa_type: ''
+      }
+    }
+
+  },
   methods: {
     qnaRegist() {
       let self = this;
       this.$axios
           .post('/jobfair/qnaRegist', {
-            user_id: this.user_id,
-            qa_title: this.qa_title,
-            qa_content: this.qa_content,
-            qa_type: this.qa_type
+            user_id: this.uQnADetail.user_id,
+            qa_title: this.uQnADetail.qa_title,
+            qa_content: this.uQnADetail.qa_content,
+            qa_type: 'q'
           })
           .then((res) => {
-            if(res.status === 200) {
+            if (res.status === 200) {
               console.log(res.data)
               self.$router.push("/uQnAView")
             }
           })
           .catch((error) => {
             console.log(error)
-            alert('에러: ' + error )
+            alert('에러: ' + error)
 
           })
           .finally(() => {

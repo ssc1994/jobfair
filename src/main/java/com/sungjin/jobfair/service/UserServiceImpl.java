@@ -48,14 +48,21 @@ public class UserServiceImpl implements UserService {
 
     //################## Resume Service #######################
     @Override
-    public ArrayList<ResumeVO> resumeInfo() {
-        return userMapper.resumeInfo();
+    public int uQnAModi(QnAVO vo) {
+        return userMapper.uQnAModi(vo);
     }
     @Override
     public void regResume(ResumeVO resVO) {
         userMapper.regResume(resVO);
     }
 
+//    @Override
+//    public QnAVO uQnABtnClick(int jpl_num) {
+//        return userMapper.uQnABtnClick(jpl_num);
+//    }
+
+
+    //################## jobPost Service #######################
     @Override
     public void regResEdu(EduVO eduVO) {
         userMapper.regResEdu(eduVO);
