@@ -28,12 +28,16 @@
               <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth"></p>
             </div>
             <!-- 프로필 사진 등록 -->
-
             <img class="headline-image" :src="viewImg" alt="프로필 사진" ref="previewImg">
             <div class="input-group mb-3 profileSubmit">
-              <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg"
-                     accept="image/*" ref="inputImg">
-              <input type="button" value="사진 선택" @click="clickFile">
+              <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg" accept="image/*" ref="inputImg">
+              <input class="ImgChoice" type="button" value="사진 선택" @click="clickFile">
+              <div class="box">
+                <h3>이미지 첨부시 유의사항</h3>
+                <div class="info">
+                  <p>사진 용량은 50MB가 최대입니다.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -357,7 +361,7 @@ body {
 .introduce {
   left: 800px;
   width: 320px;
-  margin-left: 60px;
+  margin-left: 10px;
 }
 
 .introduce-contact {
@@ -445,4 +449,44 @@ select.sel {
   top: 320px;
   left: 640px;
 }
+.ImgChoice {
+  position: relative;
+  bottom: 30px;
+  border: 1px solid #AAAAAA;
+  background-color: #A4A4A4;
+}
+
+.box {
+  position: relative;
+  bottom: 28px;
+}
+
+.box .info {
+  color: #fff;
+  position: absolute;
+  background: rgba(0,0,0,0.5);
+  width: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.35s ease-in-out;
+}
+.box:hover .info {
+  opacity: 1;
+}
+.box h3 {
+  font-size: 12px;
+  padding-bottom: 0.4em;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.box .info p {
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
 </style>

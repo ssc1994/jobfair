@@ -5,7 +5,8 @@
         <div class="userInfo_wrap">
           <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left">
           <div>
-            <h6>OOO님 환영합니다.</h6>
+<!--            session에서 가져온 아이디 값 출력 -->
+            <h6>{{userInfo.user_id}}님 환영합니다.</h6>
             <a href="#">쪽지(3)</a>
           </div>
         </div>
@@ -25,12 +26,22 @@
         </div>
       </div>
 
+<!--      왼쪽 사이드바 마이페이지 버튼 auth에 따라 다르게 나오게 만듦 -->
+      <div v-if="userInfo.mg_auth === '1'">
       <div class="btnBox">
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uInfoModi" @click="getUserInfo">
           개인정보 수정
         </button>
-        <button type="button" class="btn" @click="this.$router.push('uMypageView') ">mypage</button>
-
+        <button type="button" class="btn" @click="this.$router.push('uMypageView') ">MyPage</button>
+      </div>
+      </div>
+      <div v-if="userInfo.mg_auth === '2'">
+        <div class="btnBox">
+          <button type="button" class="btn" @click="this.$router.push('cQnAView')">
+            QnA
+          </button>
+          <button type="button" class="btn" @click="this.$router.push('cMypageView') ">MyPage</button>
+        </div>
       </div>
     </div>
   </div>
@@ -130,13 +141,18 @@
   </div>
 
 
-
   <hr>
 
   <!-- 아코디언 -->
-  <SideMenuList menuTitle='메뉴 1'/>
-  <SideMenuList menuTitle='메뉴 2'/>
-  <SideMenuList menuTitle='메뉴 3'/>
+  <div v-if="userInfo.mg_auth === '1'">
+    <SideMenuList class="menu01" menuTitle='1'/>
+  </div>
+  <div v-if="userInfo.mg_auth === '2'">
+    <SideMenuList menuTitle='2'/>
+  </div>
+  <div v-if="userInfo.mg_auth === '4'">
+    <SideMenuList menuTitle='4'/>
+  </div>
 
 </template>
 <script>
@@ -163,12 +179,13 @@ export default {
       //개인정보 수정 변수
       userInfo: {
         user_name: '',
-        user_id: '',
+        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
         user_pw: '',
         user_phone: '',
         user_email: '',
         user_gender: '',
-        user_rrn: '' //user 생년월일
+        user_rrn: '', //user 생년월일
+        mg_auth: JSON.parse(sessionStorage.getItem('sessionAuth')) //회원정보 구분 아이디 1.유저 2.미승인기업 3.승인기업 4.관리자
       },
       currentPw: '',
       newPw: '',
@@ -287,6 +304,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.menu01 {
+  border: 3px solid;
 }
 
 </style>

@@ -65,9 +65,26 @@ public class UserServiceImpl implements UserService {
     public void regResWe(WeVO weVO) {
         userMapper.regResWe(weVO);
     }
-
+    
     @Override
     public void regResCert(CertVO certVO) {
         userMapper.regResCert(certVO);
+    }
+
+    //박희진 작성중
+//    @Override
+//    public ArrayList<EmpVO> EmpRegistInfo() {
+//        return userMapper.EmpRegistInfo();
+//    }
+
+    //################## Resume Service #######################
+    @Override
+    public ArrayList<ResumeVO> resumeInfo() {
+        return userMapper.resumeInfo();
+    }
+
+    @Override
+    public void deleteResume(int res_num) {
+        userMapper.deleteResume(res_num);
     }
 }

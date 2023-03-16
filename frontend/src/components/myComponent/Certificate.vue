@@ -1,12 +1,23 @@
 <template>
-  <div class="profile">
+  <div class="profile introduce-contact">
     <p class="fs-medium fc-gray"></p>
-    <p class="headline-title">자격증명 :<input type="text" class="headline-input" v-model="certInfo.cert_name" @change="inputCertData">
-    </p>
-    <p class="headline-title">발행일 :<input type="date" class="headline-input" v-model="certInfo.cert_gainDate" @change="inputCertData">
-    </p>
-    <p class="headline-title">발행처 :<input type="text" class="headline-input"
-                                          v-model="certInfo.cert_issueInstitute" @change="inputCertData"></p>
+    <div class="empReg">
+      <section>
+        <div class="mb-3 mt-3">
+          <label for="">자격증명 :</label>
+          <input type="text" class="form-control" placeholder="자격증을 입력하세요." v-model="certInfo.cert_name" @change="inputCertData">
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="">발행일 :</label>
+          <input type="date" class="form-control" v-model="certInfo.cert_gainDate" @change="inputCertData">
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="">발행처 :</label>
+          <input type="text" class="form-control" placeholder="발행처를 입력하세요."
+                 v-model="certInfo.cert_issueInstitute" @change="inputCertData"></p>  
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -101,6 +112,21 @@ body {
   justify-content: space-between;
   align-content: center;
   margin: 15px 0;
+}
+
+.empReg {
+  width: 860px;
+}
+
+.empReg section {
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+}
+
+.empReg section .form-select {
+  width: 130px;
+  height: 30px;
 }
 
 </style>

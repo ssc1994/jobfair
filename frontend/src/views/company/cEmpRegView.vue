@@ -217,8 +217,6 @@
                 <label class="form-check-label" for="salary1">면접 후 결정</label>
               </div>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="salary2" name="salaryRadio" value=salary
-                       v-model="salaryType">
                 <label class="form-check-label" for="salary2"><input type="text" class="" placeholder="예상연봉 입력"
                                                                      v-model="jpl_salary"></label>
               </div>
@@ -261,12 +259,8 @@
           <button type="submit" class="btn btn-primary" @click="empRegist">등록</button>
         </div>
       </div>
-
-
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -275,7 +269,7 @@ export default {
 
   data() {
     return {
-       com_num:'',
+      com_num:'',
       jpl_title:'',
       jpl_content:'',
       jpl_startDate:'',
@@ -417,6 +411,7 @@ export default {
     },
 
     empRegist(){
+      // 급여 미선택시 0으로 값 주는거
       if(this.salaryType=='undecided'){
         this.jpl_salary=0;
       }
@@ -474,7 +469,16 @@ export default {
         console.log(err)
 
       })
-
+      // 작성한 채용공고 내용을 가지고가서 유저가 보는 채용공고에 데이터뿌리기.. 하는중인데 먼지 몰겟긴하지만 해본다
+      // this.$axios.post('/jobfair/EmpRegistInfo'
+      //     ,empData)
+      //     .then((res)=>{
+      //   console.log('성공')
+      //   console.log(res.data)
+      //
+      // }).catch(err => {
+      //   console.log(err)
+      // })
     },
     clickFile () {  //버튼 클릭 시 input:file 클릭으로 연동하는 함수
       this.$refs.fileInsert.click();

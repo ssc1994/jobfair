@@ -52,40 +52,21 @@
         <p><br></p>
         <p>&nbsp;</p>
         <div class="recruitment">
-          <b>혜택 및 복지</b><br/>
-          <p>블라블라블라~~</p><br/>
+          <b>기업정보</b><br/>
+          <img src="@/assets/kakao.png">
+          <span>기업명 :</span><br/>
+          <span>기업전화번호 :</span><br/>
+          <span>기업이메일 :</span><br/>
+          <span>기업주소 :</span><br/>
+          <span>업종 :</span><br/>
+          <span>대표자 :</span><br/>
+          <span>사업자등록번호 :</span><br/>
         </div>
         <p><br></p>
         <p>&nbsp;</p>
+        <p><br></p>
+        <p>&nbsp;</p>
       </div>
-      
-    <div class="contents">
-      <div class="recruitment">
-        <b>업무소개</b> <br/>
-        <p>블라블라블라 ~~fnoifoifeoifhewoifheoiwfo eiwfhoewihfoewihfoiewhfoiewhfoiewhfoiefenfoewnfoewnfonofewnofewnoifnowncowncownecowneconwecoewncowencoewnoewnoiewncoiewncoiencoiewncowencoiewncownecoiewnconfiheoreoifneimdcdcmdslkcmldknvkndvvowecodcjdbcdbdbcodjjcpocdcdocnodscndncbbcdbdubcdiucb</p><br/>
-      </div>
-      <p><br></p>
-      <p>&nbsp;</p>
-      <div class="recruitment">
-        <b>전형절차</b><br/>
-        <p>서류 지원 - 1차 면접 - 2차 면접 - 합격</p><br/>
-      </div>
-      <p><br></p>
-      <p>&nbsp;</p>
-      <div class="recruitment">
-        <b>기업정보</b><br/>
-        <img src="@/assets/kakao.png">
-        <span>기업명 :</span><br/>
-        <span>기업전화번호 :</span><br/>
-        <span>기업이메일 :</span><br/>
-        <span>기업주소 :</span><br/>
-        <span>업종 :</span><br/>
-        <span>대표자 :</span><br/>
-        <span>사업자등록번호 :</span><br/>
-      </div>
-      <p><br></p>
-      <p>&nbsp;</p>
-    </div>
     </main>
     
     <div style="position: fixed; right: 50px">

@@ -48,10 +48,17 @@
     </select>
 
     <select id="resumeInfo" resultType="ResumeVO">
-        select *
-        from ResumeList
-
+        select * from ResumeList
     </select>
+
+    <delete id="deleteResume">
+        delete from ResumeList where res_num = #{res_num}
+    </delete>
+
+<!--    박희진 작성중-->
+<!--    <select id="'EmpRegistInfo'" resultType="EmpVO">-->
+<!--        select * from JobPostingList-->
+<!--    </select>-->
 
     <insert id="regResume" parameterType="ResumeVO" useGeneratedKeys="true" keyProperty="res_num" keyColumn="res_num">
         insert into ResumeList (user_id, res_title, res_content, res_regDate,

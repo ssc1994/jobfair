@@ -50,7 +50,7 @@ public class UserController {
     private UserService userService;
 
 
-    //큐앤에이 
+    //큐앤에이
     @PostMapping(value = "/qnaRegist")
     public String qnaRegist(@RequestBody QnAVO vo) {
         userService.qnaRegist(vo);
@@ -112,6 +112,14 @@ public class UserController {
         model.addAttribute("list", list);
 
         return list;
+    }
+    
+    //이력서 삭제하기
+    @GetMapping(value = "/deleteResume")
+    public void deleteResume(@RequestParam("res_num") int res_num) {
+
+        userService.deleteResume(res_num);
+
     }
 
     //이력서 등록
@@ -200,4 +208,15 @@ public class UserController {
         }
         return "success";
     }
+
+    //기업이 작성한 채용공고 내용 가져오는 메서드 (박희진 작성중)
+//    @PostMapping( value = "EmpRegistInfo")
+//    public ArrayList<EmpVO> EmpRegistInfo(Model model){
+//
+//        ArrayList<EmpVO> list = userService.EmpRegistInfo();
+//        model.addAttribute("list", list);
+//        System.out.println("controller탐");
+//
+//        return list;
+//    }
 }
