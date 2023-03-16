@@ -11,23 +11,30 @@ import java.util.ArrayList;
 
 public interface CompanyService {
 
-    public int empRegist(EmpVO vo);
-
-    //큐앤에이 답변 등록
+    //################## QnA Service #######################
+        //큐앤에이 답변 등록
     public void cqnaRegist(QnAVO vo);
-    //큐앤에이 목록 가져오기
+        //큐앤에이 목록 가져오기
     public ArrayList<QnAVO> cgetQnAList();
-    //큐앤에이 상세페이지 데이터 가져오기 - 유저꺼
+        //큐앤에이 상세페이지 데이터 가져오기 - 유저꺼
     public QnAVO getUserQnADetail(int qa_num);
-    //큐앤에이 상세페이지 데이터 가져오기 - 기업꺼
+        //큐앤에이 상세페이지 데이터 가져오기 - 기업꺼
     public UserVO cQnAInfo(String user_id);
-
+        //기업 큐앤에이 디테일 정보 가져오기
+    public QnAVO getComQnADetail(int qa_num);
+        //기업 큐앤에이 댓글
     public QnAVO getQnAReply(int qa_num);
-    public CompanyVO info(String com_num);
 
+
+    //################## JobPost Service #######################
+        //채용공고 페이지에서 입력한 값 가져오기??
+    public int empRegist(EmpVO vo);
     public EmpVO getEmpData(int jpl_num);
 
-    //기업 큐앤에이 디테일 정보 가져오기
-    public QnAVO getComQnADetail(int qa_num);
+
+    //################## Login Service #######################
+    public CompanyVO info(String com_num);
+
+
 
 }

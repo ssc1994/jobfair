@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PasswordEncoder pwEncoder;
 
-    //################## Login Service #######################
+    //################## 로그인 관련(login) Service #######################
     @Override
     public UserVO login(UserVO vo) {
 
@@ -28,18 +28,14 @@ public class UserServiceImpl implements UserService {
         } else {
             return null;
         }
-
-    }
-    @Override
-    public UserVO info(String id) {
-        return userMapper.info(id);
     }
     @Override
     public UserVO info(String id) {
         return userMapper.info(id);
     }
 
-    //################## QnA Service #######################
+
+    //################## QnA 관련 Service #######################
     @Override
     public void qnaRegist(QnAVO vo) {
         System.out.println(vo.toString());
@@ -53,8 +49,16 @@ public class UserServiceImpl implements UserService {
     public QnAVO getQnADetail(int qa_num) {
         return userMapper.getQnADetail(qa_num);
     }
+    @Override
+    public int uQnAModi(QnAVO vo) {
+        return userMapper.uQnAModi(vo);
+    }
+//    @Override
+//    public QnAVO uQnABtnClick(int jpl_num) {
+//        return userMapper.uQnABtnClick(jpl_num);
+//    }
 
-    //################## jobPost Service #######################
+    //################## 채용공고(jobPost) 관련 Service #######################
     @Override
     public ArrayList<EmpVO> getJobPostList() {
         return userMapper.getJobPostList();
@@ -63,53 +67,37 @@ public class UserServiceImpl implements UserService {
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
         return userMapper.getJobPostSrc(vo);
     }
-
-    //################## Resume Service #######################
-    @Override
-    public int uQnAModi(QnAVO vo) {
-        return userMapper.uQnAModi(vo);
-    }
-    @Override
-    public void regResume(ResumeVO resVO) {
-        userMapper.regResume(resVO);
-    }
-
-//    @Override
-//    public QnAVO uQnABtnClick(int jpl_num) {
-//        return userMapper.uQnABtnClick(jpl_num);
-//    }
-
-
-    //################## jobPost Service #######################
-    @Override
-    public void regResEdu(EduVO eduVO) {
-        userMapper.regResEdu(eduVO);
-    }
-
-    @Override
-    public void regResWe(WeVO weVO) {
-        userMapper.regResWe(weVO);
-    }
-    
-    @Override
-    public void regResCert(CertVO certVO) {
-        userMapper.regResCert(certVO);
-    }
-
     //박희진 작성중
 //    @Override
 //    public ArrayList<EmpVO> EmpRegistInfo() {
 //        return userMapper.EmpRegistInfo();
 //    }
 
-    //################## Resume Service #######################
+    //################## 마이페이지(MyPage) Service #######################
     @Override
     public ArrayList<ResumeVO> resumeInfo() {
         return userMapper.resumeInfo();
     }
-    
     @Override
     public void deleteResume(int res_num) {
         userMapper.deleteResume(res_num);
+    }
+
+    //################## 이력서(Resume) 관련 Service #######################
+    @Override
+    public void regResume(ResumeVO resVO) {
+        userMapper.regResume(resVO);
+    }
+    @Override
+    public void regResEdu(EduVO eduVO) {
+        userMapper.regResEdu(eduVO);
+    }
+    @Override
+    public void regResWe(WeVO weVO) {
+        userMapper.regResWe(weVO);
+    }
+    @Override
+    public void regResCert(CertVO certVO) {
+        userMapper.regResCert(certVO);
     }
 }

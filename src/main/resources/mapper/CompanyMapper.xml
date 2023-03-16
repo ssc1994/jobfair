@@ -5,96 +5,100 @@
 
 <mapper namespace="com.sungjin.jobfair.service.CompanyMapper">
 
+    <!--################ 채용공고 등록 ###############-->
     <insert id="empRegist" parameterType="EmpVO">
-     insert into
-         JobPostingList(com_num,
-                        jpl_title,
-                        jpl_content,
-                        jpl_startDate,
-                        jpl_endDate,
-                        jpl_regDate,
-                        jpl_workPosition,
-                        jpl_duty,
-                        jpl_workHistory,
-                        jpl_workForm,
-                        jpl_education,
-                        jpl_conditions,
-                        jpl_certificate,
-                        jpl_gender,
-                        jpl_salary,
-                        jpl_locationSi,
-                        jpl_locationGu,
-                        jpl_address,
-                        jpl_workDay,
-                        jpl_workTimeS,
-                        jpl_workTimeE,
-                        jpl_name,
-                        jpl_companyName,
-                        jpl_contact,
-                        jpl_phoneNum,
-                        jpl_email,
-                        jpl_fileName,
-                        jpl_filePath,
-                        jpl_fileUuid)
+        insert into
+            JobPostingList(com_num,
+                           jpl_title,
+                           jpl_content,
+                           jpl_startDate,
+                           jpl_endDate,
+                           jpl_regDate,
+                           jpl_workPosition,
+                           jpl_duty,
+                           jpl_workHistory,
+                           jpl_workForm,
+                           jpl_education,
+                           jpl_conditions,
+                           jpl_certificate,
+                           jpl_gender,
+                           jpl_salary,
+                           jpl_locationSi,
+                           jpl_locationGu,
+                           jpl_address,
+                           jpl_workDay,
+                           jpl_workTimeS,
+                           jpl_workTimeE,
+                           jpl_name,
+                           jpl_companyName,
+                           jpl_contact,
+                           jpl_phoneNum,
+                           jpl_email,
+                           jpl_fileName,
+                           jpl_filePath,
+                           jpl_fileUuid)
         values (#{com_num},
-                   #{jpl_title},
-                   #{jpl_content},
-                   #{jpl_startDate},
-                   #{jpl_endDate},
+                #{jpl_title},
+                #{jpl_content},
+                #{jpl_startDate},
+                #{jpl_endDate},
                 date_format(now(), '%Y-%m-%d'),
-                   #{jpl_workPosition},
-                   #{jpl_duty},
-                   #{jpl_workHistory},
-                   #{jpl_workForm},
-                   #{jpl_education},
-                   #{jpl_conditions},
-                   #{jpl_certificate},
-                   #{jpl_gender},
-                   #{jpl_salary},
-                   #{jpl_locationSi},
-                   #{jpl_locationGu},
-                   #{jpl_address},
-                   #{jpl_workDay},
-                   #{jpl_workTimeS},
-                   #{jpl_workTimeE},
-                   #{jpl_name},
-                   #{jpl_companyName},
-                   #{jpl_contact},
-                   #{jpl_phoneNum},
-                   #{jpl_email},
-                   #{jpl_fileName},
-                   #{jpl_filePath},
-                   #{jpl_fileUuid}
-                )
+                #{jpl_workPosition},
+                #{jpl_duty},
+                #{jpl_workHistory},
+                #{jpl_workForm},
+                #{jpl_education},
+                #{jpl_conditions},
+                #{jpl_certificate},
+                #{jpl_gender},
+                #{jpl_salary},
+                #{jpl_locationSi},
+                #{jpl_locationGu},
+                #{jpl_address},
+                #{jpl_workDay},
+                #{jpl_workTimeS},
+                #{jpl_workTimeE},
+                #{jpl_name},
+                #{jpl_companyName},
+                #{jpl_contact},
+                #{jpl_phoneNum},
+                #{jpl_email},
+                #{jpl_fileName},
+                #{jpl_filePath},
+                #{jpl_fileUuid}
+               )
 
     </insert>
 
+    <!-- ######################### QnA 관련 ######################### -->
+        <!-- 큐앤에이 등록 -->
     <insert id="cqnaRegist" parameterType="QnAVO">
         insert into QnA(user_id, com_num, qa_content, qa_type, qa_reply)
         values (#{user_id}, #{com_num}, #{qa_content}, #{qa_type}, #{qa_reply})
     </insert>
-
+        <!-- 큐앤에이 리스트 -->
     <select id="cgetQnAList" resultType="QnAVO">
         select * from QnA where qa_type like "%q%" order by qa_num desc
     </select>
-
+        <!-- 큐앤에이 유저 상세 -->
     <select id="getUserQnADetail" resultType="QnAVO">
         select * from QnA where qa_num = #{qa_num}
     </select>
-
+        <!-- 큐앤에이 기업정보 데이터 가져오기 -->
     <select id="cQnAInfo" resultType="UserVO">
         select * from User where user_id = #{user_id}
     </select>
-
+        <!-- 큐앤에이 답변 가져오기 -->
     <select id="getQnAReply" resultType="QnAVO">
         select c.* from qna u
-        inner join qna c
-        on u.qa_num = c.qa_reply
+                            inner join qna c
+                                       on u.qa_num = c.qa_reply
         where u.qa_num=#{qa_num}
     </select>
 
 
-
+    <!-- ######################### Session 관련 ######################### -->
+        <!-- 기업정보 불러오기-->
     <select id="info" resultType="CompanyVO">
         select *
         from company
@@ -102,20 +106,20 @@
 
     </select>
 
-
+    <!-- ######################### 채용공고 상세보기 페이지 ######################### -->
+        <!-- 기업이 등록한 채용공고 가져오기-->
     <select id="getEmpData" resultType="EmpVO">
         select *
         from JobPostingList
         where jpl_num = #{jpl_num};
 
     </select>
-
+        <!-- 큐앤에이 기업 상세 -->
     <select id="getComQnADetail" resultType="QnAVO">
         select c.* from qna u
                             inner join qna c
                                        on u.qa_num = c.qa_reply
         where u.qa_num=#{qa_num}
     </select>
-
 
 </mapper>

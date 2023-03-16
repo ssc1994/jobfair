@@ -9,11 +9,11 @@
         <div class=" wrapBox3">
 
 
-        <div class="input-group mt-3 mb-3">
-          <span class="input-group-text" id="basic-addon1">공고명</span>
-          <input type="text" class="form-control" placeholder="내용을 입력하세요." aria-label="Username"
-                 aria-describedby="basic-addon1" v-model="jpl_title" required>
-        </div>
+          <div class="input-group mt-3 mb-3">
+            <span class="input-group-text" id="basic-addon1">공고명</span>
+            <input type="text" class="form-control" placeholder="내용을 입력하세요." aria-label="Username"
+                   aria-describedby="basic-addon1" v-model="jpl_title" required>
+          </div>
 
 
         </div>
@@ -24,20 +24,19 @@
 
       <section>
 
-      <div class=" mt-3">
-        <div class=" wrapBox3">
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">공고시작일</span>
-            <input type="date" class="form-control" placeholder="2023.03.03." aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="jpl_startDate" required>
-            &nbsp; ~ &nbsp;
-            <span class="input-group-text" id="basic-addon1">공고종료일</span>
-            <input type="date" class="form-control" placeholder="2023.06.05." aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="jpl_endDate" required>
+        <div class=" mt-3">
+          <div class=" wrapBox3">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">공고시작일</span>
+              <input type="date" class="form-control" placeholder="2023.03.03." aria-label="Username"
+                     aria-describedby="basic-addon1" v-model="jpl_startDate" required>
+              &nbsp; ~ &nbsp;
+              <span class="input-group-text" id="basic-addon1">공고종료일</span>
+              <input type="date" class="form-control" placeholder="2023.06.05." aria-label="Username"
+                     aria-describedby="basic-addon1" v-model="jpl_endDate" required>
             </div>
           </div>
         </div>
-      </div>
       </section>
       <div class=" mt-3 mb-3">
         <h2>채용조건</h2>
@@ -164,7 +163,7 @@
               <label for="">근무지 :</label>
               <input type="text" class="form-control" id="location" placeholder="지역을 입력하세요." name="location"
                      v-model="jpl_address">
-<!--              데이터 들어가서 나오는지 테스트해봄, 시각적으로 괜찮아보여서 일단 냅둠 -->
+              <!--              데이터 들어가서 나오는지 테스트해봄, 시각적으로 괜찮아보여서 일단 냅둠 -->
               <p>{{jpl_locationSi}} > {{jpl_locationGu}}</p>
               <div class="cityBox">
                 <div class="empBoxLabel citySrc1">
@@ -202,8 +201,6 @@
               <div >
                 <label for="appt">근무시간 :</label>
                 <div>
-                  <b-form-timepicker v-model="jpl_workTimeS" locale="en"></b-form-timepicker>
-                  <div class="mt-2">Value: '{{ value }}'</div>
                   <input type="time" id="appt" name="appt" v-model="jpl_workTimeS"> ~
                   <input type="time" id="appt" name="appt" v-model="jpl_workTimeE">
                 </div>
@@ -217,6 +214,8 @@
                 <label class="form-check-label" for="salary1">면접 후 결정</label>
               </div>
               <div class="form-check">
+                <input type="radio" class="form-check-input" id="salary2" name="salaryRadio" value=salary
+                       v-model="salaryType">
                 <label class="form-check-label" for="salary2"><input type="text" class="" placeholder="예상연봉 입력"
                                                                      v-model="jpl_salary"></label>
               </div>
@@ -259,8 +258,12 @@
           <button type="submit" class="btn btn-primary" @click="empRegist">등록</button>
         </div>
       </div>
+
+
     </div>
   </div>
+
+
 </template>
 
 <script>
@@ -365,7 +368,7 @@ export default {
         },
         {cityCode: 17, gooName: ["제주시", "서귀포시"]}
       ]
-,
+      ,
       viewImg: ''
     }
   },
@@ -392,7 +395,7 @@ export default {
       console.log("userData")
       console.log(res)
     }).catch(err=>{
-         console.log(err)
+      console.log(err)
     })
 
 
@@ -411,7 +414,6 @@ export default {
     },
 
     empRegist(){
-      // 급여 미선택시 0으로 값 주는거
       if(this.salaryType=='undecided'){
         this.jpl_salary=0;
       }
@@ -455,10 +457,10 @@ export default {
 
       this.$axios.post('/jobfair/EmpRegist'
           ,formData
-      ,{
-        headers:{
-          "Content-Type": `multipart/form-data`
-        }
+          ,{
+            headers:{
+              "Content-Type": `multipart/form-data`
+            }
           }).then((res)=>{
 
         console.log('성공')
@@ -469,16 +471,7 @@ export default {
         console.log(err)
 
       })
-      // 작성한 채용공고 내용을 가지고가서 유저가 보는 채용공고에 데이터뿌리기.. 하는중인데 먼지 몰겟긴하지만 해본다
-      // this.$axios.post('/jobfair/EmpRegistInfo'
-      //     ,empData)
-      //     .then((res)=>{
-      //   console.log('성공')
-      //   console.log(res.data)
-      //
-      // }).catch(err => {
-      //   console.log(err)
-      // })
+
     },
     clickFile () {  //버튼 클릭 시 input:file 클릭으로 연동하는 함수
       this.$refs.fileInsert.click();
@@ -606,4 +599,3 @@ textarea.form-control {
 }
 
 </style>
-

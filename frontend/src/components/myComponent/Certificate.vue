@@ -14,7 +14,7 @@
         <div class="mb-3 mt-3">
           <label for="">발행처 :</label>
           <input type="text" class="form-control" placeholder="발행처를 입력하세요."
-                 v-model="certInfo.cert_issueInstitute" @change="inputCertData"></p>  
+                 v-model="certInfo.cert_issueInstitute" @change="inputCertData">
         </div>
       </section>
     </div>
