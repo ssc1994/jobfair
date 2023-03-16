@@ -12,7 +12,7 @@
 
       <div v-if="fold!=false">
         <div class="resumeBoxWrap" >
-          <routerLink to="">
+          <routerLink to="/uResumeView">
             <div class="resumeBox">
               <div class="left">
               <span class="newResumeIcon" style="font-size: 40px;">
@@ -31,8 +31,16 @@
 
           <div class="resumeBox">
             <div class="left">
-              <p class="resumeTitle">{{ resumeAll.res_title }}</p>
-              <p>{{resumeAll.res_regDate}}</p>
+              <ul>
+                <li>
+                  <p class="resumeTitle">{{ res_title }}</p>
+                  <p>{{res_regDate}}</p>
+                </li>
+                <li>
+                  <p class="resumeTitle">{{ res_title }}</p>
+                  <p>{{res_regDate}}</p>
+                </li>
+              </ul>
             </div>
             <div class="right">
               <button id="" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border-color: #0064ff;color:#0064ff;">
@@ -225,7 +233,7 @@ export default {
         this.arrSrc = "down";
       }
 
-    }
+    },
   }
 }
 </script>

@@ -123,7 +123,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">수정 완료</button>
+          <button type="button" class="btn btn-primary" :data-bs-dismiss="testtext" @click.prevent="test">수정 완료</button>
         </div>
       </div>
     </div>
@@ -134,9 +134,9 @@
   <hr>
 
   <!-- 아코디언 -->
-  <Test menuTitle='메뉴 1'/>
-  <Test menuTitle='메뉴 2'/>
-  <Test menuTitle='메뉴 3'/>
+  <SideMenuList menuTitle='메뉴 1'/>
+  <SideMenuList menuTitle='메뉴 2'/>
+  <SideMenuList menuTitle='메뉴 3'/>
 
 </template>
 <script>
@@ -147,7 +147,7 @@ import Box3d from "../../components/Icon/Box3d.vue";
 import Document from "../../components/Icon/Document.vue";
 import Spaceship from "../../components/Icon/Spaceship.vue";
 import Settings from "../../components/Icon/Settings.vue";
-import Test from "@/components/myComponent/SideMenuList";
+import SideMenuList from "@/components/myComponent/SideMenuList";
 
 export default {
   name: "SidenavList",
@@ -175,7 +175,8 @@ export default {
       checkNewPw: '',
       man: 'false',
       woman: 'false',
-      gender: ''
+      gender: '',
+      testtext: ''
     }
   },
   components: {
@@ -186,7 +187,7 @@ export default {
     Document,
     Spaceship,
     Settings,
-    Test
+    SideMenuList
   },
   methods: {
     getRoute() {
@@ -241,6 +242,11 @@ export default {
         this.woman = true
       }
       console.log(this.gender)
+    },
+    test () {
+      if(this.userInfo.user_name) {
+        this.testtext = 'modal'
+      }
     }
   },
 };

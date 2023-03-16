@@ -1,5 +1,6 @@
 package com.sungjin.jobfair.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.boot.Banner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,8 +58,8 @@ public class UserController {
     }
 
     //큐앤에이 목록
-    @PostMapping (value = "/getQnAList")
-    public  ArrayList<QnAVO> getQnAList(Model model) {
+    @PostMapping(value = "/getQnAList")
+    public ArrayList<QnAVO> getQnAList(Model model) {
 
         ArrayList<QnAVO> list = userService.getQnAList();
         model.addAttribute("list", list);
@@ -80,7 +81,7 @@ public class UserController {
 
     //채용공고 검색
 
-    @GetMapping(value="/getJobPostSrc")
+    @GetMapping(value = "/getJobPostSrc")
     public ArrayList<EmpVO> getJobPostSrc(@RequestParam("jpl_Form") Model model, String str) {
 
         ArrayList<EmpVO> list = userService.getJobPostSrc(str);
@@ -111,16 +112,17 @@ public class UserController {
         model.addAttribute("list", list);
 
         return list;
+    }
 
     //이력서 등록
     @PostMapping(value = "/regResume",
-                consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String regResume (@RequestPart("res_img") MultipartFile file,
-                             @RequestPart("resData") ObjectNode node,
-                             ResumeVO resumeVO,
-                             EduVO eduVO,
-                             CertVO certVO,
-                             ArrayList<WeVO> weList) {
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String regResume(@RequestPart("res_img") MultipartFile file,
+                            @RequestPart("resData") ObjectNode node,
+                            ResumeVO resumeVO,
+                            ArrayList<EduVO> eduList,
+                            ArrayList<WeVO> weList,
+                            ArrayList<CertVO> certList) {
 
         //파일 객체 분해 및 경로+이름 지정
         String pic_name = file.getOriginalFilename();
@@ -138,22 +140,51 @@ public class UserController {
             resumeVO.setRes_picName(pic_name);
             resumeVO.setRes_picPath(pic_path);
             resumeVO.setRes_picUuid(pic_uuid);
-            eduVO = mapper.treeToValue(node.get("eduInfo"), EduVO.class);
-            certVO = mapper.treeToValue(node.get("certInfo"), CertVO.class);
-            weList = mapper.treeToValue(node.get("weInfo"), ArrayList.class);
-            System.out.println("weList = " + weList);
-//            for(WeVO we : weList){
-//                service(we)
-//            }
+            ArrayList tmpEduList = mapper.treeToValue(node.get("eduInfo"), ArrayList.class);
+            ArrayList tmpWeList = mapper.treeToValue(node.get("weInfo"), ArrayList.class);
+            ArrayList tmpCertList = mapper.treeToValue(node.get("certInfo"), ArrayList.class);
+            eduList = mapper.convertValue((node.get("eduInfo")), new TypeReference<ArrayList<EduVO>>(){});
+            weList = mapper.convertValue((node.get("weInfo")), new TypeReference<ArrayList<WeVO>>(){});
+            certList = mapper.convertValue((node.get("certInfo")), new TypeReference<ArrayList<CertVO>>(){});
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        System.out.println("eduList = " + eduList);
+        System.out.println("weList = " + weList);
+        System.out.println("certList = " + certList);
+
+        //인적사항 insert
+        System.out.println("resumeVO = " + resumeVO);
+        userService.regResume(resumeVO);
+        int res_num = resumeVO.getRes_num();
+        String user_id = resumeVO.getUser_id();
+
+        System.out.println("eduList = " + eduList);
+        System.out.println("weList = " + weList);
+        System.out.println("certList = " + certList);
+
+        for (EduVO edu : eduList) {
+            edu.setRes_num(res_num);
+            edu.setEdu_grades("4.0");
+            edu.setEdu_totalGrades("4.5");
+            System.out.println("edu = " + edu);
+            userService.regResEdu(edu);
+        }
+        for (WeVO we : weList) {
+            we.setRes_num(res_num);
+            userService.regResWe(we);
+        }
+        for (CertVO cert : certList) {
+            cert.setRes_num(res_num);
+            userService.regResCert(cert);
         }
 
         return "success";
     }
 
     @PostMapping(value = "/uploadImg")
-    public String uploadImg (@RequestParam("res_img") MultipartFile file) {
+    public String uploadImg(@RequestParam("res_img") MultipartFile file) {
 
 
         String pic_name = file.getOriginalFilename();
