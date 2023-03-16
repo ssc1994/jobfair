@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.getJobPostList();
     }
     @Override
-    public ArrayList<EmpVO> getJobPostSrc(String str) {
-        return userMapper.getJobPostSrc(str);
+    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
+        return userMapper.getJobPostSrc(vo);
     }
 
     //################## Resume Service #######################

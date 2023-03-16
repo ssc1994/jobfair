@@ -2,7 +2,6 @@ package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 
 public interface UserService {
@@ -27,8 +26,10 @@ public interface UserService {
     //################## jobPost Service #######################
     //채용공고 목록 가져오기
     public ArrayList<EmpVO> getJobPostList();
+    
     //채용공고 검색 목록 가져오기
-    public ArrayList<EmpVO> getJobPostSrc(String str);
+    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
+
     //기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)
 //    public ArrayList<EmpVO> EmpRegistInfo();
 

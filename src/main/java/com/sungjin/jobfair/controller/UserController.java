@@ -1,6 +1,8 @@
 package com.sungjin.jobfair.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.springframework.boot.Banner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,21 +76,78 @@ public class UserController {
 
         ArrayList<EmpVO> list = userService.getJobPostList();
         model.addAttribute("list", list);
-        System.out.println(list.toString());
+//        System.out.println(list.toString());
 
         return list;
     }
 
     //채용공고 검색
 
-    @GetMapping(value = "/getJobPostSrc")
-    public ArrayList<EmpVO> getJobPostSrc(@RequestParam("jpl_Form") Model model, String str) {
+    @PostMapping(value="/getJobPostSrc",
+                 consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ArrayList<EmpVO> getJobPostSrc(@RequestBody ObjectNode node,
+                                          ArrayList<EmpSearchVO> jpl_duty,
+                                          ArrayList<EmpSearchVO> jpl_workHistory,
+                                          ArrayList<EmpSearchVO> jpl_workForm,
+                                          ArrayList<EmpSearchVO> jpl_education,
+                                          ArrayList<EmpSearchVO> jpl_conditions,
+                                          ArrayList<EmpSearchVO> jpl_certificate,
+                                          ArrayList<EmpSearchVO> jpl_salary,
+                                          ArrayList<EmpSearchVO> jpl_locationSi,
+                                          ArrayList<EmpSearchVO> jpl_locationGu
+                                          ) {
+        //System.out.println(vo);
+        //System.out.println("검색메서드"+list.toString());
 
-        ArrayList<EmpVO> list = userService.getJobPostSrc(str);
-        model.addAttribute("list", list);
-        System.out.println(list.toString());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 
-        return list;
+        //System.out.println(mapper.);
+        System.out.println("node = " + node);
+
+        ArrayList<EmpVO> empvo = new ArrayList<>();
+
+        try {
+            System.out.println(1);
+            ArrayList tmp_jpl_duty = mapper.treeToValue(node.get("jpl_duty"), ArrayList.class);
+            ArrayList tmp_jpl_workHistory = mapper.treeToValue(node.get("jpl_workHistory"), ArrayList.class);
+            ArrayList tmp_jpl_workForm = mapper.treeToValue(node.get("jpl_workForm"), ArrayList.class);
+            ArrayList tmp_jpl_education = mapper.treeToValue(node.get("jpl_education"), ArrayList.class);
+            ArrayList tmp_jpl_conditions = mapper.treeToValue(node.get("jpl_conditions"), ArrayList.class);
+            ArrayList tmp_jpl_certificate = mapper.treeToValue(node.get("jpl_certificate"), ArrayList.class);
+            ArrayList tmp_jpl_salary = mapper.treeToValue(node.get("jpl_salary"), ArrayList.class);
+            ArrayList tmp_jpl_locationSi = mapper.treeToValue(node.get("jpl_locationSi"), ArrayList.class);
+            ArrayList tmp_jpl_locationGu = mapper.treeToValue(node.get("jpl_locationGu"), ArrayList.class);
+
+            System.out.println(tmp_jpl_duty.toString());
+
+            jpl_duty = mapper.convertValue(tmp_jpl_duty.toString(), new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_workHistory = mapper.convertValue(tmp_jpl_workHistory, new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_workForm = mapper.convertValue(tmp_jpl_workForm, new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_education = mapper.convertValue(tmp_jpl_education, new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_conditions = mapper.convertValue(tmp_jpl_conditions, new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_certificate = mapper.convertValue(tmp_jpl_certificate, new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_salary = mapper.convertValue(tmp_jpl_salary, new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_locationSi = mapper.convertValue(tmp_jpl_locationSi, new TypeReference<ArrayList<EmpSearchVO>>(){});
+            jpl_locationGu = mapper.convertValue(tmp_jpl_locationGu, new TypeReference<ArrayList<EmpSearchVO>>(){});
+
+            System.out.println(jpl_duty);
+            for(EmpSearchVO vo : jpl_duty){
+                System.out.println(vo);
+                userService.getJobPostSrc(vo);
+
+
+
+
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return empvo;
     }
 
 
@@ -130,7 +189,7 @@ public class UserController {
         userService.deleteResume(res_num);
 
     }
-    
+
     //이력서 등록
     @PostMapping(value = "/regResume",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
