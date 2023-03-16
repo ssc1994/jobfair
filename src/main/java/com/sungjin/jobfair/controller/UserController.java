@@ -52,7 +52,7 @@ public class UserController {
     private UserService userService;
 
 
-    //큐앤에이 
+    //큐앤에이
     @PostMapping(value = "/qnaRegist")
     public String qnaRegist(@RequestBody QnAVO vo) {
         userService.qnaRegist(vo);
@@ -60,8 +60,8 @@ public class UserController {
     }
 
     //큐앤에이 목록
-    @PostMapping (value = "/getQnAList")
-    public  ArrayList<QnAVO> getQnAList(Model model) {
+    @PostMapping(value = "/getQnAList")
+    public ArrayList<QnAVO> getQnAList(Model model) {
 
         ArrayList<QnAVO> list = userService.getQnAList();
         model.addAttribute("list", list);
@@ -97,7 +97,6 @@ public class UserController {
                                           ArrayList<EmpSearchVO> jpl_locationGu
                                           ) {
         //System.out.println(vo);
-
         //System.out.println("검색메서드"+list.toString());
 
         ObjectMapper mapper = new ObjectMapper();
@@ -153,15 +152,24 @@ public class UserController {
 
 
     //큐앤에이 상세페이지 데이터 불러오기
-    @GetMapping(value = "/uQnADetailView")
+    @GetMapping(value = "/getQnADetail")
     public QnAVO getQnADetail(@RequestParam("qa_num") int qa_num) {
 
         QnAVO vo = userService.getQnADetail(qa_num);
         System.out.println("유저VO");
-        System.out.println(vo.toString());
+        System.out.println(vo);
 
 
         return vo;
+    }
+
+    @PostMapping ( "/uQnAModi")
+    public int uQnAModi(@RequestBody QnAVO vo) {
+        int a = userService.uQnAModi(vo);
+        System.out.println("글수정");
+        System.out.println(vo.toString());
+
+        return a;
     }
 
     //이력서 내용가져오기
@@ -173,15 +181,24 @@ public class UserController {
 
         return list;
     }
+    
+    //이력서 삭제하기
+    @GetMapping(value = "/deleteResume")
+    public void deleteResume(@RequestParam("res_num") int res_num) {
+
+        userService.deleteResume(res_num);
+
+    }
+
     //이력서 등록
     @PostMapping(value = "/regResume",
-                consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String regResume (@RequestPart("res_img") MultipartFile file,
-                             @RequestPart("resData") ObjectNode node,
-                             ResumeVO resumeVO,
-                             EduVO eduVO,
-                             CertVO certVO,
-                             ArrayList<WeVO> weList) {
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String regResume(@RequestPart("res_img") MultipartFile file,
+                            @RequestPart("resData") ObjectNode node,
+                            ResumeVO resumeVO,
+                            ArrayList<EduVO> eduList,
+                            ArrayList<WeVO> weList,
+                            ArrayList<CertVO> certList) {
 
         //파일 객체 분해 및 경로+이름 지정
         String pic_name = file.getOriginalFilename();
@@ -199,22 +216,51 @@ public class UserController {
             resumeVO.setRes_picName(pic_name);
             resumeVO.setRes_picPath(pic_path);
             resumeVO.setRes_picUuid(pic_uuid);
-            eduVO = mapper.treeToValue(node.get("eduInfo"), EduVO.class);
-            certVO = mapper.treeToValue(node.get("certInfo"), CertVO.class);
-            weList = mapper.treeToValue(node.get("weInfo"), ArrayList.class);
-            System.out.println("weList = " + weList);
-//            for(WeVO we : weList){
-//                service(we)
-//            }
+            ArrayList tmpEduList = mapper.treeToValue(node.get("eduInfo"), ArrayList.class);
+            ArrayList tmpWeList = mapper.treeToValue(node.get("weInfo"), ArrayList.class);
+            ArrayList tmpCertList = mapper.treeToValue(node.get("certInfo"), ArrayList.class);
+            eduList = mapper.convertValue((node.get("eduInfo")), new TypeReference<ArrayList<EduVO>>(){});
+            weList = mapper.convertValue((node.get("weInfo")), new TypeReference<ArrayList<WeVO>>(){});
+            certList = mapper.convertValue((node.get("certInfo")), new TypeReference<ArrayList<CertVO>>(){});
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        System.out.println("eduList = " + eduList);
+        System.out.println("weList = " + weList);
+        System.out.println("certList = " + certList);
+
+        //인적사항 insert
+        System.out.println("resumeVO = " + resumeVO);
+        userService.regResume(resumeVO);
+        int res_num = resumeVO.getRes_num();
+        String user_id = resumeVO.getUser_id();
+
+        System.out.println("eduList = " + eduList);
+        System.out.println("weList = " + weList);
+        System.out.println("certList = " + certList);
+
+        for (EduVO edu : eduList) {
+            edu.setRes_num(res_num);
+            edu.setEdu_grades("4.0");
+            edu.setEdu_totalGrades("4.5");
+            System.out.println("edu = " + edu);
+            userService.regResEdu(edu);
+        }
+        for (WeVO we : weList) {
+            we.setRes_num(res_num);
+            userService.regResWe(we);
+        }
+        for (CertVO cert : certList) {
+            cert.setRes_num(res_num);
+            userService.regResCert(cert);
         }
 
         return "success";
     }
 
     @PostMapping(value = "/uploadImg")
-    public String uploadImg (@RequestParam("res_img") MultipartFile file) {
+    public String uploadImg(@RequestParam("res_img") MultipartFile file) {
 
 
         String pic_name = file.getOriginalFilename();
@@ -230,4 +276,15 @@ public class UserController {
         }
         return "success";
     }
+
+    //기업이 작성한 채용공고 내용 가져오는 메서드 (박희진 작성중)
+//    @PostMapping( value = "EmpRegistInfo")
+//    public ArrayList<EmpVO> EmpRegistInfo(Model model){
+//
+//        ArrayList<EmpVO> list = userService.EmpRegistInfo();
+//        model.addAttribute("list", list);
+//        System.out.println("controller탐");
+//
+//        return list;
+//    }
 }

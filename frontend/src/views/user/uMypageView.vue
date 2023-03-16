@@ -12,7 +12,7 @@
 
       <div v-if="fold!=false">
         <div class="resumeBoxWrap" >
-          <routerLink to="">
+          <routerLink to="/uResumeView">
             <div class="resumeBox">
               <div class="left">
               <span class="newResumeIcon" style="font-size: 40px;">
@@ -20,47 +20,32 @@
               </span>
                 <p class="newResume" style="display: inline-block;font-size: 19px;margin-left:10px;">이력서 작성하기</p>
               </div>
-              <div class="right">
 
-              </div>
             </div>
           </routerLink>
         </div>
 
-        <div class="resumeBoxWrap" >
-
+        <div class="resumeBoxWrap" v-for="(resumeAll,i) in resumeArray" :key="i">
           <div class="resumeBox">
             <div class="left">
-              <p class="resumeTitle">{{ resumeAll.res_title }}</p>
-              <p>{{resumeAll.res_regDate}}</p>
+              <ul>
+                <li>
+                  <p class="resumeTitle">{{ res_title }}</p>
+                  <p>{{res_regDate}}</p>
+                </li>
+                <li>
+                  <p class="resumeTitle">{{ res_title }}</p>
+                  <p>{{res_regDate}}</p>
+                </li>
+              </ul>
             </div>
             <div class="right">
               <button id="" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border-color: #0064ff;color:#0064ff;">
                 수정
               </button>
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#DeleteModal" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#DeleteModal" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);" @click="deleteResume" :value="resumeAll.res_num">
                 삭제
               </button>
-            </div>
-          </div>
-        </div>
-<!--        삭제버튼 클릭시 나오는 모달창-->
-        <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="DeleteModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <!--                res_title값 가져오기-->
-                <h1 class="modal-title fs-5" id="DeleteModalLabel">삭제하시겠습니까?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-
-              <div class="input-group mb-3">
-                <span>삭제 시 이력서 복구가 불가능합니다. 삭제하시겠습니까 ?</span>
-                <button type="button" class="btn btn-outline-primary" data-bs-target="#DeleteModal" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">
-                  삭제
-                </button>
-              </div>
-
             </div>
           </div>
         </div>
@@ -203,7 +188,8 @@ export default {
       res_num : '',
       res_title : '',
       res_regDate : '',
-      user_id: ''
+      user_id: '',
+      resumeNumber: ''
     }
   },
   beforeCreate() {
@@ -224,7 +210,17 @@ export default {
       } else {
         this.arrSrc = "down";
       }
-
+    },
+    // 삭제버튼 클릭 시 데이터베이스에 있는 데이터 삭제 ( 이력서 삭제 ) 2023/03/15 박희진
+    deleteResume(e) {
+      alert("삭제하시겠습니까?")
+      console.log(e.target.value)
+      this.$axios.get('/jobfair/deleteResume',{params:{res_num: e.target.value}})
+          .then((res) => {
+            this.$router.go('/uMypageView')
+            this.res_num = res.data
+          })
+          .catch((error) => { console.log(error) })
     }
   }
 }
