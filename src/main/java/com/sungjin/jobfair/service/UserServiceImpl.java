@@ -1,9 +1,6 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.ResumeVO;
-import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +21,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.info(id);
     }
 
-
     //################## QnA Service #######################
     @Override
     public void qnaRegist(QnAVO vo) {
@@ -40,7 +36,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.getQnADetail(qa_num);
     }
 
-
     //################## jobPost Service #######################
     @Override
     public ArrayList<EmpVO> getJobPostList() {
@@ -51,13 +46,28 @@ public class UserServiceImpl implements UserService {
         return userMapper.getJobPostSrc(str);
     }
 
-
     //################## Resume Service #######################
     @Override
     public ArrayList<ResumeVO> resumeInfo() {
         return userMapper.resumeInfo();
     }
+    @Override
+    public void regResume(ResumeVO resVO) {
+        userMapper.regResume(resVO);
+    }
 
+    @Override
+    public void regResEdu(EduVO eduVO) {
+        userMapper.regResEdu(eduVO);
+    }
 
+    @Override
+    public void regResWe(WeVO weVO) {
+        userMapper.regResWe(weVO);
+    }
 
+    @Override
+    public void regResCert(CertVO certVO) {
+        userMapper.regResCert(certVO);
+    }
 }

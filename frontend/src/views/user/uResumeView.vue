@@ -4,36 +4,38 @@
       <main class="resume">
         <!--이력서 제목 -->
         <div class="">
-          <h3 class="fs-medium resumeTitle">이력서제목 : <input type="text"></h3>
+          <h3 class="fs-medium resumeTitle">이력서제목 : <input type="text" v-model="resInfo.res_title"></h3>
         </div>
         <!-- 인적사항 작성 -->
         <section>
 
-  <div class="introduce">
-    <div class="introduce-contact">
-      <ul>
-        <li class="introduce-cotact_list">
-          <div>
-            <h4 class="fs-medium">인적사항</h4>
+          <div class="introduce">
+            <div class="introduce-contact">
+              <ul>
+                <li class="introduce-cotact_list">
+                  <div>
+                    <h4 class="fs-medium">인적사항</h4>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile">
+              <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요."
+                                                   v-model="resInfo.res_name"></p>
+              <p class="headline-title">이메일 :<input type="email" class="headline-input" v-model="resInfo.res_email"></p>
+              <p class="headline-title">전화번호 :<input type="text" class="headline-input" v-model="resInfo.res_phone"></p>
+              <p class="headline-title">주소 :<input type="text" class="headline-input" v-model="resInfo.res_address"></p>
+              <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth"></p>
+            </div>
+            <!-- 프로필 사진 등록 -->
+
+            <img class="headline-image" :src="viewImg" alt="프로필 사진" ref="previewImg">
+            <div class="input-group mb-3 profileSubmit">
+              <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg"
+                     accept="image/*" ref="inputImg">
+              <input type="button" value="사진 선택" @click="clickFile">
+            </div>
           </div>
-        </li>
-      </ul>
-    </div>
-              <div class="profile">
-                <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요." v-model="resInfo.res_name"></p>
-                <p class="headline-title">이메일 :<input type="email" class="headline-input" v-model="resInfo.res_email"></p>
-                <p class="headline-title">전화번호 :<input type="text" class="headline-input" v-model="resInfo.res_phone"></p>
-                <p class="headline-title">주소 :<input type="text" class="headline-input" v-model="resInfo.res_address"></p>
-                <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth"></p>
-              </div>
-              <!-- 프로필 사진 등록 -->
-              
-                <img class="headline-image" :src="viewImg" alt="프로필 사진" ref="previewImg">
-                <div class="input-group mb-3 profileSubmit">
-                  <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg" accept="image/*" ref="inputImg">
-                  <input type="button" value="사진 선택" @click="clickFile">
-                </div>
-  </div>
         </section>
 
         <section>
@@ -43,41 +45,15 @@
                 <li class="introduce-cotact_list">
                   <div>
                     <h4 class="fs-medium">학력</h4>
+                    <input type="button" value="추가" id="btnAddWe" @click="addComp">
                   </div>
                 </li>
               </ul>
             </div>
 
-            <div class="profile">
-              <p class="fs-medium fc-gray"></p>
-              <p class="headline-title">학교구분 :</p>
-              <select class="form-select school" v-model="eduInfo.edu_degree">
-                <option selected value="none">선택</option>
-                <option value="high">고등학교</option>
-                <option value="college">대학교(2, 3년)</option>
-                <option value="university">대학교(4년)</option>
-                <option value="graduate">대학원</option>
-              </select>
-              <p class="headline-title">학교명 :
-                <input type="text" class="headline-input" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName">
-              </p>
-              <p class="headline-title">입학년월 :
-                <input type="date" class="headline-input" v-model="eduInfo.edu_entranceDate">
-              </p>
-              <p class="headline-title">졸업년월 :
-                <input type="date" class="headline-input" v-model="eduInfo.edu_graduationDate">
-              </p>
-              <select class="form-select finish" v-model="eduInfo.edu_state">
-                <option selected value="none">졸업상태 선택</option>
-                <option value="1">졸업</option>
-                <option value="2">졸업예정</option>
-                <option value="3">재학중</option>
-                <option value="4">휴학</option>
-                <option value="5">자퇴</option>
-              </select>
-              <p class="headline-title">전공명 :
-                <input type="text" class="headline-input" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major">
-              </p>
+            <EDU :eduCount=0 v-model="eduInfo[0]" @inputEdu="getEduData"/>
+            <div v-for="edu in eduCount">
+              <EDU :eduCount="edu" v-model="eduInfo[edu]" @inputEdu="getEduData"/>
             </div>
           </div>
         </section>
@@ -89,14 +65,14 @@
                 <li class="introduce-cotact_list">
                   <div>
                     <h4 class="fs-medium">경력</h4>
-                    <input type="button" value="추가" id="btnAddWe" @click="addWE">
+                    <input type="button" value="추가" id="btnAddWe" @click="addComp">
                   </div>
                 </li>
               </ul>
             </div>
-              <WE :weCount=0  v-model="weInfo[0]" @inputWE="changeWeInfo"/>
-            <div  v-for="we in weCount">
-              <WE :weCount="we" v-model="weInfo[we]" @inputWE="changeWeInfo"/>
+            <WE :weCount=0 v-model="weInfo[0]" @inputWE="getWeData"/>
+            <div v-for="we in weCount">
+              <WE :weCount="we" v-model="weInfo[we]" @inputWE="getWeData"/>
             </div>
           </div>
         </section>
@@ -108,19 +84,15 @@
                 <li class="introduce-cotact_list">
                   <div>
                     <h4 class="fs-medium">자격증</h4>
+                    <input type="button" value="추가" id="btnAddWe" @click="addComp">
                   </div>
                 </li>
               </ul>
             </div>
 
-            <div class="profile">
-              <p class="fs-medium fc-gray"></p>
-              <p class="headline-title">자격증명 :<input type="text" class="headline-input" v-model="certInfo.cert_name">
-              </p>
-              <p class="headline-title">발행일 :<input type="date" class="headline-input" v-model="certInfo.cert_gainDate">
-              </p>
-              <p class="headline-title">발행처 :<input type="text" class="headline-input"
-                                                    v-model="certInfo.cert_issueInstitute"></p>
+            <CERT :certCount="0" v-model="certInfo[0]" @inputCert="getCertData"/>
+            <div v-for="cert in certCount">
+              <CERT :certCount="cert" v-model="certInfo[cert]" @inputCert="getCertData"/>
             </div>
           </div>
         </section>
@@ -154,16 +126,33 @@
 <script>
 import axios from "axios";
 import WE from "@/components/myComponent/WorkExperiences";
+import EDU from "@/components/myComponent/Education";
+import CERT from "@/components/myComponent/Certificate";
 
 export default {
   name: 'uResumeView',
   components: {
-    WE
+    WE, //경력 컴포넌트
+    EDU, //학력 컴포넌트
+    CERT //자격증 컴포넌트
+  },
+  created() {
+    //sesionStorage에서 값 가져오는법
+    let sessionId = sessionStorage.getItem('sessionId')
+    let sessionAuth = sessionStorage.getItem('sessionAuth')
+    if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
+      let SessionJsonId = JSON.parse(sessionId)
+      this.resInfo.user_id = SessionJsonId
+    }
+    if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
+      let SessionJsonAuth = JSON.parse(sessionAuth)
+    }
   },
   data() {
     return {
       //이력서 Table 변수
       resInfo: {
+        user_id: '',
         res_title: '',
         res_content: '',
         res_regDate: '',
@@ -177,67 +166,78 @@ export default {
         res_birth: '',
       },
       //학력 Table 변수
-      eduInfo: {
-        edu_degree: 'none',
-        edu_schoolName: '',
-        edu_major: '',
-        edu_entranceDate: '',
-        edu_graduationDate: '',
-        edu_state: 'none',
-        edu_grades: '',
-        edu_totalGrades: '',
-      },
+      eduInfo: [],
+      eduCount: 0,
       //자격증 Table 변수
-      certInfo: {
-        cert_name: '',
-        cert_gainDate: '',
-        cert_issueInstitute: '',
-      },
+      certInfo: [],
+      certCount: 0,
       //경력 Table 변수
       weInfo: [],
       weCount: 0,
+      //이력서 사진 관련 변수
       res_img: '',
       viewImg: ''
     }
   },
   methods: {
-    doAction() {  //form 데이터 서버로 전송
+    //*********데이터와 파일을 서버로 전송
+    doAction() {
       let tmpData = {
         resInfo: this.resInfo,
-        certInfo: this.certInfo,
+        eduInfo: this.eduInfo,
         weInfo: this.weInfo,
+        certInfo: this.certInfo
       }
+
       let formData = new FormData();
       let resData = new Blob([JSON.stringify(tmpData)], {type: "application/json"});
       formData.append("resData", resData);
       formData.append("res_img", this.res_img);
 
       this.$axios.post("/jobfair/regResume", formData)
-          .then( response => {
-            if(response.status === 200) alert("성공")
+          .then(response => {
+            if (response.status === 200) alert("작성한 이력서가 등록되었습니다.")
+            this.$router.push('/uMypageView')
           })
-          .catch( error => {
+          .catch(error => {
             console.log(error)
           })
     },
-    clickFile () {  //버튼 클릭 시 input:file 클릭으로 연동하는 함수
+    //*********버튼 클릭 시 input:file 클릭으로 연동시키는 함수
+    clickFile() {
+      console.log(this.resInfo.user_id)
       this.$refs.inputImg.click();
     },
-    previewImg(e) {  //이미지 미리보기
+    //*********업로드시킬 사진 미리보기 함수
+    previewImg(e) {
       this.res_img = e.target.files[0]
-      //이미지 업로드 시 화면에서 미리보기 기능
       let reader = new FileReader();
       reader.onload = (event) => {
         this.viewImg = event.target.result;
       }
       reader.readAsDataURL(this.res_img);
     },
-    changeWeInfo (weData) {
-      this.weInfo.splice(weData.weCount, 1, weData.weInfo)
-      console.log(this.weInfo)
+    //*********자식 컴포넌트(학력, 경력, 자격증)에서 입력된 데이터 받아오는 함수
+    //splice: 첫 번째 인자: 변경시킬 인덱스,  두 번째 인자 : 삭제시킬 개수, 세 번째 인자: 인덱스에 들어갈 값
+    //변경 시 기존 인덱스에 들어있는 값을 삭제 후 변경된 데이터를 집어넣는다.
+    getEduData(eduData) {
+      eduData.eduInfo.user_id = this.resInfo.user_id
+      this.eduInfo.splice(eduData.eduCount, 1, eduData.eduInfo);
     },
-    addWE () {
-      this.weCount++;
+    getWeData(weData) {
+      weData.weInfo.user_id = this.resInfo.user_id
+      this.weInfo.splice(weData.weCount, 1, weData.weInfo);
+    },
+    getCertData(certData) {
+      certData.certInfo.user_id = this.resInfo.user_id
+      this.certInfo.splice(certData.certCount, 1, certData.certInfo);
+    },
+    //*********자식 컴포넌트 추가 함수
+    addComp(e) {
+      let checkType = e.target.previousSibling.innerHTML;
+      if( checkType === '학력') this.eduCount++;
+      else if( checkType === '경력') this.weCount++;
+      else if( checkType === '자격증') this.certCount++;
     },
   }
 }
@@ -436,6 +436,7 @@ input.int {
 select.sel {
   margin-left: 55px;
 }
+
 /* 프로필사진 파일 선택하는 인풋태그 스타일 */
 .profileSubmit {
   width: 130px;

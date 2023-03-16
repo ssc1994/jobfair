@@ -68,7 +68,7 @@ public class CompanyController {
 
         //받아온 empData를 파싱
         try {
-             vo = mapper.readValue(empData, EmpVO.class);
+            vo = mapper.readValue(empData, EmpVO.class);
         }catch (Exception e){
             e.printStackTrace();
         }

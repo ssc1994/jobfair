@@ -4,25 +4,25 @@
       <input type="text" class="headline-input">
     </p>
     <p class="headline-title">회사명 :
-      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_company" @change="dataChanged">
+      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_company" @change="inputWeData">
     </p>
     <p class="headline-title">부서명 :
-      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_department" @change="dataChanged">
+      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_department" @change="inputWeData">
     </p>
     <p class="headline-title">직급/직책 :
-      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_position" @change="dataChanged">
+      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_position" @change="inputWeData">
     </p>
     <p class="headline-title">담당직무 :
-      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_job" @change="dataChanged">
+      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_job" @change="inputWeData">
     </p>
     <p class="headline-title">입사일 :
-      <input type="date" class="headline-input" :name="props_name" v-model="weInfo.we_emplDate" @change="dataChanged">
+      <input type="date" class="headline-input" :name="props_name" v-model="weInfo.we_emplDate" @change="inputWeData">
     </p>
     <p class="headline-title">퇴사일 :
-      <input type="date" class="headline-input" :name="props_name" v-model="weInfo.we_departureDate" @change="dataChanged">
+      <input type="date" class="headline-input" :name="props_name" v-model="weInfo.we_departureDate" @change="inputWeData">
     </p>
     <p class="headline-title">연봉 :
-      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_salary" @change="dataChanged">
+      <input type="text" class="headline-input" :name="props_name" v-model="weInfo.we_salary" @change="inputWeData">
     </p>
   </div>
 </template>
@@ -32,12 +32,12 @@
 export default {
   name: "WorkExperiences",
   props: [
-      'prop_weInfo',
       'weCount'
   ],
   data () {
     return {
       weInfo: {
+        user_id: '',
         we_company: '',
         we_department: '',
         we_position: '',
@@ -50,8 +50,7 @@ export default {
     }
   },
   methods: {
-    dataChanged (e) {
-      console.log(this.weCount)
+    inputWeData (e) {
       let weData = {
         weCount: this.weCount,
         weInfo: this.weInfo

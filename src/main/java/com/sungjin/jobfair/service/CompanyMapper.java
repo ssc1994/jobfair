@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.ArrayList;
 
 @Mapper
-
 public interface CompanyMapper {
 
     public int empRegist(EmpVO vo);
