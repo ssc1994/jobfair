@@ -11,39 +11,37 @@ import java.util.ArrayList;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
-
     @Autowired
     UserMapper userMapper;
 
+    //################## Login Service #######################
     @Override
     public UserVO login(UserVO vo) {
         return userMapper.login(vo);
-    }
-
-    @Override
-    public void qnaRegist(QnAVO vo) {
-        System.out.println(vo.toString());
-        userMapper.qnaRegist(vo);
-    }
-
-    @Override
-    public ArrayList<QnAVO> getQnAList() {
-        return userMapper.getQnAList();
     }
     @Override
     public UserVO info(String id) {
         return userMapper.info(id);
     }
 
-    @Override
-    public ArrayList<ResumeVO> resumeInfo() {
-        return userMapper.resumeInfo();
-    }
 
+    //################## QnA Service #######################
+    @Override
+    public void qnaRegist(QnAVO vo) {
+        System.out.println(vo.toString());
+        userMapper.qnaRegist(vo);
+    }
+    @Override
+    public ArrayList<QnAVO> getQnAList() {
+        return userMapper.getQnAList();
+    }
     @Override
     public QnAVO getQnADetail(int qa_num) {
         return userMapper.getQnADetail(qa_num);
     }
+
+
+    //################## jobPost Service #######################
     @Override
     public ArrayList<EmpVO> getJobPostList() {
         return userMapper.getJobPostList();
@@ -52,5 +50,24 @@ public class UserServiceImpl implements UserService {
     public ArrayList<EmpVO> getJobPostSrc(String str) {
         return userMapper.getJobPostSrc(str);
     }
+
+    //박희진 작성중
+//    @Override
+//    public ArrayList<EmpVO> EmpRegistInfo() {
+//        return userMapper.EmpRegistInfo();
+//    }
+
+
+    //################## Resume Service #######################
+    @Override
+    public ArrayList<ResumeVO> resumeInfo() {
+        return userMapper.resumeInfo();
+    }
+
+    @Override
+    public void deleteResume(int res_num) {
+        userMapper.deleteResume(res_num);
+    }
+
 
 }

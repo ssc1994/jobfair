@@ -33,7 +33,7 @@
 
     <select id="getJobPostSrc" resultType="EmpVO">
         select * from jobpostinglist
-
+    </select>
 
     <select id="getQnADetail" resultType="QnAVO">
         select * from QnA where qa_num = #{qa_num}
@@ -41,6 +41,14 @@
 
     <select id="resumeInfo" resultType="ResumeVO">
         select * from ResumeList
-
     </select>
+
+    <delete id="deleteResume">
+        delete from ResumeList where res_num = #{res_num}
+    </delete>
+
+<!--    박희진 작성중-->
+<!--    <select id="'EmpRegistInfo'" resultType="EmpVO">-->
+<!--        select * from JobPostingList-->
+<!--    </select>-->
 </mapper>

@@ -49,7 +49,7 @@ public class UserController {
     private UserService userService;
 
 
-    //큐앤에이 
+    //큐앤에이
     @PostMapping(value = "/qnaRegist")
     public String qnaRegist(@RequestBody QnAVO vo) {
         userService.qnaRegist(vo);
@@ -111,16 +111,25 @@ public class UserController {
         model.addAttribute("list", list);
 
         return list;
+    }
+
+    //이력서 삭제하기
+    @GetMapping(value = "/deleteResume")
+    public void deleteResume(@RequestParam("res_num") int res_num) {
+
+        userService.deleteResume(res_num);
+
+    }
 
     //이력서 등록
     @PostMapping(value = "/regResume",
-                consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String regResume (@RequestPart("res_img") MultipartFile file,
                              @RequestPart("resData") ObjectNode node,
                              ResumeVO resumeVO,
-                             EduVO eduVO,
-                             CertVO certVO,
-                             ArrayList<WeVO> weList) {
+                             ArrayList<EduVO> eduList,
+                             ArrayList<WeVO> weList,
+                             ArrayList<CertVO> certList) {
 
         //파일 객체 분해 및 경로+이름 지정
         String pic_name = file.getOriginalFilename();
@@ -138,10 +147,9 @@ public class UserController {
             resumeVO.setRes_picName(pic_name);
             resumeVO.setRes_picPath(pic_path);
             resumeVO.setRes_picUuid(pic_uuid);
-            eduVO = mapper.treeToValue(node.get("eduInfo"), EduVO.class);
-            certVO = mapper.treeToValue(node.get("certInfo"), CertVO.class);
+            eduList = mapper.treeToValue(node.get("eduInfo"), ArrayList.class);
             weList = mapper.treeToValue(node.get("weInfo"), ArrayList.class);
-            System.out.println("weList = " + weList);
+            certList = mapper.treeToValue(node.get("certInfo"), ArrayList.class);
 //            for(WeVO we : weList){
 //                service(we)
 //            }
@@ -169,4 +177,15 @@ public class UserController {
         }
         return "success";
     }
+
+    //기업이 작성한 채용공고 내용 가져오는 메서드 (박희진 작성중)
+//    @PostMapping( value = "EmpRegistInfo")
+//    public ArrayList<EmpVO> EmpRegistInfo(Model model){
+//
+//        ArrayList<EmpVO> list = userService.EmpRegistInfo();
+//        model.addAttribute("list", list);
+//        System.out.println("controller탐");
+//
+//        return list;
+//    }
 }
