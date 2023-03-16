@@ -27,7 +27,7 @@
             </div>
 
             <div class="empSearchInput">
-              <input placeholder="채용공고명 또는 기관명을 입력해주세요." >
+              <input placeholder="채용공고명 또는 기관명을 입력해주세요." v-model="inputSearch">
             </div>
           </div>
 
@@ -51,7 +51,7 @@
               <!--구-->
               <div v-for="(goo,i) in cityGoo.filter( gc => gc.cityCode == checkedCity).values()" :key="i" >
                 <div v-for="(gooName,j) in goo.gooName" :key="j">
-                  <input type="checkbox" :id="gooName" name="gooName" :value="gooName" v-model="selectedTag[9].tagValue">
+                  <input type="checkbox" :id="gooName" name="gooName" :value="gooName" v-model="selectedTag[1].tagValue">
                   <label :for="gooName">{{ gooName}}</label>
                 </div>
               </div>
@@ -68,7 +68,7 @@
             <div class="empBoxLabel citySrc1">
               <!--시-->
               <div v-for="job in jobArr" :key="job">
-                <input type="checkbox" :id="job" name="jpl_duty" @change="plus" :value="job" v-model="selectedTag[1].tagValue">
+                <input type="checkbox" :id="job" name="jpl_duty" @change="plus" :value="job" v-model="selectedTag[2].tagValue">
                 <label :for="job">{{ job }}</label>
               </div>
             </div>
@@ -90,10 +90,10 @@
                 <div class="empBoxTitle">경력</div>
                 <div class="empBoxLabel">
                   <div>
-                    <input type="checkbox" id="jpl_workHistory1" name="jpl_workHistory" v-model="selectedTag[2].tagValue" value="신입"><label for="jpl_workHistory1">신입</label>
+                    <input type="checkbox" id="jpl_workHistory1" name="jpl_workHistory" v-model="selectedTag[3].tagValue" value="신입"><label for="jpl_workHistory1">신입</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_workHistory2" name="jpl_workHistory" v-model="selectedTag[2].tagValue" value="경력"><label for="jpl_workHistory2">경력</label>
+                    <input type="checkbox" id="jpl_workHistory2" name="jpl_workHistory" v-model="selectedTag[3].tagValue" value="경력"><label for="jpl_workHistory2">경력</label>
                   </div>
                 </div>
               </div>
@@ -126,25 +126,25 @@
                 <div class="empBoxTitle">연봉</div>
                 <div class="empBoxLabel">
                   <div>
-                    <input type="checkbox" id="jpl_salary1" name="jpl_salary" v-model="selectedTag[7].tagValue" value="2500만원 이하"><label for="jpl_salary1">2500만원 이하</label>
+                    <input type="checkbox" id="jpl_salary1" name="jpl_salary" v-model="selectedTag[5].tagValue" value="2500만원 이하"><label for="jpl_salary1">2500만원 이하</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_salary2" name="jpl_salary" v-model="selectedTag[7].tagValue" value="2500~3000만원"><label for="jpl_salary2">2500~3000만원</label>
+                    <input type="checkbox" id="jpl_salary2" name="jpl_salary" v-model="selectedTag[5].tagValue" value="2500~3000만원"><label for="jpl_salary2">2500~3000만원</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_salary3" name="jpl_salary" v-model="selectedTag[7].tagValue" value="3000~4000만원"><label for="jpl_salary3">3000~4000만원</label>
+                    <input type="checkbox" id="jpl_salary3" name="jpl_salary" v-model="selectedTag[5].tagValue" value="3000~4000만원"><label for="jpl_salary3">3000~4000만원</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_salary4" name="jpl_salary" v-model="selectedTag[7].tagValue" value="4000~5000만원"><label for="jpl_salary4">4000~5000만원</label>
+                    <input type="checkbox" id="jpl_salary4" name="jpl_salary" v-model="selectedTag[5].tagValue" value="4000~5000만원"><label for="jpl_salary4">4000~5000만원</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_salary5" name="jpl_salary" v-model="selectedTag[7].tagValue" value="5000~6000만원"><label for="jpl_salary5">5000~6000만원</label>
+                    <input type="checkbox" id="jpl_salary5" name="jpl_salary" v-model="selectedTag[5].tagValue" value="5000~6000만원"><label for="jpl_salary5">5000~6000만원</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_salary6" name="jpl_salary" v-model="selectedTag[7].tagValue" value="6000~7000만원"><label for="jpl_salary6">6000~7000만원</label>
+                    <input type="checkbox" id="jpl_salary6" name="jpl_salary" v-model="selectedTag[5].tagValue" value="6000~7000만원"><label for="jpl_salary6">6000~7000만원</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_salary7" name="jpl_salary" v-model="selectedTag[7].tagValue" value="7000만원 이상"><label for="jpl_salary7">7000만원 이상</label>
+                    <input type="checkbox" id="jpl_salary7" name="jpl_salary" v-model="selectedTag[5].tagValue" value="7000만원 이상"><label for="jpl_salary7">7000만원 이상</label>
                   </div>
                 </div>
               </div>
@@ -153,7 +153,7 @@
                 <div class="empBoxTitle">자격증</div>
                 <div class="empBoxLabel">
                   <div>
-                    <input type="checkbox" id="jpl_certificate1" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="정보처리기사"><label for="jpl_certificate1">정보처리기사</label>
+                    <input type="checkbox" id="jpl_certificate1" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="정보처리기사" @change="test"><label for="jpl_certificate1">정보처리기사</label>
                   </div>
                   <div>
                     <input type="checkbox" id="jpl_certificate2" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="웹디자인기능사"><label for="jpl_certificate2">웹디자인기능사</label>
@@ -170,19 +170,19 @@
                 <div class="empBoxTitle">우대조건</div>
                 <div class="empBoxLabel">
                   <div>
-                    <input type="checkbox" id="jpl_conditions1" name="jpl_conditions" v-model="selectedTag[5].tagValue" value="국가유공자"><label for="jpl_conditions1">국가유공자</label>
+                    <input type="checkbox" id="jpl_conditions1" name="jpl_conditions" v-model="selectedTag[7].tagValue" value="국가유공자"><label for="jpl_conditions1">국가유공자</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_conditions2" name="jpl_conditions" v-model="selectedTag[5].tagValue" value="보훈대상자"><label for="jpl_conditions2">보훈대상자</label>
+                    <input type="checkbox" id="jpl_conditions2" name="jpl_conditions" v-model="selectedTag[7].tagValue" value="보훈대상자"><label for="jpl_conditions2">보훈대상자</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_conditions3" name="jpl_conditions" v-model="selectedTag[5].tagValue" value="고용촉진지원금 대상자"><label for="jpl_conditions3">고용촉진지원금 대상자</label>
+                    <input type="checkbox" id="jpl_conditions3" name="jpl_conditions" v-model="selectedTag[7].tagValue" value="고용촉진지원금 대상자"><label for="jpl_conditions3">고용촉진지원금 대상자</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_conditions4" name="jpl_conditions" v-model="selectedTag[5].tagValue" value="취업보호대상자"><label for="jpl_conditions4">취업보호대상자</label>
+                    <input type="checkbox" id="jpl_conditions4" name="jpl_conditions" v-model="selectedTag[7].tagValue" value="취업보호대상자"><label for="jpl_conditions4">취업보호대상자</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_conditions5" name="jpl_conditions" v-model="selectedTag[5].tagValue" value="병역특례"><label for="jpl_conditions5">병역특례</label>
+                    <input type="checkbox" id="jpl_conditions5" name="jpl_conditions" v-model="selectedTag[7].tagValue" value="병역특례"><label for="jpl_conditions5">병역특례</label>
                   </div>
                 </div>
               </div>
@@ -190,13 +190,13 @@
                 <div class="empBoxTitle">고용형태</div>
                 <div class="empBoxLabel">
                   <div>
-                    <input type="checkbox" id="jpl_Form1" name="jpl_Form" v-model="selectedTag[3].tagValue" value="정규직"><label for="jpl_Form1">정규직</label>
+                    <input type="checkbox" id="jpl_Form1" name="jpl_Form" v-model="selectedTag[8].tagValue" value="정규직"><label for="jpl_Form1">정규직</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_Form2" name="jpl_Form" v-model="selectedTag[3].tagValue" value="계약직"><label for="jpl_Form2">계약직</label>
+                    <input type="checkbox" id="jpl_Form2" name="jpl_Form" v-model="selectedTag[8].tagValue" value="계약직"><label for="jpl_Form2">계약직</label>
                   </div>
                   <div>
-                    <input type="checkbox" id="jpl_Form3" name="jpl_Form" v-model="selectedTag[3].tagValue" value="인턴직"><label for="jpl_Form3">인턴직</label>
+                    <input type="checkbox" id="jpl_Form3" name="jpl_Form" v-model="selectedTag[8].tagValue" value="인턴직"><label for="jpl_Form3">인턴직</label>
                   </div>
                 </div>
               </div>
@@ -349,21 +349,20 @@ export default {
     return {
       //채용공고 데이터
       jobPostList : [],
-
+      //검색어 입력한 값
+      inputSearch : null,
       //검색 태그
       selectedTag : [
-        {tagCode : "jpl_workPosition", tagValue : [] },
-        {tagCode : "jpl_duty", tagValue : [] },
-        {tagCode : "jpl_workHistory", tagValue : [] },
-        {tagCode : "jpl_workForm", tagValue : [] },
-        {tagCode : "jpl_education", tagValue : [] },
-        {tagCode : "jpl_conditions", tagValue : [] },
-        {tagCode : "jpl_certificate", tagValue : [] },
-        {tagCode : "jpl_salary", tagValue : [] },
-        {tagCode : "jpl_locationSi", tagValue : [] },
-        {tagCode : "jpl_locationGu", tagValue : [] }
+        {tagCode : "jpl_locationSi", tagValue : [] }, //시
+        {tagCode : "jpl_locationGu", tagValue : [] }, //구
+        {tagCode : "jpl_duty", tagValue : [] }, //직무
+        {tagCode : "jpl_workHistory", tagValue : [] }, //경력
+        {tagCode : "jpl_education", tagValue : [] }, //학력
+        {tagCode : "jpl_salary", tagValue : [] }, //연봉
+        {tagCode : "jpl_certificate", tagValue : [] }, //자격증
+        {tagCode : "jpl_conditions", tagValue : [] }, //우대조건
+        {tagCode : "jpl_workForm", tagValue : [] } //고용형태
       ],
-
       checkedCity : 0,
       detailGoocode: 'noshow',
       //지역 배열
@@ -425,13 +424,6 @@ export default {
       fold2 : false,
       arrSrc : "up",
 
-      // 선택된 value
-      job : '',
-      local : '',
-      career: '',
-      education : '',
-      salary : '',
-      certi : '',
 
       //엑시오스 테스트
       users : '',
@@ -450,20 +442,28 @@ export default {
         })
   },
   methods: {
-
+    test () {
+      console.log(this.selectedTag[0].tagValue)
+    },
     //구 필터
     plus : function(e) {
       this.checkedCity = e.target.id;
     },
     //태그 삭제 함수
     del : function (e) {
-      console.log(e.target.id);
+
+      var regex = /[^0-9]/g;
+      var index = e.target.id.replace(regex, "");
+      var tagName = e.target.id.replace(index, "");
 
       for(var i = 0; i < this.selectedTag.length; i++){
+          if(this.selectedTag[i].tagCode == tagName){
+              for(var j = 0; j < this.selectedTag[i].tagValue.length; j++) {
+                this.selectedTag[i].tagValue.splice(index,1);
+              }
+            }
+        }
 
-      }
-
-      this.selectedTag.splice(e.target.id,1);
     },
     //업다운 아이콘
     upDown1 : function (e){
@@ -477,16 +477,57 @@ export default {
     },
       jobPostSearch(){
 
-        this.$axios.get('/jobfair/getJobPostSrc/', {params:{jpl_Form:this.$route.params.jpl_Form}})
-          .then((res) => {
-                console.log(this.jpl_Form);
-                this.jobPostList = res.data;
-                console.log(this.jobPostList);
-              }
-          )
-          .catch((error) => {
-            console.log(error);
-          })
+        var jpl_locationSi = this.selectedTag[0].tagValue;
+        var jpl_locationGu = this.selectedTag[1].tagValue;
+        var jpl_duty = this.selectedTag[2].tagValue;
+        var jpl_workHistory = this.selectedTag[3].tagValue;
+        var jpl_education = this.selectedTag[4].tagValue;
+        var jpl_salary = this.selectedTag[5].tagValue;
+        var jpl_certificate = this.selectedTag[6].tagValue;
+        var jpl_conditions = this.selectedTag[7].tagValue;
+        var jpl_workForm = this.selectedTag[8].tagValue;
+
+        //검색 태그가 있는지 확인
+        var cnt = 0;
+        for(var i = 0; i < this.selectedTag.length; i++){
+          for(var j = 0; j < this.selectedTag[i].tagValue.length; j++) {
+            cnt++;
+
+          }
+        }
+
+
+        const SearchObj = {
+          jpl_duty:jpl_duty,
+          jpl_workHistory:jpl_workHistory,
+          jpl_workForm:jpl_workForm,
+          jpl_education:jpl_education,
+          jpl_conditions:jpl_conditions,
+          jpl_certificate:jpl_certificate,
+          jpl_salary:jpl_salary,
+          jpl_locationSi:jpl_locationSi,
+          jpl_locationGu:jpl_locationGu,
+          inputSearch :this.inputSearch
+        }
+
+        if(cnt == 0 && this.inputSearch == null){
+          alert('검색 키워드가 없습니다!')
+        } else {
+
+          this.$axios.post('/jobfair/getJobPostSrc/',
+
+                              SearchObj
+
+              )
+            .then((res) => {
+                  this.jobPostList = res.data;
+                  console.log(this.jobPostList);
+                }
+            )
+            .catch((error) => {
+              console.log(error);
+            })
+        }
     },
   }
 }

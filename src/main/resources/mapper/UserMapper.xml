@@ -33,6 +33,28 @@
 
     <select id="getJobPostSrc" resultType="EmpVO">
         select * from jobpostinglist
+        where jpl_locationSi like #{jpl_locationSi} and
+              jpl_locationSi like #{inputSearch} and
+              jpl_locationGu like #{jpl_locationGu} and
+              jpl_locationGu like #{inputSearch} and
+              jpl_duty like #{jpl_duty} and
+              jpl_duty like #{inputSearch} and
+              jpl_workHistory like #{jpl_workHistory} and
+              jpl_workHistory like #{inputSearch} and
+              jpl_education like #{jpl_education} and
+              jpl_education like #{inputSearch} and
+              jpl_salary like #{jpl_salary} and
+              jpl_salary like #{inputSearch} and
+              jpl_certificate like #{jpl_certificate} and
+              jpl_certificate like #{inputSearch} and
+              jpl_conditions like #{jpl_conditions} and
+              jpl_conditions like #{inputSearch} and
+              jpl_workForm like #{jpl_workForm} and
+              jpl_workForm like #{inputSearch}
+
+;
+
+    </select>
 
 
     <select id="getQnADetail" resultType="QnAVO">
@@ -41,6 +63,6 @@
 
     <select id="resumeInfo" resultType="ResumeVO">
         select * from ResumeList
-
     </select>
+
 </mapper>

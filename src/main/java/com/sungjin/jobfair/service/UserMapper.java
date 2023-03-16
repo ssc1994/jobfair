@@ -1,9 +1,6 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.ResumeVO;
-import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,7 +21,7 @@ public interface UserMapper {
     //채용공고 목록 가져오기
     public ArrayList<EmpVO> getJobPostList();
     //채용공고 검색 목록 가져오기
-    public ArrayList<EmpVO> getJobPostSrc(String str);
+    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
     
     
     //이력서 정보 가져오기

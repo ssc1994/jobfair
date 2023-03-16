@@ -1,9 +1,6 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.ResumeVO;
-import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,8 +46,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.getJobPostList();
     }
     @Override
-    public ArrayList<EmpVO> getJobPostSrc(String str) {
-        return userMapper.getJobPostSrc(str);
+    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
+        return userMapper.getJobPostSrc(vo);
     }
 
 }
