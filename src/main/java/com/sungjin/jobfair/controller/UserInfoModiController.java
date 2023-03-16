@@ -18,15 +18,22 @@ public class UserInfoModiController {
     @Qualifier("userModiService")
     public UserModiService userModiService;
 
+    // 개인정보 수정 모달 창 띄울 때 기존 회원 정보 가져와서 뿌려주기 위한 요청.
     @PostMapping("getUserInfo")
     public UserVO getUserInfo (@RequestBody UserVO uv) {
-        System.out.println(uv.getUser_id());
+//        System.out.println(uv.getUser_id());
         UserVO userInfo = userModiService.getUserInfo(uv);
-        System.out.println(userInfo.toString());
+//        System.out.println(userInfo.toString());
         return userInfo;
     }
 
+    @PostMapping("modifyInfo")
+    public void modifyInfo (@RequestBody UserVO uv) {
 
+        System.out.println(uv.toString());
+
+
+    }
 
 
 }

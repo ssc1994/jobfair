@@ -9,6 +9,8 @@ import java.util.ArrayList;
 @Mapper
 public interface UserMapper {
 
+    //로그인 요청시 비밀번호 확인 위해, db에 암호화된 pw 가져오기
+    public String getEncodePw(UserVO vo);
     //로그인 확인
     public UserVO login(UserVO vo);
     //큐앤에이 등록

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,9 @@ public class JoinController {
     @Autowired
     @Qualifier("joinService")
     private JoinService joinService;
+
+    @Autowired
+    private PasswordEncoder pwEncoder;
 
     //중복 아이디 확인
     @PostMapping("/checkSameId")
@@ -59,6 +63,14 @@ public class JoinController {
             e.printStackTrace();
         }
 
+        //user_pw 암호화
+        String rawPw = ""; // 사용자가 저장한 비밀번호
+        String encodePw= ""; // 암호화된 비밀번호
+
+        rawPw = uv.getUser_pw();
+        encodePw = pwEncoder.encode(rawPw);
+        uv.setUser_pw(encodePw);
+
         //user 가입자 정보 등록처리
         System.out.println(uv.toString());
         joinService.uJoin(uv);
@@ -78,6 +90,8 @@ public class JoinController {
         return "success";
 
     }
+
+
 
 
 }
