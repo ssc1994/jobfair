@@ -35,64 +35,66 @@
   </tr>
 
   <tr v-if="isVisible">
-        <td colspan="5">
-            <table class="table align-items-center">
-              <thead>
-              <tr>
-                <th>번호</th>
-                <th colspan="2">이력서 제목</th>
-                <th>작성자</th>
-                <th>현황</th>
-              </tr>
-              </thead>
-              <tbody>
-                <!--
-                  아래 tr을 반복시켜서 테이블 리스트를 생성한다.
-                  번호 컬럼 : index 부여
-                  이력서 제목: DB에서 꺼낸 res_title
-                  작성자: DB에서 꺼낸 작성자
-                  현황: 1 미열람 2 열람 3 서류 합격 4 최종합격 5 불합격 // 랜더링될 때 DB 저장된 값에 따라 checked 되어 있어야하고
-                       change 이벤트로 DB 값 변경시켜야 함.....
-                -->
-              <tr @mouseenter="msEnter" @mouseleave="msLeave">
-                <td>1</td>
-                <td colspan="2">모든 코딩 제가 하겠습니다.</td>
-                <td>최성수</td>
-                <td class="align-middle">
-                  <input type="radio" class="btn-check" name="resumeState1" id="notChecked1" autocomplete="off" checked>
-                  <label class="btn btn-outline-success" for="notChecked1">미확인</label>
-                </td>
-              </tr>
-              <tr @mouseenter="msEnter" @mouseleave="msLeave">
-                <td>1</td>
-                <td colspan="2">모든 코딩 제가 하겠습니다.</td>
-                <td>최성수</td>
-                <td class="align-middle">
-                  <input type="radio" class="btn-check" name="resumeState2" id="notChecked2" autocomplete="off" checked>
-                  <label class="btn btn-outline-success" for="notChecked2">미확인</label>
-                </td>
-              </tr>
-              <tr @mouseenter="msEnter" @mouseleave="msLeave">
-                <td>1</td>
-                <td colspan="2">모든 코딩 제가 하겠습니다.</td>
-                <td>최성수</td>
-                <td class="align-middle">
-                  <input type="radio" class="btn-check" name="resumeState3" id="notChecked3" autocomplete="off" checked>
-                  <label class="btn btn-outline-success" for="notChecked3">미확인</label>
-                </td>
-              </tr>
-              <tr @mouseenter="msEnter" @mouseleave="msLeave">
-                <td>1</td>
-                <td colspan="2">모든 코딩 제가 하겠습니다.</td>
-                <td>최성수</td>
-                <td class="align-middle">
-                  <input type="radio" class="btn-check" name="resumeState4" id="notChecked4" autocomplete="off" checked>
-                  <label class="btn btn-outline-success" for="notChecked4">미확인</label>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-        </td>
+    <td colspan="5">
+      <table class="table align-items-center">
+        <thead>
+        <tr>
+          <th>번호</th>
+          <th colspan="2">이력서 제목</th>
+          <th>작성자</th>
+          <th>현황</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--
+          아래 tr을 반복시켜서 테이블 리스트를 생성한다.
+          번호 컬럼 : index 부여
+          이력서 제목: DB에서 꺼낸 res_title
+          작성자: DB에서 꺼낸 작성자
+          현황: 1 미열람 2 열람 3 서류 합격 4 최종합격 5 불합격 // 랜더링될 때 DB 저장된 값에 따라 checked 되어 있어야하고
+               change 이벤트로 DB 값 변경시켜야 함.....
+        -->
+        <!--                미확인 버튼에서 이력서 조회누르면 확인으로 바뀌면서 유저마이페이지에 값을 보내야함-->
+        <tr @mouseenter="msEnter" @mouseleave="msLeave">
+          <td>1</td>
+          <td colspan="2">모든 코딩 제가 하겠습니다.</td>
+          <td>최성수</td>
+          <td class="align-middle">
+            <button type="button" class="btn btn-outline-success" @click="checkBtn(a)" :class="{active : isActive}" >{{btnchar}}</button>
+<!--            <input type="radio" class="btn-check" name="resumeState1" id="notChecked1" autocomplete="off" checked>-->
+<!--            <label class="btn btn-outline-success" for="notChecked1" @click="selectCheck(o)" :class="{isSelect : unSelect === true}" v-for="o in x" :key="o.code">{{o.label}}</label>-->
+          </td>
+        </tr>
+        <tr @mouseenter="msEnter" @mouseleave="msLeave">
+          <td>1</td>
+          <td colspan="2">모든 코딩 제가 하겠습니다.</td>
+          <td>최성수</td>
+          <td class="align-middle">
+            <input type="radio" class="btn-check" name="resumeState2" id="notChecked2" autocomplete="off" checked>
+            <label class="btn btn-outline-success" for="notChecked2">미확인</label>
+          </td>
+        </tr>
+        <tr @mouseenter="msEnter" @mouseleave="msLeave">
+          <td>1</td>
+          <td colspan="2">모든 코딩 제가 하겠습니다.</td>
+          <td>최성수</td>
+          <td class="align-middle">
+            <input type="radio" class="btn-check" name="resumeState3" id="notChecked3" autocomplete="off" checked>
+            <label class="btn btn-outline-success" for="notChecked3">미확인</label>
+          </td>
+        </tr>
+        <tr @mouseenter="msEnter" @mouseleave="msLeave">
+          <td>1</td>
+          <td colspan="2">모든 코딩 제가 하겠습니다.</td>
+          <td>최성수</td>
+          <td class="align-middle">
+            <input type="radio" class="btn-check" name="resumeState4" id="notChecked4" autocomplete="off" checked>
+            <label class="btn btn-outline-success" for="notChecked4">미확인</label>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
   </tr>
 </template>
 
@@ -102,15 +104,18 @@ import SoftBadge from "@/components/SoftBadge.vue";
 export default {
   name: "SingleAccordian.vue",
   props: [
-      'jpl_title',
-      'countCdd',
-      'jpl_regDate',
-      'jpl_endDate'
+    'jpl_title',
+    'countCdd',
+    'jpl_regDate',
+    'jpl_endDate'
   ],
   data () {
     return {
       isVisible: false,
-      isChecked: false
+      isChecked: false,
+      isActive: false,
+      btnchar: '미열람',
+      pageCount: 0
     }
   },
   methods: {
@@ -126,6 +131,15 @@ export default {
     msLeave (e) {
       e.target.style=
           "background-color: none;"
+    },
+    // 미열람에서 버튼 클릭 시 버튼값 열람으로 변경
+    checkBtn(a){
+      this.isActive = true
+      this.btnchar = '열람'
+      this.pageCount = 1
+      // 그리고 버튼을 누르면 해당 지원자의 이력서창이 뜨도록 만들기
+      console.log(this.btnchar)
+      console.log(this.pageCount)
     }
   },
   components: {

@@ -20,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/jobfair")
@@ -52,12 +50,13 @@ public class UserController {
         }
         return path;
     }
-        //이력서 내용가져오기
-    @PostMapping(value = "/resumeInfo")
-    public ArrayList<ResumeVO> resumeInfo(Model model) {
 
-        ArrayList<ResumeVO> list = userService.resumeInfo();
-        model.addAttribute("list", list);
+        //이력서 목록가져오기
+    @PostMapping(value = "/resumeInfo")
+    public ArrayList<ResumeVO> resumeInfo(@RequestBody UserVO vo) {
+
+        String user_id = vo.getUser_id();
+        ArrayList<ResumeVO> list = userService.resumeInfo(user_id);
 
         return list;
     }
@@ -248,14 +247,4 @@ public class UserController {
         return empvo;
     }
 
-        //기업이 작성한 채용공고 내용 가져오는 메서드 (박희진 작성중)
-//    @PostMapping( value = "EmpRegistInfo")
-//    public ArrayList<EmpVO> EmpRegistInfo(Model model){
-//
-//        ArrayList<EmpVO> list = userService.EmpRegistInfo();
-//        model.addAttribute("list", list);
-//        System.out.println("controller탐");
-//
-//        return list;
-//    }
 }
