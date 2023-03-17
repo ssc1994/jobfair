@@ -224,7 +224,7 @@
 
       <div class="row empListBox">
 
-        <div v-for="(jobpost,i) in jobPostList" :key="i" class="empBoxConWrap col-6">
+        <div v-for="(jobpost,i) in jobPostList" :key=i @click.prevent="detail(jobpost.com_num)" class="empBoxConWrap col-6">
 
           <div class="empBoxCon ">
             <router-link to="" class="left empBoxCompany">
@@ -428,6 +428,9 @@ export default {
       //엑시오스 테스트
       users : '',
 
+      //은영 테스트
+      com_num: 3
+
 
     }
   },
@@ -529,6 +532,15 @@ export default {
             })
         }
     },
+    detail(jobpost) {
+      this.$router.push({
+        name: 'uJobPostDetailView',
+        params: {
+          com_num: jobpost
+        }
+      })
+      this.$router.push("/uJobPostDetailView")
+    }
   }
 }
 </script>

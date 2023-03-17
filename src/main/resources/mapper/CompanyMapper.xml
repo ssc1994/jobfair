@@ -78,7 +78,7 @@
     </insert>
         <!-- 큐앤에이 리스트 -->
     <select id="cgetQnAList" resultType="QnAVO">
-        select * from QnA where qa_type like "%q%" order by qa_num desc
+        select * from QnA where qa_type like "%q%" and com_num = #{com_num} order by qa_num desc
     </select>
         <!-- 큐앤에이 유저 상세 -->
     <select id="getUserQnADetail" resultType="QnAVO">

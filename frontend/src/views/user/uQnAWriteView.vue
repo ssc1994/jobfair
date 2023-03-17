@@ -50,6 +50,8 @@ import axios from "axios";
 
 export default {
   components: {SoftInput, SoftButton},
+  name: "uQnAWriteView",
+
 
   data() {
     return {
@@ -58,11 +60,17 @@ export default {
         user_id: JSON.parse(sessionStorage.getItem('sessionId')),
         qa_title: '',
         qa_content: '',
-        qa_type: ''
+        qa_type: '',
+        com_num: this.$route.params.com_num
       }
     }
 
   },
+  created() {
+    console.log('param확인'+ this.uQnADetail.com_num);
+  },
+
+
   methods: {
     qnaRegist() {
       let self = this;
@@ -71,7 +79,8 @@ export default {
             user_id: this.uQnADetail.user_id,
             qa_title: this.uQnADetail.qa_title,
             qa_content: this.uQnADetail.qa_content,
-            qa_type: 'q'
+            qa_type: 'q',
+            com_num: this.uQnADetail.com_num
           })
           .then((res) => {
             if (res.status === 200) {

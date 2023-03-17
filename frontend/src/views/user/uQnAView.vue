@@ -7,7 +7,7 @@
 
           <div class="qnaBox">
             <h3>Q&A</h3>
-            <button @click.stop="addQnA">+ 질의 등록</button>
+<!--            <button @click.stop="addQnA">+ 질의 등록</button>-->
           </div>
 
           <table class="table table-bordered">
@@ -25,6 +25,13 @@
               <td>{{ row.user_id }}</td>
               <td>{{row.qa_title}}</td>
               <td>{{ row.qa_regDate.substring(0,10) }}</td>
+            </tr>
+
+            <tr v-if="QnAList.length == 0">
+              <td></td>
+              <td></td>
+              <td>게시글이 없습니다.</td>
+              <td></td>
             </tr>
             </tbody>
           </table>
@@ -53,10 +60,10 @@ export default {
 
   },
   methods: {
-    addQnA() {
-      this.$router.push("/uQnAWriteView")
-
-    },
+    // addQnA() {
+    //   this.$router.push("/uQnAWriteView")
+    //
+    // },
     getQnAList() {
       this.$axios.post('/jobfair/getQnAList')
           .then((res) => this.QnAList = res.data)

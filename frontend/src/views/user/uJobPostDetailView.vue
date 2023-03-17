@@ -81,7 +81,7 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             지원하기
           </button>
-          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick">
+          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" >
             Q&A 질문하기
           </button>
 
@@ -126,7 +126,8 @@
 
     <!--지원하기 모달창 설정-->
     <!--state 적용해서 데이터 넣어야해유-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="z-index: 10000;">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content ">
           <div class="modal-header">
@@ -178,40 +179,54 @@
 <script>
 export default {
   name: "uJobPostDetailView",
+
+
   data() {
     return {
+      CompanyInfo: [],
 
-      QnAComInfo: {
-        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
-        com_num: ''
-      }
+      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      com_num: 3
+    };
+  },
+  // beforeCreate() {
+  //
+  // },
+  methods: {
+    // getJobPostInfo() {
+    //   this.$axios.get('/jobfair/getJobPostInfo/', {params: {com_num: this.com_num}})
+    //       .then((res) => this.CompanyInfo = res.data)
+    //       .catch((error) => console.log(error))
+    // },
+
+
+    uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
+
+      this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
+
+      // this.$axios
+      //     .post('/jobfair/uQnABtnClick')
+      //     .then((res) => {
+      //       alert("tq")
+      //       this.$router.push({
+      //         name: 'uQnAWriteView',
+      //         params: {
+      //           com_num: this.com_num
+      //         }
+      //       })
+      //       this.$router.push("/uQnAWriteView")
+      //
+      //     })
+      //     .catch((error) => {
+      //       console.log(error)
+      //     })
+
+
+
+
 
     }
-
-  },
-  methods: {
-    // uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
-    //   let self = this;
-    //   this.$axios
-    //       .get('/jobfair/uQnABtnClick', {params: {com_num: this.$route.params.com_num}
-    //
-    //   })
-    //       .then((res) => {
-    //         console.log("데이터: " + res.data)
-    //         self.$router.push({
-    //           name: 'cQnAView',
-    //           params: {
-    //             com_num: this.$route.params.com_num
-    //           }
-    //         })
-    //         self.$router.push('/uQnAWriteView')
-    //       })
-    //       .catch((error) => {
-    //         console.log(error)
-    //       })
-    // }
   }
-
 }
 </script>
 
@@ -389,6 +404,7 @@ dl {
   white-space: pre-line;
   word-wrap: break-word;
 }
+
 .recruitment img {
   float: left;
   width: 40%;

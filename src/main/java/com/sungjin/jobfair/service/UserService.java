@@ -21,7 +21,7 @@ public interface UserService {
         //큐앤에이 수정
     public int uQnAModi(QnAVO vo);
         //큐앤에이 기업 데이터 전달하기
-//    public QnAVO uQnABtnClick(int jpl_num);
+//    public QnAVO uQnABtnClick();
 
 
     //################## 채용공고(jobPost) 관련 Service #######################

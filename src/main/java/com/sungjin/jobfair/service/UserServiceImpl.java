@@ -18,16 +18,18 @@ public class UserServiceImpl implements UserService {
     //################## 로그인 관련(login) Service #######################
     @Override
     public UserVO login(UserVO vo) {
-
-        //DB에서 암호화 된 비밀번호 가져와서 입력된 비밀번호랑 비교
-        String rawPw = vo.getUser_pw(); //입력된 pw
-        String encodePw = userMapper.getEncodePw(vo); //db에 저장된 암호화된 pw
-
-        if(true == pwEncoder.matches(rawPw, encodePw)){
+//
+//        //DB에서 암호화 된 비밀번호 가져와서 입력된 비밀번호랑 비교
+//        String rawPw = vo.getUser_pw(); //입력된 pw
+//        String encodePw = userMapper.getEncodePw(vo); //db에 저장된 암호화된 pw
+//
+//        if(true == pwEncoder.matches(rawPw, encodePw)){
+//            return userMapper.login(vo);
+//        } else {
+//            return null;
+//        }
             return userMapper.login(vo);
-        } else {
-            return null;
-        }
+
     }
     @Override
     public UserVO info(String id) {
@@ -54,8 +56,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.uQnAModi(vo);
     }
 //    @Override
-//    public QnAVO uQnABtnClick(int jpl_num) {
-//        return userMapper.uQnABtnClick(jpl_num);
+//    public QnAVO uQnABtnClick() {
+//        return userMapper.uQnABtnClick();
 //    }
 
     //################## 채용공고(jobPost) 관련 Service #######################
@@ -67,6 +69,8 @@ public class UserServiceImpl implements UserService {
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
         return userMapper.getJobPostSrc(vo);
     }
+
+
     //박희진 작성중
 //    @Override
 //    public ArrayList<EmpVO> EmpRegistInfo() {

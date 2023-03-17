@@ -148,10 +148,9 @@ public class UserController {
     }
         //큐앤에이 목록
     @PostMapping(value = "/getQnAList")
-    public ArrayList<QnAVO> getQnAList(Model model) {
+    public ArrayList<QnAVO> getQnAList() {
 
         ArrayList<QnAVO> list = userService.getQnAList();
-        model.addAttribute("list", list);
         System.out.println(list.toString());
 
         return list;
@@ -175,6 +174,15 @@ public class UserController {
 
         return a;
     }
+
+    //채용상세공고에서 질문하기 버튼 누를경우 기업정보 넘기는 메서드
+    //(채용공고정보) jpl번호를 기준으로 jpl테이블에서 데이터를 불러오는 메서드
+//    @PostMapping("/uQnABtnClick")
+//        public QnAVO uQnABtnClick(){
+//            QnAVO vo = userService.uQnABtnClick();
+//            System.out.println(vo);
+//            return vo;
+//        }
 
 
     //**********************************************채용공고**********************************************
