@@ -1,7 +1,10 @@
 package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
+import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public interface UserService {
@@ -15,7 +18,7 @@ public interface UserService {
         //큐앤에이 답변 등록
     public void qnaRegist(QnAVO vo);
         //큐앤에이 목록 가져오기
-    public ArrayList<QnAVO> getQnAList();
+    public ArrayList<QnAVO> getQnAList(Criteria cri);
         //큐앤에이 상세페이지 데이터 가져오기
     public QnAVO getQnADetail(int qa_num);
         //큐앤에이 수정
@@ -49,4 +52,20 @@ public interface UserService {
     public void regResWe(WeVO weVO);
         // 4) 이력서 -자격증- 등록
     public void regResCert(CertVO certVO);
+
+
+
+    //####################### 페이지네이션 #######################
+    //페이지 처리
+//    public ArrayList<QnAVO> getPage(Criteria cri);
+
+    //전체 게시글 가져오기
+//    public int getQnATotal();
+
+
+    //페이지네이션
+//    public Map<String, Object> uQnAListAxios(Criteria cri);
+
+    public int uQnAGetTotal(Criteria cri);
+
 }

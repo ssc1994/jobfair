@@ -1,6 +1,7 @@
 package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
+import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,8 @@ public class UserServiceImpl implements UserService {
         userMapper.qnaRegist(vo);
     }
     @Override
-    public ArrayList<QnAVO> getQnAList() {
-        return userMapper.getQnAList();
+    public ArrayList<QnAVO> getQnAList(Criteria cri) {
+        return userMapper.getQnAList(cri);
     }
     @Override
     public QnAVO getQnADetail(int qa_num) {
@@ -104,4 +105,35 @@ public class UserServiceImpl implements UserService {
     public void regResCert(CertVO certVO) {
         userMapper.regResCert(certVO);
     }
+
+
+
+
+    //################## 페이지네이션 관련 Service #######################
+//    @Override
+//    public ArrayList<QnAVO> getPage(Criteria cri) {
+//
+//        ArrayList<QnAVO> list = userMapper.getPage(cri);
+//        return list;
+//    }
+//    @Override
+//    public int getQnATotal() {
+//        return userMapper.getQnATotal();
+//    }
+
+
+
+    //페이지네이션
+//    @Override
+//    public Map<String, Object> uQnAListAxios(Criteria cri) {
+//        return userMapper.uQnAListAxios(cri);
+//    }
+
+    @Override
+    public int uQnAGetTotal(Criteria cri) {
+        return userMapper.uQnAGetTotal(cri);
+    }
+
+
+
 }

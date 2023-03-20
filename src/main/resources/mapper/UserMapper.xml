@@ -36,8 +36,16 @@
         select *
         from QnA
         where qa_type like "%q%"
-        order by qa_num desc
+        order by qa_num desc limit #{pageStart}, #{amount}
     </select>
+
+
+<!--    <select id="getPage" resultType="QnAVO">-->
+<!--        select * from qna-->
+<!--        order by qa_num desc limit #{pageStart}, #{amount}-->
+<!--    </select>-->
+
+
         <!--큐앤에이 상세페이지-->
     <select id="getQnADetail" resultType="QnAVO">
         select *
@@ -137,4 +145,21 @@
         insert into Certificate (res_num, user_id, cert_name, cert_gainDate, cert_issueInstitute)
         values (#{res_num}, #{user_id}, #{cert_name}, #{cert_gainDate}, #{cert_issueInstitute})
     </insert>
+
+
+    <!--**************************************************페이지네이션**************************************************-->
+<!--    <select id="getQnATotal" resultType="int">-->
+<!--        select count(*) from qna-->
+<!--    </select>-->
+
+
+    <!--페이지네이션-->
+    <select id="uQnAGetTotal" resultType="int">
+        select count(*) from qna
+    </select>
+
+
+
+
 </mapper>
+
