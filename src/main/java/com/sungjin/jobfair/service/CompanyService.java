@@ -30,6 +30,8 @@ public interface CompanyService {
         //채용공고 페이지에서 입력한 값 가져오기??
     public int empRegist(EmpVO vo);
     public EmpVO getEmpData(int jpl_num);
+        //기업이 등록한 채용공고 목록 가져오기
+    ArrayList<EmpVO> getComJobPosingList(String com_num);
 
 
     //################## Login Service #######################

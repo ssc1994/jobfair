@@ -149,7 +149,7 @@ const routes = [
     name: 'aComListView',
     component: () => import('../views/admin/aComListView.vue')
   },
-  {//관리자 참여업체 등록 화면
+  {//관리자 참여업체 등록 화면(기업관리)
     path: '/aComRegView',
     name: 'aComRegView',
     component: () => import('../views/admin/aComRegView.vue')
