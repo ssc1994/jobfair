@@ -107,12 +107,17 @@
     </select>
 
     <!-- ######################### 채용공고 상세보기 페이지 ######################### -->
-        <!-- 공고 번호를 기준으로 채용공고 가져오기-->
+        <!-- 기업이 등록한 채용공고 상세페이지 가져오기-->
     <select id="getEmpData" resultType="EmpVO">
         select *
         from JobPostingList
         where jpl_num = #{jpl_num};
 
+    </select>
+
+        <!-- 기업이 등록한 채용공고 리스트 가져오기 -->
+    <select id="getComJobPosingList" resultType="map">
+        select * from JobPostingList where com_num = #{com_num}
     </select>
         <!-- 큐앤에이 기업 상세 -->
     <select id="getComQnADetail" resultType="QnAVO">

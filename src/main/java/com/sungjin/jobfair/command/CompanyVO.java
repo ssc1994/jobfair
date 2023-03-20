@@ -21,5 +21,8 @@ public class CompanyVO {
     private String com_ceo;
     private String com_businessRegistration; //사업자 등록번호
     private String com_establishmentDate;
+    private String com_fileName;
+    private String com_filePath;
+    private String com_fileUuid;
 
 }
