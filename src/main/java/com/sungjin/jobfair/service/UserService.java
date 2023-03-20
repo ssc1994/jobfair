@@ -32,13 +32,11 @@ public interface UserService {
     public ArrayList<EmpVO> getJobPostList();
         //채용공고 검색 목록 가져오기
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
-        //기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)
-//    public ArrayList<EmpVO> EmpRegistInfo();
 
 
     //################## 마이페이지(MyPage) Service #######################
         //이력서 정보 가져오기
-    public ArrayList<ResumeVO> resumeInfo();
+    public ArrayList<ResumeVO> resumeInfo(String user_id);
         //이력서 삭제버튼 누르면 데이터 삭제하기
     public void deleteResume(int res_num);
 

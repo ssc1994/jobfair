@@ -69,8 +69,7 @@ public class UserServiceImpl implements UserService {
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
         return userMapper.getJobPostSrc(vo);
     }
-
-
+    
     //박희진 작성중
 //    @Override
 //    public ArrayList<EmpVO> EmpRegistInfo() {
@@ -79,8 +78,8 @@ public class UserServiceImpl implements UserService {
 
     //################## 마이페이지(MyPage) Service #######################
     @Override
-    public ArrayList<ResumeVO> resumeInfo() {
-        return userMapper.resumeInfo();
+    public ArrayList<ResumeVO> resumeInfo(String user_id) {
+        return userMapper.resumeInfo(user_id);
     }
     @Override
     public void deleteResume(int res_num) {

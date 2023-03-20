@@ -83,7 +83,7 @@
             <span>접수 시작 : {{ jpl_startDate }}</span><br/>
             <span>접수 마감 : {{ jpl_endDate }}</span>
           </div>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-bind:disabled="false">
             지원하기
           </button>
           <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" >
@@ -142,34 +142,18 @@
           <div class="modal-body" style="height: 100%">
             <div class="contentModalBox">
 
-              <div class="miniContentModalBox">
-                <input type="radio" id="test" name="resumeRadio" style="display: none" value="1">
+              <div class="miniContentModalBox" v-for="(resumeAll,i) in resumeArray" :key="i">
+                <input type="radio" id="test" name="resumeRadio" value="i">
                 <label for="test">
-                  <h4>창의적머시기</h4>
-                  <h5>2023.03.10</h5>
-                </label>
-
-              </div>
-
-              <div class="miniContentModalBox">
-                <input type="radio" id="test" name="resumeRadio" style="display: none" value="2">
-                <label for="test">
-                  <h4>창의적머시기</h4>
-                  <h5>2023.03.10</h5>
-                </label>
-
-              </div>
-              <div class="miniContentModalBox">
-                <input type="radio" id="test" name="resumeRadio" style="display: none" value="3">
-                <label for="test">
-                  <h4>창의적머시기</h4>
-                  <h5>2023.03.10</h5>
+                  <h4>{{resumeAll.res_title}}</h4>
+                  <h5>{{resumeAll.res_regDate}}</h5>
                 </label>
 
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">지원하기</button>
+              <!-- @click="supportResume" 넣기 -->
+              <button type="button" class="btn btn-primary" @click="postRes(event)" data-bs-dismiss="modal">지원하기</button>
             </div>
           </div>
         </div>
@@ -182,6 +166,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "uJobPostDetailView",
   data() {
@@ -232,6 +218,12 @@ export default {
       com_establishmentDate: '',
       curTime: Date.now()
 
+      QnAComInfo: {
+        user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+        com_num: ''
+      },
+      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      resumeArray: []
 
     }
   },
@@ -312,7 +304,33 @@ export default {
       com_num: 3
     };
   },
+  created() {
+    this.resumeinfo();
+  },
   methods: {
+    resumeinfo() {
+      this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
+          .then((res) => {
+            this.resumeArray = res.data
+            console.log(res.data)
+
+          }).catch((error) => {
+        console.log(error)
+      })
+    },
+    postRes(e){
+      //이력서 선택 후 지원하기 누르면 해당 공고에 지원한 것이므로 지원완료 버튼 생성
+      const target = document.getElementsByClassName('endBtn')
+      target.disabled = true
+      console.log(target)
+      // this.$router.go('/uJobPostDetailView')
+
+    }
+    // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
+    // supportResume(){
+    //   router.push({path:"/"})
+    // }
+  }
     // getJobPostInfo() {
     //   this.$axios.get('/jobfair/getJobPostInfo/', {params: {com_num: this.com_num}})
     //       .then((res) => this.CompanyInfo = res.data)
@@ -526,5 +544,8 @@ dl {
   width: 40%;
   height: 160px;
   margin-right: 30px;
+}
+.endBtn:disabled {
+  background-color: red;
 }
 </style>

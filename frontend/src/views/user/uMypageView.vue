@@ -30,12 +30,8 @@
             <div class="left">
               <ul>
                 <li>
-                  <p class="resumeTitle">{{ res_title }}</p>
-                  <p>{{res_regDate}}</p>
-                </li>
-                <li>
-                  <p class="resumeTitle">{{ res_title }}</p>
-                  <p>{{res_regDate}}</p>
+                  <p class="resumeTitle">{{ resumeAll.res_title }}</p>
+                  <p>{{ resumeAll.res_regDate}}</p>
                 </li>
               </ul>
             </div>
@@ -181,27 +177,21 @@
 
 <script>
 export default {
-  name: "uMypageView",
+  name: 'uMypageView',
   data() {
     return {
-      fold : true,
-      arrSrc : "up",
       resumeArray: [],
-      res_num : '',
-      res_title : '',
-      res_regDate : '',
-      user_id: '',
+      fold: true,
+      arrSrc: 'up',
+      res_num: '',
+      res_title: '',
+      res_regDate: '',
+      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
       resumeNumber: ''
     }
   },
-  beforeCreate() {
-  this.$axios.post("/jobfair/resumeInfo")
-      .then((res) => {
-        this.resumeArray = res.data
-
-      }).catch((error) => {
-        console.log(error)
-      })
+  created() {
+  this.resumeinfo();
   },
   methods : {
     upDown : function (){
@@ -213,7 +203,7 @@ export default {
         this.arrSrc = "down";
       }
     },
-    // 삭제버튼 클릭 시 데이터베이스에 있는 데이터 삭제 ( 이력서 삭제 ) 2023/03/15 박희진
+    // 삭제버튼 클릭 시 데이터베이스에 있는 데이터 삭제 ( 이력서 삭제 )
     deleteResume(e) {
       alert("삭제하시겠습니까?")
       console.log(e.target.value)
@@ -223,12 +213,31 @@ export default {
             this.res_num = res.data
           })
           .catch((error) => { console.log(error) })
+    },
+    // 로그인 한 유저의 이력서만 보여주
+    resumeinfo() {
+      this.$axios.post("/jobfair/resumeInfo" , {user_id: this.user_id})
+          .then((res) => {
+            this.resumeArray = res.data
+            // console.log(res.data)
+
+          }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
 
 .left{float: left;}
 .right {float:right;}
@@ -237,8 +246,6 @@ h3{font-weight: bold;
   font-size: 20px;
   padding:20px;
 }
-
-
 
 /*이력서*/
 .resumeBoxCon h3 {display: inline-block;}

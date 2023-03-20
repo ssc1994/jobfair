@@ -15,7 +15,7 @@
                 지원자 수
               </th>
               <th class="text-center text-uppercase text-secondary text-s font-weight-bolder">
-                둥록일
+                등록일
               </th>
               <th class="text-center text-uppercase text-secondary text-s font-weight-bolder">
                 종료일

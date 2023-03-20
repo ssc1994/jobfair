@@ -94,11 +94,10 @@
             jpl_workForm like #{inputSearch}
     </select>
 
-
     <!--**************************************************마이페이지 이력서**************************************************-->
         <!--이력서정보-->
     <select id="resumeInfo" resultType="ResumeVO">
-        select * from ResumeList
+        select * from ResumeList where user_id = #{user_id}
     </select>
         <!--이력서 지우기-->
     <delete id="deleteResume">
@@ -107,11 +106,6 @@
 
 
 
-
-    <!--    박희진 작성중-->
-    <!--    <select id="'EmpRegistInfo'" resultType="EmpVO">-->
-    <!--        select * from JobPostingList-->
-    <!--    </select>-->
 
 
     <!--**************************************************이력서 관련**************************************************-->
