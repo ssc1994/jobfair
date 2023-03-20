@@ -4,33 +4,33 @@
     <main class="resume left">
       <div class="TopBox">
         <div class="left PostImg tbList">
-          <img class="tbLogo" src="#">
-          <p>(주)카카오</p>
+          <img class="tbLogo" src="@/assets/noImg.png" alt="">
+          <p>{{ com_name }}</p>
         </div>
         <div class="left PostText">
-          <span style="font-size: 35px; font-weight: bolder;">UIUX디자이너 모집합니다</span> <br/>
-          <span style="color: #999; font-weight: bold">경력무관</span>
+          <span style="font-size: 35px; font-weight: bolder;">{{ jpl_title }}</span> <br/>
+          <span style="color: #999; font-weight: bold">{{ jpl_workForm }}</span>
           <div class="tdCol">
             <dl class="tbList left">
               <dt>직무</dt>
               <dd>
-                <strong>신입</strong>
+                <strong>{{ jpl_duty }}</strong>
               </dd>
               <dt>경력</dt>
               <dd>
-                <strong>신입</strong>
+                <strong>{{ jpl_workHistory }}</strong>
               </dd>
               <dt>학력</dt>
               <dd>
-                <strong>학력무관</strong>
+                <strong>{{ jpl_education }}</strong>
               </dd>
               <dt>연봉</dt>
               <dd>
-                <strong>얼만데.......</strong>
+                <strong>{{ jpl_salary }}</strong>
               </dd>
               <dt>위치</dt>
               <dd>
-                <strong>하기싫다..</strong>
+                <strong>{{ jpl_address }}</strong>
               </dd>
             </dl>
           </div>
@@ -39,8 +39,12 @@
       <div class="contents">
         <div class="recruitment">
           <b>업무소개</b> <br/>
-          <p>블라블라블라 ~~fnoifoifeoifhewoifheoiwfo
-            eiwfhoewihfoewihfoiewhfoiewhfoiewhfoiefenfoewnfoewnfonofewnofewnoifnowncowncownecowneconwecoewncowencoewnoewnoiewncoiewncoiencoiewncowencoiewncownecoiewnconfiheoreoifneimdcdcmdslkcmldknvkndvvowecodcjdbcdbdbcodjjcpocdcdocnodscndncbbcdbdubcdiucb</p>
+          <p>
+            {{ jpl_content }}
+            base64형식 업로드로 변경하거나 읽어오는법을 찾아야댐
+            <img src="file:///C:/bootupload/230316/bddc5e9f-18c4-4c56-82a3-1d356cf2969d-1.jpg">
+            <br>{{ viewImg }}
+          </p>
           <br/>
         </div>
         <p><br></p>
@@ -53,14 +57,14 @@
         <p>&nbsp;</p>
         <div class="recruitment">
           <b>기업정보</b><br/>
-          <img src="@/assets/kakao.png">
-          <span>기업명 :</span><br/>
-          <span>기업전화번호 :</span><br/>
-          <span>기업이메일 :</span><br/>
-          <span>기업주소 :</span><br/>
-          <span>업종 :</span><br/>
-          <span>대표자 :</span><br/>
-          <span>사업자등록번호 :</span><br/>
+          <img src="@/assets/noImg.png">
+          <span>기업명 : {{ com_name }}</span><br/>
+          <span>기업전화번호 : {{ com_phone }}</span><br/>
+          <span>기업이메일 : {{ com_email }}</span><br/>
+          <span>기업주소 : {{ com_address }}</span><br/>
+          <span>업종 : {{ com_category }}</span><br/>
+          <span>대표자 : {{ com_ceo }}</span><br/>
+          <span>사업자등록번호 : {{ com_businessRegistration }}</span><br/>
         </div>
         <p><br></p>
         <p>&nbsp;</p>
@@ -75,9 +79,11 @@
           <span style="color: #0064ff; font-weight: bolder">남은 시간</span>
           <div class="Time">
             <p>5일 12:59</p>
-            <span>접수 시작 : 2023.02.27</span><br/>
-            <span>접수 마감 : 2023.04.02</span>
+            <p>{{ curTime }}</p>
+            <span>접수 시작 : {{ jpl_startDate }}</span><br/>
+            <span>접수 마감 : {{ jpl_endDate }}</span>
           </div>
+          
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-bind:disabled="AppliedResult == 1" @click="postRes">
             {{ applyBtnText }}
           </button>
@@ -127,7 +133,8 @@
 
     <!--지원하기 모달창 설정-->
     <!--state 적용해서 데이터 넣어야해유-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000;">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="z-index: 10000;">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content ">
           <div class="modal-header">
@@ -143,8 +150,8 @@
                   <h4>{{resumeAll.res_title}} </h4>
                   <h5>{{resumeAll.res_regDate}} </h5>
                 </label>
-
               </div>
+              
             </div>
             <div class="modal-footer">
               <!-- @click="supportResume" 넣기 -->
@@ -167,6 +174,51 @@ export default {
   name: "uJobPostDetailView",
   data() {
     return {
+      //임의로 jpl_num을 6번 채용공고를 불러오는거로 설정
+      // 공고를 클릭하면 param으로 채용공고번호를 가지고 넘어워야함
+      // user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      // 데이터 정의
+      jpl_num: '6',
+      com_num: '',
+      jpl_title: '',
+      jpl_content: '',
+      jpl_startDate: '',
+      jpl_endDate: '',
+      jpl_regDate: '',
+      jpl_workPosition: '',
+      jpl_duty: '',
+      jpl_workHistory: '',
+      jpl_workForm: '',
+      jpl_education: '',
+      jpl_conditions: '',
+      jpl_certificate: '',
+      jpl_gender: '',
+      jpl_salary: '',
+      jpl_locationSi: '',
+      jpl_locationGu: '',
+      jpl_address: '',
+      jpl_workDay: '',
+      jpl_workTimeS: '',
+      jpl_workTimeE: '',
+      jpl_name: '',
+      jpl_companyName: '',
+      jpl_contact: '',
+      jpl_phoneNum: '',
+      jpl_email: '',
+      jpl_fileName: '',
+      jpl_filePath: '',
+      jpl_fileUuid: '',
+      salaryType: '',
+      viewImg: '',
+      com_name: '',
+      com_phone: '',
+      com_email: '',
+      com_address: '',
+      com_category: '',
+      com_ceo: '',
+      com_businessRegistration: '',
+      com_establishmentDate: '',
+      curTime: Date.now()
 
       QnAComInfo: {
         user_id: JSON.parse(sessionStorage.getItem('sessionId')),
@@ -184,7 +236,86 @@ export default {
       AppliedResult : 0,
       resumeArray: []
     }
+  },
+  created() {
+    this.$axios.get('/jobfair/empData', {
+      params: {jpl_num: this.jpl_num}
+    }).then(res => {
 
+      this.com_num = res.data.com_num,
+          this.jpl_title = res.data.jpl_title,
+          this.jpl_content = res.data.jpl_content,
+          this.jpl_startDate = res.data.jpl_startDate.substring(0, 10),
+          this.jpl_endDate = res.data.jpl_endDate.substring(0, 10),
+          this.jpl_regDate = res.data.jpl_regDate.substring(0, 10),
+          this.jpl_workPosition = res.data.jpl_workPosition,
+          this.jpl_duty = res.data.jpl_duty,
+          this.jpl_workHistory = res.data.jpl_workHistory,
+          this.jpl_workForm = res.data.jpl_workForm,
+          this.jpl_education = res.data.jpl_education,
+          this.jpl_conditions = res.data.jpl_conditions,
+          this.jpl_certificate = res.data.jpl_certificate,
+          this.jpl_gender = res.data.jpl_gender,
+          this.jpl_salary = res.data.jpl_salary,
+          this.jpl_locationSi = res.data.jpl_locationSi,
+          this.jpl_locationGu = res.data.jpl_locationGu,
+          this.jpl_address = res.data.jpl_address,
+          this.jpl_workDay = res.data.jpl_workDay,
+          this.jpl_workTimeS = res.data.jpl_workTimeS,
+          this.jpl_workTimeE = res.data.jpl_workTimeE,
+
+          this.jpl_name = res.data.jpl_name,
+          this.jpl_phoneNum = res.data.jpl_phoneNum,
+          this.jpl_email = res.data.jpl_email,
+          this.jpl_companyName = res.data.jpl_comPanyName,
+          this.jpl_contact = res.data.jpl_contact,
+          this.jpl_fileName = res.data.jpl_fileName,
+          this.jpl_filePath = res.data.jpl_filePath,
+          this.jpl_fileUuid = res.data.jpl_fileUuid,
+          this.viewImg = res.data.jpl_filePath + "/" + res.data.jpl_fileUuid + "-" + res.data.jpl_fileName,
+
+          // this.$axios.post('/jobfair/imgDisplay', {
+          //   viewImg: this.viewImg
+          // }).then(res => {
+          //   console.log("img")
+          //   console.log(res)
+          //   this.viewImg = res.data
+          // }).catch(err => console.log(err))
+      //회사정보 불러오는 axios
+      this.$axios
+          .post('/jobfair/compInfo', {
+            com_num: this.com_num
+          })
+          .then(res => {
+            this.jpl_comPanyName = res.data.com_name
+            this.jpl_contact = res.data.com_phone
+
+            this.com_name = res.data.com_name
+            this.com_phone = res.data.com_phone
+            this.com_email = res.data.com_email
+            this.com_address = res.data.com_address
+            this.com_category = res.data.com_category
+            this.com_ceo = res.data.com_ceo
+            this.com_establishmentDate = res.data.com_establishmentDate
+            this.com_businessRegistration = res.data.com_businessRegistration
+            console.log("comData")
+            console.log(res)
+          }).catch(err => {
+        console.log(err)
+      })
+      this.viewImg = "file:///"+this.viewImg
+      console.log(this.viewImg)
+
+    }).catch(err => {
+      console.log(err)
+    })
+
+      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      com_num: 3
+    };
+  },
+  created() {
+    this.resumeinfo();
   },
   created() {
 
@@ -206,25 +337,27 @@ export default {
 
   },
   methods: {
-    // uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
-    //   let self = this;
-    //   this.$axios
-    //       .get('/jobfair/uQnABtnClick', {params: {com_num: this.$route.params.com_num}
-    //
-    //   })
-    //       .then((res) => {
-    //         console.log("데이터: " + res.data)
-    //         self.$router.push({
-    //           name: 'cQnAView',
-    //           params: {
-    //             com_num: this.$route.params.com_num
-    //           }
-    //         })
-    //         self.$router.push('/uQnAWriteView')
-    //       })
-    //       .catch((error) => {
-    //         console.log(error)
-    //       })
+    resumeinfo() {
+      this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
+          .then((res) => {
+            this.resumeArray = res.data
+            console.log(res.data)
+
+          }).catch((error) => {
+        console.log(error)
+      })
+    },
+    postRes(e){
+      //이력서 선택 후 지원하기 누르면 해당 공고에 지원한 것이므로 지원완료 버튼 생성
+      const target = document.getElementsByClassName('endBtn')
+      target.disabled = true
+      console.log(target)
+      // this.$router.go('/uJobPostDetailView')
+
+    }
+    // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
+    // supportResume(){
+    //   router.push({path:"/"})
     // }
     resumeinfo() {
         this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
@@ -263,7 +396,36 @@ export default {
     //   router.push({path:"/"})
     // }
   }
+    // getJobPostInfo() {
+    //   this.$axios.get('/jobfair/getJobPostInfo/', {params: {com_num: this.com_num}})
+    //       .then((res) => this.CompanyInfo = res.data)
+    //       .catch((error) => console.log(error))
+    // },
 
+
+    uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
+
+      this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
+      
+      // this.$axios
+      //     .post('/jobfair/uQnABtnClick')
+      //     .then((res) => {
+      //       alert("tq")
+      //       this.$router.push({
+      //         name: 'uQnAWriteView',
+      //         params: {
+      //           com_num: this.com_num
+      //         }
+      //       })
+      //       this.$router.push("/uQnAWriteView")
+      //
+      //     })
+      //     .catch((error) => {
+      //       console.log(error)
+      //     })
+
+    }
+  }
 }
 </script>
 
@@ -441,6 +603,7 @@ dl {
   white-space: pre-line;
   word-wrap: break-word;
 }
+
 .recruitment img {
   float: left;
   width: 40%;

@@ -14,8 +14,11 @@
             <p>2023.03.09</p>
           </div>
           <div class="right">
-            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정</button>
-            <button type="button" class="btn btn-outline-primary" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제</button>
+            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정
+            </button>
+            <button type="button" class="btn btn-outline-primary"
+                    style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제
+            </button>
           </div>
         </div>
       </div>
@@ -26,8 +29,11 @@
             <p>2023.03.09</p>
           </div>
           <div class="right">
-            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정</button>
-            <button type="button" class="btn btn-outline-primary" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제</button>
+            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정
+            </button>
+            <button type="button" class="btn btn-outline-primary"
+                    style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제
+            </button>
           </div>
         </div>
       </div>
@@ -49,38 +55,45 @@
             <h3>카카오</h3>
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1" >기업번호</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <span class="input-group-text" id="basic-addon1">기업번호</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1" >전화번호</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <span class="input-group-text" id="basic-addon1">전화번호</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1" >이메일</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <span class="input-group-text" id="basic-addon1">이메일</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1" >업종</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <span class="input-group-text" id="basic-addon1">업종</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1" >대표자</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <span class="input-group-text" id="basic-addon1">대표자</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1" >설립일</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" disabled>
+            <span class="input-group-text" id="basic-addon1">설립일</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1" disabled>
           </div>
 
           <div class="btnBox">
@@ -92,7 +105,7 @@
         </div>
       </div>
 
-      <!--지원하기 모달창 설정-->
+      <!--수정하기 모달창 설정-->
       <!--state 적용해서 데이터 넣어야해유-->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -104,42 +117,56 @@
             <div class="modal-body" style="height: 100%">
               <div class="infoModalBox">
                 <div class="logoBox">
-                  <img src="#">
+                  <img src="#" alt="image"/>
                   <h3>카카오</h3>
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1" >기업번호</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
-                  <input type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+                  <input type="file" hidden="true" accept="image/*"
+                         ref="image" @change="imgUploaded($event)"
+                         name="image" multiple/>
+                  <button type="button" class="btn btn-primary" @click="runUploadImg">로고수정</button>
                 </div>
 
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1" >전화번호</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
+                <div class="infoPart_wrap">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">기업번호</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                  </div>
 
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1" >이메일</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
+                    <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                  </div>
 
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1" >업종</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">전화번호</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                  </div>
 
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1" >대표자</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">이메일</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                  </div>
 
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1" >설립일</span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">업종</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">대표자</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">설립일</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                  </div>
                 </div>
 
                 <div class="btnBox">
@@ -166,48 +193,111 @@
 </template>
 
 <script>
+
 export default {
-  name: "uMypageView"
+  name: "uMypageView",
+  data() {
+    return {
+      img_path: '',
+      com_num: sessionStorage.getItem("sessionComp"),
+
+    }
+
+  },
+  methods: {
+    //로고수정 버튼 클릭시 파일 업로드 버튼 활성화
+    runUploadImg() {
+      this.$refs.image.click()
+    },
+    //파일업로드시 실행되는 메서드
+    async imgUploaded(e) {
+
+      // console.log(e.target.files) //files는 배열로 들어온다.
+
+      let form = new FormData() //form 데이타를 담기위해 form 인스턴스 생성
+      let image = e.target.files[0];
+
+      form.append('com_num', this.com_num)
+      form.append('image', image)
+
+      const {data} = await this.$axios.post('/jobfair/companyMypage/modiLogo', form,
+          { headers: {'Content-Type': 'multipart/form-data'} }).catch( err => console.log(err));
+
+      console.log(data.filePath)
+
+      this.img_path = data.filePath
+
+
+
+    }
+
+  }
 }
 </script>
 
 <style scoped>
 
-.left{float: left;}
-.right {float:right;}
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
 /*이력서*/
-.resumeBoxCon h3 {display: inline-block;}
+.resumeBoxCon h3 {
+  display: inline-block;
+}
 
-.resumeBoxWrap { display: inline-block;width:50%;}
+.resumeBoxWrap {
+  display: inline-block;
+  width: 50%;
+}
 
-.arrDown{border:0;
-  margin-left:10px;
+.arrDown {
+  border: 0;
+  margin-left: 10px;
   background: transparent;
 }
-.arrDown img{border:0;
-  width:20px;
-  height:30px;
+
+.arrDown img {
+  border: 0;
+  width: 20px;
+  height: 30px;
   object-fit: contain;
 }
 
-.resumeBox {border: 1px solid #dedede;
+.resumeBox {
+  border: 1px solid #dedede;
   border-radius: 20px;
   overflow: hidden;
-  padding:20px;
-  width:98%;
-  margin-bottom:10px;
-  display:inline-block;
-  margin-left:5px;
+  padding: 20px;
+  width: 98%;
+  margin-bottom: 10px;
+  display: inline-block;
+  margin-left: 5px;
 }
-.resumeBox p {margin:0;padding: 0;}
-.resumeBox button {margin:5px;}
 
-.resumeBox:hover {border:1px solid #0064ff;}
-.resumeTitle {font-weight: bold;
+.resumeBox p {
+  margin: 0;
+  padding: 0;
+}
+
+.resumeBox button {
+  margin: 5px;
+}
+
+.resumeBox:hover {
+  border: 1px solid #0064ff;
+}
+
+.resumeTitle {
+  font-weight: bold;
   font-size: 18px;
 }
 
-
+/* --- company logo css ---*/
 .logoBox {
   height: 100px;
 }
@@ -222,6 +312,17 @@ export default {
 .logoBox h3 {
   line-height: 50px;
 }
+
+.logoBox button {
+}
+
+/*-------------------------*/
+/* ----- 로고 아래에서 수정하기 버튼 사이 부분 ----*/
+.infoPart_wrap {
+  margin-top: 10px;
+}
+
+/*-------------------------*/
 
 .infoWrapBox {
   border: 1px solid grey;

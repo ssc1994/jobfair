@@ -1,48 +1,17 @@
 <template>
 <!--  SidenavList.vue 에서 가져온 auth값을 이용해서 사용자마다 다른 메뉴 출력하는 화면 만듦 -->
-  <div v-if="menuTitle === '1'">
-    <div @click="visible">채용</div>
-    <div v-if="isVisible">
-      <ul>
-        <li>
-          <router-link to="uJobPostView">채용공고리스트</router-link>
-        </li>
-      </ul>
-    </div>
-    <div @click="visible">QnA</div>
-    <div v-if="isVisible">
-      <ul>
-        <li>
-          <router-link to="uQnaView">QnA리스트</router-link>
-        </li>
-      </ul>
-    </div>
+<!--  <div v-if="menuTitle === '홈' || menuTitle === '마이 페이지' || (menuTitle === '채용 정보' && this.mg_auth === '1')">-->
+  <div v-if="menuTitle != '채용 정보' || this.mg_auth != 3">
+    <div><router-link :to="link">{{ menuTitle }}</router-link></div>
   </div>
-  <div v-if="menuTitle === '2'">
-    <div @click="visible">채용</div>
+
+<!--  <div v-if="menuTitle !='홈' && menuTitle != '마이 페이지' && (menuTitle != '채용 정보' || this.mg_auth != '1')">-->
+  <div @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && this.mg_auth === '3'">
+    <div>{{ menuTitle }}</div>
     <div v-if="isVisible">
-      <ul>
+      <ul v-for="menu in menuGroup">
         <li>
-          <router-link to="cEmpRegView">채용공고등록</router-link>
-        </li>
-        <li>
-          <router-link to="cEmpModiView">채용공고수정</router-link>
-        </li>
-        <li>
-          <router-link to="cJobPostListView">나의 채용공고</router-link>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div v-if="menuTitle === '4'">
-    <div @click="visible">Menu</div>
-    <div v-if="isVisible">
-      <ul>
-        <li>
-          <router-link to="uApplyListView">유조지원관리</router-link>
-        </li>
-        <li>
-          <router-link to="uJobPostView" class="routerLink">유조리스트</router-link>
+          <router-link :to="menu.menu_URL">{{ menu.menu_name }}</router-link>
         </li>
       </ul>
     </div>
@@ -50,14 +19,55 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "SideMenuList",
   props: [
-    'menuTitle'
+    'menuTitle',
+    'menu_id',
+    'mg_auth'
   ],
   data () {
     return{
-      isVisible: true
+      isVisible: false,
+      link: '',
+      menuGroup: []
+    }
+  },
+  created () {
+    console.log(this.menuTitle)
+    console.log(this.mg_auth)
+      if(this.mg_auth === '1') {
+        if (this.menuTitle === '홈') this.link = '/uMainView'
+        else if (this.menuTitle === '마이 페이지') this.link = '/uMypageView'
+        else if (this.menuTitle === '채용 정보') this.link = '/uJobPostView'
+        else if (this.menuTitle === 'QnA') this.link = '/uQnAView'
+
+      }
+      else if(this.mg_auth  === '2' || this.mg_auth  === '3') {
+        if(this.menuTitle === '홈') this.link = '/cMainView'
+        else if(this.menuTitle ==='마이 페이지') this.link = '/cMypageView'
+        else if (this.menuTitle === 'QnA') this.link = '/cQnAView'
+      }
+      else if(this.mg_auth  === '4') {
+        if(this.menuTitle === '홈') this.link = '/aMainView'
+        else if(this.menuTitle ==='마이 페이지') this.link = '/aMypageView'
+        else if (this.menuTitle === 'QnA') this.link = '/aQnAView'
+      }
+
+    if(this.menu_id === 'p3') {
+      //하위 메뉴 DB에서 가져오기
+      this.$axios.post("/jobfair/sidebar/getMenu", {
+        menu_id: this.menu_id,
+        menu_auth: sessionStorage.getItem('sessionAuth')
+      })
+          .then(response => {
+            this.menuGroup = response.data
+          })
+          .catch(error => {
+            console.log(error)
+          })
     }
   },
   methods: {

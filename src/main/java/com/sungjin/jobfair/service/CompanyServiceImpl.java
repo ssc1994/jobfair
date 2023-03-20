@@ -22,8 +22,8 @@ public class CompanyServiceImpl implements CompanyService{
         companyMapper.cqnaRegist(vo);
     }
     @Override
-    public ArrayList<QnAVO> cgetQnAList() {
-        return companyMapper.cgetQnAList();
+    public ArrayList<QnAVO> cgetQnAList(String com_num) {
+        return companyMapper.cgetQnAList(com_num);
     }
     @Override
     public QnAVO getUserQnADetail(int qa_num) {
@@ -53,6 +53,10 @@ public class CompanyServiceImpl implements CompanyService{
         return companyMapper.getEmpData(jpl_num);
     }
 
+    @Override
+    public ArrayList<EmpVO> getComJobPosingList(String com_num) {
+        return companyMapper.getComJobPosingList(com_num);
+    }
 
     //################## Login Service #######################
         //회사 번호를 가지고 회사정보 가져오기

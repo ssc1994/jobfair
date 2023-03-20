@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sungjin.jobfair.service.AdminMapper">
+
+    <!-- ######################### 채용공고 상세보기 페이지 ######################### -->
+<!--    채용공고 작성내용 가져오기 -->
+    <select id="getEmpData" resultType="EmpVO">
+        select * from JobPostingList
+    </select>
+<!-- 채용공고를 작성한 기업의 정보만 불러오기-->
+    <select id="getComData" resultType="CompanyVO">
+        select * from Company where com_num = #{com_num}
+    </select>
+
+    <select id="getAllData" resultType="map">
+        select J.*, C.com_name from JobPostingList J
+            inner join Company C
+            on J.com_num = C.com_num
+    </select>
+
+</mapper>

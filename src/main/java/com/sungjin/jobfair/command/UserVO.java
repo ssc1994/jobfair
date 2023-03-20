@@ -24,6 +24,11 @@ public class UserVO {
     private String user_address;
     private String com_num; //기업 번호
 
+    //개인정보에서 비밀번호 변경시 체크할 변수
+    private String currentPw;
+    //새로 변경할 비밀번호
+    private String newPw;
+
 
 
 

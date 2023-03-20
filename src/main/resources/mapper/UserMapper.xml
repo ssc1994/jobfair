@@ -15,8 +15,8 @@
         select *
         from User
         where user_id = #{user_id}
-
     </select>
+
         <!--유저정보 불러오기-->
     <select id="info" resultType="UserVO">
         select *
@@ -28,16 +28,24 @@
     <!--**************************************************Q&A**************************************************-->
         <!--유저 큐앤에이 등록-->
     <insert id="qnaRegist" parameterType="QnAVO">
-        insert into QnA(user_id, qa_title, qa_content, qa_regDate, qa_type)
-        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d') , #{qa_type})
+        insert into QnA(user_id, qa_title, qa_content, qa_regDate, qa_type, com_num)
+        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d') , #{qa_type}, #{com_num})
     </insert>
     <!--유저 큐앤에이 리스트-->
     <select id="getQnAList" resultType="QnAVO">
         select *
         from QnA
         where qa_type like "%q%"
-        order by qa_num desc
+        order by qa_num desc limit #{pageStart}, #{amount}
     </select>
+
+
+<!--    <select id="getPage" resultType="QnAVO">-->
+<!--        select * from qna-->
+<!--        order by qa_num desc limit #{pageStart}, #{amount}-->
+<!--    </select>-->
+
+
         <!--큐앤에이 상세페이지-->
     <select id="getQnADetail" resultType="QnAVO">
         select *
@@ -49,6 +57,10 @@
         update QnA set qa_title = #{qa_title} , qa_content = #{qa_content}
         where qa_num = #{qa_num}
     </update>
+
+<!--    <select id="uQnABtnClick" resultType="QnAVO">-->
+<!--        select * from qna where com_num like '%3%'-->
+<!--    </select>-->
 
 
     <!--**************************************************채용공고**************************************************-->
@@ -158,27 +170,18 @@
         select EXISTS (select * from applylist where user_id=#{user_id} and jpl_num = #{jpl_num} limit 1) as success;
     </select>
 
-
-
     <!--**************************************************마이페이지 이력서**************************************************-->
         <!--이력서정보-->
     <select id="resumeInfo" resultType="ResumeVO">
-        select * from ResumeList
+        select * from ResumeList where user_id = #{user_id}
     </select>
         <!--이력서 지우기-->
     <delete id="deleteResume">
         delete from ResumeList where res_num = #{res_num}
     </delete>
 
-    <!--    <select id="uQnABtnClick" resultType="QnAVO">-->
-    <!--        select * from JOBPOSTINGLIST where jpl_num = #{jpl_num}-->
-    <!--    </select>-->
 
 
-    <!--    박희진 작성중-->
-    <!--    <select id="'EmpRegistInfo'" resultType="EmpVO">-->
-    <!--        select * from JobPostingList-->
-    <!--    </select>-->
 
 
     <!--**************************************************이력서 관련**************************************************-->
@@ -212,4 +215,21 @@
         insert into Certificate (res_num, user_id, cert_name, cert_gainDate, cert_issueInstitute)
         values (#{res_num}, #{user_id}, #{cert_name}, #{cert_gainDate}, #{cert_issueInstitute})
     </insert>
+
+
+    <!--**************************************************페이지네이션**************************************************-->
+<!--    <select id="getQnATotal" resultType="int">-->
+<!--        select count(*) from qna-->
+<!--    </select>-->
+
+
+    <!--페이지네이션-->
+    <select id="uQnAGetTotal" resultType="int">
+        select count(*) from qna
+    </select>
+
+
+
+
 </mapper>
+
