@@ -22,8 +22,8 @@ public class CompanyServiceImpl implements CompanyService{
         companyMapper.cqnaRegist(vo);
     }
     @Override
-    public ArrayList<QnAVO> cgetQnAList() {
-        return companyMapper.cgetQnAList();
+    public ArrayList<QnAVO> cgetQnAList(String com_num) {
+        return companyMapper.cgetQnAList(com_num);
     }
     @Override
     public QnAVO getUserQnADetail(int qa_num) {

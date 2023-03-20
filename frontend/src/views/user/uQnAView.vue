@@ -30,6 +30,18 @@
           </table>
 
         </div>
+
+        <!--페이지네이션 부분-->
+        <a @click="goFirstPage(page - 1)">&lt;</a>
+        <a @click="goPrevPage(page - 1)">prev</a>
+
+        <a v-for="(paging, index) in pageList" :key="index" @click="onPageChange(paging - 1)" :class="paging - 1 === page ? 'page' : ''">{{paging}}</a>
+
+
+        <a @click="goNextPage(page + 1)">next</a>
+        <a @click="goLastPage(page + 1)">&gt;</a>
+
+
       </div>
     </div>
 
@@ -38,20 +50,46 @@
 
 <script>
 export default {
-  name: "uQnAView",
-  user_id: 'user123',
-  qa_num: '',
+  // name: "uQnAView",
+  // user_id: 'user123',
+  // qa_num: '',
 
   data() {
     return {
       QnAList: [],
       QnADetailList: [],
+      list: "",
+      pages: "", // pageVO
+      pageList: "", //pageVO.pageList 배열값
+      detailNum: "",
+
+      //페이지 이동에 필요한 초기값
+      page: 1,
+      amount: 10,
+      prev: "",
+      start: "",
+      end: "",
+      realEnd: "",
+
+
     };
   },
   created() {
     this.getQnAList();
-
+    this.uQnAListAxios();
+    this.uQnAGetTotal();
   },
+
+  // computed: {
+  //   pagess: function () {
+  //     const list = [];
+  //     for(let index = this.start; index <= this.end; index++) {
+  //       list.push(index);
+  //     }
+  //     return list;
+  //   }
+  // },
+
   methods: {
     addQnA() {
       this.$router.push("/uQnAWriteView")
@@ -60,7 +98,7 @@ export default {
     getQnAList() {
       this.$axios.post('/jobfair/getQnAList')
           .then((res) => this.QnAList = res.data)
-          .catch((error) => this.QnAList = error.date)
+          .catch((error) => console.log(error))
 
     },
     // getQnADetailList() {
@@ -79,6 +117,58 @@ export default {
           qa_num: idx
         }
       })
+    },
+    uQnAListAxios() {
+      this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
+          this.amount +
+          "&page=" +
+          this.page)
+          .then((res) => {
+            console.log(res)
+            this.list = res.data.list;
+            this.pages = res.data.pageVO;
+            this.pageList = this.pages.pageList;
+
+            //페이지 이동에 필요한 데이터 담기
+            this.page = this.pages.page;
+            this.prev = this.pages.prev;
+            this.start = this.pages.start;
+            this.end = this.pages.end;
+            this.realEnd = this.pages.realEnd;
+
+          })
+          .catch((error) => console.log(error))
+
+    },
+    uQnAGetTotal() {
+      this.$axios.post("/jobfair/uQnAGetTotal")
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((error) => console.log(error))
+    },
+    goFirstPage() {
+      this.page = 1;
+      this.uQnAListAxios();
+    },
+    goPrevPage() {
+      if(this.page > 1) {
+        this.page = this.page - 1;
+      } else {
+        alert("첫 페이지입니다.");
+      }
+    },
+    goNextPage() {
+      if(this.page < this.realEnd) {
+        this.page = this.page + 1;
+        this.uQnAListAxios();
+      } else {
+        alert("마지막 페이지입니다.")
+      }
+    },
+    goLastPage() {
+      this.page = this.realEnd;
+      this.uQnAListAxios();
     }
   }
 }

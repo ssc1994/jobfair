@@ -182,8 +182,10 @@ public class CompanyController {
     }
         //큐앤에이 목록 - done
     @PostMapping(value = "/cgetQnAList")
-    public ArrayList<QnAVO> cgetQnAList() {
-        ArrayList<QnAVO> list = companyService.cgetQnAList();
+    public ArrayList<QnAVO> cgetQnAList(@RequestBody Map<String,String> map) {
+        String com_num = map.get("com_num");
+        ArrayList<QnAVO> list = companyService.cgetQnAList(com_num);
+        System.out.println(com_num);
         System.out.println(list.toString());
         return list;
     }

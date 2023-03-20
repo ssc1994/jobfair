@@ -33,8 +33,8 @@ const routes = [
     component: () => import('../views/user/uQnAView.vue')
   },
   {//유저 Q&A 작성화면
-    path: '/uQnAWriteView',
-    name: 'uQ&uQnAWriteView',
+    path: '/uQnAWriteView/:com_num' ,
+    name: 'uQnAWriteView',
     component: () => import('../views/user/uQnAWriteView.vue')
   },
   {//유저 Q&A 디테일 화면

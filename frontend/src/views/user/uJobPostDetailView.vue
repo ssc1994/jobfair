@@ -86,7 +86,7 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             지원하기
           </button>
-          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick">
+          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" >
             Q&A 질문하기
           </button>
 
@@ -308,10 +308,41 @@ export default {
       console.log(err)
     })
 
-
+      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      com_num: 3
+    };
   },
-  methods: {}
+  methods: {
+    // getJobPostInfo() {
+    //   this.$axios.get('/jobfair/getJobPostInfo/', {params: {com_num: this.com_num}})
+    //       .then((res) => this.CompanyInfo = res.data)
+    //       .catch((error) => console.log(error))
+    // },
 
+
+    uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
+
+      this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
+      
+      // this.$axios
+      //     .post('/jobfair/uQnABtnClick')
+      //     .then((res) => {
+      //       alert("tq")
+      //       this.$router.push({
+      //         name: 'uQnAWriteView',
+      //         params: {
+      //           com_num: this.com_num
+      //         }
+      //       })
+      //       this.$router.push("/uQnAWriteView")
+      //
+      //     })
+      //     .catch((error) => {
+      //       console.log(error)
+      //     })
+
+    }
+  }
 }
 </script>
 

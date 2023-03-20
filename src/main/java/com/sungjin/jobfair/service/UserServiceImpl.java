@@ -1,6 +1,7 @@
 package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
+import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ public class UserServiceImpl implements UserService {
     //################## 로그인 관련(login) Service #######################
     @Override
     public UserVO login(UserVO vo) {
-
 //        //DB에서 암호화 된 비밀번호 가져와서 입력된 비밀번호랑 비교
 //        String rawPw = vo.getUser_pw(); //입력된 pw
 //        String encodePw = userMapper.getEncodePw(vo); //db에 저장된 암호화된 pw
@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
 //            return null;
 //        }
             return userMapper.login(vo);
-
 
     }
     @Override
@@ -45,8 +44,8 @@ public class UserServiceImpl implements UserService {
         userMapper.qnaRegist(vo);
     }
     @Override
-    public ArrayList<QnAVO> getQnAList() {
-        return userMapper.getQnAList();
+    public ArrayList<QnAVO> getQnAList(Criteria cri) {
+        return userMapper.getQnAList(cri);
     }
     @Override
     public QnAVO getQnADetail(int qa_num) {
@@ -57,8 +56,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.uQnAModi(vo);
     }
 //    @Override
-//    public QnAVO uQnABtnClick(int jpl_num) {
-//        return userMapper.uQnABtnClick(jpl_num);
+//    public QnAVO uQnABtnClick() {
+//        return userMapper.uQnABtnClick();
 //    }
 
     //################## 채용공고(jobPost) 관련 Service #######################
@@ -70,6 +69,8 @@ public class UserServiceImpl implements UserService {
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
         return userMapper.getJobPostSrc(vo);
     }
+
+
     //박희진 작성중
 //    @Override
 //    public ArrayList<EmpVO> EmpRegistInfo() {
@@ -103,4 +104,35 @@ public class UserServiceImpl implements UserService {
     public void regResCert(CertVO certVO) {
         userMapper.regResCert(certVO);
     }
+
+
+
+
+    //################## 페이지네이션 관련 Service #######################
+//    @Override
+//    public ArrayList<QnAVO> getPage(Criteria cri) {
+//
+//        ArrayList<QnAVO> list = userMapper.getPage(cri);
+//        return list;
+//    }
+//    @Override
+//    public int getQnATotal() {
+//        return userMapper.getQnATotal();
+//    }
+
+
+
+    //페이지네이션
+//    @Override
+//    public Map<String, Object> uQnAListAxios(Criteria cri) {
+//        return userMapper.uQnAListAxios(cri);
+//    }
+
+    @Override
+    public int uQnAGetTotal(Criteria cri) {
+        return userMapper.uQnAGetTotal(cri);
+    }
+
+
+
 }

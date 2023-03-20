@@ -3,6 +3,9 @@ package com.sungjin.jobfair.controller;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.sungjin.jobfair.PageGate;
+import com.sungjin.jobfair.pagination.Criteria;
+import com.sungjin.jobfair.pagination.PageVO;
 import org.springframework.boot.Banner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +25,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 @RestController
@@ -141,10 +145,9 @@ public class UserController {
     }
         //큐앤에이 목록
     @PostMapping(value = "/getQnAList")
-    public ArrayList<QnAVO> getQnAList(Model model) {
+    public ArrayList<QnAVO> getQnAList(Criteria cri) {
 
-        ArrayList<QnAVO> list = userService.getQnAList();
-        model.addAttribute("list", list);
+        ArrayList<QnAVO> list = userService.getQnAList(cri);
         System.out.println(list.toString());
 
         return list;
@@ -168,6 +171,15 @@ public class UserController {
 
         return a;
     }
+
+    //채용상세공고에서 질문하기 버튼 누를경우 기업정보 넘기는 메서드
+    //(채용공고정보) jpl번호를 기준으로 jpl테이블에서 데이터를 불러오는 메서드
+//    @PostMapping("/uQnABtnClick")
+//        public QnAVO uQnABtnClick(){
+//            QnAVO vo = userService.uQnABtnClick();
+//            System.out.println(vo);
+//            return vo;
+//        }
 
 
     //**********************************************채용공고**********************************************
@@ -251,4 +263,53 @@ public class UserController {
 //
 //        return list;
 //    }
+
+
+    //**********************************************페이지네이션**********************************************
+//    @PostMapping(value = "/getQnATotal")
+////    public int getQnATotal() {
+////       int total = userService.getQnATotal();
+////        System.out.println(total);
+////        return total;
+////    }
+
+
+
+    //페이지네이션
+
+//    public ResponseEntity <Map<String, Object>> uQnAListAxios(Criteria cri) {
+//
+//        Map<String, Object> map = new HashMap<>();
+//
+//        map.put("pageVOList", userService.getQnAList(cri));
+//        map.put("totalPage", userService.uQnAGetTotal(cri));
+//        return new ResponseEntity<>(map, HttpStatus.OK);
+//    }
+
+    @GetMapping("/uQnAListAxios")
+    public PageGate list(Criteria cri) {
+
+        int total = userService.uQnAGetTotal(cri);
+        PageVO pageVO = new PageVO(cri, total);
+
+        ArrayList<QnAVO> list = userService.getQnAList(cri);
+
+        PageGate pageGate = new PageGate(list, pageVO);
+
+        System.out.println(list.toString());
+
+        return pageGate;
+    }
+
+    @PostMapping("/uQnAGetTotal")
+    public int uQnAGetTotal(Criteria cri) {
+        int total = userService.uQnAGetTotal(cri);
+
+        return total;
+    }
+
+
+
+
+
 }

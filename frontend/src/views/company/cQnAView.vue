@@ -26,6 +26,13 @@
               <td>{{ row.qa_regDate.substring(0,10) }}</td>
             </tr>
 
+            <tr v-if="QnAList.length == 0">
+              <td></td>
+              <td></td>
+              <td>게시글이 없습니다.</td>
+              <td></td>
+            </tr>
+
             </tbody>
           </table>
 
@@ -39,12 +46,13 @@
 
 <script>
 export default {
-  name: "uQnAView",
-  com_num: 'com456',
+  name: "cQnAView",
+
 
   data() {
     return {
-      QnAList: []
+      QnAList: [],
+      com_num: JSON.parse(sessionStorage.getItem('sessionComp'))
     };
   },
   created() {
@@ -52,10 +60,11 @@ export default {
   },
   methods: {
     cgetQnAList() {
-      this.$axios.post('/jobfair/cgetQnAList')
-          .then((res) => {this.QnAList = res.data
-          }
-          )
+
+      this.$axios.post('/jobfair/cgetQnAList', {
+        com_num:this.com_num
+      })
+          .then((res) => {this.QnAList = res.data})
           .catch((error) => this.QnAList = error.data)
 
     },
