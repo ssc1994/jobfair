@@ -260,13 +260,12 @@ export default {
       jpl_filePath:'',
       jpl_fileUuid:'',
       salaryType:'',
-      viewImg: ''
+      viewImg: 'C:/bootupload/230315/e1676ea5-42a8-4e04-b87f-d6b7c224c3d2-1.jpg'
     }
   },
   created() {
-    this.$axios.get('/jobfair/empData', {params:{num:'2'}
+    this.$axios.get('/jobfair/empData', {params:{jpl_num:'2'}
     }).then(res=>{
-
 
           this.com_num=res.data.com_num,
               this.jpl_title=res.data.jpl_title,
@@ -295,12 +294,11 @@ export default {
               this.jpl_email=res.data.jpl_email,
               this.jpl_companyName=res.data.jpl_comPanyName,
               this.jpl_contact=res.data.jpl_contact,
-              this.jpl_fileName=res.data.jpl_fileName,
+              this.jpl_fileName=res.data.jpl_filePath,
               this.jpl_filePath=res.data.jpl_filePath,
               this.jpl_fileUuid=res.data.jpl_fileUuid
+              // this.viewImg=require(res.data.jpl_filePath+"/"+res.data.jpl_fileUuid+"-"+res.data.jpl_fileName),
 
-
-      console.log(res)
     }).catch(err=>{
       console.log(err)
     })

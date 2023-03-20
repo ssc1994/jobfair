@@ -45,6 +45,8 @@
             </div>
           </div>
         </div>
+
+
 <!--         수정버튼 클릭시 나오는 모달창 -->
 <!--        res_num에 따른 데이터를 가져오게끔 만들어야함, 수정을 눌렀을 때 그 이력서 번호에 맞는 데이터만 출력되게끔 (아직 미구현, 박희진)-->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

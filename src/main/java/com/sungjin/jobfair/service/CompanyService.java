@@ -15,7 +15,7 @@ public interface CompanyService {
         //큐앤에이 답변 등록
     public void cqnaRegist(QnAVO vo);
         //큐앤에이 목록 가져오기
-    public ArrayList<QnAVO> cgetQnAList();
+    public ArrayList<QnAVO> cgetQnAList(String com_num);
         //큐앤에이 상세페이지 데이터 가져오기 - 유저꺼
     public QnAVO getUserQnADetail(int qa_num);
         //큐앤에이 상세페이지 데이터 가져오기 - 기업꺼
@@ -30,6 +30,8 @@ public interface CompanyService {
         //채용공고 페이지에서 입력한 값 가져오기??
     public int empRegist(EmpVO vo);
     public EmpVO getEmpData(int jpl_num);
+        //기업이 등록한 채용공고 목록 가져오기
+    ArrayList<EmpVO> getComJobPosingList(String com_num);
 
 
     //################## Login Service #######################

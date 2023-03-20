@@ -29,11 +29,22 @@ public class UserInfoModiController {
         return userInfo;
     }
 
+    //회원정보 변경
     @PostMapping("modifyInfo")
     public void modifyInfo (@RequestBody UserVO uv) {
 
         System.out.println(uv.toString());
+        userModiService.modifyInfo(uv);
 
+    }
+
+    //비밀번호 변경
+    @PostMapping("modifyPw")
+    public String modifyPw (@RequestBody UserVO uv){
+
+        System.out.println(uv.toString());
+
+        return userModiService.modifyPw(uv);
 
     }
 

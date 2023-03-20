@@ -33,8 +33,8 @@ const routes = [
     component: () => import('../views/user/uQnAView.vue')
   },
   {//유저 Q&A 작성화면
-    path: '/uQnAWriteView',
-    name: 'uQ&uQnAWriteView',
+    path: '/uQnAWriteView/:com_num' ,
+    name: 'uQnAWriteView',
     component: () => import('../views/user/uQnAWriteView.vue')
   },
   {//유저 Q&A 디테일 화면
@@ -149,7 +149,7 @@ const routes = [
     name: 'aComListView',
     component: () => import('../views/admin/aComListView.vue')
   },
-  {//관리자 참여업체 등록 화면
+  {//관리자 참여업체 등록 화면(기업관리)
     path: '/aComRegView',
     name: 'aComRegView',
     component: () => import('../views/admin/aComRegView.vue')

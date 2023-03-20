@@ -161,6 +161,9 @@ export default {
               sessionStorage.setItem('sessionComp',JSON.stringify(res.data.com_num))
             }
             console.log(res.data)
+            this.$store.commit('setUser_id', sessionStorage.getItem('sessionId'));
+            this.$store.commit('setMg_auth', sessionStorage.getItem('sessionAuth'));
+            this.$store.commit('setCom_num', sessionStorage.getItem('sessionComp'));
 
             if(res.data.mg_auth == '1'){
               //sesionStorage에서 값 가져오는법
