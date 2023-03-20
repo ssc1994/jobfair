@@ -14,9 +14,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import org.springframework.http.MediaType;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
@@ -46,13 +53,32 @@ public class CompanyController {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
         String now = sdf.format(date);
-        String path = uploadpath + "\\" + now;
+        String path = uploadpath + "/" + now;
         File file = new File(path);
         if(file.exists() == false){
             file.mkdir();
         }
         return path;
     }
+
+    @RequestMapping("/imgDisplay")
+    @ResponseBody
+    public ResponseEntity<byte[]> getFile(@RequestBody Map<String,String> map){
+        String viewImg = map.get("viewImg");
+        System.out.println(viewImg);
+        File file = new File(viewImg);
+        ResponseEntity<byte[]> result = null;
+        try {
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", Files.probeContentType(file.toPath()) );
+            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
 
 
     //######################채용공고##########################
@@ -66,6 +92,12 @@ public class CompanyController {
         map.put("com_num",vo.getCom_num());
         map.put("com_name",vo.getCom_name());
         map.put("com_phone",vo.getCom_phone());
+        map.put("com_email",vo.getCom_email());
+        map.put("com_address",vo.getCom_address());
+        map.put("com_category",vo.getCom_category());
+        map.put("com_ceo",vo.getCom_ceo());
+        map.put("com_establishmentDate",vo.getCom_establishmentDate());
+        map.put("com_businessRegistration",vo.getCom_businessRegistration());
 
         return map;
     }
@@ -109,7 +141,7 @@ public class CompanyController {
     }
         //(채용공고정보) jpl번호를 기준으로 jpl테이블에서 데이터를 불러오는 메서드
     @GetMapping(value="/empData")
-    public EmpVO getEmpData(@RequestParam("num") int jpl_num){
+    public EmpVO getEmpData(@RequestParam("jpl_num") int jpl_num){
         EmpVO vo = companyService.getEmpData(jpl_num);
         //채용공고 정보 확인용 sout
         System.out.println(vo);
