@@ -83,10 +83,12 @@
             <span>접수 시작 : {{ jpl_startDate }}</span><br/>
             <span>접수 마감 : {{ jpl_endDate }}</span>
           </div>
-          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-bind:disabled="false">
-            지원하기
+          
+          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-bind:disabled="AppliedResult == 1" @click="postRes">
+            {{ applyBtnText }}
           </button>
-          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" >
+
+          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick">
             Q&A 질문하기
           </button>
 
@@ -143,17 +145,17 @@
             <div class="contentModalBox">
 
               <div class="miniContentModalBox" v-for="(resumeAll,i) in resumeArray" :key="i">
-                <input type="radio" id="test" name="resumeRadio" value="i">
-                <label for="test">
-                  <h4>{{resumeAll.res_title}}</h4>
-                  <h5>{{resumeAll.res_regDate}}</h5>
+                <input type="radio" :id="resumeAll.res_num" name="resumeRadio" :value="i" v-model="resNum">
+                <label :for="resumeAll.res_num">
+                  <h4>{{resumeAll.res_title}} </h4>
+                  <h5>{{resumeAll.res_regDate}} </h5>
                 </label>
-
               </div>
+              
             </div>
             <div class="modal-footer">
               <!-- @click="supportResume" 넣기 -->
-              <button type="button" class="btn btn-primary" @click="postRes(event)" data-bs-dismiss="modal">지원하기</button>
+              <button type="button" class="btn btn-primary" @click.prevent="postRes" data-bs-dismiss="modal" >지원하기</button>
             </div>
           </div>
         </div>
@@ -222,9 +224,17 @@ export default {
         user_id: JSON.parse(sessionStorage.getItem('sessionId')),
         com_num: ''
       },
-      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      user_id : JSON.parse(sessionStorage.getItem('sessionId')),
+      jpl_num : '2',
+      res_num : '1',
+      //지원한 이력서
+      resNum : 0,
+      // apply 성공
+      apply : '',
+      applyBtnText : '지원하기',
+      // 지원했던 공고면 1 , 아니면 0
+      AppliedResult : 0,
       resumeArray: []
-
     }
   },
   created() {
@@ -307,6 +317,25 @@ export default {
   created() {
     this.resumeinfo();
   },
+  created() {
+
+    this.$axios.post("/jobfair/EmpApplied", {user_id: this.user_id, jpl_num: this.jpl_num})
+        .then((res) => {
+          console.log("Applied" + res.data);
+          this.AppliedResult = res.data;
+          if(this.AppliedResult == 1) {
+            this.applyBtnText = '지원완료';
+          }
+        }).catch((error) => {
+      console.log(error);
+    })
+
+    this.resumeinfo();
+
+    console.log(this.AppliedResult);
+
+
+  },
   methods: {
     resumeinfo() {
       this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
@@ -324,6 +353,42 @@ export default {
       target.disabled = true
       console.log(target)
       // this.$router.go('/uJobPostDetailView')
+
+    }
+    // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
+    // supportResume(){
+    //   router.push({path:"/"})
+    // }
+    resumeinfo() {
+        this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
+            .then((res) => {
+              this.resumeArray = res.data
+              console.log(res.data)
+            }).catch((error) => {
+          console.log(error)
+        })
+    },
+    Applied() {
+
+    },
+    postRes(){
+      console.log(this.user_id);
+      this.resNum = this.resNum + 1;
+      console.log(this.resNum);
+
+
+
+      this.$axios.post("/jobfair/EmpApply", {user_id: this.user_id,
+                                                      jpl_num: this.jpl_num,
+                                                      res_num: this.resNum
+      })
+          .then((res) => {
+            this.apply = res.data;
+            console.log(res.data);
+          }).catch((error) => {
+        console.log(error);
+      })
+
 
     }
     // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
@@ -546,6 +611,7 @@ dl {
   margin-right: 30px;
 }
 .endBtn:disabled {
-  background-color: red;
+  background-color: #dedede;
+  color:black;
 }
 </style>
