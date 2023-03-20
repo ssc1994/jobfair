@@ -36,6 +36,10 @@ public interface UserMapper {
     public ArrayList<EmpVO> getJobPostList();
         //채용공고 검색 목록 가져오기
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
+    //유저가 지원한 채용공고인지 찾기
+    public int EmpApplied(String user_id, String jpl_num);
+    //채용공고 지원하기
+    public void EmpApply(String user_id, String jpl_num, String res_num);
 //    기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)
 //    public ArrayList<EmpVO> EmpRegistInfo();
 

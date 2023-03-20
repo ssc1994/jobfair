@@ -15,7 +15,7 @@
         select *
         from User
         where user_id = #{user_id}
-          and user_pw = #{user_pw}
+
     </select>
         <!--유저정보 불러오기-->
     <select id="info" resultType="UserVO">
@@ -61,26 +61,103 @@
     </select>
         <!--채용공고 상세검색-->
     <select id="getJobPostSrc" resultType="EmpVO">
-        select * from jobpostinglist
-        where jpl_locationSi like #{jpl_locationSi} and
-            jpl_locationSi like #{inputSearch} and
-            jpl_locationGu like #{jpl_locationGu} and
-            jpl_locationGu like #{inputSearch} and
-            jpl_duty like #{jpl_duty} and
-            jpl_duty like #{inputSearch} and
-            jpl_workHistory like #{jpl_workHistory} and
-            jpl_workHistory like #{inputSearch} and
-            jpl_education like #{jpl_education} and
-            jpl_education like #{inputSearch} and
-            jpl_salary like #{jpl_salary} and
-            jpl_salary like #{inputSearch} and
-            jpl_certificate like #{jpl_certificate} and
-            jpl_certificate like #{inputSearch} and
-            jpl_conditions like #{jpl_conditions} and
-            jpl_conditions like #{inputSearch} and
-            jpl_workForm like #{jpl_workForm} and
-            jpl_workForm like #{inputSearch}
+
+        select  * from jobpostinglist j  left join company c on j.com_num = c.com_num where 1 = 1
+
+        <if test="jpl_locationSi.length != 0">
+            and jpl_locationSi in
+            <foreach item="jpl_locationSi" index="index" collection="jpl_locationSi"
+                     open="(" separator="," close=")">
+                #{jpl_locationSi}
+            </foreach>
+        </if>
+
+        <if test="jpl_locationGu.length != 0">
+            and jpl_locationGu in
+            <foreach item="jpl_locationGu" index="index" collection="jpl_locationGu"
+                     open="(" separator="," close=")">
+                #{jpl_locationGu}
+            </foreach>
+        </if>
+
+        <if test="jpl_duty.length != 0">
+            and jpl_duty in
+            <foreach item="jpl_duty" index="index" collection="jpl_duty"
+                     open="(" separator="," close=")">
+                #{jpl_duty}
+            </foreach>
+        </if>
+
+        <if test="jpl_workHistory.length != 0">
+            and jpl_workHistory in
+            <foreach item="jpl_workHistory" index="index" collection="jpl_workHistory"
+                     open="(" separator="," close=")">
+                #{jpl_workHistory}
+            </foreach>
+        </if>
+
+        <if test="jpl_education.length != 0">
+            and jpl_education in
+            <foreach item="jpl_education" index="index" collection="jpl_education"
+                     open="(" separator="," close=")">
+                #{jpl_education}
+            </foreach>
+        </if>
+
+        <if test="jpl_salary.length != 0">
+            and jpl_salary in
+            <foreach item="jpl_salary" index="index" collection="jpl_salary"
+                     open="(" separator="," close=")">
+                #{jpl_salary}
+            </foreach>
+        </if>
+
+        <if test="jpl_certificate.length != 0">
+            and jpl_certificate in
+            <foreach item="jpl_certificate" index="index" collection="jpl_certificate"
+                     open="(" separator="," close=")">
+                #{jpl_certificate}
+            </foreach>
+        </if>
+
+        <if test="jpl_conditions.length != 0">
+            and jpl_conditions in
+            <foreach item="jpl_conditions" index="index" collection="jpl_conditions"
+                     open="(" separator="," close=")">
+                #{jpl_conditions}
+            </foreach>
+        </if>
+
+        <if test="jpl_workForm.length != 0">
+            and jpl_workForm in
+            <foreach item="jpl_workForm" index="index" collection="jpl_workForm"
+                     open="(" separator="," close=")">
+                #{jpl_workForm}
+            </foreach>
+        </if>
+
+       <if test="inputSearch != ''">
+            and jpl_title like
+           concat('%', #{inputSearch}, '%') or
+           com_name like
+           concat('%', #{inputSearch}, '%')
+
+
+        </if>
+
     </select>
+
+    <!--채용공고 지원하기-->
+    <insert id="EmpApply">
+        INSERT INTO
+            applylist (user_id, jpl_num, res_num, al_state)
+        VALUES (#{user_id}, #{jpl_num}, #{res_num}, "X")
+    </insert>
+    <!--유저가 지원한 공고인지 찾기-->
+    <select id="EmpApplied" resultType="int">
+        select EXISTS (select * from applylist where user_id=#{user_id} and jpl_num = #{jpl_num} limit 1) as success;
+    </select>
+
 
 
     <!--**************************************************마이페이지 이력서**************************************************-->

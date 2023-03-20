@@ -31,6 +31,11 @@ public interface UserService {
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
         //기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)
 //    public ArrayList<EmpVO> EmpRegistInfo();
+        // 유저가 지원한 공고인지 찾기
+        public int EmpApplied(String user_id, String jpl_num);
+
+    //채용공고 지원하기
+    public void EmpApply(String user_id, String jpl_num, String res_num);
 
 
     //################## 마이페이지(MyPage) Service #######################

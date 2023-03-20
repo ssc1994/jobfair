@@ -219,7 +219,6 @@
       <select class="col-2">
         <option>최신등록순</option>
         <option>마감임박순</option>
-        <option>마감된 공고</option>
       </select>
 
       <div class="row empListBox">
@@ -239,7 +238,7 @@
               </router-link>
               <div style="padding-top:20px;">
                 <span class="left empBoxDday">D-27</span>
-                <span class="left empBoxDday">{{jobpost.jpl_endDate}}</span>
+                <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
                 <button type="button" class="btn btn-primary aplBtn right applied">지원완료</button>
               </div>
 
@@ -350,7 +349,7 @@ export default {
       //채용공고 데이터
       jobPostList : [],
       //검색어 입력한 값
-      inputSearch : null,
+      inputSearch : "",
       //검색 태그
       selectedTag : [
         {tagCode : "jpl_locationSi", tagValue : [] }, //시
@@ -476,7 +475,6 @@ export default {
       this.fold1 = false;
     },
       jobPostSearch(){
-
         var jpl_locationSi = this.selectedTag[0].tagValue;
         var jpl_locationGu = this.selectedTag[1].tagValue;
         var jpl_duty = this.selectedTag[2].tagValue;
@@ -510,7 +508,7 @@ export default {
           inputSearch :this.inputSearch
         }
 
-        if(cnt == 0 && this.inputSearch == null){
+        if(cnt == 0 && this.inputSearch == ""){
           alert('검색 키워드가 없습니다!')
         } else {
 

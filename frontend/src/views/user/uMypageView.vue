@@ -264,7 +264,7 @@ h3{font-weight: bold;
   height:100px;
   line-height: 50px;
  }
-    
+
 .resumeBox p {margin:0;padding: 0;}
 .resumeBox button {margin:5px;}
 

@@ -67,6 +67,14 @@ public class UserServiceImpl implements UserService {
     public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
         return userMapper.getJobPostSrc(vo);
     }
+    @Override
+    public int EmpApplied(String user_id, String jpl_num){
+        return userMapper.EmpApplied(user_id, jpl_num);
+    }
+    @Override
+    public void EmpApply(String user_id, String jpl_num, String res_num){
+        userMapper.EmpApply(user_id, jpl_num, res_num);
+    }
     //박희진 작성중
 //    @Override
 //    public ArrayList<EmpVO> EmpRegistInfo() {

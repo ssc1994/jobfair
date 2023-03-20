@@ -20,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/jobfair")
@@ -95,9 +93,6 @@ public class UserController {
             resumeVO.setRes_picName(pic_name);
             resumeVO.setRes_picPath(pic_path);
             resumeVO.setRes_picUuid(pic_uuid);
-            ArrayList tmpEduList = mapper.treeToValue(node.get("eduInfo"), ArrayList.class);
-            ArrayList tmpWeList = mapper.treeToValue(node.get("weInfo"), ArrayList.class);
-            ArrayList tmpCertList = mapper.treeToValue(node.get("certInfo"), ArrayList.class);
             eduList = mapper.convertValue((node.get("eduInfo")), new TypeReference<ArrayList<EduVO>>(){});
             weList = mapper.convertValue((node.get("weInfo")), new TypeReference<ArrayList<WeVO>>(){});
             certList = mapper.convertValue((node.get("certInfo")), new TypeReference<ArrayList<CertVO>>(){});
@@ -191,62 +186,71 @@ public class UserController {
         //채용공고 검색
     @PostMapping(value="/getJobPostSrc",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ArrayList<EmpVO> getJobPostSrc(@RequestBody ObjectNode node,
-                                          ArrayList<EmpSearchVO> jpl_duty,
-                                          ArrayList<EmpSearchVO> jpl_workHistory,
-                                          ArrayList<EmpSearchVO> jpl_workForm,
-                                          ArrayList<EmpSearchVO> jpl_education,
-                                          ArrayList<EmpSearchVO> jpl_conditions,
-                                          ArrayList<EmpSearchVO> jpl_certificate,
-                                          ArrayList<EmpSearchVO> jpl_salary,
-                                          ArrayList<EmpSearchVO> jpl_locationSi,
-                                          ArrayList<EmpSearchVO> jpl_locationGu
-    ) {
-        //System.out.println(vo);
-        //System.out.println("검색메서드"+list.toString());
+    public ArrayList<EmpVO> getJobPostSrc(@RequestBody EmpSearchVO vo,
+                                          String [] jpl_locationSi,
+                                          String [] jpl_locationGu,
+                                          String [] jpl_duty,
+                                          String inputSearch,
+                                          String[] jpl_workHistory,
+                                          String[] jpl_education,
+                                          String[] jpl_salary,
+                                          String[] jpl_certificate,
+                                          String[] jpl_conditions,
+                                          String[] jpl_workForm
+                                       ) {
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+        jpl_locationSi = vo.getJpl_duty();
+        jpl_locationGu = vo.getJpl_locationGu();
+        jpl_duty = vo.getJpl_workHistory();
+        jpl_workHistory = vo.getJpl_workHistory();
+        jpl_education = vo.getJpl_education();
+        jpl_salary = vo.getJpl_salary();
+        jpl_salary = vo.getJpl_salary();
+        jpl_certificate = vo.getJpl_certificate();
+        jpl_conditions = vo.getJpl_conditions();
+        jpl_workForm = vo.getJpl_workForm();
+        inputSearch = vo.getInputSearch();
 
-        //System.out.println(mapper.);
-        System.out.println("node = " + node);
+        ArrayList<EmpVO> list = userService.getJobPostSrc(vo);
 
-        ArrayList<EmpVO> empvo = new ArrayList<>();
-
-        try {
-            System.out.println(1);
-            ArrayList tmp_jpl_duty = mapper.treeToValue(node.get("jpl_duty"), ArrayList.class);
-            ArrayList tmp_jpl_workHistory = mapper.treeToValue(node.get("jpl_workHistory"), ArrayList.class);
-            ArrayList tmp_jpl_workForm = mapper.treeToValue(node.get("jpl_workForm"), ArrayList.class);
-            ArrayList tmp_jpl_education = mapper.treeToValue(node.get("jpl_education"), ArrayList.class);
-            ArrayList tmp_jpl_conditions = mapper.treeToValue(node.get("jpl_conditions"), ArrayList.class);
-            ArrayList tmp_jpl_certificate = mapper.treeToValue(node.get("jpl_certificate"), ArrayList.class);
-            ArrayList tmp_jpl_salary = mapper.treeToValue(node.get("jpl_salary"), ArrayList.class);
-            ArrayList tmp_jpl_locationSi = mapper.treeToValue(node.get("jpl_locationSi"), ArrayList.class);
-            ArrayList tmp_jpl_locationGu = mapper.treeToValue(node.get("jpl_locationGu"), ArrayList.class);
-
-            System.out.println(tmp_jpl_duty.toString());
-
-            jpl_duty = mapper.convertValue(tmp_jpl_duty.toString(), new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_workHistory = mapper.convertValue(tmp_jpl_workHistory, new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_workForm = mapper.convertValue(tmp_jpl_workForm, new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_education = mapper.convertValue(tmp_jpl_education, new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_conditions = mapper.convertValue(tmp_jpl_conditions, new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_certificate = mapper.convertValue(tmp_jpl_certificate, new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_salary = mapper.convertValue(tmp_jpl_salary, new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_locationSi = mapper.convertValue(tmp_jpl_locationSi, new TypeReference<ArrayList<EmpSearchVO>>(){});
-            jpl_locationGu = mapper.convertValue(tmp_jpl_locationGu, new TypeReference<ArrayList<EmpSearchVO>>(){});
-
-            System.out.println(jpl_duty);
-            for(EmpSearchVO vo : jpl_duty){
-                System.out.println(vo);
-                userService.getJobPostSrc(vo);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return empvo;
+        return list;
     }
+    // 유저가 지원한 공고인지 찾기
+    @PostMapping(value="/EmpApplied")
+    public int EmpApplied(
+            @RequestBody HashMap<String,String> map,
+            String user_id,
+            String jpl_num
+    ) {
+
+        user_id = map.get("user_id");
+        jpl_num = map.get("jpl_num");
+
+        int result = userService.EmpApplied(user_id, jpl_num);
+
+        return result;
+    }
+
+    // 지원 목록에 추가
+    @PostMapping(value="/EmpApply")
+    public String EmpApply(
+                           @RequestBody HashMap<String,String> map,
+                           String user_id,
+                           String jpl_num,
+                           String res_num
+                           ) {
+
+        user_id = map.get("user_id");
+        jpl_num = map.get("jpl_num");
+        res_num = map.get("res_num");
+
+        userService.EmpApply(user_id, jpl_num, res_num);
+
+        System.out.println();
+
+        return "success";
+    }
+
 
         //기업이 작성한 채용공고 내용 가져오는 메서드 (박희진 작성중)
 //    @PostMapping( value = "EmpRegistInfo")
