@@ -15,7 +15,6 @@
         select *
         from User
         where user_id = #{user_id}
-          and user_pw = #{user_pw}
     </select>
         <!--유저정보 불러오기-->
     <select id="info" resultType="UserVO">

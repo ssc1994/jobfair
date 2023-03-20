@@ -5,6 +5,7 @@
         <div class="userInfo_wrap">
           <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left">
           <div>
+<!--            session에서 가져온 아이디 값 출력 -->
             <h6>{{userInfo.user_id}}님 환영합니다.</h6>
             <a href="#">쪽지(3)</a>
           </div>
@@ -25,7 +26,7 @@
         </div>
       </div>
 
-      <!-- 왼쪽 사이드바 마이페이지 버튼 auth에 따라 다르게 나오게 만듦 -->
+<!--      왼쪽 사이드바 마이페이지 버튼 auth에 따라 다르게 나오게 만듦 -->
       <div v-if="userInfo.mg_auth === '1'">
       <div class="btnBox">
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uInfoModi"
@@ -150,37 +151,38 @@
   <hr>
 
   <!-- 아코디언 -->
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
-    </div>
+  <div v-if="userInfo.mg_auth === '1'">
+    <SideMenuList class="menu01" menuTitle='1'/>
+  </div>
+  <div>
+    <SideMenuList menuTitle='2'/>
+  </div>
+  <div>
+    <SideMenuList menuTitle='4'/>
+  </div>
 
 </template>
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
+import SidenavCard from "./SidenavCard.vue";
+import Shop from "../../components/Icon/Shop.vue";
+import Box3d from "../../components/Icon/Box3d.vue";
+import Document from "../../components/Icon/Document.vue";
+import Spaceship from "../../components/Icon/Spaceship.vue";
+import Settings from "../../components/Icon/Settings.vue";
 import SideMenuList from "@/components/myComponent/SideMenuList";
 
 export default {
   name: "SidenavList",
-  components: {
-    SidenavCollapse,
-    SideMenuList
-  },
   props: {
     cardBg: String,
   },
   data() {
     return {
-      homeLink: '',
-      myPageLink: '',
+      title: "Soft UI Dashboard PRO",
+      controls: "dashboardsExamples",
+      isActive: "active",
+      isOpen: false,
       //개인정보 수정 변수
       userInfo: {
         user_name: '',
@@ -210,27 +212,30 @@ export default {
       check_result : 'success'  // 유효성 검사 중 실패 사항 있을시 fail 들어감.
     }
   },
-  created () {
-    //sesionStorage에서 값 가져오기
-    let sessionAuth = sessionStorage.getItem('sessionAuth')
-    if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
-      let SessionJsonAuth = JSON.parse(sessionAuth)
-      if(SessionJsonAuth === '1') {
-        this.homeLink = '/uMainView'
-      }
-      else if(SessionJsonAuth === '2' || SessionJsonAuth === '3') {
-        this.homeLink = '/cMainView'
-      }
-      else if(SessionJsonAuth === '4') {
-        this.homeLink = '/aMainView'
-      }
-    }
+  components: {
+    SidenavCollapse,
+    SidenavCard,
+    Shop,
+    Box3d,
+    Document,
+    Spaceship,
+    Settings,
+    SideMenuList
   },
   methods: {
+    getRoute() {
+      const routeArr = this.$route.path.split("/");
+      return routeArr[1];
+    },
+    handleCollapse() {
+      this.isOpen = !this.isOpen
+    },
     getUserInfo() {
       //세션에서 user의 id 값을 가져와서 넘기는 데이터의 user_id 에 넣어줘야함.
       this.$axios.post('/jobfair/userInfoModi/getUserInfo', {user_id: 'taemin'})
           .then(response => {
+            console.log(response)
+            console.log(response.data.user_gender)
             this.userInfo = response.data
 
             //받아온 성별데이터에 따라서 모달창 내에 라디오 타입 체크 되있도록 처리
