@@ -44,7 +44,7 @@
     <h3>채용공고 목록</h3>
     <div class="userInfoFirstLine">
       <div>
-<!--        기업이 등록한 전체 채용공고를 가져오려하는중, 근데 작성한 채용공고테이블과 기업테이블을 join해서 채용공고를 작성한 기업정보도 가져올 생각-->
+<!--        기업이 등록한 전체 채용공고를 가져오려하는중, 근데 작성한 채용공고테이블과 기업테이블을 join해서 채용공고를 작성한 기업정보도 가져올 생-->
         <table class="tableDesign">
           <thead>
             <th v-for="tableTitle in items">{{tableTitle}}</th>
@@ -133,53 +133,111 @@ html, body {width:100%;
   padding: 30px;
 }
 
-.adminBg{
-  width:100%;
-  height:100%;
-  background-color: #efefef;
+/* 테이블 css */
+.userInfoBox {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.userInfoBox h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.tableDesign {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tableDesign th,
+.tableDesign td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.tableDesign th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.tableDesign tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* */
+
+.adminBg {
+  background-color: #f7f7f7;
+  padding: 20px 0;
 }
 
 .empBoxWrap {
-  max-width:1200px;
-  margin:0 auto;
+  margin: 0 auto;
+  max-width: 900px;
 }
-.aBox {padding:5px;}
-.aBox a, .aBox > div{
-  /*padding: 5px;*/
-  width:100%;
-  height:150px;
-  border-radius: 20px;
+
+.empBoxWrap h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.aBox {
+  margin-bottom: 20px;
+}
+
+.aBox a {
   display: block;
-  padding:2%;
+  height: 150px;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-.aBox > div {background-color: white;}
-
-.aBox a:first-child {background-color:rgb(95, 75, 229); }
-.aBox a:nth-child(2) {background-color:rgb(229, 75, 75);}
-
-.companyNum_text {color:white;}
-.companyNum_text p {font-size: 40px;
-
+.aBox a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.aBoxBtn button{width:50%;
-  display: inline-block;
-  height:20px;
-  border:0;
-  background-color: #efefef;
-}
-
-/* 채용공고 목록 css */
-.userInfoBox {
-  margin-top: 40px;
-  border-top: 1px solid #AAAAAA;
-}
-/* 테이블 디자인 */
-.tableDesign tr:hover {
-  background-color: #d2d6da;
-}
-.tableDesign {
+.companyNumImg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  /*background-image: url("path/to/image");*/
+  background-position: center;
+  background-size: cover;
+  opacity: 0.5;
+}
+
+.companyNum_text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.companyNum_text span {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.companyNum_text p {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0;
 }
 </style>
