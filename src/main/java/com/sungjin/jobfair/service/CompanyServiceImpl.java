@@ -53,6 +53,10 @@ public class CompanyServiceImpl implements CompanyService{
         return companyMapper.getEmpData(jpl_num);
     }
 
+    @Override
+    public ArrayList<EmpVO> getComJobPosingList(String com_num) {
+        return companyMapper.getComJobPosingList(com_num);
+    }
 
     //################## Login Service #######################
         //회사 번호를 가지고 회사정보 가져오기

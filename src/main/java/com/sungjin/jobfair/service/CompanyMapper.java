@@ -22,7 +22,7 @@ public interface CompanyMapper {
     public UserVO cQnAInfo(String user_id);
 
     public QnAVO getQnAReply(int qa_num);
-
+    
 
     public CompanyVO info(String com_num);
 
@@ -32,5 +32,8 @@ public interface CompanyMapper {
 
     //기업 큐앤에이 디테일 정보 가져오기
     public QnAVO getComQnADetail(int qa_num);
+    
+    //기업이 등록한 채용공고 목록 가져오기
+    ArrayList<EmpVO> getComJobPosingList(String com_num);
 
 }

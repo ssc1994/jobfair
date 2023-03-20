@@ -144,6 +144,7 @@ export default {
     //sesionStorage에서 값 가져오는법
     let sessionId = sessionStorage.getItem('sessionId')
     let sessionAuth = sessionStorage.getItem('sessionAuth')
+    let sessionComp = sessionStorage.getItem('sessionAuth')
     if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
       let SessionJsonId = JSON.parse(sessionId)
       this.resInfo.user_id = SessionJsonId
@@ -214,6 +215,7 @@ export default {
     },
     //*********업로드시킬 사진 미리보기 함수
     previewImg(e) {
+      console.log(e.target.files)
       this.res_img = e.target.files[0]
       let reader = new FileReader();
       reader.onload = (event) => {

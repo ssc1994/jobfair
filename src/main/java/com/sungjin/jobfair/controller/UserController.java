@@ -88,7 +88,9 @@ public class UserController {
         String pic_path = makeDir();
         String pic_uuid = UUID.randomUUID().toString();
         String saveName = pic_path + "/" + pic_uuid + "_" + pic_name;
-
+        System.out.println(pic_name);
+        System.out.println("pic_uuid = " + pic_uuid);
+        System.out.println(pic_path);
         ObjectMapper mapper = new ObjectMapper();
         try {
             //넘어온 이미지파일 먼저 생성
@@ -109,19 +111,10 @@ public class UserController {
             e.printStackTrace();
         }
 
-        System.out.println("eduList = " + eduList);
-        System.out.println("weList = " + weList);
-        System.out.println("certList = " + certList);
-
         //인적사항 insert
-        System.out.println("resumeVO = " + resumeVO);
         userService.regResume(resumeVO);
         int res_num = resumeVO.getRes_num();
         String user_id = resumeVO.getUser_id();
-
-        System.out.println("eduList = " + eduList);
-        System.out.println("weList = " + weList);
-        System.out.println("certList = " + certList);
 
         for (EduVO edu : eduList) {
             edu.setRes_num(res_num);
