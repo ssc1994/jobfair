@@ -241,7 +241,7 @@
                 </div>
                 <div class="input-group mb-3">
 
-                  <input type="file" style="display: none" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert">
+                  <input type="file" style="display: none" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert" accept="image/*">
                   <input type="button" value="채용공고 이미지선택" @click="clickFile">
 
                 </div>

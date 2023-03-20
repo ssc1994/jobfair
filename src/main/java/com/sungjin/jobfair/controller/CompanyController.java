@@ -115,6 +115,13 @@ public class CompanyController {
         System.out.println(vo);
         return vo;
     }
+        //기업이 등록한 채용공고 리스트 가져오기
+    @PostMapping(value="/getComJobPosingList")
+    public ArrayList<EmpVO> getComJobPosingList (@RequestBody Map<String, String> map) {
+        String com_num = map.get("com_num");
+        ArrayList<EmpVO> list = companyService.getComJobPosingList(com_num);
+        return companyService.getComJobPosingList(com_num);
+    }
 
 
     //##################### Q&A ###########################

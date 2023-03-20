@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <!--      왼쪽 사이드바 마이페이지 버튼 auth에 따라 다르게 나오게 만듦 -->
+      <!-- 왼쪽 사이드바 마이페이지 버튼 auth에 따라 다르게 나오게 만듦 -->
       <div v-if="userInfo.mg_auth === '1'">
         <div class="btnBox">
           <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#uInfoModi"
@@ -192,38 +192,37 @@
   <hr>
 
   <!-- 아코디언 -->
-  <div v-if="userInfo.mg_auth === '1'">
-    <SideMenuList class="menu01" menuTitle='1'/>
-  </div>
-  <div v-if="userInfo.mg_auth === '2'">
-    <SideMenuList menuTitle='2'/>
-  </div>
-  <div v-if="userInfo.mg_auth === '4'">
-    <SideMenuList menuTitle='4'/>
-  </div>
+    <div>
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
+    </div>
+    <div>
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
+    </div>
+    <div>
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
+    </div>
+    <div>
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
+    </div>
 
 </template>
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
-import SidenavCard from "./SidenavCard.vue";
-import Shop from "../../components/Icon/Shop.vue";
-import Box3d from "../../components/Icon/Box3d.vue";
-import Document from "../../components/Icon/Document.vue";
-import Spaceship from "../../components/Icon/Spaceship.vue";
-import Settings from "../../components/Icon/Settings.vue";
 import SideMenuList from "@/components/myComponent/SideMenuList";
 
 export default {
   name: "SidenavList",
+  components: {
+    SidenavCollapse,
+    SideMenuList
+  },
   props: {
     cardBg: String,
   },
   data() {
     return {
-      title: "Soft UI Dashboard PRO",
-      controls: "dashboardsExamples",
-      isActive: "active",
-      isOpen: false,
+      homeLink: '',
+      myPageLink: '',
       //개인정보 수정 변수
       userInfo: {
         user_name: '',
@@ -262,15 +261,21 @@ export default {
       modi_type: 'info' // info = 회원정보수정, pw = 비밀번호 변경
     }
   },
-  components: {
-    SidenavCollapse,
-    SidenavCard,
-    Shop,
-    Box3d,
-    Document,
-    Spaceship,
-    Settings,
-    SideMenuList
+  created () {
+    //sesionStorage에서 값 가져오기
+    let sessionAuth = sessionStorage.getItem('sessionAuth')
+    if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
+      let SessionJsonAuth = JSON.parse(sessionAuth)
+      if(SessionJsonAuth === '1') {
+        this.homeLink = '/uMainView'
+      }
+      else if(SessionJsonAuth === '2' || SessionJsonAuth === '3') {
+        this.homeLink = '/cMainView'
+      }
+      else if(SessionJsonAuth === '4') {
+        this.homeLink = '/aMainView'
+      }
+    }
   },
   methods: {
     getRoute() {
