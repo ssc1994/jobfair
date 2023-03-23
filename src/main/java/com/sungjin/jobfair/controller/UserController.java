@@ -1,5 +1,9 @@
 package com.sungjin.jobfair.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -21,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,26 +39,31 @@ public class UserController {
     @Autowired
     @Qualifier("userService")
     private UserService userService;
+
+    @Autowired
+    AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
     
     //application.properties에서 경로 가져오기
-    @Value("${project.uploadpath}")
-    private String uploadpath;
-
-    //**********************************************이력서**********************************************
-        //파일 생성 시 날짜 별로 폴더 생성 후 저장할 경로 생성
-    public String makeDir() {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-        String now = sdf.format(date);
-
-        System.out.println("uploadpath = " + uploadpath);
-        String path = uploadpath + "\\" + now;
-        File file = new File(path);
-        if (file.exists() == false) {
-            file.mkdir();
-        }
-        return path;
-    }
+//    @Value("${project.uploadpath}")
+//    private String uploadpath;
+//
+//    //**********************************************이력서**********************************************
+//        //파일 생성 시 날짜 별로 폴더 생성 후 저장할 경로 생성
+//    public String makeDir() {
+//        Date date = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+//        String now = sdf.format(date);
+//
+//        String path = uploadpath + "\\" + now;
+//        File file = new File(path);
+//        if (file.exists() == false) {
+//            file.mkdir();
+//        }
+//        return path;
+//    }
 
         //이력서 목록가져오기
     @PostMapping(value = "/resumeInfo")
@@ -64,9 +76,13 @@ public class UserController {
     }
 
         //이력서 삭제하기
-    @GetMapping(value = "/deleteResume")
-    public void deleteResume(@RequestParam("res_num") int res_num) {
+    @PostMapping(value = "/deleteResume")
+    public void deleteResume(@RequestBody Map<String, String> map) {
+        String res_num = map.get("res_num");
 
+        userService.deleteEdu(res_num);
+        userService.deleteWe(res_num);
+        userService.deleteCert(res_num);
         userService.deleteResume(res_num);
 
     }
@@ -78,16 +94,103 @@ public class UserController {
                             ResumeVO resumeVO,
                             ArrayList<EduVO> eduList,
                             ArrayList<WeVO> weList,
-                            ArrayList<CertVO> certList) {
+                            ArrayList<CertVO> certList) throws IOException {
+
+        //AWS S3 파일 업로드
+        String tmpName = file.getOriginalFilename();
+        File uploadFile = new File(tmpName); //파일 이름
+        FileOutputStream fos = new FileOutputStream(uploadFile);
+        String uuid = UUID.randomUUID().toString(); //uuid
+        String fileName = uuid + "_" + tmpName; //uuid + 파일이름
+        fos.write(file.getBytes());
+        fos.close();
+
+        amazonS3Client.putObject(new PutObjectRequest(bucket+"/image", fileName, uploadFile)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
 
         //파일 객체 분해 및 경로+이름 지정
         String pic_name = file.getOriginalFilename();
-        String pic_path = makeDir();
+        String pic_path = bucket+"/image";
+        String pic_uuid = uuid;
+//        String saveName = pic_path + "/" + pic_uuid + "_" + pic_name;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            //넘어온 이미지파일 먼저 생성
+//            File save = new File(saveName);
+//            file.transferTo(save);
+            //Json을 객체로 변환
+            resumeVO = mapper.treeToValue(node.get("resInfo"), ResumeVO.class);
+            resumeVO.setRes_picName(pic_name);
+            resumeVO.setRes_picPath(pic_path);
+            resumeVO.setRes_picUuid(pic_uuid);
+            eduList = mapper.convertValue((node.get("eduInfo")), new TypeReference<ArrayList<EduVO>>(){});
+            weList = mapper.convertValue((node.get("weInfo")), new TypeReference<ArrayList<WeVO>>(){});
+            certList = mapper.convertValue((node.get("certInfo")), new TypeReference<ArrayList<CertVO>>(){});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //인적사항 insert
+        userService.regResume(resumeVO);
+        int res_num = resumeVO.getRes_num();
+
+        for (EduVO edu : eduList) {
+            edu.setRes_num(res_num);
+            edu.setEdu_grades("4.0");
+            edu.setEdu_totalGrades("4.5");
+            userService.regResEdu(edu);
+        }
+        for (WeVO we : weList) {
+            we.setRes_num(res_num);
+            userService.regResWe(we);
+        }
+        for (CertVO cert : certList) {
+            cert.setRes_num(res_num);
+            userService.regResCert(cert);
+        }
+
+        return "success";
+    }
+        //이력서 상세페이지
+    @GetMapping("/getResumeDetail")
+    public Map getResumeDetail(@RequestParam("res_num") String res_num) {
+        Map<String, Object> map = new HashMap<>();
+
+        ResumeVO resVO =  userService.getResDetail(res_num);
+        ArrayList<EduVO> eduList = userService.getEduDetail(res_num);
+        ArrayList<WeVO> weList = userService.getWeDetail(res_num);
+        ArrayList<CertVO> certList = userService.getCertDetail(res_num);
+
+        String path = resVO.getRes_picUuid() + "_" + resVO.getRes_picName();
+        String bucket = resVO.getRes_picPath();
+
+        String url = amazonS3Client.getUrl(bucket, path).toString();
+        System.out.println(url);
+
+        map.put("resVO", resVO);
+        map.put("eduList", eduList);
+        map.put("weList", weList);
+        map.put("certList", certList);
+        map.put("imageUrl", url);
+
+        return map;
+    }
+        //이력서 수정(update)
+    @PostMapping(value = "/modiResume",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String regResume(@RequestPart("res_img") MultipartFile file,
+                            @RequestPart("resData") ObjectNode node) throws IOException {
+        ResumeVO resumeVO = new ResumeVO();
+        ArrayList<EduVO> eduList = new ArrayList<>();
+        ArrayList<WeVO> weList = new ArrayList<>();
+        ArrayList<CertVO> certList = new ArrayList<>();
+
+        //파일 객체 분해 및 경로+이름 지정
+        String pic_name = file.getOriginalFilename();
+        String pic_path = bucket+"/image";
         String pic_uuid = UUID.randomUUID().toString();
         String saveName = pic_path + "/" + pic_uuid + "_" + pic_name;
-        System.out.println(pic_name);
-        System.out.println("pic_uuid = " + pic_uuid);
-        System.out.println(pic_path);
         ObjectMapper mapper = new ObjectMapper();
         try {
             //넘어온 이미지파일 먼저 생성
@@ -105,28 +208,27 @@ public class UserController {
             e.printStackTrace();
         }
 
-        //인적사항 insert
-        userService.regResume(resumeVO);
+        //인적사항 update
+        userService.modiResume(resumeVO);
         int res_num = resumeVO.getRes_num();
         String user_id = resumeVO.getUser_id();
 
         for (EduVO edu : eduList) {
             edu.setRes_num(res_num);
-            edu.setEdu_grades("4.0");
             edu.setEdu_totalGrades("4.5");
-            System.out.println("edu = " + edu);
-            userService.regResEdu(edu);
+            userService.modiResEdu(edu);
         }
         for (WeVO we : weList) {
             we.setRes_num(res_num);
-            userService.regResWe(we);
+            userService.modiResWe(we);
         }
         for (CertVO cert : certList) {
             cert.setRes_num(res_num);
-            userService.regResCert(cert);
+            userService.modiResCert(cert);
         }
 
-        return "success";
+
+        return null;
     }
 
 
@@ -142,7 +244,6 @@ public class UserController {
     public ArrayList<QnAVO> getQnAList(Criteria cri) {
 
         ArrayList<QnAVO> list = userService.getQnAList(cri);
-        System.out.println(list.toString());
 
         return list;
     }
@@ -151,8 +252,6 @@ public class UserController {
     public QnAVO getQnADetail(@RequestParam("qa_num") int qa_num) {
 
         QnAVO vo = userService.getQnADetail(qa_num);
-        System.out.println("유저VO");
-        System.out.println(vo);
 
         return vo;
     }
@@ -160,8 +259,6 @@ public class UserController {
     @PostMapping ( "/uQnAModi")
     public int uQnAModi(@RequestBody QnAVO vo) {
         int a = userService.uQnAModi(vo);
-        System.out.println("글수정");
-        System.out.println(vo.toString());
 
         return a;
     }
@@ -250,8 +347,6 @@ public class UserController {
 
         userService.EmpApply(user_id, jpl_num, res_num);
 
-        System.out.println();
-
         return "success";
     }
 
@@ -298,8 +393,6 @@ public class UserController {
         ArrayList<QnAVO> list = userService.getQnAList(cri);
 
         PageGate pageGate = new PageGate(list, pageVO);
-
-        System.out.println(list.toString());
 
         return pageGate;
     }

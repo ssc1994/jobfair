@@ -1,11 +1,10 @@
 <template>
-
   <div>
     <form>
       <main class="resume">
         <!--이력서 제목 -->
         <div class="">
-          <h3 class="fs-medium resumeTitle">이력서제목 : <input type="text" v-model="resInfo.res_title"></h3>
+          <h2>{{resInfo.res_title}}</h2>
         </div>
         <!-- 인적사항 작성 -->
         <section>
@@ -21,18 +20,18 @@
               </ul>
             </div>
             <div class="profile">
-              <p class="headline-title">이름 :<input type="text" class="headline-input" placeholder="이름을 입력하세요."
+              <p class="headline-title">이름 :<input type="text" class="headline-input" :disabled="isAble" placeholder="이름을 입력하세요."
                                                    v-model="resInfo.res_name"></p>
-              <p class="headline-title">이메일 :<input type="email" class="headline-input" v-model="resInfo.res_email"></p>
-              <p class="headline-title">전화번호 :<input type="text" class="headline-input" v-model="resInfo.res_phone"></p>
-              <p class="headline-title">주소 :<input type="text" class="headline-input" v-model="resInfo.res_address"></p>
-              <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth"></p>
+              <p class="headline-title">이메일 :<input type="email" class="headline-input" :disabled="isAble" v-model="resInfo.res_email"></p>
+              <p class="headline-title">전화번호 :<input type="text" class="headline-input" :disabled="isAble" v-model="resInfo.res_phone"></p>
+              <p class="headline-title">주소 :<input type="text" class="headline-input" :disabled="isAble" v-model="resInfo.res_address"></p>
+              <p class="headline-title">생년월일 :<input type="date" class="headline-input" :disabled="isAble" v-model="resInfo.res_birth"></p>
             </div>
             <!-- 프로필 사진 등록 -->
-            <img class="headline-image" :src="viewImg" alt="프로필 사진" ref="previewImg">
+            <img class="headline-image" :src="imageUrl" alt="프로필 사진" ref="previewImg">
             <div class="input-group mb-3 profileSubmit">
               <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg" accept="image/*" ref="inputImg">
-              <input class="ImgChoice" type="button" value="사진 선택" @click="clickFile">
+              <input class="ImgChoice" :class="isAble" type="button" value="사진 선택" @click="clickFile">
               <div class="box">
                 <h3>이미지 첨부시 유의사항</h3>
                 <div class="info">
@@ -50,15 +49,13 @@
                 <li class="introduce-cotact_list">
                   <div>
                     <h4 class="fs-medium">학력</h4>
-                    <input type="button" value="추가" id="btnAddWe" @click="addComp">
                   </div>
                 </li>
               </ul>
             </div>
 
-            <EDU :eduCount=0 v-model="eduInfo[0]" @inputEdu="getEduData"/>
             <div v-for="edu in eduCount">
-              <EDU :eduCount="edu" v-model="eduInfo[edu]" @inputEdu="getEduData"/>
+              <EDU :isAble="isAble" :eduCount="edu" :value="eduInfo[edu-1]"/>
             </div>
           </div>
         </section>
@@ -70,14 +67,13 @@
                 <li class="introduce-cotact_list">
                   <div>
                     <h4 class="fs-medium">경력</h4>
-                    <input type="button" value="추가" id="btnAddWe" @click="addComp">
                   </div>
                 </li>
               </ul>
             </div>
-            <WE :weCount=0 v-model="weInfo[0]" @inputWE="getWeData"/>
+
             <div v-for="we in weCount">
-              <WE :weCount="we" v-model="weInfo[we]" @inputWE="getWeData"/>
+              <WE :isAble="isAble" :weCount="we" :value="weInfo[we-1]"/>
             </div>
           </div>
         </section>
@@ -89,15 +85,13 @@
                 <li class="introduce-cotact_list">
                   <div>
                     <h4 class="fs-medium">자격증</h4>
-                    <input type="button" value="추가" id="btnAddWe" @click="addComp">
                   </div>
                 </li>
               </ul>
             </div>
 
-            <CERT :certCount="0" v-model="certInfo[0]" @inputCert="getCertData"/>
             <div v-for="cert in certCount">
-              <CERT :certCount="cert" v-model="certInfo[cert]" @inputCert="getCertData"/>
+              <CERT :isAble="isAble" :certCount="cert" :value="certInfo[cert-1]" />
             </div>
           </div>
         </section>
@@ -117,12 +111,21 @@
             <div class="profile">
               <p class="fs-medium fc-gray"></p>
               <div class="container">
-                <textarea class="form-control col-sm-5" rows="5" v-model="resInfo.res_content"></textarea>
+                <textarea class="form-control col-sm-5" rows="5" :disabled="isAble" v-model="resInfo.res_content"></textarea>
               </div>
             </div>
           </div>
         </section>
-        <input type="submit" value="이력서 저장" @click.prevent="doAction">
+
+        <div v-if="isAble">
+          <input type="button" value="이력서 수정" @click="modiBtn">
+          <input type="button" value="삭제" @click="delBtn">
+        </div>
+        <div v-if="!isAble">
+          <input type="button" value="이력서 저장" @click="modiRes">
+          <input type="button" value="취소" @click="cancelBtn">
+        </div>
+
       </main>
     </form>
   </div>
@@ -141,19 +144,9 @@ export default {
     EDU, //학력 컴포넌트
     CERT //자격증 컴포넌트
   },
-  created() {
-    //sesionStorage에서 값 가져오는법
-    let sessionId = sessionStorage.getItem('sessionId')
-    let sessionAuth = sessionStorage.getItem('sessionAuth')
-    let sessionComp = sessionStorage.getItem('sessionAuth')
-    if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
-      let SessionJsonId = JSON.parse(sessionId)
-      this.resInfo.user_id = SessionJsonId
-    }
-    if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
-      let SessionJsonAuth = JSON.parse(sessionAuth)
-    }
-  },
+  props: [
+    'resDetail'
+  ],
   data() {
     return {
       //이력서 Table 변수
@@ -173,80 +166,76 @@ export default {
       },
       //학력 Table 변수
       eduInfo: [],
-      eduCount: 0,
+      eduCount: '',
       //자격증 Table 변수
       certInfo: [],
-      certCount: 0,
+      certCount: '',
       //경력 Table 변수
       weInfo: [],
-      weCount: 0,
+      weCount: '',
       //이력서 사진 관련 변수
       res_img: '',
-      viewImg: ''
+      viewImg: '',
+      res_num: '',
+      isAble: false,
+      imageUrl: ''
     }
   },
+  created() {
+    this.res_num = this.$route.query.res_num
+    this.isAble = this.$route.query.isAble
+
+    this.$axios.get('/jobfair/getResumeDetail?res_num=' + this.res_num)
+        .then(response => {
+          this.resInfo = response.data.resVO;
+          this.eduInfo = response.data.eduList;
+          this.eduCount = this.eduInfo.length;
+          this.weInfo = response.data.weList;
+          this.weCount = this.weInfo.length;
+          this.certInfo = response.data.certList;
+          this.certCount = this.certInfo.length;
+          this.imageUrl = response.data.imageUrl;
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  },
   methods: {
-    //*********데이터와 파일을 서버로 전송
-    doAction() {
-      let tmpData = {
-        resInfo: this.resInfo,
-        eduInfo: this.eduInfo,
-        weInfo: this.weInfo,
-        certInfo: this.certInfo
+    delBtn() {
+      if (confirm('정말로 삭제하시겠습니까?')) {
+        this.$axios.post('/jobfair/deleteResume', {res_num: this.resInfo.res_num})
+            .then((res) => {
+              this.$router.push("/uMypageView");
+              this.res_num = res.data
+            })
+            .catch((error) => {
+              console.log(error)
+            })
       }
+    },
+    modiBtn() {
+      this.$router.push({
+        name: 'uModiResumeView',
+        query: {
+          res_num: this.resInfo.res_num
+        }}
+      )
+      window.scrollTo(0, 0);
 
-      let formData = new FormData();
-      let resData = new Blob([JSON.stringify(tmpData)], {type: "application/json"});
-      formData.append("resData", resData);
-      formData.append("res_img", this.res_img);
-
-      this.$axios.post("/jobfair/regResume", formData)
+    },
+    modiRes() {
+      this.$axios.post("/modiRes", {res_num: this.resInfo.res_num})
           .then(response => {
-            if (response.status === 200) alert("작성한 이력서가 등록되었습니다.")
-            this.$router.push('/uMypageView')
+            console.log(response)
           })
-          .catch(error => {
-            console.log(error)
+          .catch(err => {
+            console.log(err)
           })
     },
-    //*********버튼 클릭 시 input:file 클릭으로 연동시키는 함수
-    clickFile() {
-      console.log(this.resInfo.user_id)
-      this.$refs.inputImg.click();
+    cancelBtn () {
+      this.$router.go(-1);
     },
-    //*********업로드시킬 사진 미리보기 함수
-    previewImg(e) {
-      console.log(e.target.files)
-      this.res_img = e.target.files[0]
-      let reader = new FileReader();
-      reader.onload = (event) => {
-        this.viewImg = event.target.result;
-      }
-      reader.readAsDataURL(this.res_img);
-    },
-    //*********자식 컴포넌트(학력, 경력, 자격증)에서 입력된 데이터 받아오는 함수
-    //splice: 첫 번째 인자: 변경시킬 인덱스,  두 번째 인자 : 삭제시킬 개수, 세 번째 인자: 인덱스에 들어갈 값
-    //변경 시 기존 인덱스에 들어있는 값을 삭제 후 변경된 데이터를 집어넣는다.
-    getEduData(eduData) {
-      eduData.eduInfo.user_id = this.resInfo.user_id
-      this.eduInfo.splice(eduData.eduCount, 1, eduData.eduInfo);
-    },
-    getWeData(weData) {
-      weData.weInfo.user_id = this.resInfo.user_id
-      this.weInfo.splice(weData.weCount, 1, weData.weInfo);
-    },
-    getCertData(certData) {
-      certData.certInfo.user_id = this.resInfo.user_id
-      this.certInfo.splice(certData.certCount, 1, certData.certInfo);
-    },
-    //*********자식 컴포넌트 추가 함수
-    addComp(e) {
-      let checkType = e.target.previousSibling.innerHTML;
-      if( checkType === '학력') this.eduCount++;
-      else if( checkType === '경력') this.weCount++;
-      else if( checkType === '자격증') this.certCount++;
-    },
-  }
+  },
 }
 </script>
 
@@ -492,4 +481,8 @@ select.sel {
   text-transform: uppercase;
 }
 
+input:disabled {
+  border: none;
+  background-color: white;
+}
 </style>

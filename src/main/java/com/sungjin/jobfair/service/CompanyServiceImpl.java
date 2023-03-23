@@ -48,6 +48,12 @@ public class CompanyServiceImpl implements CompanyService{
     public int empRegist(EmpVO vo) {
         return companyMapper.empRegist(vo);
     }
+
+    @Override
+    public int empModify(EmpVO vo) {
+        return companyMapper.empModify(vo);
+    }
+
     @Override
     public EmpVO getEmpData(int jpl_num) {
         return companyMapper.getEmpData(jpl_num);

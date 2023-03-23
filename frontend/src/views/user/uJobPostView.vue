@@ -223,7 +223,7 @@
 
       <div class="row empListBox">
 
-        <div v-for="(jobpost,i) in jobPostList" :key=i @click.prevent="detail(jobpost.com_num)" class="empBoxConWrap col-6">
+        <div v-for="(jobpost,i) in jobPostList" :key=i @click.prevent="detail(jobpost.jpl_num)" class="empBoxConWrap col-6">
 
           <div class="empBoxCon ">
             <router-link to="" class="left empBoxCompany">
@@ -238,6 +238,7 @@
               </router-link>
               <div style="padding-top:20px;">
                 <span class="left empBoxDday">D-27</span>
+<!--                <input type="text" class="left empBoxDday" style="width: 65px" v-model="dDay" disabled>-->
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
                 <button type="button" class="btn btn-primary aplBtn right applied">지원완료</button>
               </div>
@@ -247,93 +248,93 @@
           </div>
         </div>
 
-        <div class="empBoxConWrap col-6">
-          <div class="empBoxCon ">
-            <router-link to="" class="left empBoxCompany">
-              <p>(주) 카카오</p>
-              <img src="@/assets/kakao.png" >
-            </router-link>
-            <div class="left empBoxText">
-              <router-link to="">
-                <p class="empTitle">UIUX 디자이너</p>
+<!--        <div class="empBoxConWrap col-6">-->
+<!--          <div class="empBoxCon ">-->
+<!--            <router-link to="" class="left empBoxCompany">-->
+<!--              <p>(주) 카카오</p>-->
+<!--              <img src="@/assets/kakao.png" >-->
+<!--            </router-link>-->
+<!--            <div class="left empBoxText">-->
+<!--              <router-link to="">-->
+<!--                <p class="empTitle">UIUX 디자이너</p>-->
 
-                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-              </router-link>
-              <div style="padding-top:20px;">
-                <span class="left empBoxDday">D-27</span>
-                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-              </div>
+<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
+<!--              </router-link>-->
+<!--              <div style="padding-top:20px;">-->
+<!--                <span class="left empBoxDday">D-27</span>-->
+<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
+<!--              </div>-->
 
-            </div>
+<!--            </div>-->
 
-          </div>
-        </div>
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="empBoxConWrap col-6">
-          <div class="empBoxCon ">
-            <router-link to="" class="left empBoxCompany">
-              <p>(주) 카카오</p>
-              <img src="@/assets/kakao.png" >
-            </router-link>
-            <div class="left empBoxText">
-              <router-link to="">
-                <p class="empTitle">UIUX 디자이너</p>
+<!--        <div class="empBoxConWrap col-6">-->
+<!--          <div class="empBoxCon ">-->
+<!--            <router-link to="" class="left empBoxCompany">-->
+<!--              <p>(주) 카카오</p>-->
+<!--              <img src="@/assets/kakao.png" >-->
+<!--            </router-link>-->
+<!--            <div class="left empBoxText">-->
+<!--              <router-link to="">-->
+<!--                <p class="empTitle">UIUX 디자이너</p>-->
 
-                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-              </router-link>
-              <div style="padding-top:20px;">
-                <span class="left empBoxDday">D-27</span>
-                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-              </div>
+<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
+<!--              </router-link>-->
+<!--              <div style="padding-top:20px;">-->
+<!--                <span class="left empBoxDday">D-27</span>-->
+<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
+<!--              </div>-->
 
-            </div>
+<!--            </div>-->
 
-          </div>
-        </div>
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="empBoxConWrap col-6">
-          <div class="empBoxCon ">
-            <router-link to="" class="left empBoxCompany">
-              <p>(주) 카카오</p>
-              <img src="@/assets/kakao.png" >
-            </router-link>
-            <div class="left empBoxText">
-              <router-link to="">
-                <p class="empTitle">UIUX 디자이너</p>
+<!--        <div class="empBoxConWrap col-6">-->
+<!--          <div class="empBoxCon ">-->
+<!--            <router-link to="" class="left empBoxCompany">-->
+<!--              <p>(주) 카카오</p>-->
+<!--              <img src="@/assets/kakao.png" >-->
+<!--            </router-link>-->
+<!--            <div class="left empBoxText">-->
+<!--              <router-link to="">-->
+<!--                <p class="empTitle">UIUX 디자이너</p>-->
 
-                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-              </router-link>
-              <div style="padding-top:20px;">
-                <span class="left empBoxDday">D-27</span>
-                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-              </div>
+<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
+<!--              </router-link>-->
+<!--              <div style="padding-top:20px;">-->
+<!--                <span class="left empBoxDday">D-27</span>-->
+<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
+<!--              </div>-->
 
-            </div>
+<!--            </div>-->
 
-          </div>
-        </div>
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="empBoxConWrap col-6">
-          <div class="empBoxCon ">
-            <router-link to="" class="left empBoxCompany">
-              <p>(주) 카카오</p>
-              <img src="@/assets/kakao.png" >
-            </router-link>
-            <div class="left empBoxText">
-              <router-link to="">
-                <p class="empTitle">UIUX 디자이너</p>
+<!--        <div class="empBoxConWrap col-6">-->
+<!--          <div class="empBoxCon ">-->
+<!--            <router-link to="" class="left empBoxCompany">-->
+<!--              <p>(주) 카카오</p>-->
+<!--              <img src="@/assets/kakao.png" >-->
+<!--            </router-link>-->
+<!--            <div class="left empBoxText">-->
+<!--              <router-link to="">-->
+<!--                <p class="empTitle">UIUX 디자이너</p>-->
 
-                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>
-              </router-link>
-              <div style="padding-top:20px;">
-                <span class="left empBoxDday">D-27</span>
-                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>
-              </div>
+<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
+<!--              </router-link>-->
+<!--              <div style="padding-top:20px;">-->
+<!--                <span class="left empBoxDday">D-27</span>-->
+<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
+<!--              </div>-->
 
-            </div>
+<!--            </div>-->
 
-          </div>
-        </div>
+<!--          </div>-->
+<!--        </div>-->
 
       </div>
     </div>
@@ -342,6 +343,7 @@
 
 <script>
 import axios from 'axios'
+import moment from "moment/moment";
 export default {
   name: "uJobPostView",
   data() {
@@ -428,8 +430,10 @@ export default {
       users : '',
 
       //은영 테스트
-      com_num: 3
+      com_num: 3,
 
+      //dday설정
+      // dDay:''
 
     }
   },
@@ -497,7 +501,6 @@ export default {
           }
         }
 
-
         const SearchObj = {
           jpl_duty:jpl_duty,
           jpl_workHistory:jpl_workHistory,
@@ -516,9 +519,7 @@ export default {
         } else {
 
           this.$axios.post('/jobfair/getJobPostSrc/',
-
                               SearchObj
-
               )
             .then((res) => {
                   this.jobPostList = res.data;
@@ -534,11 +535,18 @@ export default {
       this.$router.push({
         name: 'uJobPostDetailView',
         params: {
-          com_num: jobpost
+          jpl_num: jobpost
         }
       })
-      this.$router.push("/uJobPostDetailView")
-    }
+    },
+    // setDDay(){
+    //   const moment = require('moment')
+    //   var time = moment();
+    //   var etime = moment(this.jpl_endDate, 'YYYY-MM-DD');
+    //   var curTime=moment.duration(etime.diff(time))
+    //   var diffDay=curTime.days()
+    //   this.dDay = diffDay
+    // }
   }
 }
 </script>

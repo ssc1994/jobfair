@@ -27,8 +27,11 @@ public interface CompanyService {
 
 
     //################## JobPost Service #######################
-        //채용공고 페이지에서 입력한 값 가져오기??
+    //채용공고 등록하기
     public int empRegist(EmpVO vo);
+    //채용공고 등록하기
+    public int empModify(EmpVO vo);
+    //채용공고 페이지에서 입력한 값 가져오기??
     public EmpVO getEmpData(int jpl_num);
         //기업이 등록한 채용공고 목록 가져오기
     ArrayList<EmpVO> getComJobPosingList(String com_num);
