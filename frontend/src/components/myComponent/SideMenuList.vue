@@ -6,7 +6,7 @@
   </div>
 
 <!--  <div v-if="menuTitle !='홈' && menuTitle != '마이 페이지' && (menuTitle != '채용 정보' || this.mg_auth != '1')">-->
-  <div @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && this.mg_auth === '3'">
+  <div @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && (this.mg_auth === '3' || this.mg_auth === '2')">
     <div>{{ menuTitle }}</div>
     <div v-if="isVisible">
       <ul v-for="menu in menuGroup">

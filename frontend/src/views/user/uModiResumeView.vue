@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <form>
       <main class="resume">
@@ -56,9 +55,8 @@
               </ul>
             </div>
 
-            <EDU :eduCount=0 v-model="eduInfo[0]" @inputEdu="getEduData"/>
-            <div v-for="edu in eduCount">
-              <EDU :eduCount="edu" v-model="eduInfo[edu]" @inputEdu="getEduData"/>
+            <div v-for="(edu, index) in eduInfo" :key="'key' + index">
+              <EDU :eduCount="index" :value="edu" @inputEdu="getEduData" @clickBtn="deleteEdu"/>
             </div>
           </div>
         </section>
@@ -75,9 +73,8 @@
                 </li>
               </ul>
             </div>
-            <WE :weCount=0 v-model="weInfo[0]" @inputWE="getWeData"/>
             <div v-for="we in weCount">
-              <WE :weCount="we" v-model="weInfo[we]" @inputWE="getWeData"/>
+              <WE :weCount="we-1" :value="weInfo[we-1]" @inputWE="getWeData"/>
             </div>
           </div>
         </section>
@@ -95,9 +92,8 @@
               </ul>
             </div>
 
-            <CERT :certCount="0" v-model="certInfo[0]" @inputCert="getCertData"/>
             <div v-for="cert in certCount">
-              <CERT :certCount="cert" v-model="certInfo[cert]" @inputCert="getCertData"/>
+              <CERT :certCount="cert-1" :value="certInfo[cert-1]" @inputCert="getCertData"/>
             </div>
           </div>
         </section>
@@ -129,7 +125,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import WE from "@/components/myComponent/WorkExperiences";
 import EDU from "@/components/myComponent/Education";
 import CERT from "@/components/myComponent/Certificate";
@@ -142,17 +137,23 @@ export default {
     CERT //자격증 컴포넌트
   },
   created() {
-    //sesionStorage에서 값 가져오는법
-    let sessionId = sessionStorage.getItem('sessionId')
-    let sessionAuth = sessionStorage.getItem('sessionAuth')
-    let sessionComp = sessionStorage.getItem('sessionAuth')
-    if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
-      let SessionJsonId = JSON.parse(sessionId)
-      this.resInfo.user_id = SessionJsonId
-    }
-    if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
-      let SessionJsonAuth = JSON.parse(sessionAuth)
-    }
+    this.$axios.get('/jobfair/getResumeDetail?res_num=' + this.$route.query.res_num)
+        .then(response => {
+          this.resInfo = response.data.resVO;
+          this.eduInfo = response.data.eduList;
+          this.eduCount = this.eduInfo.length
+          this.weInfo = response.data.weList;
+          this.weCount = this.weInfo.length
+          this.certInfo = response.data.certList;
+          this.certCount = this.certInfo.length
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+  },
+  updated() {
+    console.log(this.eduInfo);
   },
   data() {
     return {
@@ -200,9 +201,9 @@ export default {
       formData.append("resData", resData);
       formData.append("res_img", this.res_img);
 
-      this.$axios.post("/jobfair/regResume", formData)
+      this.$axios.post("/jobfair/modiResume", formData)
           .then(response => {
-            if (response.status === 200) alert("작성한 이력서가 등록되었습니다.")
+            if (response.status === 200) alert("정상적으로 이력서가 수정되었습니다.")
             this.$router.push('/uMypageView')
           })
           .catch(error => {
@@ -242,11 +243,25 @@ export default {
     //*********자식 컴포넌트 추가 함수
     addComp(e) {
       let checkType = e.target.previousSibling.innerHTML;
-      if( checkType === '학력') this.eduCount++;
+      if( checkType === '학력') this.eduInfo.push({});
       else if( checkType === '경력') this.weCount++;
       else if( checkType === '자격증') this.certCount++;
     },
-  }
+    deleteEdu(delData) {
+      var removeNum = delData.removeNum;
+      console.log("삭제할 인덱스" + removeNum)
+      this.eduInfo.splice(removeNum, 1);
+      this.eduInfo.push();
+      console.log(this.eduInfo)
+      this.test();
+      this.$forceUpdate
+    },
+    test() {
+      this.eduCount--;
+    },
+  },
+  watch() {
+  },
 }
 </script>
 
