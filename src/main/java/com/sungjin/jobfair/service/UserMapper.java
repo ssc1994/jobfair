@@ -34,9 +34,9 @@ public interface UserMapper {
 
     //################## 채용공고 Service #######################
         //채용공고 목록 가져오기
-    public ArrayList<EmpVO> getJobPostList();
+    public ArrayList<EmpListVO> getJobPostList(String selSortInt);
         //채용공고 검색 목록 가져오기
-    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
+    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo);
     //유저가 지원한 채용공고인지 찾기
     public int EmpApplied(String user_id, String jpl_num);
     //채용공고 지원하기
@@ -62,6 +62,10 @@ public interface UserMapper {
         // 4) 이력서 -자격증- 등록
     public void regResCert(CertVO certVO);
 
+    //################## 지원현황(ApplyList) 관련 Service #######################
+    public ArrayList<EmpApplyVO> getApplyListAll(String user_id);
+    public ArrayList<EmpApplyVO> getApplyListO(String user_id);
+    public ArrayList<EmpApplyVO> getApplyListX(String user_id);
 
     //####################### 페이지네이션 #######################
     //페이지 처리

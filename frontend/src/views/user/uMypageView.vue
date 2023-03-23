@@ -102,22 +102,18 @@
         <h3>지원 현황</h3>
       </div>
       <div class="aplBtnBox">
-        <button style="border:0;">
-          <p class="aplBtnNum">30</p>
-          <p>전체</p>
-        </button>
-        <button>
-          <p class="aplBtnNum">30</p>
+        <div @click="getApplyList" id="all" v-bind:class="{on : One}"> <!---->
+          <p class="aplBtnNum">{{ this.applyCnt.all }}</p>
           <p>지원완료</p>
-        </button>
-        <button>
-          <p class="aplBtnNum">30</p>
+        </div>
+        <div id="O" @click="getApplyList" v-bind:class="{on : Two}">
+          <p class="aplBtnNum">{{ this.applyCnt.O }}</p>
           <p>열람</p>
-        </button>
-        <button>
-          <p class="aplBtnNum">30</p>
+        </div>
+        <div id="X" @click="getApplyList" v-bind:class="{on : Thr}">
+          <p class="aplBtnNum">{{ this.applyCnt.X }}</p>
           <p>미열람</p>
-        </button>
+        </div>
       </div>
 
       <div class="aplBoxConWrap">
@@ -125,7 +121,12 @@
           <div>
             <div>
               <table class="aplTable">
-                <thead>
+
+                <div v-if="applylist.length == 0" style="margin:0 auto; width:100%;height:500px;font-size: 20px;">
+                  내용이 없습니다.
+                </div>
+
+                <thead v-if="applylist.length != 0">
                 <tr class="aplTableTitle">
                   <td>지원 회사</td>
                   <td>공고명</td>
@@ -136,31 +137,13 @@
 
                 <tbody>
 
-                  <tr>
-                    <td ><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="allPass">열람</td>
-                  </tr>
-                  <tr>
-                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="noPass">미열람</td>
-                  </tr>
-                  <tr>
-                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="pass">서류통과</td>
-                  </tr>
-                  <tr>
-                    <td><router-link to="" style="color:black;text-decoration: none;">(주)카카오</router-link></td>
-                    <td><router-link to="" style="color:black;text-decoration: none;">카카오와 함께할 UI/UX 디자이너 인재를 채용합니다.</router-link></td>
-                    <td>UI/UX 디자이너</td>
-                    <td class="applied">지원완료</td>
-                  </tr>
 
+                  <tr v-for="(applyList,i) in applylist" :key=i > <!--@click.prevent="detail(jobpost.com_num)"-->
+                    <td ><router-link to="" style="color:black;text-decoration: none;">{{ applyList.com_name }}</router-link></td>
+                    <td><router-link to="" style="color:black;text-decoration: none;">{{ applyList.jpl_title }}</router-link></td>
+                    <td>{{ applyList.jpl_workPosition }}</td>
+                    <td class="allPass">{{ applyList.al_state }}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -187,11 +170,43 @@ export default {
       res_title: '',
       res_regDate: '',
       user_id: JSON.parse(sessionStorage.getItem('sessionId')),
-      resumeNumber: ''
+      resumeNumber: '',
+      //applylist배열
+      applylist: [],
+      //applylist분류
+      applySel: 'all',
+      //applylist 버튼 스타일
+      One : true,
+      Two : false,
+      Thr : false,
+      //applylist 갯수
+      applyCnt : []
+
     }
   },
   created() {
-  this.resumeinfo();
+    //이력서
+   this.resumeinfo();
+    //지원현황 리스트
+    this.$axios.post("/jobfair/getApplyList" , {user_id: this.user_id, applySel : this.applySel})
+        .then((res) => {
+
+          console.log(res.data);
+          this.applylist = res.data;
+          console.log(this.applylist);
+
+        }).catch((error) => {
+      console.log(error)
+    }),
+        //지원현황 리스트
+        console.log("아이디"+this.user_id);
+        this.$axios.post("/jobfair/getApplyListCnt" , {user_id: this.user_id})
+            .then((res) => {
+              console.log(res.data);
+              this.applyCnt = res.data;
+            }).catch((error) => {
+          console.log(error)
+        })
   },
   methods : {
     upDown : function (){
@@ -220,6 +235,31 @@ export default {
           .then((res) => {
             this.resumeArray = res.data
             // console.log(res.data)
+
+          }).catch((error) => {
+        console.log(error)
+      })
+    },
+    getApplyList(e){
+      this.applySel = e.currentTarget.id;
+      if(e.currentTarget.id == "all"){
+        this.One = true;
+        this.Two = false;
+        this.Thr = false;
+      } else if(e.currentTarget.id == "O"){
+        this.One = false;
+        this.Two = true;
+        this.Thr = false;
+      } else if(e.currentTarget.id == "X"){
+        this.One = false;
+        this.Two = false;
+        this.Thr = true;
+      }
+
+      this.$axios.post("/jobfair/getApplyList" , {user_id: this.user_id, applySel : this.applySel})
+          .then((res) => {
+            this.applylist = res.data
+            console.log(this.applylist);
 
           }).catch((error) => {
         console.log(error)
@@ -290,20 +330,26 @@ h3{font-weight: bold;
   display: inline-block;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  background-color: #efefef;
   width: 100%;
 }
-.aplBtnBox button {
+.aplBtnBox div {
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
   border:0;
   border-left:1px solid #dedede;
   background-color: transparent;
-  width:25%;
-  background-color: #efefef;
+  width:33.33%;
+
   padding:10px;
 }
 
-.aplBtnBox button:hover {color:#0064ff;}
+.on {color:#0064ff;
+  border-radius: 20px;
+}
 
-.aplBtnBox button:first-child {border:0;}
+.aplBtnBox div:first-child {border:0;}
 
 .aplBtnBox p {padding:0;margin:0;}
 

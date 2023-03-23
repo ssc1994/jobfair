@@ -179,10 +179,11 @@ public class UserController {
     //**********************************************채용공고**********************************************
         //채용공고 목록
     @PostMapping(value = "/getJobPostList")
-    public ArrayList<EmpVO> getJobPostList(Model model) {
-
-        ArrayList<EmpVO> list = userService.getJobPostList();
-        model.addAttribute("list", list);
+    public ArrayList<EmpListVO> getJobPostList(@RequestBody HashMap<String,String> map,
+                                               String selSortInt
+                                               ) {
+        selSortInt = map.get("selSortInt");
+        ArrayList<EmpListVO> list = userService.getJobPostList(selSortInt);
 //        System.out.println(list.toString());
 
         return list;
@@ -190,7 +191,7 @@ public class UserController {
         //채용공고 검색
     @PostMapping(value="/getJobPostSrc",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ArrayList<EmpVO> getJobPostSrc(@RequestBody EmpSearchVO vo,
+    public ArrayList<EmpListVO> getJobPostSrc(@RequestBody EmpSearchVO vo,
                                           String [] jpl_locationSi,
                                           String [] jpl_locationGu,
                                           String [] jpl_duty,
@@ -200,7 +201,8 @@ public class UserController {
                                           String[] jpl_salary,
                                           String[] jpl_certificate,
                                           String[] jpl_conditions,
-                                          String[] jpl_workForm
+                                          String[] jpl_workForm,
+                                              String selSortInt
                                        ) {
 
         jpl_locationSi = vo.getJpl_duty();
@@ -214,8 +216,9 @@ public class UserController {
         jpl_conditions = vo.getJpl_conditions();
         jpl_workForm = vo.getJpl_workForm();
         inputSearch = vo.getInputSearch();
+        selSortInt = vo.getSelSortInt();
 
-        ArrayList<EmpVO> list = userService.getJobPostSrc(vo);
+        ArrayList<EmpListVO> list = userService.getJobPostSrc(vo);
 
         return list;
     }
@@ -253,6 +256,56 @@ public class UserController {
         System.out.println();
 
         return "success";
+    }
+
+    //**********************************************지원현황 관리(유저 마이페이지)**********************************************
+    //마이페이지 지원현황 목록 가져오기
+    @PostMapping(value="/getApplyList")
+    public ArrayList<EmpApplyVO> getApplyList(@RequestBody HashMap<String,String> map,
+                                String user_id,
+                                String applySel
+                                ){
+
+        user_id = map.get("user_id");
+        applySel = map.get("applySel");
+        ArrayList<EmpApplyVO> list = new ArrayList<EmpApplyVO>();
+
+        if(applySel.equals("all")){
+            list = userService.getApplyListAll(user_id);
+        }else if(applySel.equals("O")){
+            list = userService.getApplyListO(user_id);
+        }else if(applySel.equals("X")){
+            list = userService.getApplyListX(user_id);
+        }
+
+        return list;
+
+    }
+
+    //마이페이지 지원현황 목록 개수 가져오기
+    @PostMapping(value="/getApplyListCnt")
+    public HashMap<String, Integer> getApplyListCnt(@RequestBody HashMap <String,String> map,
+                                                    ArrayList<EmpApplyVO> list1,
+                                                    ArrayList<EmpApplyVO> list2,
+                                                    ArrayList<EmpApplyVO> list3,
+                                                    String user_id
+    ){
+
+
+        user_id = map.get("user_id");
+
+        list1 = userService.getApplyListAll(user_id);
+        list2 = userService.getApplyListO(user_id);
+        list3 = userService.getApplyListX(user_id);
+
+        HashMap<String, Integer> CntMap = new HashMap<>();
+
+        CntMap.put("all", list1.size());
+        CntMap.put("O", list2.size());
+        CntMap.put("X", list3.size());
+
+        return CntMap;
+
     }
 
 

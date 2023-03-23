@@ -62,11 +62,11 @@ public class UserServiceImpl implements UserService {
 
     //################## 채용공고(jobPost) 관련 Service #######################
     @Override
-    public ArrayList<EmpVO> getJobPostList() {
-        return userMapper.getJobPostList();
+    public ArrayList<EmpListVO> getJobPostList(String selSortInt) {
+        return userMapper.getJobPostList(selSortInt);
     }
     @Override
-    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
+    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo) {
         return userMapper.getJobPostSrc(vo);
     }
 
@@ -112,6 +112,11 @@ public class UserServiceImpl implements UserService {
     public void regResCert(CertVO certVO) {
         userMapper.regResCert(certVO);
     }
+    //################## 지원현황(ApplyList) 관련 Service #######################
+    @Override
+    public ArrayList<EmpApplyVO> getApplyListAll(String user_id) { return userMapper.getApplyListAll(user_id); }
+    public ArrayList<EmpApplyVO> getApplyListO(String user_id) { return userMapper.getApplyListO(user_id); };
+    public ArrayList<EmpApplyVO> getApplyListX(String user_id) { return userMapper.getApplyListX(user_id); };
 
 
 

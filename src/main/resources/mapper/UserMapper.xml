@@ -65,19 +65,33 @@
 
     <!--**************************************************채용공고**************************************************-->
         <!--채용공고 리스트-->
-    <select id="getJobPostList" resultType="EmpVO">
+    <select id="getJobPostList" resultType="EmpListVO">
         select *
         from jobpostinglist j
-                 left join company c on j.com_num = c.com_num
-        order by jpl_num desc
+        left join applylist a on j.jpl_num = a.jpl_num
+        left join company c on j.com_num = c.com_num
+        <choose>
+            <when test = "selSortInt == 1">
+            order by j.jpl_num desc
+            </when>
+             <when test = "selSortInt == 2">
+                 where j.jpl_endDate >= DATE_FORMAT(now(), '%Y-%m-%d')
+                 order by j.jpl_endDate asc;
+             </when>
+            <when test = "selSortInt == 3">
+                order by j.jpl_salary desc
+            </when>
+        </choose>
+
     </select>
         <!--채용공고 상세검색-->
-    <select id="getJobPostSrc" resultType="EmpVO">
-
-        select  * from jobpostinglist j  left join company c on j.com_num = c.com_num where 1 = 1
-
+    <select id="getJobPostSrc" resultType="EmpListVO">
+        select  * from jobpostinglist j
+        left join applylist a on j.jpl_num = a.jpl_num
+        left join company c on j.com_num = c.com_num
+                  where 1 = 1
         <if test="jpl_locationSi.length != 0">
-            and jpl_locationSi in
+            and j.jpl_locationSi in
             <foreach item="jpl_locationSi" index="index" collection="jpl_locationSi"
                      open="(" separator="," close=")">
                 #{jpl_locationSi}
@@ -85,7 +99,7 @@
         </if>
 
         <if test="jpl_locationGu.length != 0">
-            and jpl_locationGu in
+            and j.jpl_locationGu in
             <foreach item="jpl_locationGu" index="index" collection="jpl_locationGu"
                      open="(" separator="," close=")">
                 #{jpl_locationGu}
@@ -93,7 +107,7 @@
         </if>
 
         <if test="jpl_duty.length != 0">
-            and jpl_duty in
+            and j.jpl_duty in
             <foreach item="jpl_duty" index="index" collection="jpl_duty"
                      open="(" separator="," close=")">
                 #{jpl_duty}
@@ -101,7 +115,7 @@
         </if>
 
         <if test="jpl_workHistory.length != 0">
-            and jpl_workHistory in
+            and j.jpl_workHistory in
             <foreach item="jpl_workHistory" index="index" collection="jpl_workHistory"
                      open="(" separator="," close=")">
                 #{jpl_workHistory}
@@ -109,7 +123,7 @@
         </if>
 
         <if test="jpl_education.length != 0">
-            and jpl_education in
+            and j.jpl_education in
             <foreach item="jpl_education" index="index" collection="jpl_education"
                      open="(" separator="," close=")">
                 #{jpl_education}
@@ -117,7 +131,7 @@
         </if>
 
         <if test="jpl_salary.length != 0">
-            and jpl_salary in
+            and j.jpl_salary in
             <foreach item="jpl_salary" index="index" collection="jpl_salary"
                      open="(" separator="," close=")">
                 #{jpl_salary}
@@ -125,7 +139,7 @@
         </if>
 
         <if test="jpl_certificate.length != 0">
-            and jpl_certificate in
+            and j.jpl_certificate in
             <foreach item="jpl_certificate" index="index" collection="jpl_certificate"
                      open="(" separator="," close=")">
                 #{jpl_certificate}
@@ -133,7 +147,7 @@
         </if>
 
         <if test="jpl_conditions.length != 0">
-            and jpl_conditions in
+            and j.jpl_conditions in
             <foreach item="jpl_conditions" index="index" collection="jpl_conditions"
                      open="(" separator="," close=")">
                 #{jpl_conditions}
@@ -141,7 +155,7 @@
         </if>
 
         <if test="jpl_workForm.length != 0">
-            and jpl_workForm in
+            and j.jpl_workForm in
             <foreach item="jpl_workForm" index="index" collection="jpl_workForm"
                      open="(" separator="," close=")">
                 #{jpl_workForm}
@@ -149,7 +163,7 @@
         </if>
 
        <if test="inputSearch != ''">
-            and jpl_title like
+            and j.jpl_title like
            concat('%', #{inputSearch}, '%') or
            com_name like
            concat('%', #{inputSearch}, '%')
@@ -157,13 +171,29 @@
 
         </if>
 
+        <choose>
+            <when test = "selSortInt == 1">
+                order by j.jpl_num desc
+            </when>
+            <when test = "selSortInt == 2">
+                and j.jpl_endDate >= DATE_FORMAT(now(), '%Y-%m-%d')
+                order by j.jpl_endDate asc;
+            </when>
+            <when test = "selSortInt == 3">
+                order by j.jpl_salary desc
+            </when>
+        </choose>
+
+
+
+
     </select>
 
     <!--채용공고 지원하기-->
     <insert id="EmpApply">
         INSERT INTO
-            applylist (user_id, jpl_num, res_num, al_state)
-        VALUES (#{user_id}, #{jpl_num}, #{res_num}, "X")
+            applylist (user_id, jpl_num, res_num, al_state, al_regDate)
+        VALUES (#{user_id}, #{jpl_num}, #{res_num}, "X", date_format(now(), '%Y-%m-%d'))
     </insert>
     <!--유저가 지원한 공고인지 찾기-->
     <select id="EmpApplied" resultType="int">
@@ -215,7 +245,34 @@
         insert into Certificate (res_num, user_id, cert_name, cert_gainDate, cert_issueInstitute)
         values (#{res_num}, #{user_id}, #{cert_name}, #{cert_gainDate}, #{cert_issueInstitute})
     </insert>
-
+    <!--**************************************************지원현황관련**************************************************-->
+    <!--지원 현황 전부 가져오기-->
+    <select id="getApplyListAll" resultType="EmpApplyVO">
+        select *
+        from jobpostinglist j
+                 left join applylist a on a.jpl_num = j.jpl_num
+                 left join company c on c.com_num = j.jpl_num
+        where user_id = #{user_id}
+        order by al_regDate desc
+    </select>
+    <!--지원 현황 열람 가져오기-->
+    <select id="getApplyListO" resultType="EmpApplyVO">
+        select *
+        from jobpostinglist j
+                 left join applylist a on a.jpl_num = j.jpl_num
+                 left join company c on c.com_num = j.jpl_num
+        where user_id = #{user_id} and al_state like "%O%"
+        order by al_regDate desc
+    </select>
+    <!--지원 현황 미열람 가져오기-->
+    <select id="getApplyListX" resultType="EmpApplyVO">
+        select *
+        from jobpostinglist j
+                 left join applylist a on a.jpl_num = j.jpl_num
+                 left join company c on c.com_num = j.jpl_num
+        where user_id = #{user_id} and al_state like "%X%"
+        order by al_regDate desc
+    </select>
 
     <!--**************************************************페이지네이션**************************************************-->
 <!--    <select id="getQnATotal" resultType="int">-->

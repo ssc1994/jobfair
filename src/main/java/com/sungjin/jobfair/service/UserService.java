@@ -29,9 +29,9 @@ public interface UserService {
 
     //################## 채용공고(jobPost) 관련 Service #######################
         //채용공고 목록 가져오기
-    public ArrayList<EmpVO> getJobPostList();
+    public ArrayList<EmpListVO> getJobPostList(String selSortInt);
         //채용공고 검색 목록 가져오기
-    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
+    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo);
         //기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)
 //    public ArrayList<EmpVO> EmpRegistInfo();
         // 유저가 지원한 공고인지 찾기
@@ -46,6 +46,13 @@ public interface UserService {
     public ArrayList<ResumeVO> resumeInfo(String user_id);
         //이력서 삭제버튼 누르면 데이터 삭제하기
     public void deleteResume(int res_num);
+    //지원현황 목록 전체
+    public ArrayList<EmpApplyVO> getApplyListAll(String user_id);
+    //지원현황 목록 열람
+    public ArrayList<EmpApplyVO> getApplyListO(String user_id);
+    //지원현황 목록 미열람
+    public ArrayList<EmpApplyVO> getApplyListX(String user_id);
+
 
 
     //################## 이력서(Resume) 관련 Service #######################
