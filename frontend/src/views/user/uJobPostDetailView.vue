@@ -229,7 +229,6 @@ export default {
       diffMin:'',
       diffSec:'',
       diffTime:'',
-
       QnAComInfo: {
         user_id: JSON.parse(sessionStorage.getItem('sessionId')),
         com_num: ''
@@ -320,7 +319,6 @@ export default {
     }),
         this.resumeinfo();
 
-
     this.$axios.post("/jobfair/EmpApplied", {user_id: this.user_id, jpl_num: this.jpl_num})
         .then((res) => {
           console.log("Applied" + res.data);
@@ -389,7 +387,6 @@ setInterval(this.curcur,1000);
 
       this.$axios.post("/jobfair/EmpApply", {
         user_id: this.user_id,
-
         jpl_num: this.jpl_num,
         res_num: this.resNum
       })

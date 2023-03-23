@@ -10,4 +10,16 @@
         update company set com_fileName = #{com_fileName} , com_filePath = #{com_filePath}, com_fileUuid = #{com_fileUuid} where com_num = #{com_num}
     </update>
 
+    <!--  로그인 중인 기업의 정보 가져오기   -->
+    <select id="getComInfo" resultType="CompanyVO" parameterType="String">
+        select * from company where com_num = #{com_num};
+    </select>
+
+    <!--  기업 정보 수정  -->
+    <update id="modifyComInfo" parameterType="CompanyVO">
+        update company set com_businessRegistration = #{com_businessRegistration}, com_name = #{com_name}, com_phone = #{com_phone}, com_email = #{com_email}, com_category = #{com_category}, com_ceo = #{com_ceo}, com_address = #{com_address}, com_detail_address = #{com_detail_address}, com_establishmentDate = #{com_establishmentDate}   where com_num = #{com_num};
+    </update>
+
+
+
 </mapper>

@@ -552,8 +552,6 @@ export default {
       this.currentPw_errorMsg = ''
       this.newPw_errorMsg = ''
       this.newPwCheck_errorMsg = ''
-
-
     },
 
     //로그아웃 기능 (sessionStorage에 있는 세션값 삭제 후 로그인 페이지로 이동

@@ -37,7 +37,6 @@
 
         <a v-for="(paging, index) in pageList" :key="index" @click="onPageChange(paging - 1)" :class="paging - 1 === page ? 'page' : ''">{{paging}}</a>
 
-
         <a @click="goNextPage(page + 1)">next</a>
         <a @click="goLastPage(page + 1)">&gt;</a>
 
