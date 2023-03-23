@@ -220,6 +220,7 @@ const routes = [
     name: "Sign Up",
     component: SignUp,
   }
+
 ]
 
 const router = createRouter({

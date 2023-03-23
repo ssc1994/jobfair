@@ -5,34 +5,29 @@
     id="sidenav-main"
   >
     <div class="sidenav-header">
-      <i
-        class="top-0 p-3 cursor-pointer fas fa-times text-secondary opacity-5 position-absolute end-0 d-none d-xl-none"
-        aria-hidden="true"
-        id="iconSidenav"
-      ></i>
-      <a class="m-0 navbar-brand" href="/">
-        <img :src="logo" class="navbar-brand-img h-100" alt="main_logo" />
-        <span class="ms-1 font-weight-bold">Soft UI Dashboard PRO</span>
-      </a>
+      <router-link class="navbar-brand" to="/">
+        <img :src="logo" class="navbar-brand-img" alt="main_logo" />
+      </router-link>
     </div>
     <hr class="mt-0 horizontal dark" />
     <sidenav-list :cardBg="customClass" />
   </aside>
 </template>
 <script>
+// logo가 로고이미지를 변경해주는곳임 이미지 변경은 여기서 임포트해서 변경하면됨
 import SidenavList from "./SidenavList.vue";
-import logo from "@/assets/img/logo-ct.png";
+import logo from "@/assets/img/homeLogo.png";
 import { mapState } from "vuex";
 
 export default {
   name: "index",
   components: {
-    SidenavList,
+    SidenavList
   },
   data() {
     return {
-      logo,
-    };
+      logo
+    }
   },
   props: {
     customClass: {
@@ -41,7 +36,17 @@ export default {
     },
   },
   computed: {
-    ...mapState(["isRTL"]),
+    ...mapState(["isRTL"])
   },
-};
+}
 </script>
+<style>
+.sidenav .navbar-brand {
+  padding: 0px;
+  margin: 0px;
+}
+.navbar-brand-img {
+  max-width: 200px;
+  max-height: 30px;
+}
+</style>

@@ -1,13 +1,7 @@
 <template>
-
-
-
   <div class="wrapBox">
     <div class="wrapBox2">
-
-
-
-      <div class="container empBoxWrap">
+    <div class="container empBoxWrap">
         <div>
           <h3>HOT 채용공고</h3>
         </div>
