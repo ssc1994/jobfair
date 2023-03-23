@@ -8,6 +8,7 @@
             <!--            session에서 가져온 아이디 값 출력 -->
             <h6>{{ userInfo.user_id }}님 환영합니다.</h6>
             <a href="#">쪽지(3)</a>
+            <button type="button" @click="logOut">logOut</button>
           </div>
         </div>
       </div>
@@ -209,6 +210,7 @@
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
 import SideMenuList from "@/components/myComponent/SideMenuList";
+import router from "@/router";
 
 export default {
   name: "SidenavList",
@@ -552,8 +554,13 @@ export default {
       this.newPwCheck_errorMsg = ''
 
 
-    }
+    },
 
+    //로그아웃 기능 (sessionStorage에 있는 세션값 삭제 후 로그인 페이지로 이동
+    logOut(){
+      sessionStorage.clear()
+      this.$router.push('/sign-in')
+    }
   }
 }
 </script>
@@ -699,5 +706,9 @@ export default {
 
 .menu01 {
   border: 3px solid;
+}
+
+.userInfoBox {
+  z-index: 500;
 }
 </style>

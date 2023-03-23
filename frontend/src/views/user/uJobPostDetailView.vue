@@ -41,9 +41,9 @@
           <b>업무소개</b> <br/>
           <p>
             {{ jpl_content }}
-            base64형식 업로드로 변경하거나 읽어오는법을 찾아야댐
-            <img src="file:///C:/bootupload/230316/bddc5e9f-18c4-4c56-82a3-1d356cf2969d-1.jpg">
-            <br>{{ viewImg }}
+            <br>
+<!--            aws에서 가져오는 이미지를 집어넣을예정-->
+<!--            <br>{{ viewImg }}-->
           </p>
           <br/>
         </div>
@@ -78,13 +78,15 @@
         <div class="marginTime">
           <span style="color: #0064ff; font-weight: bolder">남은 시간</span>
           <div class="Time">
-            <p>5일 12:59</p>
-            <p>{{ curTime }}</p>
+<!--            <p>5일 12:59</p>-->
+            <input type="text" disabled v-model="diffTime">
+<!--            <button type="button" @click="curcur"></button>-->
             <span>접수 시작 : {{ jpl_startDate }}</span><br/>
             <span>접수 마감 : {{ jpl_endDate }}</span>
           </div>
 
-          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-bind:disabled="AppliedResult == 1" @click="postRes">
+          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  v-bind:disabled="AppliedResult == 1" @click="postRes">
             {{ applyBtnText }}
           </button>
 
@@ -108,6 +110,7 @@
           </div>
 
           <div>
+            <br>
             <ul>
               <li>연령</li>
               <li>
@@ -147,15 +150,16 @@
               <div class="miniContentModalBox" v-for="(resumeAll,i) in resumeArray" :key="i">
                 <input type="radio" :id="resumeAll.res_num" name="resumeRadio" :value="i" v-model="resNum">
                 <label :for="resumeAll.res_num">
-                  <h4>{{resumeAll.res_title}} </h4>
-                  <h5>{{resumeAll.res_regDate}} </h5>
+                  <h4>{{ resumeAll.res_title }} </h4>
+                  <h5>{{ resumeAll.res_regDate }} </h5>
                 </label>
               </div>
 
             </div>
             <div class="modal-footer">
               <!-- @click="supportResume" 넣기 -->
-              <button type="button" class="btn btn-primary" @click.prevent="postRes" data-bs-dismiss="modal" >지원하기</button>
+              <button type="button" class="btn btn-primary" @click.prevent="postRes" data-bs-dismiss="modal">지원하기
+              </button>
             </div>
           </div>
         </div>
@@ -169,6 +173,7 @@
 
 <script>
 import router from "@/router";
+import moment from "moment/moment";
 
 export default {
   name: "uJobPostDetailView",
@@ -178,7 +183,7 @@ export default {
       // 공고를 클릭하면 param으로 채용공고번호를 가지고 넘어워야함
       // user_id: JSON.parse(sessionStorage.getItem('sessionId')),
       // 데이터 정의
-      jpl_num: '6',
+      jpl_num: this.$route.params.jpl_num,
       com_num: '',
       jpl_title: '',
       jpl_content: '',
@@ -218,21 +223,26 @@ export default {
       com_ceo: '',
       com_businessRegistration: '',
       com_establishmentDate: '',
-      curTime: Date.now(),
+      curTime: '',
+      diffDay:'',
+      diffHour:'',
+      diffMin:'',
+      diffSec:'',
+      diffTime:'',
 
       QnAComInfo: {
         user_id: JSON.parse(sessionStorage.getItem('sessionId')),
         com_num: ''
       },
-      user_id : JSON.parse(sessionStorage.getItem('sessionId')),
-      res_num : '1',
+      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      res_num: '1',
       //지원한 이력서
-      resNum : 0,
+      resNum: 0,
       // apply 성공
-      apply : '',
-      applyBtnText : '지원하기',
+      apply: '',
+      applyBtnText: '지원하기',
       // 지원했던 공고면 1 , 아니면 0
-      AppliedResult : 0,
+      AppliedResult: 0,
       resumeArray: []
     }
   },
@@ -302,15 +312,12 @@ export default {
               }).catch(err => {
             console.log(err)
           })
-      this.viewImg = "file:///"+this.viewImg
+      this.viewImg = "file:///" + this.viewImg
       console.log(this.viewImg)
 
     }).catch(err => {
       console.log(err)
     }),
-
-
-
         this.resumeinfo();
 
 
@@ -318,38 +325,47 @@ export default {
         .then((res) => {
           console.log("Applied" + res.data);
           this.AppliedResult = res.data;
-          if(this.AppliedResult == 1) {
+          if (this.AppliedResult == 1) {
             this.applyBtnText = '지원완료';
           }
         }).catch((error) => {
       console.log(error);
     })
 
-    this.resumeinfo();
 
-    console.log(this.AppliedResult);
+    console.log(this.AppliedResult)
+
+    //모멘트 적용
+
 
 
   },
+  mounted() {
+setInterval(this.curcur,1000);
+
+  },
+
   methods: {
-    /*resumeinfo() {
-      this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
-          .then((res) => {
-            this.resumeArray = res.data
-            console.log(res.data)
+    curcur(){
+      const moment = require('moment')
+      var time = moment();
+      var etime = moment(this.jpl_endDate, 'YYYY-MM-DD');
+      var stime = moment(this.jpl_startDate, 'YYYY-MM-DD');
 
-          }).catch((error) => {
-        console.log(error)
-      })
+      if(moment(time).isBetween(stime,etime)){
+        //현재 시간이 접수 시작일과 마감일 사이일경우 동작
+        this.curTime=moment.duration(etime.diff(time))
+        this.diffDay=this.curTime.days()
+        this.diffHour=this.curTime.hours()
+        this.diffMin=this.curTime.minutes()
+        this.diffSec=this.curTime.seconds()
+        this.diffTime= this.diffDay+"일 "+this.diffHour+"시간"+this.diffMin+"분"+this.diffSec+"초"
+      }else {
+        //현재 시간이 접수 시작일과 마감일 사이가 아닐경우 남은시간이 아닌 공고 마감 출력
+        this.diffTime= "공고 마감"
+        clearInterval(this.curcur)
+      }
     },
-    postRes(e){
-      //이력서 선택 후 지원하기 누르면 해당 공고에 지원한 것이므로 지원완료 버튼 생성
-      const target = document.getElementsByClassName('endBtn')
-      target.disabled = true
-      console.log(target)
-      // this.$router.go('/uJobPostDetailView')
-
-    }*/
     // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
     // supportResume(){
     //   router.push({path:"/"})
@@ -366,14 +382,14 @@ export default {
     Applied() {
 
     },
-    postRes(){
+    postRes() {
       console.log(this.user_id);
       this.resNum = this.resNum + 1;
       console.log(this.resNum);
 
+      this.$axios.post("/jobfair/EmpApply", {
+        user_id: this.user_id,
 
-
-      this.$axios.post("/jobfair/EmpApply", {user_id: this.user_id,
         jpl_num: this.jpl_num,
         res_num: this.resNum
       })
@@ -383,8 +399,6 @@ export default {
           }).catch((error) => {
         console.log(error);
       })
-
-
     },
     // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
     // supportResume(){
@@ -513,6 +527,17 @@ dl {
   font-size: 30px;
   font-weight: bolder;
 }
+.Time input {
+  font-size: 24px;
+  font-weight: bolder;
+  border:none;
+  border-right:0px;
+  border-top:0px;
+  boder-left:0px;
+  boder-bottom:0px;
+  width: 220px;
+  background-color: #FFFFFF;
+}
 
 .marginTime button {
   width: 200px;
@@ -605,8 +630,9 @@ dl {
   height: 160px;
   margin-right: 30px;
 }
+
 .endBtn:disabled {
   background-color: #dedede;
-  color:black;
+  color: black;
 }
 </style>
