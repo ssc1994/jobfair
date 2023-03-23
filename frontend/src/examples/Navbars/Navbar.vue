@@ -16,18 +16,18 @@
           class="pe-md-3 d-flex align-items-center"
           :class="this.$store.state.isRTL ? 'me-md-auto' : 'ms-md-auto'"
         >
-          <div class="input-group">
-            <span class="input-group-text text-body"
-              ><i class="fas fa-search" aria-hidden="true"></i
-            ></span>
-            <input
-              type="text"
-              class="form-control"
-              :placeholder="
-                this.$store.state.isRTL ? 'أكتب هنا...' : 'Type here...'
-              "
-            />
-        </div>
+<!--          <div class="input-group">-->
+<!--            <span class="input-group-text text-body"-->
+<!--              ><i class="fas fa-search" aria-hidden="true"></i-->
+<!--            ></span>-->
+<!--            <input-->
+<!--              type="text"-->
+<!--              class="form-control"-->
+<!--              :placeholder="-->
+<!--                this.$store.state.isRTL ? 'أكتب هنا...' : 'Type here...'-->
+<!--              "-->
+<!--            />-->
+<!--        </div>-->
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
@@ -43,7 +43,7 @@
               <span v-if="this.$store.state.isRTL" class="d-sm-inline d-none"
                 >يسجل دخول</span
               >
-              <span v-else class="d-sm-inline d-none">Sign In </span>
+              <span v-else class="d-sm-inline d-none">Log Out </span>
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">

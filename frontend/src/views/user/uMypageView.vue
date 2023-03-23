@@ -25,74 +25,10 @@
           </routerLink>
         </div>
 
-        <div class="resumeBoxWrap" v-for="(resumeAll,i) in resumeArray" :key="i">
-          <div class="resumeBox">
-            <div class="left">
-              <ul>
-                <li>
-                  <p class="resumeTitle">{{ resumeAll.res_title }}</p>
-                  <p>{{ resumeAll.res_regDate}}</p>
-                </li>
-              </ul>
-            </div>
-            <div class="right">
-              <button id="" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border-color: #0064ff;color:#0064ff;">
-                수정
-              </button>
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#DeleteModal" style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);" @click="deleteResume" :value="resumeAll.res_num">
-                삭제
-              </button>
-            </div>
-          </div>
+        <div class="resumeBoxWrap" key="i" v-for="(resDetail, i) in resumeArray" :key="i">
+          <ResComp :index='i' :resDetail='resDetail' />
         </div>
 
-
-<!--         수정버튼 클릭시 나오는 모달창 -->
-<!--        res_num에 따른 데이터를 가져오게끔 만들어야함, 수정을 눌렀을 때 그 이력서 번호에 맞는 데이터만 출력되게끔 (아직 미구현, 박희진)-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content"  v-for="(resumeAll,i) in resumeArray" :key="i">
-<!--              모달창 최상단 section -->
-              <div class="modal-header">
-<!--                res_title값 가져오기-->
-                <h1 class="modal-title fs-5" id="exampleModalLabel" value="res_title">{{ resumeAll.res_title }}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-
-              <div class="modal-body" style="height: 100%">
-                <div class="infoModalBox">
-                  <div class="wrapBox3">
-                    <div class="input-group mb-3">
-<!--                      res_name 값 가져오기-->
-                      <span class="input-group-text" id="basic-addon1">작성자</span>
-                      <p class="form-control"  aria-label="Username" aria-describedby="basic-addon1">{{resumeAll.user_id}}</p>
-                    </div>
-
-                    <div class="input-group mb-3">
-<!--                      res_regDate 값 가져오기-->
-                      <span class="input-group-text" id="basic-addon1">작성일</span>
-                      <p class="form-control"  aria-label="Username" aria-describedby="basic-addon1">{{resumeAll.res_regDate}}</p>
-                    </div>
-
-                    <div class="input-group">
-<!--                       res_content 값 가져오기-->
-                      <span class="input-group-text">자기소개서 내용</span>
-                      <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
-                    </div>
-                    <div>
-                      <button type="button" class="btn btn-primary" data-bs-target="#exampleModal">
-                        수정하기
-                      </button>
-                      <button type="button" class="btn btn-primary">
-                        이력서 상세보기
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     <hr>
@@ -159,8 +95,13 @@
 </template>
 
 <script>
+import ResComp from "@/components/myComponent/ResumeComp";
+
 export default {
   name: 'uMypageView',
+  components: {
+    ResComp
+  },
   data() {
     return {
       resumeArray: [],
@@ -218,24 +159,11 @@ export default {
         this.arrSrc = "down";
       }
     },
-    // 삭제버튼 클릭 시 데이터베이스에 있는 데이터 삭제 ( 이력서 삭제 )
-    deleteResume(e) {
-      alert("삭제하시겠습니까?")
-      console.log(e.target.value)
-      this.$axios.get('/jobfair/deleteResume',{params:{res_num: e.target.value}})
-          .then((res) => {
-            this.$router.go('/uMypageView')
-            this.res_num = res.data
-          })
-          .catch((error) => { console.log(error) })
-    },
     // 로그인 한 유저의 이력서만 보여주
     resumeinfo() {
       this.$axios.post("/jobfair/resumeInfo" , {user_id: this.user_id})
           .then((res) => {
             this.resumeArray = res.data
-            // console.log(res.data)
-
           }).catch((error) => {
         console.log(error)
       })

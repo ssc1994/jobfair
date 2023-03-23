@@ -15,4 +15,16 @@ public class CompanyMypageServiceImpl implements  CompanyMypageService{
     public void modiLogo(CompanyVO cv) {
         comMypageMapper.modiLogo(cv);
     }
+
+    //로그인 중인 기업의 정보 가져오기
+    @Override
+    public CompanyVO getComInfo(String com_num) {
+        return comMypageMapper.getComInfo(com_num);
+    }
+
+    //기업 정보 수정
+    @Override
+    public void modifyComInfo(CompanyVO cv) {
+        comMypageMapper.modifyComInfo(cv);
+    }
 }

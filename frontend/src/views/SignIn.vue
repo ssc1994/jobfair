@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <main class="mt-0 main-content main-content-bg">
+  <main class="mt-0 main-content main-content-bg" @keydown.enter="logInBtn">
     <section>
       <div class="page-header min-vh-75">
         <div class="container">
@@ -49,16 +49,6 @@
                     <soft-switch id="rememberMe" name="rememberMe" checked>
                       Remember me
                     </soft-switch>
-<!--                    <div class="text-center">-->
-<!--                      <soft-button-->
-<!--                        class="my-4 mb-2"-->
-<!--                        variant="gradient"-->
-<!--                        color="success"-->
-<!--                        full-width-->
-<!--                        @click="logInBtn"-->
-<!--                        >Sign in-->
-<!--                      </soft-button>-->
-<!--                    </div>-->
                   </div>
                 </div>
                 <button type="submit" id="loginBtn" @click="logInBtn"
@@ -142,9 +132,6 @@ export default {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
 
     logInBtn () {
-      console.log(this.mg_auth)
-      console.log(this.user_id)
-      console.log(this.user_pw)
       let self = this;
 
       this.$axios
@@ -160,7 +147,6 @@ export default {
             if(res.data.com_num != null){
               sessionStorage.setItem('sessionComp',JSON.stringify(res.data.com_num))
             }
-            console.log(res.data)
             this.$store.commit('setUser_id', sessionStorage.getItem('sessionId'));
             this.$store.commit('setMg_auth', sessionStorage.getItem('sessionAuth'));
             this.$store.commit('setCom_num', sessionStorage.getItem('sessionComp'));

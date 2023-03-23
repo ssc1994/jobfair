@@ -212,9 +212,14 @@
                             <span :hidden="comAddress_errorMsg === ''"
                                   class="pass_error">{{ comAddress_errorMsg }}</span>
                           </div>
-                          <input type="text" id="address" class="data_insert_box" ref="com_addressBox"
-                                 placeholder="기업 주소"
-                                 v-model="com_address" @click="execDaumPostcode" @keydown="execDaumPostcode"/>
+                          <div class="address_btn_wrap">
+                            <input type="text" id="address" class="data_insert_box" ref="com_addressBox"
+                                   placeholder="주소검색을 눌러주세요"
+                                   v-model="com_address" readonly @keydown="execDaumPostcode"/>
+                            <button type="button"  class="btn bg-gradient-dark" @click="execDaumPostcode">
+                              주소검색
+                            </button>
+                          </div>
                         </div>
                         <div>
                           <div class="data_title_wrap">
@@ -251,7 +256,7 @@
                             <span :hidden="comBizReg_errorMsg === ''"
                                   class="pass_error">{{ comBizReg_errorMsg }}</span>
                           </div>
-                          <input type="text" class="data_insert_box" ref="com_regBox" placeholder="사업자등록번호 - 포함해서 입력"
+                          <input type="text" class="data_insert_box" ref="com_regBox" placeholder="사업자 등록번호 3글자-2글자-5글자 형식으로 입력"
                                  v-model="com_businessRegistration" maxlength="12"/>
                         </div>
                         <div class="esDateWrap">

@@ -14,7 +14,6 @@ import java.sql.Date;
 public class EduVO {
     private int edu_num;                //학력번호
     private int res_num;                //이력서번호
-    private String user_id;             //아이디
     private String edu_degree;          //학교구분
     private String edu_schoolName;      //학교이름
     private String edu_major;           //전공

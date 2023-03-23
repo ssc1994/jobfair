@@ -6,18 +6,20 @@
 <mapper namespace="com.sungjin.jobfair.service.UserMapper">
 
     <!--**************************************************로그인 관련**************************************************-->
-        <!--로그인시 비밀번호 같은지 비교-->
-    <select id = "getEncodePw" resultType="String" parameterType="UserVO">
-        select user_pw from User where user_id = #{user_id}
+    <!--로그인시 비밀번호 같은지 비교-->
+    <select id="getEncodePw" resultType="String" parameterType="UserVO">
+        select user_pw
+        from User
+        where user_id = #{user_id}
     </select>
-        <!--로그인-->
+    <!--로그인-->
     <select id="login" resultType="UserVO">
         select *
         from User
         where user_id = #{user_id}
     </select>
 
-        <!--유저정보 불러오기-->
+    <!--유저정보 불러오기-->
     <select id="info" resultType="UserVO">
         select *
         from User
@@ -26,41 +28,50 @@
 
 
     <!--**************************************************Q&A**************************************************-->
-        <!--유저 큐앤에이 등록-->
+    <!--유저 큐앤에이 등록-->
     <insert id="qnaRegist" parameterType="QnAVO">
         insert into QnA(user_id, qa_title, qa_content, qa_regDate, qa_type, com_num)
-        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d') , #{qa_type}, #{com_num})
+        values (#{user_id}, #{qa_title}, #{qa_content}, date_format(now(), '%Y-%m-%d'), #{qa_type}, #{com_num})
     </insert>
     <!--유저 큐앤에이 리스트-->
     <select id="getQnAList" resultType="QnAVO">
         select *
         from QnA
         where qa_type like "%q%"
-        order by qa_num desc limit #{pageStart}, #{amount}
+        order by qa_num desc limit #{cri.pageStart}, #{cri.amount}
     </select>
 
 
-<!--    <select id="getPage" resultType="QnAVO">-->
-<!--        select * from qna-->
-<!--        order by qa_num desc limit #{pageStart}, #{amount}-->
-<!--    </select>-->
+    <!--    <select id="getPage" resultType="QnAVO">-->
+    <!--        select * from qna-->
+    <!--        order by qa_num desc limit #{pageStart}, #{amount}-->
+    <!--    </select>-->
 
 
-        <!--큐앤에이 상세페이지-->
+    <!--큐앤에이 상세페이지-->
     <select id="getQnADetail" resultType="QnAVO">
         select *
         from QnA
         where qa_num = #{qa_num}
     </select>
-        <!--큐앤에이 수정-->
+    <!--큐앤에이 수정-->
     <update id="uQnAModi" parameterType="QnAVO">
-        update QnA set qa_title = #{qa_title} , qa_content = #{qa_content}
+        update QnA
+        set qa_title   = #{qa_title},
+            qa_content = #{qa_content}
         where qa_num = #{qa_num}
     </update>
 
-<!--    <select id="uQnABtnClick" resultType="QnAVO">-->
-<!--        select * from qna where com_num like '%3%'-->
-<!--    </select>-->
+    <!--    <select id="uQnABtnClick" resultType="QnAVO">-->
+    <!--        select * from qna where com_num like '%3%'-->
+    <!--    </select>-->
+
+    <select id="getMainQnAList" resultType="QnAVO">
+        select *
+        from QnA
+        where qa_type like "%q%"
+        order by qa_num desc
+    </select>
 
 
     <!--**************************************************채용공고**************************************************-->
@@ -168,7 +179,6 @@
            com_name like
            concat('%', #{inputSearch}, '%')
 
-
         </if>
 
         <choose>
@@ -197,25 +207,41 @@
     </insert>
     <!--유저가 지원한 공고인지 찾기-->
     <select id="EmpApplied" resultType="int">
-        select EXISTS (select * from applylist where user_id=#{user_id} and jpl_num = #{jpl_num} limit 1) as success;
+        select EXISTS(select * from applylist where user_id = #{user_id} and jpl_num = #{jpl_num} limit 1) as success;
     </select>
 
     <!--**************************************************마이페이지 이력서**************************************************-->
-        <!--이력서정보-->
+    <!--이력서정보-->
     <select id="resumeInfo" resultType="ResumeVO">
-        select * from ResumeList where user_id = #{user_id}
+        select *
+        from ResumeList
+        where user_id = #{user_id}
     </select>
-        <!--이력서 지우기-->
+    <!--이력서 지우기-->
     <delete id="deleteResume">
-        delete from ResumeList where res_num = #{res_num}
+        delete
+        from resumelist
+        where res_num = #{res_num}
+    </delete>
+    <delete id="deleteEdu">
+        delete
+        from education
+        where res_num = #{res_num}
+    </delete>
+    <delete id="deleteWe">
+        delete
+        from workexperiences
+        where res_num = #{res_num}
+    </delete>
+    <delete id="deleteCert">
+        delete
+        from certificate
+        where res_num = #{res_num}
     </delete>
 
 
-
-
-
     <!--**************************************************이력서 관련**************************************************-->
-        <!--이력서 등록-->
+    <!--이력서 등록-->
     <insert id="regResume" parameterType="ResumeVO" useGeneratedKeys="true" keyProperty="res_num" keyColumn="res_num">
         insert into ResumeList (user_id, res_title, res_content, res_regDate,
                                 res_picName, res_picPath, res_picUuid, res_name, res_email,
@@ -225,26 +251,72 @@
                 #{res_phone}, #{res_address}, #{res_birth})
     </insert>
 
-        <!--이력서 학력등록-->
+    <!--이력서 학력등록-->
     <insert id="regResEdu" parameterType="EduVO">
-        insert into Education (res_num, user_id, edu_degree, edu_schoolName, edu_major, edu_entranceDate,
+        insert into Education (res_num, edu_degree, edu_schoolName, edu_major, edu_entranceDate,
                                edu_graduationDate,
                                edu_state, edu_grades, edu_totalGrades)
-        values (#{res_num}, #{user_id}, #{edu_degree}, #{edu_schoolName}, #{edu_major}, #{edu_entranceDate},
+        values (#{res_num}, #{edu_degree}, #{edu_schoolName}, #{edu_major}, #{edu_entranceDate},
                 #{edu_graduationDate}, #{edu_state}, #{edu_grades}, #{edu_totalGrades})
     </insert>
-        <!--이력서 경력등록-->
+    <!--이력서 경력등록-->
     <insert id="regResWe" parameterType="WeVO">
-        insert into WorkExperiences (res_num, user_id, we_company, we_department, we_position, we_job, we_emplDate,
+        insert into WorkExperiences (res_num, we_company, we_department, we_position, we_job, we_emplDate,
                                      we_departureDate, we_salary)
-        values (#{res_num}, #{user_id}, #{we_company}, #{we_department}, #{we_position}, #{we_job}, #{we_emplDate},
+        values (#{res_num}, #{we_company}, #{we_department}, #{we_position}, #{we_job}, #{we_emplDate},
                 #{we_departureDate}, #{we_salary})
     </insert>
-        <!--이력서 자격증 등록-->
+    <!--이력서 자격증 등록-->
     <insert id="regResCert" parameterType="CertVO">
-        insert into Certificate (res_num, user_id, cert_name, cert_gainDate, cert_issueInstitute)
-        values (#{res_num}, #{user_id}, #{cert_name}, #{cert_gainDate}, #{cert_issueInstitute})
+        insert into Certificate (res_num, cert_name, cert_gainDate, cert_issueInstitute)
+        values (#{res_num}, #{cert_name}, #{cert_gainDate}, #{cert_issueInstitute})
     </insert>
+    
+    <select id="getResDetail" resultType="ResumeVO">
+        select *
+        from ResumeList
+        where res_num = #{res_num}
+    </select>
+    
+    <select id="getEduDetail" resultType="map">
+        select *
+        from Education
+        where res_num = #{res_num}
+    </select>
+    
+    <select id="getWeDetail" resultType="map">
+        select *
+        from WorkExperiences
+        where res_num = #{res_num}
+    </select>
+    
+    <select id="getCertDetail" resultType="map">
+        select *
+        from Certificate
+        where res_num = #{res_num}
+    </select>
+    
+    <update id="modiResume" parameterType="ResumeVO">
+        update resumelist
+        set (res_title = #{res_title}, res_content = #{res_content}, res_regDate = #{res_picName},
+                res_picName= #{res_picPath}, res_picUuid=#{res_picUuid}, res_name = #{res_name}, res_email = #{res_email},
+                res_phone = {res_phone}, res_address = #{res_address}, res_birth = #{res_birth})
+        where res_num = #{res_num}
+    </update>
+    
+    <update id="modiResEdu" parameterType="EduVO">
+        update Education
+        set (edu_degree = #{edu_degree}, edu_schoolName = #{edu_schoolName},
+                edu_major = #{edu_major}, edu_entranceDate = #{edu_entranceDate}, edu_graduationDate = #{edu_graduationDate},
+                edu_state = #{edu_state}, edu_grades = #{edu_grades}, edu_totalGrades = #{edu_totalGrades})
+        where res_num = #{res_num}
+    </update>
+    
+    <update id="modiResWe" parameterType="WeVO">
+        update WorkExperiences set (we_company = #{we_company}, we_department = #{we_department}, we_position = #{we_position},
+            we_job = #{we_job}, we_emplDate = #{we_emplDate}, we_departureDate = #{we_departureDate}, we_salary = #{we_salary}) where res_num =
+    </update>
+
     <!--**************************************************지원현황관련**************************************************-->
     <!--지원 현황 전부 가져오기-->
     <select id="getApplyListAll" resultType="EmpApplyVO">
@@ -273,19 +345,18 @@
         where user_id = #{user_id} and al_state like "%X%"
         order by al_regDate desc
     </select>
+   
 
     <!--**************************************************페이지네이션**************************************************-->
-<!--    <select id="getQnATotal" resultType="int">-->
-<!--        select count(*) from qna-->
-<!--    </select>-->
+    <!--    <select id="getQnATotal" resultType="int">-->
+    <!--        select count(*) from qna-->
+    <!--    </select>-->
 
 
     <!--페이지네이션-->
     <select id="uQnAGetTotal" resultType="int">
-        select count(*) from qna
+        select count(*) from qna where qa_type like "%q%"
     </select>
-
-
 
 
 </mapper>

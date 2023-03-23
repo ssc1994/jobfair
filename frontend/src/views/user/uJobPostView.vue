@@ -221,7 +221,7 @@
 
       <div class="row empListBox">
 
-        <div v-for="(jobpost,i) in jobPostList" :key=i @click.prevent="detail(jobpost.com_num)" class="empBoxConWrap col-6">
+        <div v-for="(jobpost,i) in jobPostList" :key=i @click.prevent="detail(jobpost.jpl_num)" class="empBoxConWrap col-6">
 
           <div class="empBoxCon ">
             <router-link to="" class="left empBoxCompany">
@@ -236,6 +236,7 @@
               </router-link>
               <div style="padding-top:20px;">
                 <span class="left empBoxDday">D-27</span>
+<!--                <input type="text" class="left empBoxDday" style="width: 65px" v-model="dDay" disabled>-->
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
                 <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.user_id == user_id">
                   지원완료 {{jobpost.user_id}}
@@ -249,7 +250,6 @@
 
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -257,6 +257,7 @@
 
 <script>
 import axios from 'axios'
+import moment from "moment/moment";
 export default {
   name: "uJobPostView",
   data() {
@@ -345,8 +346,10 @@ export default {
       users : '',
 
       //은영 테스트
-      com_num: 3
+      com_num: 3,
 
+      //dday설정
+      // dDay:''
 
     }
   },
@@ -455,10 +458,9 @@ export default {
       this.$router.push({
         name: 'uJobPostDetailView',
         params: {
-          com_num: jobpost
+          jpl_num: jobpost
         }
       })
-      this.$router.push("/uJobPostDetailView")
     },
     //지역 열고 닫기
     upDown1 : function (e){
@@ -493,8 +495,7 @@ export default {
       } else {
         this.jobPostSearch();
       }
-
-    }
+    },
   }
 }
 </script>
