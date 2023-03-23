@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -49,10 +50,14 @@ public interface UserMapper {
         //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo(String user_id);
         //이력서 삭제버튼 누르면 데이터 삭제하기
-    public void deleteResume(int res_num);
+    public void deleteResume(String res_num);
+    public void deleteEdu(String res_num);
+    public void deleteWe(String res_num);
+    public void deleteCert(String res_num);
 
 
     //################## 이력서 등록  #######################
+        //이력서 등록
         // 1) 이력서 -인적사항- 등록
     public void regResume(ResumeVO resVO);
         // 2) 이력서 -학력- 등록
@@ -61,6 +66,24 @@ public interface UserMapper {
     public void regResWe(WeVO weVO);
         // 4) 이력서 -자격증- 등록
     public void regResCert(CertVO certVO);
+        //이력서 상세페이지
+        // 1) 이력서 상세 가져오기
+    public ResumeVO getResDetail(String res_num);
+        // 2) 이력서 학력 가져오기
+    public ArrayList<EduVO> getEduDetail(String res_num);
+        // 3) 이력서 경력 가져오기
+    public ArrayList<WeVO> getWeDetail(String res_num);
+        // 4) 이력서 자격증 가져오기
+    public ArrayList<CertVO> getCertDetail(String res_num);
+        // 이력서 수정
+        // 1) 이력서 -인적사항- 수정
+    public void modiResume(ResumeVO resVO);
+        // 2) 이력서 -학력- 수정
+    public void modiResEdu(EduVO eduVO);
+        // 3) 이력서 -경력- 수정
+    public void modiResWe(WeVO weVO);
+        // 4) 이력서 -자격증- 수정
+    public void modiResCert(CertVO certVO);
 
 
     //####################### 페이지네이션 #######################

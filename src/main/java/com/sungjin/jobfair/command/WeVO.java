@@ -14,7 +14,6 @@ import java.sql.Date;
 public class WeVO {
     private int we_num;
     private int res_num;
-    private String user_id;
     private String we_company;
     private String we_department;
     private String we_position;
