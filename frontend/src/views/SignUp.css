@@ -160,6 +160,21 @@
     display: inline-block;
 }
 
+/*기업 주소 버튼 부분*/
+.address_btn_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+.address_btn_wrap input{
+    display: inline-block;
+    width: 79%;
+}
+.address_btn_wrap button {
+    width: 20%;
+    display: inline-block;
+    margin: 0;
+}
+
 /*동의항목, 가입하기 버튼 부분*/
 .form-bottom {
     padding: 10px 5px;

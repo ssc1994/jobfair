@@ -551,7 +551,6 @@ export default {
       this.newPw_errorMsg = ''
       this.newPwCheck_errorMsg = ''
 
-
     }
 
   }
