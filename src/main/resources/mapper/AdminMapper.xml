@@ -35,4 +35,19 @@
 
     </select>
 
+    <!--큐앤에이-->
+    <!--큐앤에이 리스트-->
+    <select id="agetQnAList" resultType="QnAVO">
+        select *
+        from QnA
+        where qa_type like "%q%"
+        order by qa_num desc limit #{cri.pageStart}, #{cri.amount}
+    </select>
+
+    <!--페이지네이션-->
+    <select id="aQnAGetTotal" resultType="int">
+        select count(*) from qna where qa_type like "%q%"
+    </select>
+
+
 </mapper>

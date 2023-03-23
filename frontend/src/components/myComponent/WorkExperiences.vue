@@ -4,23 +4,30 @@
       <section>
         <div class="mb-3 mt-3">
           <label for="">회사명 :</label>
-          <input type="text" class="form-control" :name="props_name" placeholder="회사명을 입력하세요." v-model="weInfo.we_company" @change="inputWeData">
+          <input type="text" class="form-control" :name="props_name" placeholder="회사명을 입력하세요."
+                 :disabled="isAble" v-model="weInfo.we_company" @change="inputWeData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">부서명 :</label>
-          <input type="text" class="form-control" :name="props_name" placeholder="부서명을 입력하세요." v-model="weInfo.we_department" @change="inputWeData">
+          <input type="text" class="form-control" :name="props_name" placeholder="부서명을 입력하세요."
+                 :disabled="isAble" v-model="weInfo.we_department" @change="inputWeData">
           <label for="">직급/직책 :</label>
-          <input type="text" class="form-control" :name="props_name" v-model="weInfo.we_position" @change="inputWeData">
+          <input type="text" class="form-control" :name="props_name"
+                 :disabled="isAble" v-model="weInfo.we_position" @change="inputWeData">
           <label for="">담당직무 :</label>
-          <input type="text" class="form-control" :name="props_name" v-model="weInfo.we_job" @change="inputWeData">
+          <input type="text" class="form-control" :name="props_name"
+                 :disabled="isAble" v-model="weInfo.we_job" @change="inputWeData">
           <label for="">연봉 :</label>
-          <input type="text" class="form-control" :name="props_name" v-model="weInfo.we_salary" @change="inputWeData">
+          <input type="text" class="form-control" :name="props_name"
+                 :disabled="isAble" v-model="weInfo.we_salary" @change="inputWeData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">입사일 :</label>
-          <input type="date" class="form-control" :name="props_name" v-model="weInfo.we_emplDate" @change="inputWeData">
+          <input type="date" class="form-control" :name="props_name"
+                 :disabled="isAble" v-model="weInfo.we_emplDate" @change="inputWeData">
           <label for="">퇴사일 :</label>
-          <input type="date" class="form-control" :name="props_name" v-model="weInfo.we_departureDate" @change="inputWeData">
+          <input type="date" class="form-control" :name="props_name"
+                 :disabled="isAble" v-model="weInfo.we_departureDate" @change="inputWeData">
         </div>
       </section>
     </div>
@@ -32,7 +39,9 @@
 export default {
   name: "WorkExperiences",
   props: [
-      'weCount'
+      'weCount',
+      'value',
+      'isAble'
   ],
   data () {
     return {
@@ -47,6 +56,11 @@ export default {
         we_salary: '',
       },
       props_name: 'weInfo' + this.$props.weCount
+    }
+  },
+  created() {
+    if(this.$props.value != undefined){
+      this.weInfo = this.$props.value;
     }
   },
   methods: {
@@ -160,6 +174,11 @@ body {
 .empReg section .form-select {
   width: 130px;
   height: 30px;
+}
+
+input:disabled {
+  border: none;
+  background-color: white;
 }
 
 </style>

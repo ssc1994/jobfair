@@ -3,6 +3,7 @@ package com.sungjin.jobfair.service;
 import com.sungjin.jobfair.command.CompanyVO;
 import com.sungjin.jobfair.command.EmpVO;
 import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.pagination.Criteria;
 
 import java.util.ArrayList;
@@ -25,5 +26,14 @@ public interface AdminService {
     //################## 통계 #######################
     //전체 유저정보 가져와서 통계에 남녀가입성비나타내기
     public ArrayList<UserVO> getUserInfo();
+
+
+    //큐앤에이
+
+    //큐앤에이 목록 가져오기
+    public ArrayList<QnAVO> agetQnAList(Criteria cri);
+
+    //큐앤에이 페이지네이션
+    public int aQnAGetTotal(Criteria cri);
 
 }

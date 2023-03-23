@@ -59,8 +59,7 @@
       <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
     </div>
 
-    <!--지원하기 모달창 설정-->
-    <!--state 적용해서 데이터 넣어야해유-->
+    <!--수정하기 모달창 설정-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content ">

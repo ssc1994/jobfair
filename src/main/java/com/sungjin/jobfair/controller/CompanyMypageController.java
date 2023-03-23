@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -55,10 +56,10 @@ public class CompanyMypageController {
     public HashMap modiLogo (@RequestParam("image") MultipartFile file,
                             @RequestParam("com_num") String com_num,
                             CompanyVO cv) {
-        System.out.println(file);
-        System.out.println(com_num);
+//        System.out.println(file);
+//        System.out.println(com_num);
         String num = com_num.replaceAll("\"", "");
-        System.out.println(num);
+//        System.out.println(num);
 
         //파일명 처리
         String imgName = file.getOriginalFilename();
@@ -93,5 +94,28 @@ public class CompanyMypageController {
         result.put("filePath", saveName);
         return result;
     }
+
+    //comMypage 화면이 나올때 로그인한 기업의 정보를 화면에 뿌려주기위해 데이터를 보내주는 것
+    @PostMapping("/getComInfo")
+    public CompanyVO getComInfo(@RequestBody Map<String, String> map){
+
+        String com_num = map.get("com_num").replaceAll("\"", "");
+
+        CompanyVO comInfo =  comMypageService.getComInfo(com_num);
+
+        return comInfo;
+
+    }
+
+    //기업 정보 수정요청
+    @PostMapping("modifyInfo")
+    public void modifyComInfo(@RequestBody CompanyVO cv){
+//        System.out.println(cv.toString());
+
+        comMypageService.modifyComInfo(cv);
+
+    }
+
+
 
 }

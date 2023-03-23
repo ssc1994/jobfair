@@ -25,4 +25,10 @@ public class CompanyVO {
     private String com_filePath;
     private String com_fileUuid;
 
+    //admin 페이지 참여업체 목록 가져오기 할 때
+    //mg_auth, user_regDate 도  한번에 CompanyVO 에서 받기 위해서 변수 선언
+    private String mg_auth;
+    private String user_regDate;
+
+
 }

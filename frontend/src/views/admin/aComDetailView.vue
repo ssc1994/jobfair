@@ -1,65 +1,118 @@
 <template>
-  <div>
+  <div class="container" style="max-width:1560px;">
 
     <div>
-      <h3>기업정보</h3>
       <div>
-        <div>
+        <div class="aplBoxCon">
           <div>
-            <img src="" alt="기업이미지">
-            <h5>(주)카카오</h5>
+            <h3>기업 정보</h3>
           </div>
-          <div>
-            <table>
-              <tr>
-                <td>기업번호</td>
-                <td>123-456-789</td>
-              </tr>
-              <tr>
-                <td>사업자등록번호</td>
-                <td>0000-0000-0000</td>
-              </tr>
-              <tr>
-                <td>전화번호</td>
-                <td>010-1234-5678</td>
-              </tr>
-              <tr>
-                <td>이메일</td>
-                <td>~~@gmail.com</td>
-              </tr>
-              <tr>
-                <td>업종</td>
-                <td>IT</td>
-              </tr>
-              <tr>
-                <td>대표자</td>
-                <td>홍길동</td>
-              </tr>
-              <tr>
-                <td>설립일</td>
-                <td>2022.10.11</td>
-              </tr>
-            </table>
+
+          <div class="infoWrapBox">
+            <div class="infoBox">
+              <div class="logoBox">
+                <img src="#">
+                <h3>카카오</h3>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">기업번호</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled>
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
+                <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled>
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">전화번호</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled>
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">이메일</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled>
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">업종</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled>
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">대표자</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled>
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">설립일</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled>
+              </div>
+
+
+            </div>
           </div>
+
         </div>
-        <div>
-          <button>승인하기</button>
-          <button>반려하기</button>
+
+
+        <div class="btnBox">
+          <button class="okBtn">승인하기</button>
+          <button class="noBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            반려하기
+          </button>
         </div>
       </div>
     </div>
 
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">반려하기</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="height: 100%">
+            <div class="infoModalBox">
+
+              <div class=" wrapBox3">
+
+                <div class="input-group">
+                  <span class="input-group-text">반려사유</span>
+                  <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
+                </div>
+
+                <div class="btnModalBox">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click.prevent="uQnAModi">
+                    반려하기
+                  </button>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
   </div>
 
-  <!-- 반려사유 팝업창 -->
-  <div>
-    <div>
-      <h4>반려사유</h4>
-      <button>X</button>
-      <input type="text"/>
-      <button>반려하기</button>
-    </div>
-  </div>
+
+
 </template>
 
 <script>
@@ -69,5 +122,49 @@ export default {
 </script>
 
 <style scoped>
+.infoWrapBox {
+  border: 1px solid grey;
+  width: 100%;
+  height: 600px;
+  margin: 0 auto;
+}
+
+.infoBox {
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.btnBox {
+  text-align: center;
+}
+
+.okBtn {
+  text-align: center;
+  margin-top: 30px;
+  height: 50px;
+  line-height: 50px;
+  width: 250px;
+  border: 1px solid gray;
+  margin-right: 15px;
+}
+.noBtn {
+  text-align: center;
+  margin-top: 30px;
+  height: 50px;
+  line-height: 50px;
+  width: 250px;
+  border: 1px solid gray;
+}
+
+.input-group textarea {
+  height: 150px;
+}
+
+.btnModalBox button {
+  float: right;
+  margin-top: 25px;
+}
 
 </style>

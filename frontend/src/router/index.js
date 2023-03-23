@@ -48,7 +48,7 @@ const routes = [
     component: () => import('../views/user/uApplyListView.vue')
   },
   {//유저 채용공고 상세화면
-    path: '/uJobPostDetailView',
+    path: '/uJobPostDetailView/:jpl_num',
     name: 'uJobPostDetailView',
     component: () => import('../views/user/uJobPostDetailView.vue')
   },
@@ -76,6 +76,16 @@ const routes = [
     path: '/uResumeView',
     name: 'uResumeView',
     component: () => import('../views/user/uResumeView.vue')
+  },
+  {//유저 이력서 상세보기
+    path: '/uResumeDetailView',
+    name: 'uResumeDetailView',
+    component: () => import('../views/user/uResumeDetailView.vue')
+  },
+  {//유저 이력서 수정
+    path: '/uModiResumeView',
+    name: 'uModiResumeView',
+    component: () => import('../views/user/uModiResumeView')
   },
 //*********************기업 화면*********************
   {//기업 메인화면
@@ -173,6 +183,21 @@ const routes = [
     path: '/aStatisticView',
     name: 'aStatisticView',
     component: () => import('../views/admin/aStatisticView.vue')
+  },
+  {//관리자 큐앤에이 리스트
+    path: '/aQnAView',
+    name: 'aQnAView',
+    component: () => import('../views/admin/aQnAView.vue')
+  },
+  {//관리자 큐앤에이 답변 작성
+    path: '/aQnAWriteView',
+    name: 'aQnAWriteView',
+    component: () => import('../views/admin/aQnAWriteView.vue')
+  },
+  {//관리자 큐앤에이 디테일
+    path: '/aQnADetailView',
+    name: 'aQnADetailView',
+    component: () => import('../views/admin/aQnADetailView.vue')
   },
     /////////////////// 부트스트랩////////////////////////////////////////////////////
   // {

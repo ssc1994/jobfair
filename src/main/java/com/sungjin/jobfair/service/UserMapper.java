@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -23,20 +24,21 @@ public interface UserMapper {
         //큐앤에이 등록
     public void qnaRegist(QnAVO vo);
         //큐앤에이 목록 가져오기
-    public ArrayList<QnAVO> getQnAList(Criteria cri);
+    public ArrayList<QnAVO> getQnAList(@Param("cri") Criteria cri);
         //큐앤에이 상세페이지 데이터 가져오기
     public QnAVO getQnADetail(int qa_num);
         //큐앤에이 수정
     public int uQnAModi(QnAVO vo);
-        //큐앤에이 기업 데이터 전달하기
-//    public QnAVO uQnABtnClick();
+
+    //메인화면에 큐앤에이 리스트 뽑기
+    public ArrayList<QnAVO> getMainQnAList();
 
 
     //################## 채용공고 Service #######################
         //채용공고 목록 가져오기
-    public ArrayList<EmpVO> getJobPostList();
+    public ArrayList<EmpListVO> getJobPostList(String selSortInt);
         //채용공고 검색 목록 가져오기
-    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo);
+    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo);
     //유저가 지원한 채용공고인지 찾기
     public int EmpApplied(String user_id, String jpl_num);
     //채용공고 지원하기
@@ -49,10 +51,14 @@ public interface UserMapper {
         //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo(String user_id);
         //이력서 삭제버튼 누르면 데이터 삭제하기
-    public void deleteResume(int res_num);
+    public void deleteResume(String res_num);
+    public void deleteEdu(String res_num);
+    public void deleteWe(String res_num);
+    public void deleteCert(String res_num);
 
 
     //################## 이력서 등록  #######################
+        //이력서 등록
         // 1) 이력서 -인적사항- 등록
     public void regResume(ResumeVO resVO);
         // 2) 이력서 -학력- 등록
@@ -61,19 +67,32 @@ public interface UserMapper {
     public void regResWe(WeVO weVO);
         // 4) 이력서 -자격증- 등록
     public void regResCert(CertVO certVO);
+        //이력서 상세페이지
+        // 1) 이력서 상세 가져오기
+    public ResumeVO getResDetail(String res_num);
+        // 2) 이력서 학력 가져오기
+    public ArrayList<EduVO> getEduDetail(String res_num);
+        // 3) 이력서 경력 가져오기
+    public ArrayList<WeVO> getWeDetail(String res_num);
+        // 4) 이력서 자격증 가져오기
+    public ArrayList<CertVO> getCertDetail(String res_num);
+        // 이력서 수정
+        // 1) 이력서 -인적사항- 수정
+    public void modiResume(ResumeVO resVO);
+        // 2) 이력서 -학력- 수정
+    public void modiResEdu(EduVO eduVO);
+        // 3) 이력서 -경력- 수정
+    public void modiResWe(WeVO weVO);
+        // 4) 이력서 -자격증- 수정
+    public void modiResCert(CertVO certVO);
 
+    //################## 지원현황(ApplyList) 관련 Service #######################
+    public ArrayList<EmpApplyVO> getApplyListAll(String user_id);
+    public ArrayList<EmpApplyVO> getApplyListO(String user_id);
+    public ArrayList<EmpApplyVO> getApplyListX(String user_id);
 
     //####################### 페이지네이션 #######################
-    //페이지 처리
-//    public ArrayList<QnAVO> getPage(Criteria cri);
 
-    //전체 게시글 가져오기
-//    public int getQnATotal();
-
-
-
-
-    //페이지네이션
 //    public Map<String, Object> uQnAListAxios(Criteria cri);
 
     public int uQnAGetTotal(Criteria cri);

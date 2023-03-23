@@ -5,7 +5,6 @@ import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 
 @Service("userService")
@@ -55,6 +54,11 @@ public class UserServiceImpl implements UserService {
     public int uQnAModi(QnAVO vo) {
         return userMapper.uQnAModi(vo);
     }
+
+    @Override
+    public ArrayList<QnAVO> getMainQnAList() {
+        return userMapper.getMainQnAList();
+    }
 //    @Override
 //    public QnAVO uQnABtnClick() {
 //        return userMapper.uQnABtnClick();
@@ -62,11 +66,11 @@ public class UserServiceImpl implements UserService {
 
     //################## 채용공고(jobPost) 관련 Service #######################
     @Override
-    public ArrayList<EmpVO> getJobPostList() {
-        return userMapper.getJobPostList();
+    public ArrayList<EmpListVO> getJobPostList(String selSortInt) {
+        return userMapper.getJobPostList(selSortInt);
     }
     @Override
-    public ArrayList<EmpVO> getJobPostSrc(EmpSearchVO vo) {
+    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo) {
         return userMapper.getJobPostSrc(vo);
     }
 
@@ -91,8 +95,23 @@ public class UserServiceImpl implements UserService {
         return userMapper.resumeInfo(user_id);
     }
     @Override
-    public void deleteResume(int res_num) {
+    public void deleteResume(String res_num) {
         userMapper.deleteResume(res_num);
+    }
+
+    @Override
+    public void deleteEdu(String res_num) {
+        userMapper.deleteEdu(res_num);
+    }
+
+    @Override
+    public void deleteWe(String res_num) {
+        userMapper.deleteWe(res_num);
+    }
+
+    @Override
+    public void deleteCert(String res_num) {
+        userMapper.deleteCert(res_num);
     }
 
     //################## 이력서(Resume) 관련 Service #######################
@@ -112,25 +131,58 @@ public class UserServiceImpl implements UserService {
     public void regResCert(CertVO certVO) {
         userMapper.regResCert(certVO);
     }
+    
+    //################## 지원현황(ApplyList) 관련 Service #######################
+    @Override
+    public ArrayList<EmpApplyVO> getApplyListAll(String user_id) { return userMapper.getApplyListAll(user_id); }
+    
+    @Override
+    public ArrayList<EmpApplyVO> getApplyListO(String user_id) { return userMapper.getApplyListO(user_id); };
+    
+    @Override
+    public ArrayList<EmpApplyVO> getApplyListX(String user_id) { return userMapper.getApplyListX(user_id); };
 
+    @Override
+    public ResumeVO getResDetail(String res_num) {
+        return userMapper.getResDetail(res_num);
+    }
 
+    @Override
+    public ArrayList<EduVO> getEduDetail(String res_num) {
+        return userMapper.getEduDetail(res_num);
+    }
 
+    @Override
+    public ArrayList<WeVO> getWeDetail(String res_num) {
+        return userMapper.getWeDetail(res_num);
+    }
 
+    @Override
+    public ArrayList<CertVO> getCertDetail(String res_num) {
+        return userMapper.getCertDetail(res_num);
+    }
+
+    @Override
+    public void modiResume(ResumeVO resVO) {
+        userMapper.modiResume(resVO);
+    }
+
+    @Override
+    public void modiResEdu(EduVO eduVO) {
+        userMapper.modiResEdu(eduVO);
+    }
+
+    @Override
+    public void modiResWe(WeVO weVO) {
+        userMapper.modiResWe(weVO);
+    }
+
+    @Override
+    public void modiResCert(CertVO certVO) {
+        userMapper.modiResCert(certVO);
+    }
     //################## 페이지네이션 관련 Service #######################
-//    @Override
-//    public ArrayList<QnAVO> getPage(Criteria cri) {
-//
-//        ArrayList<QnAVO> list = userMapper.getPage(cri);
-//        return list;
-//    }
-//    @Override
-//    public int getQnATotal() {
-//        return userMapper.getQnATotal();
-//    }
 
-
-
-    //페이지네이션
 //    @Override
 //    public Map<String, Object> uQnAListAxios(Criteria cri) {
 //        return userMapper.uQnAListAxios(cri);

@@ -132,7 +132,7 @@ export default {components: {SoftInput, SoftButton},
       cqnaRegist() {
         let myData = {
           user_id: this.cQnADetail.user_id,
-          com_num: this.cQnADetail.com_num,
+          com_num: JSON.parse(sessionStorage.getItem('sessionComp')),
           qa_content: this.cQnADetail.qa_content,
           qa_type: this.cQnADetail.qa_type,
           qa_reply: this.$route.params.qa_num
@@ -148,6 +148,12 @@ export default {components: {SoftInput, SoftButton},
                   name: 'cQnADetailView',
                   params: {
                     qa_num: this.$route.params.qa_num
+                  }
+                })
+                this.$router.push({
+                  name: 'cQnAView',
+                  params: {
+                    com_num: JSON.parse(sessionStorage.getItem('sessionComp'))
                   }
                 })
               }

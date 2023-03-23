@@ -12,7 +12,7 @@ import SoftUIDashboard from "./soft-ui-dashboard";
 import "bootstrap/dist/css/bootstrap.min.css" // [bootstrap]
 import "bootstrap" // [bootstrap]
 import session from 'vue-session'
-
+import VueMoment from 'moment'
 // Vue.use(BootstrapVue)
 
 
@@ -22,9 +22,11 @@ app.config.globalProperties.$axios = axios
 app.config.globalProperties.$store = store
 app.config.globalProperties.$router = router
 app.config.globalProperties.$session = session
+app.config.globalProperties.$moment = VueMoment
 app.use(SoftUIDashboard)
 app.use(BootstrapVue3)
 app.use(router)
 app.use(store)
+app.use(VueMoment)
 
 app.mount('#app')
