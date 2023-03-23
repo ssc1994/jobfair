@@ -36,7 +36,7 @@
         select *
         from QnA
         where qa_type like "%q%"
-        order by qa_num desc limit #{pageStart}, #{amount}
+        order by qa_num desc limit #{cri.pageStart}, #{cri.amount}
     </select>
 
 
@@ -61,6 +61,13 @@
 <!--    <select id="uQnABtnClick" resultType="QnAVO">-->
 <!--        select * from qna where com_num like '%3%'-->
 <!--    </select>-->
+
+    <select id="getMainQnAList" resultType="QnAVO">
+        select *
+        from QnA
+        where qa_type like "%q%"
+        order by qa_num desc
+    </select>
 
 
     <!--**************************************************채용공고**************************************************-->
@@ -225,7 +232,7 @@
 
     <!--페이지네이션-->
     <select id="uQnAGetTotal" resultType="int">
-        select count(*) from qna
+        select count(*) from qna where qa_type like "%q%"
     </select>
 
 

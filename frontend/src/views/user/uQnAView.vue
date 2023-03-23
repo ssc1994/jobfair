@@ -10,21 +10,21 @@
             <button @click.stop="addQnA">+ 질의 등록</button>
           </div>
 
-          <table class="table table-bordered">
+          <table id="qnaTable">
             <thead>
-            <tr>
-              <td>No</td>
-              <td>작성자</td>
-              <td>질문제목</td>
-              <td>등록시간</td>
+            <tr style="background-color: #0064ff; color: antiquewhite; height: 60px; font-size: 20px">
+              <td style="text-align: center; width: 100px; ">No</td>
+              <td style="text-align: center; width: 200px">작성자</td>
+              <td style="text-align: center; width: 500px">질문제목</td>
+              <td style="text-align: center; width: 200px">등록시간</td>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(row, idx) in QnAList" :key=idx @click="detail(row.qa_num)">
-              <td>{{idx + 1}}</td>
-              <td>{{ row.user_id }}</td>
+              <td style="text-align: center">{{idx + 1}}</td>
+              <td style="text-align: center">{{ row.user_id }}</td>
               <td>{{row.qa_title}}</td>
-              <td>{{ row.qa_regDate.substring(0,10) }}</td>
+              <td style="text-align: center">{{ row.qa_regDate.substring(0,10) }}</td>
             </tr>
             </tbody>
           </table>
@@ -32,14 +32,22 @@
         </div>
 
         <!--페이지네이션 부분-->
-        <a @click="goFirstPage(page - 1)">&lt;</a>
-        <a @click="goPrevPage(page - 1)">prev</a>
 
-        <a v-for="(paging, index) in pageList" :key="index" @click="onPageChange(paging - 1)" :class="paging - 1 === page ? 'page' : ''">{{paging}}</a>
+        <div class="paginationWrap">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
+            <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)" style="margin-right: 10px">Previous</a></li>
+            <template v-for="(item, index) in pageList" :key="index">
+              <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link" href="#" @click.prevent="ClickPage" id="index">{{item}}</span></li>
+            </template>
+            <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)" style="margin-right: 10px">Next</a></li>
+            <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)" style="margin-right: 10px">Last</a></li>
+          </ul>
+        </div>
 
 
-        <a @click="goNextPage(page + 1)">next</a>
-        <a @click="goLastPage(page + 1)">&gt;</a>
+
+
 
 
       </div>
@@ -49,19 +57,19 @@
 </template>
 
 <script>
+import {ref} from "vue";
+
 export default {
-  // name: "uQnAView",
-  // user_id: 'user123',
-  // qa_num: '',
 
   data() {
     return {
       QnAList: [],
       QnADetailList: [],
-      list: "",
+
       pages: "", // pageVO
       pageList: "", //pageVO.pageList 배열값
       detailNum: "",
+
 
       //페이지 이동에 필요한 초기값
       page: 1,
@@ -71,44 +79,39 @@ export default {
       end: "",
       realEnd: "",
 
-
     };
   },
+
+
+  watch: {
+    page: function () {
+      this.uQnAListAxios();
+    },
+
+  },
+
   created() {
     this.getQnAList();
     this.uQnAListAxios();
-    this.uQnAGetTotal();
+    // this.uQnAGetTotal();
   },
 
-  // computed: {
-  //   pagess: function () {
-  //     const list = [];
-  //     for(let index = this.start; index <= this.end; index++) {
-  //       list.push(index);
-  //     }
-  //     return list;
-  //   }
-  // },
 
   methods: {
     addQnA() {
-      this.$router.push("/uQnAWriteView")
+      this.$router.push({name: "uQnAWriteView", params: {com_num: -1}});
 
     },
     getQnAList() {
       this.$axios.post('/jobfair/getQnAList')
-          .then((res) => this.QnAList = res.data)
+          .then((res) => {
+            this.QnAList = res.data
+          })
+
           .catch((error) => console.log(error))
 
     },
-    // getQnADetailList() {
-    //   this.$axios.get('/jobfair/getQnADetailList?qa_num=' + this.qa_num)
-    //       .then((res) => {
-    //
-    //         self.$router.push("/uQnADetailView")
-    //       })
-    //       .catch((error) => this.QnADetailList = error.date)
-    // }
+
     detail(idx) {
       this.$router.push({
         //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
@@ -118,16 +121,22 @@ export default {
         }
       })
     },
+
     uQnAListAxios() {
       this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
           this.amount +
           "&page=" +
           this.page)
           .then((res) => {
-            console.log(res)
+           //  console.log(11111111);
+           // console.log(res.data)
+           //  console.log(222222222);
+
             this.list = res.data.list;
             this.pages = res.data.pageVO;
             this.pageList = this.pages.pageList;
+            this.QnAList = res.data.list;
+            // console.log(this.list)
 
             //페이지 이동에 필요한 데이터 담기
             this.page = this.pages.page;
@@ -140,13 +149,13 @@ export default {
           .catch((error) => console.log(error))
 
     },
-    uQnAGetTotal() {
-      this.$axios.post("/jobfair/uQnAGetTotal")
-          .then((res) => {
-            console.log(res)
-          })
-          .catch((error) => console.log(error))
-    },
+    // uQnAGetTotal() {
+    //   this.$axios.post("/jobfair/uQnAGetTotal")
+    //       .then((res) => {
+    //         console.log(res)
+    //       })
+    //       .catch((error) => console.log(error))
+    // },
     goFirstPage() {
       this.page = 1;
       this.uQnAListAxios();
@@ -169,7 +178,14 @@ export default {
     goLastPage() {
       this.page = this.realEnd;
       this.uQnAListAxios();
-    }
+    },
+
+    ClickPage() {
+      var clicked = event.target.innerHTML;
+      this.page = clicked
+    },
+
+
   }
 }
 
@@ -190,30 +206,67 @@ body, html {
 .qnaBox {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
 }
 
 .qnaBox h3 {
-  font-size: 350%;
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
 }
 
 .qnaBox button {
   border: none;
 }
 
-table {
+
+/*.table thead {*/
+/*  background-color: #202632;*/
+/*  color: white;*/
+/*}*/
+
+/*.table tbody tr:last-child td {*/
+/*  border-width: 1px;*/
+/*}*/
+
+
+.paginationWrap ul {
+  margin-top: 50px;
+  padding-left: 470px;
+}
+
+.paginationWrap .page-link {
+  background-color: #0064ff;
+}
+
+.paginationWrap li.active span {
+  background-color: #202632;
+  border: none;
+}
+
+#qnaTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
   width: 100%;
   border: 1px solid #444444;
   border-collapse: collapse;
 }
 
-.table thead {
-  background-color: grey;
-  color: white;
+#qnaTable td, #qnaTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
-.table tbody tr:last-child td {
-  border-width: 1px;
+#qnaTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#qnaTable tr:hover {background-color: #ddd;}
+
+#qnaTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }
 
 

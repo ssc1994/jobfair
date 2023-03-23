@@ -2,6 +2,7 @@ package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -25,6 +26,9 @@ public interface UserService {
     public int uQnAModi(QnAVO vo);
         //큐앤에이 기업 데이터 전달하기
 //    public QnAVO uQnABtnClick();
+
+    //메인화면에 큐앤에이 리스트 뽑기
+    public ArrayList<QnAVO> getMainQnAList();
 
 
     //################## 채용공고(jobPost) 관련 Service #######################
@@ -61,14 +65,7 @@ public interface UserService {
 
 
     //####################### 페이지네이션 #######################
-    //페이지 처리
-//    public ArrayList<QnAVO> getPage(Criteria cri);
 
-    //전체 게시글 가져오기
-//    public int getQnATotal();
-
-
-    //페이지네이션
 //    public Map<String, Object> uQnAListAxios(Criteria cri);
 
     public int uQnAGetTotal(Criteria cri);

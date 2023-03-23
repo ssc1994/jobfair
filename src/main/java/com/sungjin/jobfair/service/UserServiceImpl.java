@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
     public int uQnAModi(QnAVO vo) {
         return userMapper.uQnAModi(vo);
     }
+
+    @Override
+    public ArrayList<QnAVO> getMainQnAList() {
+        return userMapper.getMainQnAList();
+    }
 //    @Override
 //    public QnAVO uQnABtnClick() {
 //        return userMapper.uQnABtnClick();
@@ -117,20 +122,7 @@ public class UserServiceImpl implements UserService {
 
 
     //################## 페이지네이션 관련 Service #######################
-//    @Override
-//    public ArrayList<QnAVO> getPage(Criteria cri) {
-//
-//        ArrayList<QnAVO> list = userMapper.getPage(cri);
-//        return list;
-//    }
-//    @Override
-//    public int getQnATotal() {
-//        return userMapper.getQnATotal();
-//    }
 
-
-
-    //페이지네이션
 //    @Override
 //    public Map<String, Object> uQnAListAxios(Criteria cri) {
 //        return userMapper.uQnAListAxios(cri);

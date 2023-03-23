@@ -83,7 +83,7 @@
             <span>접수 시작 : {{ jpl_startDate }}</span><br/>
             <span>접수 마감 : {{ jpl_endDate }}</span>
           </div>
-          
+
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-bind:disabled="AppliedResult == 1" @click="postRes">
             {{ applyBtnText }}
           </button>
@@ -151,7 +151,7 @@
                   <h5>{{resumeAll.res_regDate}} </h5>
                 </label>
               </div>
-              
+
             </div>
             <div class="modal-footer">
               <!-- @click="supportResume" 넣기 -->
@@ -218,14 +218,13 @@ export default {
       com_ceo: '',
       com_businessRegistration: '',
       com_establishmentDate: '',
-      curTime: Date.now()
+      curTime: Date.now(),
 
       QnAComInfo: {
         user_id: JSON.parse(sessionStorage.getItem('sessionId')),
         com_num: ''
       },
       user_id : JSON.parse(sessionStorage.getItem('sessionId')),
-      jpl_num : '2',
       res_num : '1',
       //지원한 이력서
       resNum : 0,
@@ -281,43 +280,39 @@ export default {
           //   console.log(res)
           //   this.viewImg = res.data
           // }).catch(err => console.log(err))
-      //회사정보 불러오는 axios
-      this.$axios
-          .post('/jobfair/compInfo', {
-            com_num: this.com_num
-          })
-          .then(res => {
-            this.jpl_comPanyName = res.data.com_name
-            this.jpl_contact = res.data.com_phone
+          //회사정보 불러오는 axios
+          this.$axios
+              .post('/jobfair/compInfo', {
+                com_num: this.com_num
+              })
+              .then(res => {
+                this.jpl_comPanyName = res.data.com_name
+                this.jpl_contact = res.data.com_phone
 
-            this.com_name = res.data.com_name
-            this.com_phone = res.data.com_phone
-            this.com_email = res.data.com_email
-            this.com_address = res.data.com_address
-            this.com_category = res.data.com_category
-            this.com_ceo = res.data.com_ceo
-            this.com_establishmentDate = res.data.com_establishmentDate
-            this.com_businessRegistration = res.data.com_businessRegistration
-            console.log("comData")
-            console.log(res)
-          }).catch(err => {
-        console.log(err)
-      })
+                this.com_name = res.data.com_name
+                this.com_phone = res.data.com_phone
+                this.com_email = res.data.com_email
+                this.com_address = res.data.com_address
+                this.com_category = res.data.com_category
+                this.com_ceo = res.data.com_ceo
+                this.com_establishmentDate = res.data.com_establishmentDate
+                this.com_businessRegistration = res.data.com_businessRegistration
+                console.log("comData")
+                console.log(res)
+              }).catch(err => {
+            console.log(err)
+          })
       this.viewImg = "file:///"+this.viewImg
       console.log(this.viewImg)
 
     }).catch(err => {
       console.log(err)
-    })
+    }),
 
-      user_id: JSON.parse(sessionStorage.getItem('sessionId')),
-      com_num: 3
-    };
-  },
-  created() {
-    this.resumeinfo();
-  },
-  created() {
+
+
+        this.resumeinfo();
+
 
     this.$axios.post("/jobfair/EmpApplied", {user_id: this.user_id, jpl_num: this.jpl_num})
         .then((res) => {
@@ -337,7 +332,7 @@ export default {
 
   },
   methods: {
-    resumeinfo() {
+    /*resumeinfo() {
       this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
           .then((res) => {
             this.resumeArray = res.data
@@ -354,19 +349,19 @@ export default {
       console.log(target)
       // this.$router.go('/uJobPostDetailView')
 
-    }
+    }*/
     // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
     // supportResume(){
     //   router.push({path:"/"})
     // }
     resumeinfo() {
-        this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
-            .then((res) => {
-              this.resumeArray = res.data
-              console.log(res.data)
-            }).catch((error) => {
-          console.log(error)
-        })
+      this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
+          .then((res) => {
+            this.resumeArray = res.data
+            console.log(res.data)
+          }).catch((error) => {
+        console.log(error)
+      })
     },
     Applied() {
 
@@ -379,8 +374,8 @@ export default {
 
 
       this.$axios.post("/jobfair/EmpApply", {user_id: this.user_id,
-                                                      jpl_num: this.jpl_num,
-                                                      res_num: this.resNum
+        jpl_num: this.jpl_num,
+        res_num: this.resNum
       })
           .then((res) => {
             this.apply = res.data;
@@ -390,12 +385,12 @@ export default {
       })
 
 
-    }
+    },
     // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
     // supportResume(){
     //   router.push({path:"/"})
     // }
-  }
+
     // getJobPostInfo() {
     //   this.$axios.get('/jobfair/getJobPostInfo/', {params: {com_num: this.com_num}})
     //       .then((res) => this.CompanyInfo = res.data)
@@ -406,7 +401,6 @@ export default {
     uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
 
       this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
-      
       // this.$axios
       //     .post('/jobfair/uQnABtnClick')
       //     .then((res) => {

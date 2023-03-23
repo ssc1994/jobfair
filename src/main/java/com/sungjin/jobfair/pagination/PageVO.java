@@ -19,7 +19,7 @@ public class PageVO {
 
     private Criteria cri; //페이지 기준 -> Criteria 객체에 페이지 번호와 amount값이 있으므로 넣어주고 변수로 사용
 
-    private int pageCnt = 10;
+    private int pageCnt = 5;
 
     private ArrayList<Integer> pageList; // 화면에 반복시킬 페이지
 

@@ -700,4 +700,8 @@ export default {
 .menu01 {
   border: 3px solid;
 }
+
+navbar {
+  z-index: 10;
+}
 </style>

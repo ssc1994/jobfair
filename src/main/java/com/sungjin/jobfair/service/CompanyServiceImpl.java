@@ -4,6 +4,7 @@ import com.sungjin.jobfair.command.CompanyVO;
 import com.sungjin.jobfair.command.EmpVO;
 import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class CompanyServiceImpl implements CompanyService{
         companyMapper.cqnaRegist(vo);
     }
     @Override
-    public ArrayList<QnAVO> cgetQnAList(String com_num) {
-        return companyMapper.cgetQnAList(com_num);
+    public ArrayList<QnAVO> cgetQnAList(String com_num, Criteria cri) {
+        return companyMapper.cgetQnAList(com_num, cri);
     }
     @Override
     public QnAVO getUserQnADetail(int qa_num) {
@@ -63,4 +64,20 @@ public class CompanyServiceImpl implements CompanyService{
     public CompanyVO info(String com_num) {
         return companyMapper.info(com_num);
     }
+
+
+
+    //################## 페이지네이션 관련 Service #######################
+
+//    @Override
+//    public Map<String, Object> uQnAListAxios(Criteria cri) {
+//        return userMapper.uQnAListAxios(cri);
+//    }
+
+    @Override
+    public int cQnAGetTotal(Criteria cri, String com_num) {
+        return companyMapper.cQnAGetTotal(cri, com_num);
+    }
+
+
 }
