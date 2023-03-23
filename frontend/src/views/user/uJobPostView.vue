@@ -13,6 +13,7 @@
 
             <div class="empSearchLocal">
               <input type="button" class="topBtn1" value="지역을 선택하세요" @click="upDown1"/>
+
               <!--                <span><img src="@/assets/icon_city.png"></span>-->
               <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)"/>-->
 
@@ -36,10 +37,6 @@
           <!--  지역 또는 직무 클릭시 나오는 div -->
           <div class="showLocal" v-if="fold1">
             <!--  지역 검색 -->
-            <div>
-              <input placeholder="지역을 입력해주세요." >
-            </div>
-
             <div class="empBoxLabel citySrc1">
               <!--시-->
               <div v-for="city in city" :key="city.cityCode">
@@ -60,14 +57,9 @@
           </div>
           <!--   직무  -->
           <div class="showJob" v-if="fold2">
-            <!--  지역 검색 -->
-            <div>
-              <input placeholder="직무을 입력해주세요." >
-            </div>
 
-            <div class="empBoxLabel citySrc1">
-              <!--시-->
-              <div v-for="job in jobArr" :key="job">
+            <div class="empBoxLabel jobSrc1">
+              <div v-for="job in jobArr" :key="job" class="jobSrc1Div">
                 <input type="checkbox" :id="job" name="jpl_duty" @change="plus" :value="job" v-model="selectedTag[2].tagValue">
                 <label :for="job">{{ job }}</label>
               </div>
@@ -202,12 +194,16 @@
               </div>
             </div>
             <div class="empSearchTag">
-              <button type="button" class="btn btn-primary searchBtn" @click.prevent="jobPostSearch">검색</button>
-              <p v-for="(tagValue, i) in selectedTag" :key="i" style="display: inline-block">
+
+              <p v-for="(tagValue, i) in selectedTag" :key="i" style="display: inline-block; float: left; line-height: 3;">
                 <span v-for="(tag, i) in tagValue.tagValue" :key="i" class="tagDesign">
                   {{tag}}<input type="button" @click="del" value="X" :id="tagValue.tagCode+i" style="border:0;padding:0 5px;">
                 </span>
               </p>
+<!--              <div style="overflow: hidden;">-->
+                <button type="button" class="btn btn-primary searchBtn" @click.prevent="jobPostSearch">검색</button>
+<!--              </div>-->
+
             </div>
 
           </div>
@@ -216,9 +212,11 @@
       </div>
 
 
-      <select class="col-2">
+      <b style="padding:10px;color:#0064ff;border:1px solid #0064ff;border-radius: 20px;">분류기준</b>
+      <select class="col-2 selSort" v-model="selSort" @change="sortEvent" style="padding:10px;">
         <option>최신등록순</option>
         <option>마감임박순</option>
+        <option>연봉순</option>
       </select>
 
       <div class="row empListBox">
@@ -227,7 +225,7 @@
 
           <div class="empBoxCon ">
             <router-link to="" class="left empBoxCompany">
-              <p>{{ jobpost.com_name }}</p>
+              <p>(주) {{ jobpost.com_name }}</p>
               <img src="@/assets/kakao.png" >
             </router-link>
             <div class="left empBoxText">
@@ -240,102 +238,18 @@
                 <span class="left empBoxDday">D-27</span>
 <!--                <input type="text" class="left empBoxDday" style="width: 65px" v-model="dDay" disabled>-->
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
-                <button type="button" class="btn btn-primary aplBtn right applied">지원완료</button>
+                <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.user_id == user_id">
+                  지원완료 {{jobpost.user_id}}
+                </button>
+                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.user_id != user_id">
+                  지원하기
+                </button>
               </div>
 
             </div>
 
           </div>
         </div>
-
-<!--        <div class="empBoxConWrap col-6">-->
-<!--          <div class="empBoxCon ">-->
-<!--            <router-link to="" class="left empBoxCompany">-->
-<!--              <p>(주) 카카오</p>-->
-<!--              <img src="@/assets/kakao.png" >-->
-<!--            </router-link>-->
-<!--            <div class="left empBoxText">-->
-<!--              <router-link to="">-->
-<!--                <p class="empTitle">UIUX 디자이너</p>-->
-
-<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
-<!--              </router-link>-->
-<!--              <div style="padding-top:20px;">-->
-<!--                <span class="left empBoxDday">D-27</span>-->
-<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="empBoxConWrap col-6">-->
-<!--          <div class="empBoxCon ">-->
-<!--            <router-link to="" class="left empBoxCompany">-->
-<!--              <p>(주) 카카오</p>-->
-<!--              <img src="@/assets/kakao.png" >-->
-<!--            </router-link>-->
-<!--            <div class="left empBoxText">-->
-<!--              <router-link to="">-->
-<!--                <p class="empTitle">UIUX 디자이너</p>-->
-
-<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
-<!--              </router-link>-->
-<!--              <div style="padding-top:20px;">-->
-<!--                <span class="left empBoxDday">D-27</span>-->
-<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="empBoxConWrap col-6">-->
-<!--          <div class="empBoxCon ">-->
-<!--            <router-link to="" class="left empBoxCompany">-->
-<!--              <p>(주) 카카오</p>-->
-<!--              <img src="@/assets/kakao.png" >-->
-<!--            </router-link>-->
-<!--            <div class="left empBoxText">-->
-<!--              <router-link to="">-->
-<!--                <p class="empTitle">UIUX 디자이너</p>-->
-
-<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
-<!--              </router-link>-->
-<!--              <div style="padding-top:20px;">-->
-<!--                <span class="left empBoxDday">D-27</span>-->
-<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="empBoxConWrap col-6">-->
-<!--          <div class="empBoxCon ">-->
-<!--            <router-link to="" class="left empBoxCompany">-->
-<!--              <p>(주) 카카오</p>-->
-<!--              <img src="@/assets/kakao.png" >-->
-<!--            </router-link>-->
-<!--            <div class="left empBoxText">-->
-<!--              <router-link to="">-->
-<!--                <p class="empTitle">UIUX 디자이너</p>-->
-
-<!--                <p class="empBoxTag">경력무관 초대졸 경기도 성남시 정규직 3,000~3,400만원</p>-->
-<!--              </router-link>-->
-<!--              <div style="padding-top:20px;">-->
-<!--                <span class="left empBoxDday">D-27</span>-->
-<!--                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">지원하기</button>-->
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--          </div>-->
-<!--        </div>-->
-
       </div>
     </div>
   </div>
@@ -387,23 +301,23 @@ export default {
         { cityCode : 17, cityName : "제주특별자치도"}
       ],
       cityGoo : [
-        { cityCode: 1, gooName: ["서울 전체", "종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구","강동구"]},
-        { cityCode: 2, gooName: ["부산 전체", "중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"] },
-        { cityCode: 3, gooName: ["인천 전체", "중구", "동구", "남구", "연수구", "남동구", "부평구", "계양구", "서구", "강화군", "옹진군"] },
-        { cityCode: 4, gooName: ["대구 전체", "중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군"] },
-        { cityCode: 5, gooName: ["광주 전체", "동구", "서구", "남구", "북구", "광산구"] },
-        { cityCode: 6, gooName: ["대전 전체", "동구", "중구", "서구", "유성구", "대덕구"] },
-        { cityCode: 7, gooName: ["울산 전체", "중구", "남구", "동구", "북구", "울주군"] },
-        { cityCode: 8, gooName: ["세종 전체"] },
-        { cityCode: 9, gooName: ["경기 전체", "가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"] },
-        { cityCode: 10, gooName: ["강원 전체", "원주시", "춘천시", "강릉시", "동해시", "속초시", "삼척시", "홍천군", "태백시", "철원군", "횡성군", "평창군", "영월군", "정선군", "인제군", "고성군", "양양군", "화천군", "양구군"] },
-        { cityCode: 11, gooName: ["충청북도 전체", "청주시", "충주시", "제천시", "보은군", "옥천군", "영동군", "증평군", "진천군", "괴산군", "음성군", "단양군"] },
-        { cityCode: 12, gooName: ["충청남도 전체", "천안시", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군"] },
-        { cityCode: 13, gooName: ["경상북도 전체", "포항시", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군"] },
-        { cityCode: 14, gooName: ["경상남도 전체", "창원시", "김해시", "진주시", "양산시", "거제시", "통영시", "사천시", "밀양시", "함안군", "거창군", "창녕군", "고성군", "하동군", "합천군", "남해군", "함양군", "산청군", "의령군"] },
-        { cityCode: 15, gooName: ["전라북도 전체", "전주시", "익산시", "군산시", "정읍시", "완주군", "김제시", "남원시", "고창군", "부안군", "임실군", "순창군", "진안군", "장수군", "무주군"] },
-        { cityCode: 16, gooName: ["전라남도 전체", "여수시", "순천시", "목포시", "광양시", "나주시", "무안군", "해남군", "고흥군", "화순군", "영암군", "영광군", "완도군", "담양군", "장성군", "보성군", "신안군", "장흥군", "강진군", "함평군", "진도군", "곡성군", "구례군"] },
-        { cityCode: 17, gooName: ["제주도 전체", "제주시", "서귀포시"]}
+        { cityCode: 1, gooName: ["서울", "종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구","강동구"]},
+        { cityCode: 2, gooName: ["부산", "중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"] },
+        { cityCode: 3, gooName: ["인천", "중구", "동구", "남구", "연수구", "남동구", "부평구", "계양구", "서구", "강화군", "옹진군"] },
+        { cityCode: 4, gooName: ["대구", "중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군"] },
+        { cityCode: 5, gooName: ["광주", "동구", "서구", "남구", "북구", "광산구"] },
+        { cityCode: 6, gooName: ["대전", "동구", "중구", "서구", "유성구", "대덕구"] },
+        { cityCode: 7, gooName: ["울산", "중구", "남구", "동구", "북구", "울주군"] },
+        { cityCode: 8, gooName: ["세종"] },
+        { cityCode: 9, gooName: ["경기", "가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"] },
+        { cityCode: 10, gooName: ["강원", "원주시", "춘천시", "강릉시", "동해시", "속초시", "삼척시", "홍천군", "태백시", "철원군", "횡성군", "평창군", "영월군", "정선군", "인제군", "고성군", "양양군", "화천군", "양구군"] },
+        { cityCode: 11, gooName: ["충청북도", "청주시", "충주시", "제천시", "보은군", "옥천군", "영동군", "증평군", "진천군", "괴산군", "음성군", "단양군"] },
+        { cityCode: 12, gooName: ["충청남도", "천안시", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군"] },
+        { cityCode: 13, gooName: ["경상북도", "포항시", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군"] },
+        { cityCode: 14, gooName: ["경상남도", "창원시", "김해시", "진주시", "양산시", "거제시", "통영시", "사천시", "밀양시", "함안군", "거창군", "창녕군", "고성군", "하동군", "합천군", "남해군", "함양군", "산청군", "의령군"] },
+        { cityCode: 15, gooName: ["전라북도", "전주시", "익산시", "군산시", "정읍시", "완주군", "김제시", "남원시", "고창군", "부안군", "임실군", "순창군", "진안군", "장수군", "무주군"] },
+        { cityCode: 16, gooName: ["전라남도", "여수시", "순천시", "목포시", "광양시", "나주시", "무안군", "해남군", "고흥군", "화순군", "영암군", "영광군", "완도군", "담양군", "장성군", "보성군", "신안군", "장흥군", "강진군", "함평군", "진도군", "곡성군", "구례군"] },
+        { cityCode: 17, gooName: ["제주도", "제주시", "서귀포시"]}
       ],
       jobArr : [
         "경영ㆍ사무",
@@ -424,7 +338,9 @@ export default {
       fold1 : false,
       fold2 : false,
       arrSrc : "up",
-
+      selSort : '최신등록순',
+      selSortInt : 1,
+      user_id: sessionStorage.getItem('sessionId'),
 
       //엑시오스 테스트
       users : '',
@@ -438,7 +354,10 @@ export default {
     }
   },
   beforeCreate() {
-    this.$axios.post('/jobfair/getJobPostList/')
+
+    console.log(this.selSortInt);
+    console.log("아이디"+this.user_id);
+    this.$axios.post('/jobfair/getJobPostList/',{selSortInt: 1})
         .then((res) => {
               this.jobPostList = res.data;
             }
@@ -451,6 +370,19 @@ export default {
     test () {
       console.log(this.selectedTag[0].tagValue)
     },
+    getJobPostList(e) {
+
+      this.$axios.post('/jobfair/getJobPostList/', {selSortInt: this.selSortInt})
+          .then((res) => {
+                this.jobPostList = res.data;
+                console.log(this.selSort);
+              }
+          )
+          .catch((error) => {
+            console.log(error);
+          })
+    },
+
     //구 필터
     plus : function(e) {
       this.checkedCity = e.target.id;
@@ -470,16 +402,6 @@ export default {
             }
         }
 
-    },
-    //업다운 아이콘
-    upDown1 : function (e){
-      this.fold1 = !this.fold1;
-      this.fold2 = false;
-    },
-    //업다운 아이콘
-    upDown2 : function (e){
-      this.fold2 = !this.fold2;
-      this.fold1 = false;
     },
       jobPostSearch(){
         var jpl_locationSi = this.selectedTag[0].tagValue;
@@ -511,7 +433,8 @@ export default {
           jpl_salary:jpl_salary,
           jpl_locationSi:jpl_locationSi,
           jpl_locationGu:jpl_locationGu,
-          inputSearch :this.inputSearch
+          inputSearch :this.inputSearch,
+          selSortInt : this.selSortInt
         }
 
         if(cnt == 0 && this.inputSearch == ""){
@@ -539,14 +462,40 @@ export default {
         }
       })
     },
-    // setDDay(){
-    //   const moment = require('moment')
-    //   var time = moment();
-    //   var etime = moment(this.jpl_endDate, 'YYYY-MM-DD');
-    //   var curTime=moment.duration(etime.diff(time))
-    //   var diffDay=curTime.days()
-    //   this.dDay = diffDay
-    // }
+    //지역 열고 닫기
+    upDown1 : function (e){
+      this.fold1 = !this.fold1;
+      this.fold2 = false;
+    },
+    //직무 열고 닫기
+    upDown2 : function (e){
+      this.fold2 = !this.fold2;
+      this.fold1 = false;
+    },
+    sortEvent(e){
+      console.log(this.selSort);
+      if(this.selSort == "최신등록순"){
+        this.selSortInt = '1';
+      }else if(this.selSort == "마감임박순"){
+        this.selSortInt = '2';
+      }else if(this.selSort == "연봉순"){
+        this.selSortInt = '3';
+      }
+
+      var cnt = 0;
+      console.log(this.selectedTag.length);
+      for(var i=0; i < this.selectedTag.length; i++){
+        for(var j=0; j < this.selectedTag[i].tagValue.length; j++){
+          cnt++;
+        }
+      }
+
+      if(cnt == 0){
+        this.getJobPostList();
+      } else {
+        this.jobPostSearch();
+      }
+    },
   }
 }
 </script>
@@ -564,6 +513,26 @@ export default {
 
 
 a {text-decoration: none;}
+
+select {
+  -moz-appearance: none;
+}
+
+select:hover {
+  border-color: #888;
+}
+
+select:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222;
+  outline: none;
+}
+
+select:disabled {
+  opacity: 0.5;
+}
 
 
 html, body {width:100%;
@@ -584,7 +553,7 @@ html, body {width:100%;
 .empBoxTitle {
   font-weight: bold;
   font-size: 18px;
-  background-color: #efefef;
+  /*background-color: #efefef;*/
 }
 .empBoxTag {color:#838383;}
 
@@ -671,6 +640,7 @@ h3{font-weight: bold;
   border-radius: 20px;
   text-align: left;
   margin-bottom: 20px;
+  height:auto;
 
 }
 
@@ -679,9 +649,9 @@ h3{font-weight: bold;
 .empSearchBox:hover {box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
 
 .empSearchTitle {font-weight:bold;
-  background-color: #dedede;
+  /*background-color: #dedede;*/
   display: inline-block;
-  text-align: center;
+  /*text-align: center;*/
   width:100%;
   height:30px;
 
@@ -694,7 +664,7 @@ h3{font-weight: bold;
 .empSearchWrap > div {
   float: left;
   width:33.33%;
-
+  box-sizing: border-box;
 
 }
 
@@ -703,23 +673,20 @@ h3{font-weight: bold;
 .empSearchWrap > div > button {
   width:100%;
   height:50px;
-  text-align: left;
-  background-color: #efefef;
+  /*background-color: #efefef;*/
   border:1px solid #dedede;
   font-weight: bold;
-
-
-
 }
+
 
 .empBoxTitle {
   font-weight: bold;
   font-size: 15px;
-  text-align: center;
   padding:10px;
   border: 1px solid #dedede;
+  background-color: #efefef;
+
 }
-.empSearchBoxWrap:hover {border: 1px solid #0064ff;}
 
 
 
@@ -727,7 +694,25 @@ h3{font-weight: bold;
   width:100%;
   height:50px;
   border:0;
-  border-bottom: 2px solid black;
+  border: 1px solid #dedede;
+  padding-left: 50px;
+  background-image: url("@/assets/icon_src.svg");
+  background-position: 15px 10px;
+  background-repeat: no-repeat;
+  background-size: 23px;
+
+
+}
+
+.empSearchInput input:focus {border:1px solid #0064ff;}
+
+.empSearchLocal input {border-right: none;}
+.empSearchJob input {border-right: none;}
+.empSearchLocal input, .empSearchJob input{
+  text-align: left;
+  padding-left: 60px;
+  border: 1px solid #dedede;
+  background-color: #efefef;
 }
 
 .empSearchLocal img, .empSearchJob img{border:0;
@@ -737,19 +722,35 @@ h3{font-weight: bold;
 
 /* 공고 검색 */
 .showLocal {height: 200px;
-  border: 1px solid #dedede;
 
 }
-.showLocal .empBoxLabel {border:0;height:90%;}
 
+.showJob {height:200px;}
+.showLocal .empBoxLabel {border:0;height:90%;}
+.showJob .empBoxLabel {border:0;height:100%; padding:0px;}
 .jobCate_1, .jobCate_2, .jobCate_3 {width:33.3%;display: inline-block;}
 
 .empBoxLabel {
   padding:10px;
-  height:100px;
+  height:120px;
   border: 1px solid #dedede;
   overflow: auto;
+
 }
+
+.empBoxLabel div label{
+                       padding:5px 10px;
+                       margin: 2px;
+                       font-size: 13px;
+}
+
+.empBoxLabel div input {display: none;}
+
+
+.empBoxLabel div input:checked + label{border:1px solid #0064ff;
+                                border-radius: 20px;}
+.empBoxLabel .jobSrc1Div input:checked + label {border:1px solid #0064ff; border-radius:20px;width:90%; height:90%;}
+
 .empBoxLabel label {padding-left:8px;}
 
 .empSearchTag {margin-top:20px;}
@@ -782,34 +783,58 @@ h3{font-weight: bold;
 }
 
 .citySrc1 {
-  width:30%;
+  width:40%;
   display: inline-block;
 
 }
+
+.citySrc1 div {display:inline-block;width:50%;}
 
 .citySrc2 {
-  width:70%;
+  width:60%;
   display: inline-block;
 }
+
+.citySrc2 div {display: inline-block;width:50%;}
+
+.jobSrc1 {height:auto;}
+
+
+
+
+.jobSrc1 div{display: inline-block;
+            width:16.66%;
+            height:50px;
+            /*border:1px solid #dedede;*/
+            /*background-color: #f2f6ff;*/
+            text-align: center;
+            line-height: 35px;
+            cursor:pointer;
+}
+
+.jobSrc1 div input {width:100%;display: none;}
+.jobSrc1 div label {width:100%;}
 
 .topBtn1 {width:100%;
   height:50px;
-  border: 1px solid #dedede;
   font-weight: bold;
-  background-image: url("@/assets/icon_city.png");
-  background-position: 30px 10px;
+  background-image: url("@/assets/icon_location.svg");
+  background-position: 15px 10px;
   background-repeat: no-repeat;
-  background-size: 25px;
+  background-size: 27px;
+  background-color: white;
 }
 .topBtn2 {width:100%;
   height:50px;
-  border: 1px solid #dedede;
   font-weight: bold;
-  background-image: url("@/assets/icon_job.png");
-  background-position: 30px 10px;
+  background-image: url("@/assets/icon_jobcard.svg");
+  background-position: 15px 10px;
   background-repeat: no-repeat;
-  background-size: 25px;
+  background-size: 30px;
+  background-color: white;
 
 }
+
+.selSort {width:130px;font-weight: bold;border:0;}
 
 </style>

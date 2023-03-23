@@ -25,6 +25,7 @@ public class EmpSearchVO {
     private String[] jpl_locationSi;
     private String[] jpl_locationGu;
     private String inputSearch;
+    private String selSortInt;
 
 
 }

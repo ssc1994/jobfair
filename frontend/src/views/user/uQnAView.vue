@@ -7,7 +7,6 @@
 
           <div class="qnaBox">
             <h3>Q&A</h3>
-            <button @click.stop="addQnA">+ 질의 등록</button>
           </div>
 
           <table id="qnaTable">
@@ -32,6 +31,35 @@
         </div>
 
         <!--페이지네이션 부분-->
+        <!--        <a @click="goFirstPage(page - 1)">&lt;</a>-->
+        <!--        <a @click="goPrevPage(page - 1)">prev</a>-->
+
+        <!--                <a v-for="(paging, index) in pageList" :key="index" @click="onPageChange(paging - 1)" :class="paging - 1 === page ? 'page' : ''">{{paging}}</a>-->
+
+        <!--        <div v-for="(paging, index) in pageList" :key="index">-->
+        <!--          <router-link to="{ path: '/uQnAView'+index }">{{ paging }}</router-link>-->
+        <!--        </div>-->
+
+        <!--        <a v-for="n in pageList" :key="n" :class="[n === ]"></a>-->
+
+        <!--        <a v-for="(paging, index) in pageList" :key="index">{{ paging }}</a>-->
+
+        <!--        <a v-for="(paging, index) in pageList" :key="index" @click="uQnAListAxios">{{paging}}</a>-->
+
+
+
+        <!--        <a @click="goNextPage(page + 1)">next</a>-->
+        <!--        <a @click="goLastPage(page + 1)">&gt;</a>      -->
+
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)">First</a></li>
+          <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)">Previous</a></li>
+          <template v-for="(item, index) in pageList" :key="index">
+            <li class="page-item" :class="{'active' : item == currentPage}"><span class="page-link" href="#" @click.prevent="ClickPage()" id="index">{{item}}</span></li>
+          </template>
+          <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)">Next</a></li>
+          <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)">Last</a></li>
+        </ul>
 
         <div class="paginationWrap">
           <ul class="pagination">
@@ -45,8 +73,6 @@
           </ul>
         </div>
 
-        <a @click="goNextPage(page + 1)">next</a>
-        <a @click="goLastPage(page + 1)">&gt;</a>
 
       </div>
     </div>
@@ -63,7 +89,17 @@ export default {
     return {
       QnAList: [],
       QnADetailList: [],
+      list: ref([]),
+      cache: ref([]),
 
+      currentPage: ref(0),
+
+      isBtnFirst : ref(true),
+      isBtnPrev : ref(true),
+      isBtnNext : ref(true),
+      isBtnLast : ref(true),
+
+      // list: "",
       pages: "", // pageVO
       pageList: "", //pageVO.pageList 배열값
       detailNum: "",
@@ -79,22 +115,27 @@ export default {
 
     };
   },
-
-
+  props: {
+    listArray: {
+      type: Array,
+      required: true
+    }
+  },
   watch: {
     page: function () {
       this.uQnAListAxios();
     },
-
   },
-
   created() {
     this.getQnAList();
     this.uQnAListAxios();
     // this.uQnAGetTotal();
   },
-
-
+  computed: {
+    paginatedData() {
+      return this.listArray.slice(this.pages.start, this.pages.end);
+    }
+  },
   methods: {
     addQnA() {
       this.$router.push({name: "uQnAWriteView", params: {com_num: -1}});
@@ -126,15 +167,17 @@ export default {
           "&page=" +
           this.page)
           .then((res) => {
-           //  console.log(11111111);
-           // console.log(res.data)
-           //  console.log(222222222);
-
             this.list = res.data.list;
             this.pages = res.data.pageVO;
             this.pageList = this.pages.pageList;
             this.QnAList = res.data.list;
             // console.log(this.list)
+
+            // console.log(this.pages.page)
+            // console.log(this.pages.prev)
+            // console.log(this.pages.start)
+            // console.log(this.pages.end)
+            // console.log(this.pages.realEnd)
 
             //페이지 이동에 필요한 데이터 담기
             this.page = this.pages.page;
@@ -177,13 +220,38 @@ export default {
       this.page = this.realEnd;
       this.uQnAListAxios();
     },
+    onPageChange(e) {
+      this.$axios.post('/jobfair/uQnAListAxios', {
+        amount: this.amount,
+        page: this.e.target
+      })
+    },
+    // pageArrow(e) {
+    //   let movePage = parseInt(this.pages.page.value)
+    //   if(e == 'first') {
+    //     movePage = this.pages.start.value
+    //   } else if(e == 'last') {
+    //     movePage = this.pages.end.value
+    //   } else if(e == 'prev') {
+    //     movePage = this.pages.prev
+    //   } else if(e == 'next') {
+    //     movePage = this.pages.next
+    //   }
+    // },
+    page(item) {
+      console.log(item.currentTarget.id)
 
+    },
     ClickPage() {
       var clicked = event.target.innerHTML;
-      this.page = clicked
+      console.log(clicked)
     },
-
-
+    // paging() {
+    //   this.pageList.value = [];
+    //
+    //
+    //
+    // }
   }
 }
 

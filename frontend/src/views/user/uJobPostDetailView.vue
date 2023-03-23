@@ -411,7 +411,7 @@ setInterval(this.curcur,1000);
     uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
 
       this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
-      
+
       // this.$axios
       //     .post('/jobfair/uQnABtnClick')
       //     .then((res) => {
