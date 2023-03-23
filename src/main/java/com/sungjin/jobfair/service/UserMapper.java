@@ -24,13 +24,14 @@ public interface UserMapper {
         //큐앤에이 등록
     public void qnaRegist(QnAVO vo);
         //큐앤에이 목록 가져오기
-    public ArrayList<QnAVO> getQnAList(Criteria cri);
+    public ArrayList<QnAVO> getQnAList(@Param("cri") Criteria cri);
         //큐앤에이 상세페이지 데이터 가져오기
     public QnAVO getQnADetail(int qa_num);
         //큐앤에이 수정
     public int uQnAModi(QnAVO vo);
-        //큐앤에이 기업 데이터 전달하기
-//    public QnAVO uQnABtnClick();
+
+    //메인화면에 큐앤에이 리스트 뽑기
+    public ArrayList<QnAVO> getMainQnAList();
 
 
     //################## 채용공고 Service #######################
@@ -87,16 +88,7 @@ public interface UserMapper {
 
 
     //####################### 페이지네이션 #######################
-    //페이지 처리
-//    public ArrayList<QnAVO> getPage(Criteria cri);
 
-    //전체 게시글 가져오기
-//    public int getQnATotal();
-
-
-
-
-    //페이지네이션
 //    public Map<String, Object> uQnAListAxios(Criteria cri);
 
     public int uQnAGetTotal(Criteria cri);

@@ -184,6 +184,21 @@ const routes = [
     name: 'aStatisticView',
     component: () => import('../views/admin/aStatisticView.vue')
   },
+  {//관리자 큐앤에이 리스트
+    path: '/aQnAView',
+    name: 'aQnAView',
+    component: () => import('../views/admin/aQnAView.vue')
+  },
+  {//관리자 큐앤에이 답변 작성
+    path: '/aQnAWriteView',
+    name: 'aQnAWriteView',
+    component: () => import('../views/admin/aQnAWriteView.vue')
+  },
+  {//관리자 큐앤에이 디테일
+    path: '/aQnADetailView',
+    name: 'aQnADetailView',
+    component: () => import('../views/admin/aQnADetailView.vue')
+  },
     /////////////////// 부트스트랩////////////////////////////////////////////////////
   // {
   //   path: "/",

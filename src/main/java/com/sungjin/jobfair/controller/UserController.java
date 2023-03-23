@@ -273,6 +273,17 @@ public class UserController {
 //        }
 
 
+    //메인페이지에서 큐앤에이 리스트 가져오기
+    @PostMapping(value = "/getMainQnAList")
+    public ArrayList<QnAVO> getMainQnAList() {
+
+        ArrayList<QnAVO> list = userService.getMainQnAList();
+        System.out.println(list.toString());
+
+        return list;
+    }
+
+
     //**********************************************채용공고**********************************************
         //채용공고 목록
     @PostMapping(value = "/getJobPostList")

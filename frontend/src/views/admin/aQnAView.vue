@@ -1,41 +1,32 @@
 <template>
 
-  <div className="wrapBox">
-    <div className="container ">
-      <div className="row ">
-        <div className="col-sm-12">
+  <div class="wrapBox">
+    <div class="container ">
+      <div class="row ">
+        <div class="col-sm-12">
 
-          <div className="qnaBox">
+          <div class="qnaBox">
             <h3>Q&A</h3>
           </div>
 
           <table id="qnaTable">
             <thead>
             <tr style="background-color: #0064ff; color: antiquewhite; height: 60px; font-size: 20px">
-              <td style="text-align: center; width: 100px; ">No</td>
+              <td style="text-align: center; width: 100px;">No</td>
               <td style="text-align: center; width: 200px">작성자</td>
               <td style="text-align: center; width: 500px">질문제목</td>
               <td style="text-align: center; width: 200px">등록시간</td>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(row, idx) in QnAList" :key=idx @click.prevent="detail(row.qa_num)">
+            <tr v-for="(row, idx) in QnAList" :key=idx @click="detail(row.qa_num)">
               <td>{{idx + 1}}</td>
               <td>{{ row.user_id }}</td>
               <td>{{row.qa_title}}</td>
               <td>{{ row.qa_regDate.substring(0,10) }}</td>
             </tr>
-
-            <tr v-if="QnAList.length == 0">
-              <td></td>
-              <td></td>
-              <td>게시글이 없습니다.</td>
-              <td></td>
-            </tr>
-
             </tbody>
           </table>
-
 
         </div>
 
@@ -53,6 +44,11 @@
           </ul>
         </div>
 
+
+
+
+
+
       </div>
     </div>
 
@@ -61,19 +57,17 @@
 
 <script>
 export default {
-  name: "cQnAView",
-
+  name: "aQnAView",
 
   data() {
     return {
-      QnAList: [
-
-      ],
-      com_num: JSON.parse(sessionStorage.getItem('sessionComp')),
+      QnAList: [],
+      QnADetailList: [],
 
       pages: "", // pageVO
       pageList: "", //pageVO.pageList 배열값
       detailNum: "",
+
 
       //페이지 이동에 필요한 초기값
       page: 1,
@@ -83,50 +77,36 @@ export default {
       end: "",
       realEnd: "",
 
-
     };
   },
-
   watch: {
     page: function () {
-      this.cQnAListAxios();
+      this.aQnAListAxios();
     },
 
   },
 
   created() {
-    this.cgetQnAList();
-    this.cQnAListAxios();
-    // this.cQnAGetTotal();
+    this.agetQnAList();
+    this.aQnAListAxios();
+    this.aQnAGetTotal();
   },
-  methods: {
-    cgetQnAList() {
 
-      this.$axios.get('/jobfair/cgetQnAList?com_num=' + this.com_num)
+  methods: {
+    agetQnAList() {
+      this.$axios.post('/jobfair/agetQnAList')
           .then((res) => {
             this.QnAList = res.data
-
           })
+
           .catch((error) => console.log(error))
 
     },
-    detail(idx) {
-      this.$router.push({
-        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
-        name: 'cQnADetailView',
-        params: {
-          qa_num: idx
-        }
-      })
-    },
-    cQnAListAxios() {
-      this.$axios.get("/jobfair/cQnAListAxios/?amount=" +
+    aQnAListAxios() {
+      this.$axios.get("/jobfair/aQnAListAxios/?amount=" +
           this.amount +
           "&page=" +
-          this.page +
-          "&com_num=" +
-          this.com_num
-      )
+          this.page)
           .then((res) => {
             //  console.log(11111111);
             // console.log(res.data)
@@ -149,16 +129,16 @@ export default {
           .catch((error) => console.log(error))
 
     },
-    // cQnAGetTotal() {
-    //   this.$axios.post("/jobfair/cQnAGetTotal")
-    //       .then((res) => {
-    //         console.log(res)
-    //       })
-    //       .catch((error) => console.log(error))
-    // },
+    aQnAGetTotal() {
+      this.$axios.post("/jobfair/aQnAGetTotal")
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((error) => console.log(error))
+    },
     goFirstPage() {
       this.page = 1;
-      this.cQnAListAxios();
+      this.aQnAListAxios();
     },
     goPrevPage() {
       if(this.page > 1) {
@@ -170,27 +150,25 @@ export default {
     goNextPage() {
       if(this.page < this.realEnd) {
         this.page = this.page + 1;
-        this.cQnAListAxios();
+        this.aQnAListAxios();
       } else {
         alert("마지막 페이지입니다.")
       }
     },
     goLastPage() {
       this.page = this.realEnd;
-      this.cQnAListAxios();
+      this.aQnAListAxios();
     },
 
     ClickPage() {
       var clicked = event.target.innerHTML;
       this.page = clicked
-      console.log(this.page)
     },
   }
 }
 </script>
 
 <style scoped>
-
 body, html {
   padding: 0;
   margin: 0;
@@ -204,7 +182,6 @@ body, html {
 .qnaBox {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
 }
 
 .qnaBox h3 {
@@ -256,4 +233,5 @@ body, html {
   background-color: #04AA6D;
   color: white;
 }
+
 </style>

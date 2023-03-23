@@ -1,48 +1,132 @@
 <template>
-<div>
+  <div class="container" style="max-width:1560px;">
 
-  <img src="" alt="이미지">
-  <div>OOO님</div>
-  <div>쪽지(12)</div>
-  <ul>
-    <li>
-      <div>11</div>
-      <div>담당자 신청 목록</div>
-    </li>
-    <li>
-      <div>6</div>
-      <div>참여업체 신청 목록</div>
-    </li>
-  </ul>
-  <input type="button" value="채용 담당자 신청 목록 조회">
-  <input type="button" value="참여업체 신청 목록 조회">
+  <div class="aplBoxCon" style="margin-top: 50px">
+    <div style="margin-left: 50px">
+      <h3>참여기업 등록</h3>
+    </div>
 
-  <hr/>
+    <div class="infoWrapBox">
+      <div class="infoBox" >
 
-  <h2>기업정보 수정 </h2>
-  <ul>
-    <li>기업명</li>
-    <li>기업주소</li>
-    <li>기업 전화번호</li>
-    <li>기업 이메일</li>
-    <li>업종</li>
-    <li>대표자</li>
-    <li>사업자 등록번호</li>
-    <li>참여기간</li>
-  </ul>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">기업명</span>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
 
-  <input type="button" value="등록하기">
-  <input type="button" value="목록">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">기업주소</span>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">기업 전화번호</span>
+          <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">기업 이메일</span>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">업종</span>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">대표자</span>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">사업자 등록번호</span>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">참여기간</span>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                 aria-describedby="basic-addon1" disabled>
+        </div>
+
+        <div class="btnBox">
+          <input type="button" value="등록하기" class="regBtn">
+          <input type="button" value="목록" class="listBtn" @click.prevent="BackToList">
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
 
 </div>
 </template>
 
 <script>
 export default {
-  name: "aComRegView"
+  name: "aComRegView",
+
+
+  methods: {
+    BackToList() {
+      this.$router.push('/aComListView')
+    }
+  }
+
 }
 </script>
 
 <style scoped>
+.infoWrapBox {
+  border: 1px solid grey;
+  width: 100%;
+  height: 600px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+
+.infoBox {
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 70px;
+}
+
+.btnBox {
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+
+}
+
+.regBtn {
+  text-align: center;
+  margin-top: 30px;
+  height: 50px;
+  line-height: 50px;
+  width: 250px;
+  border: 1px solid gray;
+  margin-right: 15px;
+}
+
+.listBtn {
+  text-align: center;
+  margin-top: 30px;
+  height: 50px;
+  line-height: 50px;
+  width: 250px;
+  border: 1px solid gray;
+}
 
 </style>

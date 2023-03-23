@@ -118,7 +118,7 @@ where jpl_num = #{jpl_num}
     </insert>
         <!-- 큐앤에이 리스트 -->
     <select id="cgetQnAList" resultType="QnAVO">
-        select * from QnA where qa_type like "%q%" and com_num = #{com_num} order by qa_num desc
+        select * from QnA where qa_type like "%q%" and com_num =#{com_num} order by qa_num desc limit #{cri.pageStart}, #{cri.amount}
     </select>
         <!-- 큐앤에이 유저 상세 -->
     <select id="getUserQnADetail" resultType="QnAVO">
@@ -165,6 +165,11 @@ where jpl_num = #{jpl_num}
                             inner join qna c
                                        on u.qa_num = c.qa_reply
         where u.qa_num=#{qa_num}
+    </select>
+
+    <!--페이지네이션-->
+    <select id="cQnAGetTotal" resultType="int">
+        select count(*) from QnA where qa_type like "%q%" and com_num =#{com_num}
     </select>
 
 </mapper>

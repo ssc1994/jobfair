@@ -706,6 +706,9 @@ export default {
   border: 3px solid;
 }
 
+navbar {
+  z-index: 10;
+}
 .userInfoBox {
   z-index: 500;
 }
