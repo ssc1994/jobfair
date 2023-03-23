@@ -5,16 +5,17 @@
       <section>
         <div class="mb-3 mt-3">
           <label for="">자격증명 :</label>
-          <input type="text" class="form-control" placeholder="자격증을 입력하세요." v-model="certInfo.cert_name" @change="inputCertData">
+          <input type="text" class="form-control" placeholder="자격증을 입력하세요." v-model="certInfo.cert_name"
+                 :disabled="isAble" @change="inputCertData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">발행일 :</label>
-          <input type="date" class="form-control" v-model="certInfo.cert_gainDate" @change="inputCertData">
+          <input type="date" class="form-control" v-model="certInfo.cert_gainDate" :disabled="isAble" @change="inputCertData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">발행처 :</label>
           <input type="text" class="form-control" placeholder="발행처를 입력하세요."
-                 v-model="certInfo.cert_issueInstitute" @change="inputCertData">
+                 v-model="certInfo.cert_issueInstitute" :disabled="isAble" @change="inputCertData">
         </div>
       </section>
     </div>
@@ -25,7 +26,9 @@
 export default {
   name: "Certificate",
   props: [
-      'certCount'
+      'certCount',
+      'value',
+      'isAble'
   ],
   data () {
     return {
@@ -35,6 +38,11 @@ export default {
         cert_gainDate: '',
         cert_issueInstitute: '',
       }
+    }
+  },
+  created() {
+    if(this.$props.value != undefined){
+      this.certInfo = this.$props.value;
     }
   },
   methods: {
@@ -127,6 +135,11 @@ body {
 .empReg section .form-select {
   width: 130px;
   height: 30px;
+}
+
+input:disabled {
+  border: none;
+  background-color: white;
 }
 
 </style>

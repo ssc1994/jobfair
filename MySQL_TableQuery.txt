@@ -1,31 +1,36 @@
-## 23.03.15 ResumeList 수정
+변경된 내용은 제일 위 예시처럼 작성해주시면 됩니다 23.03.15 ResumeList 수정
 ## 23.03.16 company 테이블에 com_detail_address 컬럼 추가
+## 23.03.21 학력/경력/자격증 테이블에서 user_id 컬럼 삭제 후 이력서 테이블과 비식별관계로 변경하였음 //민재
+
 
 CREATE TABLE User (
    user_id   varchar(30)   primary key,
-   user_pw   varchar(30),
+   user_pw   varchar(100),
    mg_auth   varchar(1)   NOT NULL,
-   user_name   varchar(10),
-   user_rrn   varchar(10),
-   user_email   varchar(30),
-   user_phone   varchar(20),
+   user_name   varchar(30),
+   user_rrn   varchar(40), #생년월일 칼럼임
+   user_email   varchar(40),
+   user_phone   varchar(40),
    user_regDate date,
-   user_gender   varchar(1),
+   user_gender   varchar(20),
    user_address varchar(100),
    com_num int
 );
 
 CREATE TABLE Company (
    com_num   int   primary key auto_increment,
-   com_name varchar(20),
-   com_phone varchar(30),
+   com_name varchar(40),
+   com_phone varchar(40),
    com_email varchar(50),
-   com_address   varchar(100),
+   com_address varchar(100),
    com_detail_address varchar(100),
-   com_category varchar(10),
-   com_ceo   varchar(10),
-   com_businessRegistration varchar(30),
-   com_establishmentDate Date
+   com_category varchar(50),
+   com_ceo   varchar(20),
+   com_businessRegistration varchar(40),
+   com_establishmentDate Date,
+   com_fileName varchar(100),
+   com_filePath varchar(200),
+   com_fileUuid varchar(300)
 );
 
 CREATE TABLE JobPostingList (
@@ -47,15 +52,18 @@ CREATE TABLE JobPostingList (
    jpl_salary   varchar(50)   NULL,
    jpl_locationSi   varchar(20)   NULL,
    jpl_locationGu   varchar(20)   NULL,
-   jpl_locationDong   varchar(20)   NULL,
    jpl_address   varchar(100)   NULL,
    jpl_workDay   varchar(30)   NULL,
-   jpl_workTime   varchar(30)   NULL,
+   jpl_workTimeS   varchar(30)   NULL,
+   jpl_workTimeE   varchar(30)   NULL,
    jpl_name   varchar(10)   NULL,
    jpl_departmentName   varchar(30)   NULL,
    jpl_contact   varchar(20)   NULL,
    jpl_phoneNum   varchar(20)   NULL,
    jpl_email   varchar(50)   NULL
+   jpl_fileName   varchar(100)   NULL,
+   jpl_filePath   varchar(200)   NULL,
+   jpl_fileUuid varchar(300)   NULL
 );
 
 CREATE TABLE ApplyList (
@@ -98,7 +106,6 @@ CREATE TABLE Message (
 CREATE TABLE Education (
    edu_num   int   primary key auto_increment,
    res_num   int  NOT NULL,
-   user_id   varchar(20)   NOT NULL,
    edu_degree   varchar(30)   NULL,
    edu_schoolName   varchar(30)   NULL,
    edu_major   varchar(30)   NULL,
@@ -123,7 +130,6 @@ CREATE TABLE QnA (
 CREATE TABLE WorkExperiences (
    we_num   int   primary key auto_increment,
    res_num   int   NOT NULL,
-   user_id   varchar(20)   NOT NULL,
    we_company   varchar(30)   NULL,
    we_department   varchar(30)   NULL,
    we_position   varchar(30)   NULL,
@@ -136,7 +142,6 @@ CREATE TABLE WorkExperiences (
 CREATE TABLE Certificate (
    cert_num      int   primary key auto_increment,
    res_num   int   NOT NULL,
-   user_id   varchar(20)   NOT NULL,
    cert_name   varchar(30)   NULL,
    cert_gainDate   varchar(30)   NULL,
    cert_issueInstitute   varchar(30)   NULL
@@ -254,7 +259,10 @@ REFERENCES `ResumeList` (
    `user_id`
 );
 
-# 03-14 user_rrn 을 user의 birth 칼럼으로 사용하기로 함. 생년월일 들어오는데 안들어가서 varchar(10) -> varchar(20) 으로 변경
-alter table user change user_rrn user_rrn varchar(20);
-# 03-14  user_gender   varchar(1) -> varchar (10) 으로 변경 
-alter table user change user_gender user_gender varchar(10);
+
+##23.03.20 applylist 테이블에 al_interviewDate 컬럼 삭제
+alter table applylist drop al_interviewDate;
+
+##23.03.20 applylist 테이블에 al_regDate 컬럼 추가
+alter table applylist add al_regDate Date NULL; 
+//은아

@@ -4,8 +4,9 @@
     <div class="empReg">
       <section>
         <div class="mb-3 mt-3">
+          {{this.eduCount}}
           <label for="">학교구분 :</label>
-          <select class="form-select" v-model="eduInfo.edu_degree" @change="inputEduData">
+          <select class="form-select" v-model="eduInfo.edu_degree" :disabled="isAble" @change="inputEduData">
             <option selected value="none">선택</option>
             <option value="high">고등학교</option>
             <option value="college">대학교(2, 3년)</option>
@@ -13,15 +14,15 @@
             <option value="graduate">대학원</option>
           </select>
           <label for="">학교명 :</label>
-          <input type="text" class="form-control" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName" @change="inputEduData">
+          <input type="text" class="form-control" placeholder="학교명을 입력하세요." v-model="eduInfo.edu_schoolName" :disabled="isAble" @change="inputEduData">
         </div>
         <div class="mb-3 mt-3">
           <label for="">입학년월 :</label>
-          <input type="date" class="form-control" v-model="eduInfo.edu_entranceDate" @change="inputEduData">
+          <input type="date" class="form-control" v-model="eduInfo.edu_entranceDate" :disabled="isAble" @change="inputEduData">
           <label for="">졸업년월 :</label>
-          <input type="date" class="form-control" v-model="eduInfo.edu_graduationDate" @change="inputEduData">
+          <input type="date" class="form-control" v-model="eduInfo.edu_graduationDate" :disabled="isAble" @change="inputEduData">
           <label for="">졸업상태 :</label>
-          <select class="form-select" v-model="eduInfo.edu_state" @change="inputEduData">
+          <select class="form-select" v-model="eduInfo.edu_state" :disabled="isAble" @change="inputEduData">
             <option selected value="none">졸업상태 선택</option>
             <option value="1">졸업</option>
             <option value="2">졸업예정</option>
@@ -32,10 +33,11 @@
         </div>
         <div class="mb-3 mt-3">
           <label for="">전공명 :</label>
-          <input type="text" class="form-control" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major"
+          <input type="text" class="form-control" placeholder="전공을 입력하세요." v-model="eduInfo.edu_major" :disabled="isAble"
                  @change="inputEduData">
         </div>
       </section>
+      <input type="button" :name="this.eduCount" value="삭제" @click="clickDelete">
     </div>
   </div>
 </template>
@@ -44,7 +46,9 @@
 export default {
   name: "Education",
   props: [
-    'eduCount'
+    'eduCount',
+    'value',
+    'isAble'
   ],
   data() {
     return {
@@ -58,7 +62,12 @@ export default {
         edu_state: 'none',
         edu_grades: '',
         edu_totalGrades: '',
-      },
+      }
+    }
+  },
+  created() {
+    if(this.$props.value != undefined){
+      this.eduInfo = this.$props.value;
     }
   },
   methods: {
@@ -68,8 +77,16 @@ export default {
         eduCount: this.eduCount
       };
       this.$emit("inputEdu", eduData);
+    },
+    clickDelete() {
+      let delData = {
+        removeNum: this.eduCount
+      };
+      console.log("보내는 값/: " + this.eduCount)
+      this.$emit("clickBtn", delData);
+      this.$forceUpdate();
+      }
     }
-  }
 }
 </script>
 
@@ -173,6 +190,11 @@ body {
 .empReg section .form-select {
   width: 130px;
   height: 30px;
+}
+
+input:disabled {
+  border: none;
+  background-color: white;
 }
 
 </style>

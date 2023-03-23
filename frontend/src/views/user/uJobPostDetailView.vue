@@ -365,10 +365,7 @@ setInterval(this.curcur,1000);
         this.diffTime= "공고 마감"
         clearInterval(this.curcur)
       }
-
-
     },
-
     // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
     // supportResume(){
     //   router.push({path:"/"})
@@ -390,9 +387,9 @@ setInterval(this.curcur,1000);
       this.resNum = this.resNum + 1;
       console.log(this.resNum);
 
-
       this.$axios.post("/jobfair/EmpApply", {
         user_id: this.user_id,
+
         jpl_num: this.jpl_num,
         res_num: this.resNum
       })
