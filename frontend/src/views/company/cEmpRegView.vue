@@ -367,8 +367,8 @@ export default {
           gooName: ["여수시", "순천시", "목포시", "광양시", "나주시", "무안군", "해남군", "고흥군", "화순군", "영암군", "영광군", "완도군", "담양군", "장성군", "보성군", "신안군", "장흥군", "강진군", "함평군", "진도군", "곡성군", "구례군"]
         },
         {cityCode: 17, gooName: ["제주시", "서귀포시"]}
-      ]
-      ,
+      ],
+
       viewImg: ''
     }
   },
@@ -402,16 +402,7 @@ export default {
 
   },
   methods:{
-    fileChange(e){
-      this.jpl_fileName = this.$refs.fileInsert.files[0]
-      this.res_img = e.target.files[0]
-      //이미지 업로드 시 화면에서 미리보기 기능
-      let reader = new FileReader();
-      reader.onload = (event) => {
-        this.viewImg = event.target.result;
-      }
-      reader.readAsDataURL(this.res_img);
-    },
+
 
     empRegist(){
       if(this.salaryType=='undecided'){
@@ -476,7 +467,8 @@ export default {
     clickFile () {  //버튼 클릭 시 input:file 클릭으로 연동하는 함수
       this.$refs.fileInsert.click();
     },
-    previewImg(e) {  //이미지 미리보기
+    fileChange(e){
+      this.jpl_fileName = this.$refs.fileInsert.files[0]
       this.res_img = e.target.files[0]
       //이미지 업로드 시 화면에서 미리보기 기능
       let reader = new FileReader();

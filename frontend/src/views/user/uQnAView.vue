@@ -45,10 +45,8 @@
           </ul>
         </div>
 
-
-
-
-
+        <a @click="goNextPage(page + 1)">next</a>
+        <a @click="goLastPage(page + 1)">&gt;</a>
 
       </div>
     </div>

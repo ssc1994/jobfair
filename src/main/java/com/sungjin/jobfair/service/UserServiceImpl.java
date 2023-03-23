@@ -5,7 +5,6 @@ import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 
 @Service("userService")
@@ -96,8 +95,23 @@ public class UserServiceImpl implements UserService {
         return userMapper.resumeInfo(user_id);
     }
     @Override
-    public void deleteResume(int res_num) {
+    public void deleteResume(String res_num) {
         userMapper.deleteResume(res_num);
+    }
+
+    @Override
+    public void deleteEdu(String res_num) {
+        userMapper.deleteEdu(res_num);
+    }
+
+    @Override
+    public void deleteWe(String res_num) {
+        userMapper.deleteWe(res_num);
+    }
+
+    @Override
+    public void deleteCert(String res_num) {
+        userMapper.deleteCert(res_num);
     }
 
     //################## 이력서(Resume) 관련 Service #######################
@@ -117,10 +131,45 @@ public class UserServiceImpl implements UserService {
     public void regResCert(CertVO certVO) {
         userMapper.regResCert(certVO);
     }
+    @Override
+    public ResumeVO getResDetail(String res_num) {
+        return userMapper.getResDetail(res_num);
+    }
 
+    @Override
+    public ArrayList<EduVO> getEduDetail(String res_num) {
+        return userMapper.getEduDetail(res_num);
+    }
 
+    @Override
+    public ArrayList<WeVO> getWeDetail(String res_num) {
+        return userMapper.getWeDetail(res_num);
+    }
 
+    @Override
+    public ArrayList<CertVO> getCertDetail(String res_num) {
+        return userMapper.getCertDetail(res_num);
+    }
 
+    @Override
+    public void modiResume(ResumeVO resVO) {
+        userMapper.modiResume(resVO);
+    }
+
+    @Override
+    public void modiResEdu(EduVO eduVO) {
+        userMapper.modiResEdu(eduVO);
+    }
+
+    @Override
+    public void modiResWe(WeVO weVO) {
+        userMapper.modiResWe(weVO);
+    }
+
+    @Override
+    public void modiResCert(CertVO certVO) {
+        userMapper.modiResCert(certVO);
+    }
     //################## 페이지네이션 관련 Service #######################
 
 //    @Override

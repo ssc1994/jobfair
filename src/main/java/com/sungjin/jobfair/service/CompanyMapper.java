@@ -13,6 +13,7 @@ import java.util.ArrayList;
 @Mapper
 public interface CompanyMapper {
 
+    //채용공고등록하기
     public int empRegist(EmpVO vo);
     //큐앤에이 답변 등록
     public void cqnaRegist(QnAVO vo);
@@ -28,8 +29,11 @@ public interface CompanyMapper {
 
     public CompanyVO info(String com_num);
 
-
+    //채용공고 데이터 불러오기
     public EmpVO getEmpData(int jpl_num);
+
+    //채용공고 수정하기
+    public int empModify(EmpVO vo);
 
 
     //기업 큐앤에이 디테일 정보 가져오기

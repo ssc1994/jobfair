@@ -142,6 +142,48 @@ public class CompanyController {
         int result = companyService.empRegist(vo);
         return "등록완료"+result;
     }
+
+    //채용공고 수정 메서드
+    @PostMapping(value = "/empModify", consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String empModify(@RequestPart("empData") String empData, @RequestParam(value="files", required = false) MultipartFile file){
+
+        ObjectMapper mapper = new ObjectMapper();
+        EmpVO vo = null;
+        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
+
+        //받아온 empData를 파싱
+        try {
+            vo = mapper.readValue(empData, EmpVO.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //파일명 처리
+        String originName = file.getOriginalFilename();
+        //폴더생성
+        String filePath = makeDir();
+        //중복파일처리용 UUID 생성
+        String uuid = UUID.randomUUID().toString();
+        //최종 저장 경로
+        String saveName = filePath+"/"+uuid+"-"+originName;
+
+        //vo에파일관련 값 추가
+        vo.setJpl_fileName(file.getOriginalFilename());
+        vo.setJpl_filePath(filePath);
+        vo.setJpl_fileUuid(uuid);
+
+        //파일 업로드
+        try (FileOutputStream writer = new FileOutputStream(saveName)){
+            writer.write(file.getBytes());
+        }catch (Exception e){
+            return "fail";
+        }
+        int result = companyService.empModify(vo);
+        
+        return "수정완료"+result;
+    }
+
+
     //(채용공고정보) jpl번호를 기준으로 jpl테이블에서 데이터를 불러오는 메서드
     @GetMapping(value="/empData")
     public EmpVO getEmpData(@RequestParam("jpl_num") int jpl_num){
