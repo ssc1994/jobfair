@@ -48,7 +48,7 @@ const routes = [
     component: () => import('../views/user/uApplyListView.vue')
   },
   {//유저 채용공고 상세화면
-    path: '/uJobPostDetailView',
+    path: '/uJobPostDetailView/:jpl_num',
     name: 'uJobPostDetailView',
     component: () => import('../views/user/uJobPostDetailView.vue')
   },

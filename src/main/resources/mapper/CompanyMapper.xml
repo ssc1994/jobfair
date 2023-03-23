@@ -70,6 +70,46 @@
 
     </insert>
 
+
+    <!--##################채용공고 수정##################-->
+
+    <update id="empModify" parameterType="EmpVO">
+        update
+            JobPostingList
+        set com_num=#{com_num},
+            jpl_title=#{jpl_title},
+            jpl_content=#{jpl_content},
+            jpl_startDate=#{jpl_startDate},
+            jpl_endDate=#{jpl_endDate},
+            jpl_regDate=date_format(now(), '%Y-%m-%d'),
+            jpl_workPosition=#{jpl_workPosition},
+            jpl_duty=#{jpl_duty},
+            jpl_workHistory=#{jpl_workHistory},
+            jpl_workForm=#{jpl_workForm},
+            jpl_education=#{jpl_education},
+            jpl_conditions=#{jpl_conditions},
+            jpl_certificate=#{jpl_certificate},
+            jpl_gender=#{jpl_gender},
+            jpl_salary=#{jpl_salary},
+            jpl_locationSi=#{jpl_locationSi},
+            jpl_locationGu=#{jpl_locationGu},
+            jpl_address=#{jpl_address},
+            jpl_workDay=#{jpl_workDay},
+            jpl_workTimeS=#{jpl_workTimeS},
+            jpl_workTimeE=#{jpl_workTimeE},
+            jpl_name=#{jpl_name},
+            jpl_companyName=#{jpl_companyName},
+            jpl_contact=#{jpl_contact},
+            jpl_phoneNum=#{jpl_phoneNum},
+            jpl_email=#{jpl_email},
+            jpl_fileName=#{jpl_fileName},
+            jpl_filePath=#{jpl_filePath},
+            jpl_fileUuid=#{jpl_fileUuid}
+
+where jpl_num = #{jpl_num}
+
+    </update>
+
     <!-- ######################### QnA 관련 ######################### -->
         <!-- 큐앤에이 등록 -->
     <insert id="cqnaRegist" parameterType="QnAVO">
