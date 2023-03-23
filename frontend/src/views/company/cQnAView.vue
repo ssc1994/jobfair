@@ -62,8 +62,6 @@
 <script>
 export default {
   name: "cQnAView",
-
-
   data() {
     return {
       QnAList: [
@@ -101,14 +99,12 @@ export default {
   },
   methods: {
     cgetQnAList() {
-
       this.$axios.get('/jobfair/cgetQnAList?com_num=' + this.com_num)
           .then((res) => {
             this.QnAList = res.data
 
           })
           .catch((error) => console.log(error))
-
     },
     detail(idx) {
       this.$router.push({

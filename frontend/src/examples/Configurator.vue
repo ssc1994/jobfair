@@ -9,11 +9,11 @@
     <div class="shadow-lg card blur">
 
       <!-- Soft UI Configurator -->
-      <div class="pt-3 pb-0 bg-transparent card-header">
-        <div class="float-start">
-          <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
-          <p>See our dashboard options.</p>
-        </div>
+<!--      <div class="pt-3 pb-0 bg-transparent card-header">-->
+<!--        <div class="float-start">-->
+<!--          <h5 class="mt-3 mb-0">Soft UI Configurator</h5>-->
+<!--          <p>See our dashboard options.</p>-->
+<!--        </div>-->
 
         <!--   X 버튼     -->
         <div class="mt-4 float-end" @click="toggle">

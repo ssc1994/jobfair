@@ -45,14 +45,10 @@
         <li class="page-item"><a class="page-link"  @click="goLastPage(page + 1)" style="margin-right: 10px">Last</a></li>
       </ul>
     </div>
-
-
   </div>
 </template>
 
 <script>
-
-
 export default {
   name: 'aComListView',
   data() {
@@ -161,8 +157,6 @@ export default {
       var clicked = e.target.innerHTML;
       this.page = clicked
     },
-
-
   }
 }
 </script>
@@ -284,6 +278,5 @@ select {
   background-color: #202632;
   border: none;
 }
-
 
 </style>

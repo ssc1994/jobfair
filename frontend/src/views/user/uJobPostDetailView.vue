@@ -84,7 +84,7 @@
             <span>접수 시작 : {{ jpl_startDate }}</span><br/>
             <span>접수 마감 : {{ jpl_endDate }}</span>
           </div>
-
+          
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                   v-bind:disabled="AppliedResult == 1" @click="postRes">
             {{ applyBtnText }}

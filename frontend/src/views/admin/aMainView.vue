@@ -4,44 +4,44 @@
     <div class="container empBoxWrap">
       <h3>참여 기업 상태</h3>
       <div class="row">
-        <div class="col-lg-4 col-sm-4  aBox" >
-          <a href="#" style="background-color:rgb(95, 75, 229)">
+        <div class="col-lg-4 col-sm-4 aBox" >
+          <router-link to="aComListView" style="background-color:rgb(95, 75, 229)">
             <div class="companyNumImg">
             </div>
             <div class="companyNum_text">
-
               <span>참여 기업 수</span>
-              <p>{{jobPostList.length}}</p>
+              <p>{{number}}</p>
             </div>
-          </a>
+          </router-link>
         </div>
         <div class="col-lg-4 col-sm-4  aBox" >
-          <a href="#" style="background-color:rgb(229, 75, 75)">
+          <router-link to="" style="background-color:rgb(229, 75, 75)">
             <div class="companyNumImg">
             </div>
             <div class="companyNum_text">
 
-              <span>반려</span>
-              <p>{{}}</p>
+              <span>미승인 기업 수</span>
+              <p>{{nosuccess}}</p>
             </div>
-          </a>
+          </router-link>
         </div>
         <div class="col-lg-4 col-sm-4  aBox">
-          <a href="#" style="background-color:rgb(62, 162, 72)">
+          <router-link to="" style="background-color:rgb(62, 162, 72)">
             <div class="companyNumImg">
             </div>
             <div class="companyNum_text">
 
-              <span>승인완료</span>
-              <p>{{}}</p>
+              <span>승인 기업 수</span>
+              <p>{{ysuccess}}</p>
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
   </div>
   <div class="userInfoBox">
     <h3>채용공고 목록</h3>
+    <router-link to="/aComListView" style="float: right">더보기</router-link>
     <div class="userInfoFirstLine">
       <div>
 <!--        기업이 등록한 전체 채용공고를 가져오려하는중, 근데 작성한 채용공고테이블과 기업테이블을 join해서 채용공고를 작성한 기업정보도 가져올 생-->
@@ -57,56 +57,61 @@
                         <td>{{line.jpl_name}}</td>
                         <td>{{line.com_name}}</td>
                       </tr>
-                      <tr v-for="(line,i) in CompanyInfo">
-                        <td>{{i+1}}</td>
-                        <td>{{line.jpl_title}}</td>
-                        <td>{{line.jpl_regDate}}</td>
-                        <td>{{line.jpl_name}}</td>
-                        <td>{{line.com_name}}</td>
-                      </tr>
                     </tbody>
         </table>
-<!--        <b-table striped hover>-->
-<!--          <b-thead>-->
-<!--            <b-th v-for="tableTitle in items">{{tableTitle}}</b-th>-->
-<!--          </b-thead>-->
-<!--          <b-tbody>-->
-<!--            <b-tr v-for="line in jobPostList">-->
-<!--              <b-td>{{line.jpl_title}}</b-td>-->
-<!--            </b-tr>-->
-<!--          </b-tbody>-->
-<!--        </b-table>-->
       </div>
     </div>
   </div>
 </template>
 <script>
+import {mg_auth} from "vuex";
+
 export default {
   name: 'aMainView',
   data() {
     return {
       items: ['No.','채용공고제목','작성일','등록자명','회사명'],
       jobPostList: [],
-      CompanyInfo: [],
-      com_num: JSON.parse(sessionStorage.getItem('sessionComp'))
+      com_num: '',
+      com_name: [],
+      number: 1,
+      auth: [],
+      nosuccess: 0,
+      ysuccess: 0
+      // auth: JSON.parse(sessionStorage.getItem('sessionAuth'))
     }
   },
-  beforeCreate () {
-    this.$axios.post('/jobfair/getEmpData')
-      .then(res => {
-        this.jobPostList = res.data
-      }).catch(error => {
-        console.log(error)
-      })
-  },
   created() {
-    this.companyinfo()
+    this.allinfo()
+    this.getauth()
   },
   methods: {
-    companyinfo(){
-      this.$axios.post('/jobfair/getComData', {com_num: this.com_num})
+    getauth(){
+      this.$axios.post('/jobfair/getAuth')
           .then(res => {
-            this.CompanyInfo = res.data
+            this.auth = res.data
+            console.log(this.auth)
+            for (let i = 0; i < res.data.length; i++) {
+              console.log('실행됨')
+              if(this.auth[i].mg_auth === '2') {
+                this.nosuccess++
+              } else if(this.auth[i].mg_auth === '3') {
+                this.ysuccess++
+              }
+            }
+          })
+          .catch(error => { console.log(error)})
+    },
+    allinfo() {
+      this.$axios.post('/jobfair/getAllData', {com_num: this.com_num})
+          .then(res => {
+            this.com_name = res.data.com_num
+            this.jobPostList = res.data
+            var set = new Set()
+            for(let i=0; i<res.data.length; i++){
+              set.add(res.data[i].com_num)
+            }
+            this.number=set.size
           }).catch(error => {
         console.log(error)
       })
@@ -202,7 +207,7 @@ html, body {width:100%;
 
 .aBox a:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .companyNumImg {

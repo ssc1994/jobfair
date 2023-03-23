@@ -44,4 +44,7 @@ public class EmpVO {
     private String jpl_fileName;
     private String jpl_filePath;
     private String jpl_fileUuid;
+
+    // 기업명이 필요해서 CompanyVO에서 가져옴
+    private String com_name;
 }

@@ -3,27 +3,12 @@
     <div class="userInfoBox">
       <div class="userInfoFirstLine">
         <div class="userInfo_wrap">
+<!--          이미지 얼굴사진으로 변경해야함-->
           <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left">
           <div>
             <!--            session에서 가져온 아이디 값 출력 -->
             <h6>{{ userInfo.user_id }}님 환영합니다.</h6>
-            <a href="#">쪽지(3)</a>
-            <button type="button" @click="logOut">logOut</button>
           </div>
-        </div>
-      </div>
-      <div class="userInfo_wrap">
-        <div class="userInfo_left user_Info_list">
-          <span>지원완료</span><br>
-          <span>10</span>
-        </div>
-        <div class="userInfo_left user_Info_list center">
-          <span>열람</span><br>
-          <span>10</span>
-        </div>
-        <div class="userInfo_left user_Info_list">
-          <span>지원완료</span><br>
-          <span>10</span>
         </div>
       </div>
 
@@ -608,6 +593,19 @@ export default {
 
 .modiInfo_type_wrap {
   border-top: 1px solid #1E1E1E;
+}
+.userInfo_wrap {
+  display: flex;
+  align-items: center;
+}
+
+.userInfo_wrap h6 {
+  margin-left: 10px;
+}
+/* 사진있는 사이드바 변경 */
+.profile_img {
+  width: 80px;
+  height: 80px;
 }
 
 .changeType_btn_wrap {

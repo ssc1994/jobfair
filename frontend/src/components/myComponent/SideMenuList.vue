@@ -1,12 +1,12 @@
 <template>
 <!--  SidenavList.vue 에서 가져온 auth값을 이용해서 사용자마다 다른 메뉴 출력하는 화면 만듦 -->
 <!--  <div v-if="menuTitle === '홈' || menuTitle === '마이 페이지' || (menuTitle === '채용 정보' && this.mg_auth === '1')">-->
-  <div v-if="menuTitle != '채용 정보' || this.mg_auth != 3">
+  <div v-if="menuTitle != '채용 정보' || this.mg_auth != 3" class="menu_link">
     <div><router-link :to="link">{{ menuTitle }}</router-link></div>
   </div>
 
 <!--  <div v-if="menuTitle !='홈' && menuTitle != '마이 페이지' && (menuTitle != '채용 정보' || this.mg_auth != '1')">-->
-  <div @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && (this.mg_auth === '3' || this.mg_auth === '2')">
+  <div class="menu_dropdown" @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && this.mg_auth === '3'">
     <div>{{ menuTitle }}</div>
     <div v-if="isVisible">
       <ul v-for="menu in menuGroup">
@@ -93,4 +93,23 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.menu_link {
+  color: #202632;
+  height: 30px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.menu_link:hover {
+  color: #0064ff;
+}
+
+.menu_dropdown {
+  color: #333;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+
+
 </style>
