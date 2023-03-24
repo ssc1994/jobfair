@@ -364,6 +364,31 @@ public class UserController {
         return "success";
     }
 
+    //메인화면에서 채용공고 가져오기
+    @PostMapping(value = "/getMainJobInfo")
+    public ArrayList<EmpListVO> getMainJobInfo() {
+
+        ArrayList<EmpListVO> list = userService.getMainJobInfo();
+
+
+        for(EmpListVO vo : list) {
+            String fileUuid = vo.getJpl_fileUuid();
+            String fileName = vo.getJpl_fileName();
+            String filePath = vo.getJpl_filePath();
+
+            String path = fileUuid + "_" + fileName;
+            String bucket = filePath;
+            String url = amazonS3Client.getUrl(bucket, path).toString();
+
+            vo.setUrl(url);
+        }
+
+
+        return list;
+    }
+
+
+
     //**********************************************지원현황 관리(유저 마이페이지)**********************************************
     //마이페이지 지원현황 목록 가져오기
     @PostMapping(value="/getApplyList")

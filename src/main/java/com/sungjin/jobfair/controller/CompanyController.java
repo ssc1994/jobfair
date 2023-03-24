@@ -1,5 +1,8 @@
 package com.sungjin.jobfair.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sungjin.jobfair.PageGate;
@@ -22,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -46,6 +50,12 @@ public class CompanyController {
     @Autowired
     @Qualifier("companyService")
     private CompanyService companyService;
+
+    @Autowired
+    AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     //###############폴더 생성용#####################
     @Value("${project.uploadpath}")
@@ -106,7 +116,7 @@ public class CompanyController {
     }
     //채용공고 등록 메서드
     @PostMapping(value = "/EmpRegist", consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String EmpRegist(@RequestPart("empData") String empData, @RequestParam(value="files", required = false) MultipartFile file){
+    public String EmpRegist(@RequestPart("empData") String empData, @RequestParam(value="files", required = false) MultipartFile file) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         EmpVO vo = null;
@@ -119,26 +129,29 @@ public class CompanyController {
             e.printStackTrace();
         }
 
-        //파일명 처리
-        String originName = file.getOriginalFilename();
-        //폴더생성
-        String filePath = makeDir();
-        //중복파일처리용 UUID 생성
-        String uuid = UUID.randomUUID().toString();
-        //최종 저장 경로
-        String saveName = filePath+"/"+uuid+"-"+originName;
+        //AWS S3 파일 업로드
+        String tmpName = file.getOriginalFilename();
+        File uploadFile = new File(tmpName); //파일 이름
+        FileOutputStream fos = new FileOutputStream(uploadFile);
+        String uuid = UUID.randomUUID().toString(); //uuid
+        String fileName = uuid + "_" + tmpName; //uuid + 파일이름
+        fos.write(file.getBytes());
+        fos.close();
+
+        amazonS3Client.putObject(new PutObjectRequest(bucket+"/image", fileName, uploadFile)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
 
         //vo에파일관련 값 추가
         vo.setJpl_fileName(file.getOriginalFilename());
-        vo.setJpl_filePath(filePath);
+        vo.setJpl_filePath(bucket+"/image");
         vo.setJpl_fileUuid(uuid);
-
-        //파일 업로드
-        try (FileOutputStream writer = new FileOutputStream(saveName)){
-            writer.write(file.getBytes());
-        }catch (Exception e){
-            return "fail";
-        }
+//
+//        //파일 업로드
+//        try (FileOutputStream writer = new FileOutputStream(saveName)){
+//            writer.write(file.getBytes());
+//        }catch (Exception e){
+//            return "fail";
+//        }
         int result = companyService.empRegist(vo);
         return "등록완료"+result;
     }

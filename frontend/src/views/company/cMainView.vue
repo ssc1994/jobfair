@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="@/assets/mainImg.png" style="width: 1500px">
   <div class="comBoxWrap">
 <!--    <section class="comMiddle col-xl-12">-->
 <!--      공고 등록하기 버튼 클릭시 페이지 이동하는 메서드 추가 + 스크립트 -->

@@ -7,22 +7,22 @@
 
     <!-- 개인정보 수정 모달창 열릴 때 로그인 한 회원의 정보를 모달창에서 뿌려주기위해 회원정보 요청   -->
     <select id="getUserInfo" resultType="UserVO" parameterType="UserVO" >
-        select * from user where user_id = #{user_id}
+        select * from User where user_id = #{user_id}
     </select>
 
     <!-- 회원정보 수정 -->
     <update id="modifyInfo" parameterType="UserVO">
-    update user set user_name = #{user_name}, user_rrn = #{user_rrn}, user_email = #{user_email}, user_phone = #{user_phone}, user_gender = #{user_gender} where user_id = #{user_id};
+    update User set user_name = #{user_name}, user_rrn = #{user_rrn}, user_email = #{user_email}, user_phone = #{user_phone}, user_gender = #{user_gender} where user_id = #{user_id};
     </update>
 
     <!-- 접속한 유저의 현재 비밀번호 가져오기  -->
     <select id="getEncodePw" resultType="String" parameterType="UserVO">
-        select user_pw from user where user_id = #{user_id}
+        select user_pw from User where user_id = #{user_id}
     </select>
 
     <!--  현재 접속한 유저의 비밀번호를 새로운 비밀번호로 변경  -->
     <update id="modifyPw" parameterType="UserVO">
-        update user set user_pw = #{newPw} where user_id = #{user_id}
+        update User set user_pw = #{newPw} where user_id = #{user_id}
     </update>
 
 </mapper>

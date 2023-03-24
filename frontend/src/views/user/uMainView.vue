@@ -1,122 +1,38 @@
 <template>
-  <div class="wrapBox">
+  <div class="wrapBox" style="height: 2000px">
     <div class="wrapBox2">
     <div class="container empBoxWrap">
+      <img src="@/assets/mainImg.png" style="width: 1500px">
         <div>
-          <h3>HOT 채용공고</h3>
+          <h3 style="margin-top: 20px">HOT 채용공고</h3>
         </div>
-        <div class="row" style="margin-top: 20px">
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-                <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
 
 
+        <div>
+          <div class="row" style="margin-top: 20px">
+            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" :key="i">
+              <div>
+                <img :src="data.url" alt="이미지">
+              </div>
+              <div class="hotText">
+                <div>{{ data.com_name }}</div>
+                <p class="hotTitle">
+                  {{ data.jpl_title }}
+                </p>
 
+<!--                <span class="hotDday">-->
+<!--                  {{diffTime}}-->
+<!--                </span>-->
+
+              </div>
+            </router-link>
+
+
+          </div>
         </div>
+
+
+
       </div>
 
 
@@ -164,21 +80,74 @@
 </template>
 
 <script>
+import moment from "moment/moment";
+
 export default {
   name: 'uMainView',
 
   data() {
     return {
       QnAList: [],
+      mainJobInfo: [],
+      jpl_endDate : [],
+
+
+      diffTime: '',
+      diffDay: '',
+      year: '',
+      month: '',
+      day: '',
+      curTime: '',
+      inputTime:'',
     }
+
+
+  },
+  mounted() {
+    setInterval(this.getDate,86400);
+    this.getDate();
+
+  },
+
+  beforeCreate() {
+
+
+
+
   },
 
   created() {
-    this.getMainQnAList();
+    this.getQnAList();
+
+    this.$axios.post('/jobfair/getMainJobInfo')
+        .then((res) => {
+          this.mainJobInfo = res.data;
+          console.log('데이터' + res)
+
+
+          // this.jpl_endDate = res.data.jpl_endDate.substring(0, 10)
+          //
+          // for(var i = 0; i < this.mainJobInfo.length; i++) {
+          //   console.log("하이")
+          //   this.jpl_endDate = JSON.stringify(this.mainJobInfo[i].jpl_endDate);
+          // }
+
+
+
+          // this.jpl_endDate =  JSON.stringify(this.mainJobInfo[3].jpl_endDate);
+          // console.log('엔드데이트: '+this.jpl_endDate);
+          // console.log('데이터:' + JSON.stringify(this.mainJobInfo))
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
   },
 
+
+
   methods: {
-    getMainQnAList() {
+    getQnAList() {
       this.$axios.post('/jobfair/getQnAList')
           .then((res) => {
             this.QnAList = res.data
@@ -198,7 +167,66 @@ export default {
     },
     goToQnAList() {
       this.$router.push('/uQnAView')
+    },
+
+    // getMainJobInfo() {
+    //
+    //   this.$axios.post('/jobfair/getMainJobInfo')
+    //       .then((res) => {
+    //         this.mainJobInfo = res.data;
+    //
+    //         this.jpl_endDate = res.data.jpl_endDate;
+    //
+    //         console.log(res.data);
+    //       })
+    //       .catch((error) => {
+    //         console.log(error)
+    //       })
+    // },
+
+    // getDate() {
+    //   const moment = require('moment')
+    //   var today = moment();
+    //   var etime = moment(this.jpl_endDate, 'YYYY-MM-DD');
+    //   var inputT = moment(this.year + "-" + this.month + "-" + this.day)
+    //
+    //
+    //   this.curTime = today.format('YYYY-MM-DD')
+    //   this.inputTime = inputT.format('YYYY-MM-DD')
+    //   this.diffTime = "D-" + moment.duration(today.diff(inputT)).days()
+    //
+    //   // if (moment(time).isBetween(stime, etime)) {
+    //   //   //현재 시간이 접수 시작일과 마감일 사이일경우 동작
+    //   //
+    //   // } else {
+    //   //   //현재 시간이 접수 시작일과 마감일 사이가 아닐경우 남은시간이 아닌 공고 마감 출력
+    //   //   this.diffTime = "공고 마감"
+    //   //   clearInterval(this.curcur)
+    //   // }
+    //
+    // }
+
+    getDate() {
+      const moment = require('moment')
+
+      var today = moment();
+      var endTime = moment(this.jpl_endDate, 'YYYY-MM-DD');
+
+      this.curTime = moment.duration(endTime.diff(today));
+
+      this.diffDay = this.curTime.days()
+      this.diffTime = "D-" + this.diffDay
+
+      // console.log(this.jpl_endDate)
+      // var TimeMinus = moment(this.jpl_endDate[1]).subtract(1, 'days').format('YYYY-MM-DD')
+      // console.log('시간:' + TimeMinus)
+
+
+
+
     }
+
+
   }
 
 }
@@ -207,7 +235,8 @@ export default {
 <style scoped>
 
 
-html, body {width:100%;
+html, body {
+  width:100%;
   height:100%;}
 
 .left{float: left;}
@@ -291,7 +320,7 @@ h3{
   justify-content: space-between;
   margin-bottom: 30px;
   position: relative;
-  top: 200px;
+  top: 700px;
 }
 
 .qnaBox h3 {
