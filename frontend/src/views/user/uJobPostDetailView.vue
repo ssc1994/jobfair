@@ -86,7 +86,7 @@
           </div>
 
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                  v-bind:disabled="AppliedResult == 1" @click="postRes">
+                  v-bind:disabled="AppliedResult == 1">
             {{ applyBtnText }}
           </button>
 

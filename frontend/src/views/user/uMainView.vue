@@ -10,9 +10,15 @@
 
         <div>
           <div class="row" style="margin-top: 20px">
-            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" :key="i">
+            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" v-bind:value="data.value" :key="i" @click.prevent="jobPostDetail(data.jpl_num)">
+
+<!--              <div v-if="data.url == null">-->
+<!--                <img src="@/assets/myImage/noPic.jpg">-->
+<!--              </div>-->
+
               <div>
-                <img :src="data.url" alt="이미지">
+<!--                <img :src=" './assets/myImage/noPic.jpg' " v-if="data.url === '파일명'">-->
+                <img :src="data.url" alt="이미지" style="height: 250px">
               </div>
               <div class="hotText">
                 <div>{{ data.com_name }}</div>
@@ -20,9 +26,9 @@
                   {{ data.jpl_title }}
                 </p>
 
-<!--                <span class="hotDday">-->
-<!--                  {{diffTime}}-->
-<!--                </span>-->
+                <span class="hotDday">
+                  마감일 {{data.jpl_endDate}}
+                </span>
 
               </div>
             </router-link>
@@ -80,7 +86,6 @@
 </template>
 
 <script>
-import moment from "moment/moment";
 
 export default {
   name: 'uMainView',
@@ -88,63 +93,65 @@ export default {
   data() {
     return {
       QnAList: [],
-      mainJobInfo: [],
-      jpl_endDate : [],
+      mainJobInfo: {
+        jpl_num: '',
+        jpl_title: '',
+        jpl_endDate: '',
+        jpl_fileName: '',
+        jpl_filePath: '',
+        jpl_fileUuid: '',
+        com_num: '',
+      },
 
 
+      dDay: '',
+      sysDate: '',
+      endDate: '',
       diffTime: '',
-      diffDay: '',
-      year: '',
-      month: '',
-      day: '',
-      curTime: '',
-      inputTime:'',
     }
 
-
-  },
-  mounted() {
-    setInterval(this.getDate,86400);
-    this.getDate();
 
   },
 
   beforeCreate() {
 
-
-
-
   },
 
   created() {
     this.getQnAList();
-
     this.$axios.post('/jobfair/getMainJobInfo')
         .then((res) => {
           this.mainJobInfo = res.data;
-          console.log('데이터' + res)
+
+          // this.jpl_num = res.data.jpl_num,
+          //     this.jpl_title =  JSON.stringify(res.data.jpl_title),
+          //     this.jpl_endDate = res.data.jpl_endDate,
+          //     this.jpl_fileName = res.data.jpl_fileName,
+          //     this.jpl_fileUuid = res.data.jpl_fileUuid,
+          //     this.jpl_filePath = res.data.jpl_filePath
 
 
-          // this.jpl_endDate = res.data.jpl_endDate.substring(0, 10)
-          //
-          // for(var i = 0; i < this.mainJobInfo.length; i++) {
-          //   console.log("하이")
-          //   this.jpl_endDate = JSON.stringify(this.mainJobInfo[i].jpl_endDate);
-          // }
+          for(var i = 0; i < res.data.length; i++) {
+            this.jpl_title =  JSON.stringify(res.data[i].jpl_title),
+                this.jpl_endDate = JSON.stringify(res.data[i].jpl_endDate),
+                this.jpl_fileName = JSON.stringify(res.data[i].jpl_fileName),
+                this.jpl_fileUuid = JSON.stringify(res.data[i].jpl_fileUuid),
+                this.jpl_filePath = JSON.stringify(res.data[i].jpl_filePath)
 
 
+          }
 
-          // this.jpl_endDate =  JSON.stringify(this.mainJobInfo[3].jpl_endDate);
-          // console.log('엔드데이트: '+this.jpl_endDate);
-          // console.log('데이터:' + JSON.stringify(this.mainJobInfo))
+
+          console.log("ddd" + JSON.stringify(res.data[1].jpl_endDate))
+          console.log("kk" + JSON.stringify(this.jpl_title))
+
         })
         .catch((error) => {
           console.log(error)
         })
+    // this.getDate();
 
   },
-
-
 
   methods: {
     getQnAList() {
@@ -156,6 +163,8 @@ export default {
           .catch((error) => console.log(error))
 
     },
+
+
     detail(idx) {
       this.$router.push({
         //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
@@ -169,62 +178,39 @@ export default {
       this.$router.push('/uQnAView')
     },
 
-    // getMainJobInfo() {
-    //
-    //   this.$axios.post('/jobfair/getMainJobInfo')
-    //       .then((res) => {
-    //         this.mainJobInfo = res.data;
-    //
-    //         this.jpl_endDate = res.data.jpl_endDate;
-    //
-    //         console.log(res.data);
-    //       })
-    //       .catch((error) => {
-    //         console.log(error)
-    //       })
-    // },
+    jobPostDetail(jobpost) {
+      this.$router.push({
+        name: 'uJobPostDetailView',
+        params: {
+          jpl_num: jobpost
+        }
+      })
+    },
+    getMainJobInfo() {
+      this.$axios.post('/jobfair/getMainJobInfo')
+          .then((res) => {
+            this.mainJobInfo = res.data;
+            console.log('데이터' + res.data)
 
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
     // getDate() {
-    //   const moment = require('moment')
-    //   var today = moment();
-    //   var etime = moment(this.jpl_endDate, 'YYYY-MM-DD');
-    //   var inputT = moment(this.year + "-" + this.month + "-" + this.day)
+    //   let sysDate = new Date();
+    //   let endDate = new Date(this.jpl_endDate);
     //
+    //   let diffTime = Math.trunc(((endDate - sysDate) / (1000) * 60 * 60 * 24));
     //
-    //   this.curTime = today.format('YYYY-MM-DD')
-    //   this.inputTime = inputT.format('YYYY-MM-DD')
-    //   this.diffTime = "D-" + moment.duration(today.diff(inputT)).days()
+    //   if(diffTime > 0) this.dDay = 'D-' + diffTime;
+    //   else if(diffTime === 0) this.dDay = 'D-Day';
+    //   else if(diffTime < 0) this.dDay = '모집종료';
     //
-    //   // if (moment(time).isBetween(stime, etime)) {
-    //   //   //현재 시간이 접수 시작일과 마감일 사이일경우 동작
-    //   //
-    //   // } else {
-    //   //   //현재 시간이 접수 시작일과 마감일 사이가 아닐경우 남은시간이 아닌 공고 마감 출력
-    //   //   this.diffTime = "공고 마감"
-    //   //   clearInterval(this.curcur)
-    //   // }
+    //   console.log(endDate.getMonth())
+    //   this.endDate = (endDate.getMonth() + 1) + '월' + endDate.getDate() + '일 마감'
     //
     // }
-
-    getDate() {
-      const moment = require('moment')
-
-      var today = moment();
-      var endTime = moment(this.jpl_endDate, 'YYYY-MM-DD');
-
-      this.curTime = moment.duration(endTime.diff(today));
-
-      this.diffDay = this.curTime.days()
-      this.diffTime = "D-" + this.diffDay
-
-      // console.log(this.jpl_endDate)
-      // var TimeMinus = moment(this.jpl_endDate[1]).subtract(1, 'days').format('YYYY-MM-DD')
-      // console.log('시간:' + TimeMinus)
-
-
-
-
-    }
 
 
   }
@@ -320,7 +306,7 @@ h3{
   justify-content: space-between;
   margin-bottom: 30px;
   position: relative;
-  top: 700px;
+  top: 900px;
 }
 
 .qnaBox h3 {
