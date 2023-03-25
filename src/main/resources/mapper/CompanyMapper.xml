@@ -130,8 +130,8 @@ where jpl_num = #{jpl_num}
     </select>
         <!-- 큐앤에이 답변 가져오기 -->
     <select id="getQnAReply" resultType="QnAVO">
-        select c.* from qna u
-                            inner join qna c
+        select c.* from QnA u
+                            inner join QnA c
                                        on u.qa_num = c.qa_reply
         where u.qa_num=#{qa_num}
     </select>
@@ -141,7 +141,7 @@ where jpl_num = #{jpl_num}
         <!-- 기업정보 불러오기-->
     <select id="info" resultType="CompanyVO">
         select *
-        from company
+        from Company
         where com_num = #{com_num};
 
     </select>
@@ -161,8 +161,8 @@ where jpl_num = #{jpl_num}
     </select>
         <!-- 큐앤에이 기업 상세 -->
     <select id="getComQnADetail" resultType="QnAVO">
-        select c.* from qna u
-                            inner join qna c
+        select c.* from QnA u
+                            inner join QnA c
                                        on u.qa_num = c.qa_reply
         where u.qa_num=#{qa_num}
     </select>

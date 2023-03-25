@@ -20,6 +20,7 @@
             개인정보 수정
           </button>
           <button type="button" class="btn" @click="this.$router.push('uMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
       <div v-if="userInfo.mg_auth === '2'">
@@ -28,6 +29,7 @@
             QnA
           </button>
           <button type="button" class="btn" @click="this.$router.push('cMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
     </div>
