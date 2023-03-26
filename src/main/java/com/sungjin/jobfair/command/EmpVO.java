@@ -47,4 +47,7 @@ public class EmpVO {
 
     // 기업명이 필요해서 CompanyVO에서 가져옴
     private String com_name;
+
+    //화면에 다시 뿌려줄때 필요한 사진url
+    private String url;
 }

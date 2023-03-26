@@ -45,25 +45,7 @@ public class UserController {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-    
-    //application.properties에서 경로 가져오기
-//    @Value("${project.uploadpath}")
-//    private String uploadpath;
-//
-//    //**********************************************이력서**********************************************
-//        //파일 생성 시 날짜 별로 폴더 생성 후 저장할 경로 생성
-//    public String makeDir() {
-//        Date date = new Date();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-//        String now = sdf.format(date);
-//
-//        String path = uploadpath + "\\" + now;
-//        File file = new File(path);
-//        if (file.exists() == false) {
-//            file.mkdir();
-//        }
-//        return path;
-//    }
+
 
         //이력서 목록가져오기
     @PostMapping(value = "/resumeInfo")

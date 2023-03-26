@@ -4,9 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sungjin.jobfair.service.AdminComListMapper">
-
     <!--참여 업체 목록 가져오기-->
-<!--    <select id="getComList" resultType="map" parameterType="AdminComListCriteria">-->
+<!--      <select id="getComList" resultType="map" parameterType="AdminComListCriteria">-->
 
 <!--        select c.*, u.mg_auth, u.user_regDate-->
 <!--        from Company c-->
@@ -35,6 +34,7 @@
 
 <!--    </select>-->
 
+
 <!--    &lt;!&ndash;&ndash;&gt;-->
 <!--    <select id="getComList" resultType="map" parameterType="AdminComListCriteria">-->
 
@@ -62,7 +62,6 @@
 <!--                order by c.com_num asc-->
 <!--            </when>-->
 <!--        </choose>-->
-
 <!--    </select>-->
 
 </mapper>

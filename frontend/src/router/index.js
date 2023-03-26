@@ -119,7 +119,7 @@ const routes = [
     component: () => import('../views/company/cEmpRegView.vue')
   },
   {//기업 채용공고 수정 화면
-    path: '/cEmpModiView',
+    path: '/cEmpModiView/:jpl_num',
     name: 'cEmpModiView',
     component: () => import('../views/company/cEmpModiView.vue')
   },
@@ -170,7 +170,7 @@ const routes = [
     component: () => import('../views/admin/aComModiView.vue')
   },
   {//관리자 참여업체 상세 화면
-    path: '/aComDetailView',
+    path: '/aComDetailView/:com_num',
     name: 'aComDetailView',
     component: () => import('../views/admin/aComDetailView.vue')
   },

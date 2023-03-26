@@ -269,7 +269,7 @@ export default {
   name: "cEmpModiView",
   data() {
     return {
-      jpl_num: '7',
+      jpl_num: this.$route.params.jpl_num,
       com_num: '',
       jpl_title: '',
       jpl_content: '',
@@ -366,7 +366,7 @@ export default {
         },
         {cityCode: 17, gooName: ["제주시", "서귀포시"]}
       ],
-      viewImg: ''
+      viewImg: 'https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/0afa39a2-b46b-4ffc-a7c9-677b3aee751c_no-img-icon3.jpg'
 
 
     }
@@ -406,7 +406,11 @@ export default {
           this.jpl_fileName = res.data.jpl_filePath,
           this.jpl_filePath = res.data.jpl_filePath,
           this.jpl_fileUuid = res.data.jpl_fileUuid
-      // this.viewImg=require(res.data.jpl_filePath+"/"+res.data.jpl_fileUuid+"-"+res.data.jpl_fileName),
+
+          if(res.data.url!=null){
+            this.viewImg=res.data.url
+          }
+
 
     }).catch(err => {
       console.log(err)
