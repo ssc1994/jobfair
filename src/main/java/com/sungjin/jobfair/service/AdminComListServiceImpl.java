@@ -19,4 +19,11 @@ public class AdminComListServiceImpl implements AdminComListService{
         List<CompanyVO> list = adminComListMapper.getComList(cri);
         return list;
     }
+
+    //정렬 조건에 따른 참여 업체 목록 total 값 가져오기
+    @Override
+    public int getTotal(AdminComListCriteria cri) {
+        return adminComListMapper.getTotal(cri);
+
+    }
 }

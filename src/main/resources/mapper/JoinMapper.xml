@@ -25,7 +25,7 @@
     <update id="insertComNum" parameterType="UserVO">
         update User
         set com_num = (select com_num
-                       from company
+                       from Company
                        order by com_num desc
                        limit 1)
         where user_id = #{user_id};

@@ -10,11 +10,12 @@
 
           <div class="infoWrapBox">
             <div class="infoBox">
-              <div class="logoBox">
+              <div class="info_head">
                 <img src="#">
                 <h3>{{comInfo.com_name}}</h3>
               </div>
               <div class="input-group mb-3">
+
                 <span class="input-group-text" id="basic-addon1">기업번호</span>
                 <input type="text" class="form-control" placeholder="comNum" aria-label="Username"
                        aria-describedby="basic-addon1" disabled :value="comInfo.com_num">
@@ -27,6 +28,7 @@
               </div>
 
               <div class="input-group mb-3">
+
                 <span class="input-group-text" id="basic-addon1">전화번호</span>
                 <input type="text" class="form-control" placeholder="Phone" aria-label="Username"
                        aria-describedby="basic-addon1" disabled :value="comInfo.com_phone">
@@ -50,18 +52,29 @@
                        aria-describedby="basic-addon1" disabled :value="comInfo.com_ceo">
               </div>
 
+
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">설립일</span>
                 <input type="text" class="form-control" placeholder="RegDate" aria-label="Username"
                        aria-describedby="basic-addon1" disabled :value="comInfo.com_establishmentDate">
               </div>
 
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">상세주소</span>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                       aria-describedby="basic-addon1" disabled :value="comInfo.com_detail_address">
+              </div>
+
+              <div class="btnBox">
+                <button class="okBtn">승인하기</button>
+                <button class="noBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  반려하기
+                </button>
+              </div>
 
             </div>
           </div>
-
         </div>
-
 
         <div class="btnBox">
           <button class="okBtn" @click="OkAlert">승인하기</button>
@@ -98,6 +111,7 @@ export default {
         com_fileName: '',
         com_filePath: '',
         com_fileUuid: ''
+
       },
     }
   },
@@ -111,7 +125,6 @@ export default {
       const {data} = await this.$axios.post('/jobfair/companyMypage/getComInfo',
           {com_num: this.comInfo.com_num})
           .catch( err => console.log(err))
-      this.comInfo = data;
     },
     OkAlert() {
       alert("승인하시겠습니까?")

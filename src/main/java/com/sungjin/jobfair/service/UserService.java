@@ -61,6 +61,7 @@ public interface UserService {
       //지원현황 목록 미열람
     public ArrayList<EmpApplyVO> getApplyListX(String user_id);
 
+
       //이력서 삭제버튼 누르면 데이터 삭제하기
     public void deleteResume(String res_num);
 

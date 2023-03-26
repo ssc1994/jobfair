@@ -1,5 +1,8 @@
 package com.sungjin.jobfair.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sungjin.jobfair.command.CompanyVO;
 import com.sungjin.jobfair.service.CompanyMypageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +27,13 @@ public class CompanyMypageController {
     @Autowired
     @Qualifier("comMypageService")
     public CompanyMypageService comMypageService;
+
+    //AWS 객체 사용하기
+    @Autowired
+    public AmazonS3Client amazonS3Client;
+    //AWS s3(파일스토리지) 저장소
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     //application.properties에서 경로 가져오기
     @Value("${project.uploadpath}")
@@ -53,46 +64,45 @@ public class CompanyMypageController {
 
 
     @PostMapping("/modiLogo")
-    public HashMap modiLogo (@RequestParam("image") MultipartFile file,
+    public String modiLogo (@RequestParam("image") MultipartFile file,
                             @RequestParam("com_num") String com_num,
-                            CompanyVO cv) {
-//        System.out.println(file);
-//        System.out.println(com_num);
-        String num = com_num.replaceAll("\"", "");
-//        System.out.println(num);
+                            CompanyVO cv) throws IOException {
 
-        //파일명 처리
-        String imgName = file.getOriginalFilename();
-        //폴더 생성
-        String imgPath = makeDir();
-        //중복파일처리용 UUID 생성
-        String uuid = UUID.randomUUID().toString();
-        //최종 저장 경로
-        String saveName = imgPath+"/"+uuid+"-"+imgName;
 
-        //넘어온 이미지파일 먼저 생성
-        File save = new File(saveName);
-        try {
-            file.transferTo(save); //이 메소드에 의해 저장 경로에 실질적으로 file이 생성됨
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //AWS S3에 이미지 파일 업로드
+        String tmpName = file.getOriginalFilename();
+        File uploadFile = new File(tmpName); //파일 이름
+        FileOutputStream fos = new FileOutputStream(uploadFile);
+        String uuid = UUID.randomUUID().toString(); //uuid
+        String fileName = uuid + "_" + tmpName; //uuid + 파일이름
+        fos.write(file.getBytes());
+        fos.close();
 
-        //업로드된 이미지 파일 정보 해당 기업의 DB에 저장.
-        cv.setCom_num(num);
-        cv.setCom_fileName(imgName);
-        cv.setCom_filePath(imgPath);
-        cv.setCom_fileUuid(uuid);
+        amazonS3Client.putObject(new PutObjectRequest(bucket+"/image", fileName, uploadFile)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
 
+
+        //파일 객체 분해 및 경로+이름 지정
+        String com_fileName = file.getOriginalFilename();
+        String com_filePath = bucket+"/image";
+        String com_fileUuid = uuid;
+
+        cv.setCom_fileName(com_fileName);
+        cv.setCom_filePath(com_filePath);
+        cv.setCom_fileUuid(com_fileUuid);
+
+        //업로드된 이미지 파일 정보 Company 테이블에 등록
         comMypageService.modiLogo(cv);
 
+        //업로드된 이미지 파일 url 가져오기
+        String path = cv.getCom_fileUuid() + "_" + cv.getCom_fileName();
+        String bucket = cv.getCom_filePath();
 
-        //이제 업로드된 이미지 파일 불러와서 화면에 뿌려줘야함.
+        String url = amazonS3Client.getUrl(bucket, path).toString();
+
+        return url;
 
 
-        HashMap result = new HashMap();
-        result.put("filePath", saveName);
-        return result;
     }
 
     //comMypage 화면이 나올때 로그인한 기업의 정보를 화면에 뿌려주기위해 데이터를 보내주는 것
@@ -102,6 +112,19 @@ public class CompanyMypageController {
         String com_num = map.get("com_num").replaceAll("\"", "");
 
         CompanyVO comInfo =  comMypageService.getComInfo(com_num);
+
+        //업로드된 이미지 파일 url 가져와서 CompanyVO에 담기
+
+        if(comInfo.getCom_fileName() == null || comInfo.getCom_fileName().equals("")){
+            //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
+            comInfo.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/0afa39a2-b46b-4ffc-a7c9-677b3aee751c_no-img-icon3.jpg");
+        } else {
+            //업로드된 이미지 파일이 있다면 이미지 파일의 url 가져와서 담아줌.
+            String path = comInfo.getCom_fileUuid() + "_" + comInfo.getCom_fileName();
+            String bucket = comInfo.getCom_filePath();
+            String url = amazonS3Client.getUrl(bucket, path).toString();
+            comInfo.setImg_url(url);
+        }
 
         return comInfo;
 
