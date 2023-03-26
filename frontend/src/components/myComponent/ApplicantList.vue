@@ -26,9 +26,20 @@
             </tr>
           </thead>
           <tbody :key="index" v-for="(jpl, index) in jplList">
-            <TableAccordian :jpl_title=jpl.jpl_title count-cdd="99" :jpl_reg-date=jpl.jpl_regDate :jpl_end-date=jpl.jpl_endDate />
-<!--            <TableAccordian jpl_title="2023 상반기 삼성그룹 신입사원 채용" count-cdd="544" jpl_reg-date="23-03-01" jpl_end-date="23-03-31"/>-->
+            <TableAccordian :jplInfo="jpl" :countCdd="countAppList[index]"/>
           </tbody>
+          <div class="paginationWrap">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link"  @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
+              <li class="page-item"><a class="page-link"  @click="goPrevPage(page - 1)" style="margin-right: 10px">Previous</a></li>
+              <template v-for="(item, index) in pageVO.pageList" :key="index">
+                <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link"  @click.prevent="ClickPage($event), getJplList()" id="index">{{item}}</span></li>
+              </template>
+              <li class="page-item"><a class="page-link"  @click="goNextPage(page + 1)" style="margin-right: 10px">Next</a></li>
+              <li class="page-item"><a class="page-link"  @click="goLastPage(page + 1)" style="margin-right: 10px">Last</a></li>
+            </ul>
+          </div>
+
         </table>
       </div>
     </div>
@@ -46,24 +57,71 @@ export default {
       user_id: '',
       mg_auth: '',
       com_num: '',
-      jplList: [],
+      //페이지네이션 관련
+      jplList: [], //받아온 기업 공고리스트 담을 변수
+      pageVO: "", //pageVO
+      pageList: [], //pageVO.pageList 배열값
+      detailNum: "",
+      //페이지 이동에 필요한 초기값
+      page: 1,
+      amount: 10,
+      prev: '',
+      start: '',
+      end: '',
+      realEnd: '',
+      countAppList: []
     };
   },
   methods: {
-    test () {
-      console.log("test")
-      console.log(this.user_id);
-      console.log(this.mg_auth);
-      console.log(this.com_num);
+    //페이지 네이션 부분
+    goFirstPage() {
+      this.page = 1;
+      this.getComList();
+    },
+    goPrevPage() {
+      if(this.page > 1) {
+        this.page = this.page - 1;
+        this.getComList();
+      } else {
+        alert("첫 페이지입니다.");
+      }
+    },
+    goNextPage() {
+      if(this.page < this.realEnd) {
+        this.page = this.page + 1;
+        this.getComList();
+      } else {
+        alert("마지막 페이지입니다.")
+      }
+    },
+    goLastPage() {
+      this.page = this.realEnd;
+      this.getComList();
+    },
+    ClickPage(e) {
+      var clicked = e.target.innerHTML;
+      this.page = clicked
+    },
+    async getJplList () {
+      let jplData = {
+        com_num: this.com_num,
+            page: this.page,
+          amount: this.amount,
+      }
+
+      let res = await this.$axios.post("/jobfair/getComJobPosingList",
+          jplData) .catch( err => console.log(err))
+      console.log(res)
+      this.pageVO = res.data.pageVO;
+      this.jplList = res.data.jplList;
+      this.countAppList = res.data.countAppList;
     }
+
   },
   components: {
     TableAccordian
   },
   created () {
-        // this.user_id = this.$store.getters.getUser_id,
-        // this.mg_auth = this.$store.getters.getMg_auth;
-        // this.com_num = this.$store.getters.getCom_num;
     let sessionId = sessionStorage.getItem('sessionId')
     let sessionAuth = sessionStorage.getItem('sessionAuth')
     let sessionComNum = sessionStorage.getItem('sessionComp')
@@ -77,16 +135,7 @@ export default {
       this.com_num = JSON.parse(sessionComNum)
     }
 
-    let data = {
-      com_num: this.com_num
-    }
-    this.$axios.post("/jobfair/getComJobPosingList", data)
-        .then(res => {
-          this.jplList = res.data;
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    this.getJplList ()
   }
 };
 </script>
@@ -98,6 +147,20 @@ export default {
 .card {
   width:95%;
   margin-top: 50px;
+}
+/* 페이지네이션 부분 */
+.paginationWrap ul {
+  margin-top: 50px;
+  padding-left: 470px;
+}
+
+.paginationWrap .page-link {
+  background-color: #0064ff;
+}
+
+.paginationWrap li.active span {
+  background-color: #202632;
+  border: none;
 }
 
 </style>
