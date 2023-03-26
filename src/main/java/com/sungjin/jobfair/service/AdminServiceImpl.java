@@ -1,9 +1,6 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.CompanyVO;
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.UserVO;
-import com.sungjin.jobfair.command.QnAVO;
+import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,6 +35,11 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public ArrayList<UserVO> getUserInfo() {
         return adminMapper.getUserInfo();
+    }
+
+    @Override
+    public ArrayList<StatisticVO> getPopList() {
+        return adminMapper.getPopList();
     }
 
     //큐앤에이

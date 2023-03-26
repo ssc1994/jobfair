@@ -49,6 +49,10 @@ public interface UserMapper {
     //메인에서 채용공고 가져오기
     public ArrayList<EmpListVO> getMainJobInfo();
 
+    //채용공고 통계관련
+    //지원자의 성별통계 구하기!!
+    public ArrayList<StatisticVO> getGendertotal();
+
 
     //################## MyPage Service #######################
         //이력서 정보 가져오기

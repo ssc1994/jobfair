@@ -97,28 +97,26 @@
         </div>
 
         <div class="marginTime">
-          <span style="color: #0064ff; font-weight: bolder">지원자 현황 통계</span>
+          <span>지원자 현황 통계</span>
           <div class="applicant">
-            <div class="left">
+            <div class="personCount">
               <p>지원자 수</p>
-              <span>5</span>
-            </div>
-            <div class="right">
-              <p>모집 인원</p>
-              <span>1</span>
+              <span>{{peopleNumber}}</span>
             </div>
           </div>
 
           <div>
             <br>
             <ul>
-              <li>연령</li>
-              <li>
-                <img src="#">
-              </li>
+              <li>성별</li>
+              <div class="genderGroup">
+                <canvas
+                    ref="genderGroup"
+                />
+              </div>
             </ul>
             <ul>
-              <li>성별</li>
+              <li>연령</li>
               <li>
                 <img src="#">
               </li>
@@ -174,11 +172,32 @@
 <script>
 import router from "@/router";
 import moment from "moment/moment";
-
+import { Chart, registerables } from 'chart.js'
+Chart.register(...registerables)
+let chart
 export default {
   name: "uJobPostDetailView",
   data() {
     return {
+      peopleNumber: 0,
+      woman: 0,
+      man: 0,
+      page_jpl_num: [],
+      data1: {
+        labels: [
+          '여성',
+          '남성'
+        ],
+        datasets: [{
+          label: 'Login Gender Total',
+          data: [],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)'
+          ],
+          hoverOffset: 4
+        }]
+      },
       //임의로 jpl_num을 6번 채용공고를 불러오는거로 설정
       // 공고를 클릭하면 param으로 채용공고번호를 가지고 넘어워야함
       // user_id: JSON.parse(sessionStorage.getItem('sessionId')),
@@ -245,8 +264,13 @@ export default {
       resumeArray: []
     }
   },
+  watch: {
+    woman () { this.genderChart() },
+    man () { this.genderChart() }
+  },
   created() {
-    this.$axios.get('/jobfair/empData', {
+    this.getGendertotal(),
+        this.$axios.get('/jobfair/empData', {
       params: {jpl_num: this.jpl_num}
     }).then(res => {
 
@@ -340,7 +364,7 @@ export default {
   },
   mounted() {
     setInterval(this.curcur,1000);
-
+    this.genderChart()
   },
 
   methods: {
@@ -429,6 +453,36 @@ export default {
       //       console.log(error)
       //     })
 
+    },
+    getGendertotal () {
+      this.$axios.post('/jobfair/getGendertotal')
+          .then((res) => {
+            for(var a = 0; a < res.data.length; a++){
+              this.page_jpl_num = res.data[a].jpl_num
+              if(this.jpl_num === this.page_jpl_num){
+                for (var i = 0; i < this.page_jpl_num.length; i++) {
+                  this.peopleNumber++
+                  if (res.data[i].user_gender === 'F') {
+                    this.woman++
+                  } else if (res.data[i].user_gender === 'M') {
+                    this.man++
+                  }
+                }
+              }
+            }
+            chart.data.datasets[0].data[0] = this.woman
+            chart.data.datasets[0].data[1] = this.man
+            chart.update()
+            chart.destroy()
+          })
+          .catch((error) => console.log(error))
+    },
+    //남녀성비구하는 차트함수
+    genderChart() {
+      chart = new Chart(this.$refs.genderGroup, {
+        type: 'doughnut',
+        data: this.data1
+      })
     }
   }
 }
@@ -506,10 +560,16 @@ dl {
   float: left;
 }
 
-.right {
-  float: right;
+/* 지원자 수 */
+.personCount p {
+  font-size: 20px;
+  font-weight: 700;
 }
-
+.personCount span {
+  font-size: 28px;
+  font-weight: 900;
+  color: #0064ff;
+}
 /* 남은시간 */
 .marginTime {
   width: 280px;

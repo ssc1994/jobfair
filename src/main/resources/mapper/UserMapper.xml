@@ -222,6 +222,12 @@
 
     </select>
 
+    <!--    채용공고 통계 / 지원자수의 성비 구하기 -->
+    <select id="getGendertotal" resultType="StatisticVO">
+        SELECT * FROM ApplyList a INNER JOIN User u
+        ON a.user_id = u.user_id
+    </select>
+
 
     <!--**************************************************마이페이지 이력서**************************************************-->
     <!--이력서정보-->
