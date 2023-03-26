@@ -56,6 +56,51 @@ public class CompanyController {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+    
+    //######################기업 메인페이지 ###################
+        //현황판( 진행 중, 지원마감, 열람, 미열람) 데이터 가져오기
+    @GetMapping("/getStatusData")
+    public Map getStatusData(@RequestParam("com_num") String com_num) {
+        // 전체 채용공고 수와 진행 중인 공고 수
+        ArrayList<Integer> postingArr = companyService.getStatusPosting(com_num);
+        // 전체 이력서 수와 열람한 이력서 수
+        ArrayList<Integer> resArr = companyService.getStatusRes(com_num);
+
+        //내가 등록한 최신공고 2개
+        ArrayList<EmpVO> jplArr = companyService.getRecentPosting(com_num);
+        //최근 지원자 2명
+        ArrayList<ApplyVO> appArr = companyService.getRecentApplicant(com_num);
+        //회사로고 이미지 url, 최신 공고 지원자 수
+        ArrayList<String> urlArr = new ArrayList<>();
+        ArrayList<Integer> totalAppArr = new ArrayList<>();
+        for(EmpVO jpl : jplArr){
+            String path = jpl.getJpl_fileUuid() + "_" + jpl.getJpl_fileName();
+            String bucket = jpl.getJpl_filePath();
+            urlArr.add(amazonS3Client.getUrl(bucket, path).toString());
+
+            totalAppArr.add(companyService.getTotalAl(jpl.getJpl_num()));
+        }
+
+        Map map = new HashMap();
+        map.put("postingArr", postingArr);
+        map.put("resArr", resArr);
+        map.put("jplArr", jplArr);
+        map.put("appArr", appArr);
+        map.put("urlArr", urlArr);
+        map.put("totalAppArr", totalAppArr);
+
+        return map;
+    }
+
+    @PostMapping("/getResPic")
+    public String getImgUrl(@RequestBody Map<String, String> map) {
+        String path = map.get("picUuid") + "_" + map.get("pic_name");
+        String bucket = map.get("picPath");
+        String url = amazonS3Client.getUrl(bucket, path).toString();
+        System.out.println("url = " + url);
+        return url;
+    }
+    
 
     //######################채용공고##########################
     //(회사정보)com_num을 기준으로 회사테이블에서 정보를 불러오는 메서드
@@ -172,14 +217,76 @@ public class CompanyController {
         System.out.println(vo);
         return vo;
     }
-    //기업이 등록한 채용공고 리스트 가져오기
     @PostMapping(value="/getComJobPosingList")
-    public ArrayList<EmpVO> getComJobPosingList (@RequestBody Map<String, String> map) {
+    public Map getComJobPosingList (@RequestBody Map<String, String> map) {
         String com_num = map.get("com_num");
-        ArrayList<EmpVO> list = companyService.getComJobPosingList(com_num);
-        return companyService.getComJobPosingList(com_num);
-    }
 
+        int page = Integer.parseInt(map.get("page"));
+        int amount = Integer.parseInt(map.get("amount"));
+        int total = companyService.getTotalJpl(com_num);
+
+        //페이지네이션
+        Criteria cri = new Criteria(page, amount);
+        PageVO pageVO = new PageVO(cri, total);
+
+        Map paramMap = new HashMap();
+        paramMap.put("cri", cri);
+        paramMap.put("com_num", com_num);
+
+        // 채용 공고에 지원한 지원자들 리스트
+        ArrayList<EmpVO> jplList = companyService.getComJobPosingList(paramMap);
+        ArrayList<Integer> countAppList = new ArrayList<>();
+
+        for(EmpVO jpl : jplList) {
+            countAppList.add(companyService.getTotalAl(jpl.getJpl_num()));
+        }
+
+        System.out.println("countAppList = " + countAppList);
+
+        paramMap.clear();
+        paramMap.put("pageVO", pageVO);
+        paramMap.put("jplList", jplList);
+        paramMap.put("countAppList", countAppList);
+        return paramMap; //반환값 변경해야함
+    }
+    
+        //채용공고에 지원한 지원자 리스트
+    @PostMapping(value="getApplicantList")
+    public Map getApplicantList(@RequestBody Map<String, String> map){
+        String jpl_num = map.get("jpl_num");
+
+        int page = Integer.parseInt(map.get("page"));
+        int amount = Integer.parseInt(map.get("amount"));
+        int total = companyService.getTotalAl(jpl_num);
+
+        Criteria cri = new Criteria(page, amount);
+        PageVO pageVO = new PageVO(cri, total);
+
+        Map paramMap = new HashMap();
+        paramMap.put("cri", cri);
+        paramMap.put("jpl_num", jpl_num);
+
+        ArrayList<ApplyVO> applicantList = companyService.getApplicantList(paramMap);
+        paramMap.clear();
+        paramMap.put("pageVO", pageVO);
+        paramMap.put("applicantList", applicantList);
+
+        return paramMap;
+    }
+    
+    //이력서 열람 / 미열람 상태변화
+    @GetMapping(value = "chgApplicantState")
+    public String chgApplicantState(@RequestParam("res_num") String res_num,
+                                    @RequestParam("al_state") String al_state) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("res_num", res_num);
+        map.put("al_state", al_state);
+
+        companyService.chgApplicantState(map);
+
+        return "변경 성공";
+    }
 
     //##################### Q&A ###########################
     //Q&A 답변 정보 얻기   ///getComQnADetail 랑 동일( 합쳐야댐)
