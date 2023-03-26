@@ -51,15 +51,13 @@ public interface UserService {
         //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo(String user_id);
         //이력서 삭제버튼 누르면 데이터 삭제하기
-    public void deleteResume(int res_num);
+    public void deleteResume(String res_num);
     //지원현황 목록 전체
     public ArrayList<EmpApplyVO> getApplyListAll(String user_id);
     //지원현황 목록 열람
     public ArrayList<EmpApplyVO> getApplyListO(String user_id);
     //지원현황 목록 미열람
     public ArrayList<EmpApplyVO> getApplyListX(String user_id);
-
-    public void deleteResume(String res_num);
 
     public void deleteEdu(String res_num);
 
