@@ -28,7 +28,7 @@
               <p class="headline-title">생년월일 :<input type="date" class="headline-input" v-model="resInfo.res_birth"></p>
             </div>
             <!-- 프로필 사진 등록 -->
-            <img class="headline-image" :src="viewImg" alt="프로필 사진" ref="previewImg">
+            <img class="headline-image" :src="imageUrl" alt="프로필 사진" ref="previewImg">
             <div class="input-group mb-3 profileSubmit">
               <input type="file" style="display: none" class="form-control" id="inputGroupFile02" @change="previewImg" accept="image/*" ref="inputImg">
               <input class="ImgChoice" type="button" value="사진 선택" @click="clickFile">
@@ -118,7 +118,8 @@
             </div>
           </div>
         </section>
-        <input type="submit" value="이력서 저장" @click.prevent="doAction">
+        <input type="submit" value="이력서 저장" @click="doAction">
+        <input type="submit" value="돌아가기" @click="this.$router.go(-1)">
       </main>
     </form>
   </div>
@@ -145,15 +146,13 @@ export default {
           this.weInfo = response.data.weList;
           this.weCount = this.weInfo.length
           this.certInfo = response.data.certList;
-          this.certCount = this.certInfo.length
+          this.certCount = this.certInfo.length;
+          this.imageUrl = response.data.imageUrl;
         })
         .catch(err => {
           console.log(err)
         })
 
-  },
-  updated() {
-    console.log(this.eduInfo);
   },
   data() {
     return {
@@ -183,7 +182,8 @@ export default {
       weCount: 0,
       //이력서 사진 관련 변수
       res_img: '',
-      viewImg: ''
+      viewImg: '',
+      imageUrl: ''
     }
   },
   methods: {
@@ -195,6 +195,8 @@ export default {
         weInfo: this.weInfo,
         certInfo: this.certInfo
       }
+      console.log(this.eduInfo);
+      console.log(this.weInfo);
 
       let formData = new FormData();
       let resData = new Blob([JSON.stringify(tmpData)], {type: "application/json"});
