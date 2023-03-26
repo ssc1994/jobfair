@@ -64,6 +64,31 @@ public class CompanyServiceImpl implements CompanyService{
     public ArrayList<EmpVO> getComJobPosingList(String com_num) {
         return companyMapper.getComJobPosingList(com_num);
     }
+    
+    @Override
+    public ArrayList<Integer> getCountAppList(Map paramMap) {
+        return companyMapper.getCountAppList(paramMap);
+    }
+
+    @Override
+    public int getTotalJpl(String com_num) {
+        return companyMapper.getTotalJpl(com_num);
+    }
+
+    @Override
+    public int getTotalAl(String jpl_num) {
+        return companyMapper.getTotalAl(jpl_num);
+    }
+
+    @Override
+    public ArrayList<ApplyVO> getApplicantList(Map map) {
+        return companyMapper.getApplicantList(map);
+    }
+
+    @Override
+    public void chgApplicantState(Map map) {
+        companyMapper.chgApplicantState(map);
+    }
 
     //################## Login Service #######################
         //회사 번호를 가지고 회사정보 가져오기
@@ -85,5 +110,25 @@ public class CompanyServiceImpl implements CompanyService{
         return companyMapper.cQnAGetTotal(cri, com_num);
     }
 
-
+    //####################### 기업 메인 페이지 #######################
+        //현황판( 진행 중, 지원마감, 열람, 미열람) 데이터 가져오기
+    @Override
+    public ArrayList<Integer> getStatusPosting(String com_num) {
+        return companyMapper.getStatusPosting(com_num);
+    }
+        //현황판(열람, 미열람 이력서 수) 가져오기
+    @Override
+    public ArrayList<Integer> getStatusRes(String com_num) {
+        return companyMapper.getStatusRes(com_num);
+    }
+        // 내가 등록한 최신공고
+    @Override
+    public ArrayList<EmpVO> getRecentPosting(String com_num){
+        return companyMapper.getRecentPosting(com_num);
+    }
+        // 최근 지원자
+    @Override
+    public ArrayList<ApplyVO> getRecentApplicant(String com_num){
+        return companyMapper.getRecentApplicant(com_num);
+    }
 }
