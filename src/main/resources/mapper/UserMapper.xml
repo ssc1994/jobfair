@@ -78,9 +78,9 @@
         <!--채용공고 리스트-->
     <select id="getJobPostList" resultType="EmpListVO">
         select *
-        from jobpostinglist j
-        left join applylist a on j.jpl_num = a.jpl_num
-        left join company c on j.com_num = c.com_num
+        from JobPostingList j
+        left join ApplyList a on j.jpl_num = a.jpl_num
+        left join Company c on j.com_num = c.com_num
         <choose>
             <when test = "selSortInt == 1">
             order by j.jpl_num desc
@@ -97,9 +97,9 @@
     </select>
         <!--채용공고 상세검색-->
     <select id="getJobPostSrc" resultType="EmpListVO">
-        select  * from jobpostinglist j
-        left join applylist a on j.jpl_num = a.jpl_num
-        left join company c on j.com_num = c.com_num
+        select  * from JobPostingList j
+        left join ApplyList a on j.jpl_num = a.jpl_num
+        left join Company c on j.com_num = c.com_num
                   where 1 = 1
         <if test="jpl_locationSi.length != 0">
             and j.jpl_locationSi in
@@ -202,13 +202,26 @@
     <!--채용공고 지원하기-->
     <insert id="EmpApply">
         INSERT INTO
-            applylist (user_id, jpl_num, res_num, al_state, al_regDate)
+            ApplyList (user_id, jpl_num, res_num, al_state, al_regDate)
         VALUES (#{user_id}, #{jpl_num}, #{res_num}, "X", date_format(now(), '%Y-%m-%d'))
     </insert>
     <!--유저가 지원한 공고인지 찾기-->
     <select id="EmpApplied" resultType="int">
-        select EXISTS(select * from applylist where user_id = #{user_id} and jpl_num = #{jpl_num} limit 1) as success;
+        select EXISTS(select * from ApplyList where user_id = #{user_id} and jpl_num = #{jpl_num} limit 1) as success;
     </select>
+
+
+    <!--유저 메인화면에 채용공고 데이터 뿌리기-->
+    <select id="getMainJobInfo" resultType="EmpListVO">
+        select j.jpl_num, j.jpl_title, j.jpl_endDate, j.jpl_fileName, j.jpl_filePath, j.jpl_fileUuid, c.com_name
+        from JobPostingList j
+        left join Company c on j.com_num = c.com_num
+        order by j.jpl_num desc
+        limit 0, 8
+
+
+    </select>
+
 
     <!--**************************************************마이페이지 이력서**************************************************-->
     <!--이력서정보-->
@@ -220,22 +233,22 @@
     <!--이력서 지우기-->
     <delete id="deleteResume">
         delete
-        from resumelist
+        from ResumeList
         where res_num = #{res_num}
     </delete>
     <delete id="deleteEdu">
         delete
-        from education
+        from Education
         where res_num = #{res_num}
     </delete>
     <delete id="deleteWe">
         delete
-        from workexperiences
+        from WorkExperiences
         where res_num = #{res_num}
     </delete>
     <delete id="deleteCert">
         delete
-        from certificate
+        from Certificate
         where res_num = #{res_num}
     </delete>
 
@@ -297,7 +310,7 @@
     </select>
     
     <update id="modiResume" parameterType="ResumeVO">
-        update resumelist
+        update ResumeList
         set (res_title = #{res_title}, res_content = #{res_content}, res_regDate = #{res_picName},
                 res_picName= #{res_picPath}, res_picUuid=#{res_picUuid}, res_name = #{res_name}, res_email = #{res_email},
                 res_phone = {res_phone}, res_address = #{res_address}, res_birth = #{res_birth})
@@ -321,27 +334,27 @@
     <!--지원 현황 전부 가져오기-->
     <select id="getApplyListAll" resultType="EmpApplyVO">
         select *
-        from jobpostinglist j
-                 left join applylist a on a.jpl_num = j.jpl_num
-                 left join company c on c.com_num = j.jpl_num
+        from JobPostingList j
+                 left join ApplyList a on a.jpl_num = j.jpl_num
+                 left join Company c on c.com_num = j.jpl_num
         where user_id = #{user_id}
         order by al_regDate desc
     </select>
     <!--지원 현황 열람 가져오기-->
     <select id="getApplyListO" resultType="EmpApplyVO">
         select *
-        from jobpostinglist j
-                 left join applylist a on a.jpl_num = j.jpl_num
-                 left join company c on c.com_num = j.jpl_num
+        from JobPostingList j
+                 left join ApplyList a on a.jpl_num = j.jpl_num
+                 left join Company c on c.com_num = j.jpl_num
         where user_id = #{user_id} and al_state like "%O%"
         order by al_regDate desc
     </select>
     <!--지원 현황 미열람 가져오기-->
     <select id="getApplyListX" resultType="EmpApplyVO">
         select *
-        from jobpostinglist j
-                 left join applylist a on a.jpl_num = j.jpl_num
-                 left join company c on c.com_num = j.jpl_num
+        from JobPostingList j
+                 left join ApplyList a on a.jpl_num = j.jpl_num
+                 left join Company c on c.com_num = j.jpl_num
         where user_id = #{user_id} and al_state like "%X%"
         order by al_regDate desc
     </select>
@@ -355,7 +368,7 @@
 
     <!--페이지네이션-->
     <select id="uQnAGetTotal" resultType="int">
-        select count(*) from qna where qa_type like "%q%"
+        select count(*) from QnA where qa_type like "%q%"
     </select>
 
 

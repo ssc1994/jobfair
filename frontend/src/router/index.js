@@ -119,7 +119,7 @@ const routes = [
     component: () => import('../views/company/cEmpRegView.vue')
   },
   {//기업 채용공고 수정 화면
-    path: '/cEmpModiView',
+    path: '/cEmpModiView/:jpl_num',
     name: 'cEmpModiView',
     component: () => import('../views/company/cEmpModiView.vue')
   },

@@ -195,7 +195,7 @@
 
 <script>
 export default {
-  name: "cJobPostView",
+  name: "cJobPostListView",
   data() {
     return {
       job : '',

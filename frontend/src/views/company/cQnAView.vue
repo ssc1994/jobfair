@@ -145,13 +145,7 @@ export default {
           .catch((error) => console.log(error))
 
     },
-    // cQnAGetTotal() {
-    //   this.$axios.post("/jobfair/cQnAGetTotal")
-    //       .then((res) => {
-    //         console.log(res)
-    //       })
-    //       .catch((error) => console.log(error))
-    // },
+
     goFirstPage() {
       this.page = 1;
       this.cQnAListAxios();

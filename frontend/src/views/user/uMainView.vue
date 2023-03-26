@@ -1,122 +1,44 @@
 <template>
-  <div class="wrapBox">
+  <div class="wrapBox" style="height: 2000px">
     <div class="wrapBox2">
     <div class="container empBoxWrap">
+      <img src="@/assets/mainImg.png" style="width: 1500px">
         <div>
-          <h3>HOT 채용공고</h3>
+          <h3 style="margin-top: 20px">HOT 채용공고</h3>
         </div>
-        <div class="row" style="margin-top: 20px">
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-                <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
-          <router-link to="" class="hotBoxWrap">
-            <div>
-              <img src="@/assets/kakao.png"/>
-            </div>
-            <div class="hotText">
-              <div>(주)카카오</div>
-              <p class="hotTitle">
-                채용전환형 인턴 공개채용
-              </p>
-
-              <span class="hotDday">D-9</span>
-            </div>
-          </router-link>
 
 
+        <div>
+          <div class="row" style="margin-top: 20px">
+            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" v-bind:value="data.value" :key="i" @click.prevent="jobPostDetail(data.jpl_num)">
 
+<!--              <div v-if="data.url == null">-->
+<!--                <img src="@/assets/myImage/noPic.jpg">-->
+<!--              </div>-->
+
+              <div>
+<!--                <img :src=" './assets/myImage/noPic.jpg' " v-if="data.url === '파일명'">-->
+                <img :src="data.url" alt="이미지" style="height: 250px">
+              </div>
+              <div class="hotText">
+                <div>{{ data.com_name }}</div>
+                <p class="hotTitle">
+                  {{ data.jpl_title }}
+                </p>
+
+                <span class="hotDday">
+                  마감일 {{data.jpl_endDate}}
+                </span>
+
+              </div>
+            </router-link>
+
+
+          </div>
         </div>
+
+
+
       </div>
 
 
@@ -164,21 +86,75 @@
 </template>
 
 <script>
+
 export default {
   name: 'uMainView',
 
   data() {
     return {
       QnAList: [],
+      mainJobInfo: {
+        jpl_num: '',
+        jpl_title: '',
+        jpl_endDate: '',
+        jpl_fileName: '',
+        jpl_filePath: '',
+        jpl_fileUuid: '',
+        com_num: '',
+      },
+
+
+      dDay: '',
+      sysDate: '',
+      endDate: '',
+      diffTime: '',
     }
+
+
+  },
+
+  beforeCreate() {
+
   },
 
   created() {
-    this.getMainQnAList();
+    this.getQnAList();
+    this.$axios.post('/jobfair/getMainJobInfo')
+        .then((res) => {
+          this.mainJobInfo = res.data;
+
+          // this.jpl_num = res.data.jpl_num,
+          //     this.jpl_title =  JSON.stringify(res.data.jpl_title),
+          //     this.jpl_endDate = res.data.jpl_endDate,
+          //     this.jpl_fileName = res.data.jpl_fileName,
+          //     this.jpl_fileUuid = res.data.jpl_fileUuid,
+          //     this.jpl_filePath = res.data.jpl_filePath
+
+
+          for(var i = 0; i < res.data.length; i++) {
+            this.jpl_title =  JSON.stringify(res.data[i].jpl_title),
+                this.jpl_endDate = JSON.stringify(res.data[i].jpl_endDate),
+                this.jpl_fileName = JSON.stringify(res.data[i].jpl_fileName),
+                this.jpl_fileUuid = JSON.stringify(res.data[i].jpl_fileUuid),
+                this.jpl_filePath = JSON.stringify(res.data[i].jpl_filePath)
+
+
+          }
+
+
+          console.log("ddd" + JSON.stringify(res.data[1].jpl_endDate))
+          console.log("kk" + JSON.stringify(this.jpl_title))
+
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    // this.getDate();
+
   },
 
   methods: {
-    getMainQnAList() {
+    getQnAList() {
       this.$axios.post('/jobfair/getQnAList')
           .then((res) => {
             this.QnAList = res.data
@@ -187,6 +163,8 @@ export default {
           .catch((error) => console.log(error))
 
     },
+
+
     detail(idx) {
       this.$router.push({
         //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
@@ -198,7 +176,43 @@ export default {
     },
     goToQnAList() {
       this.$router.push('/uQnAView')
-    }
+    },
+
+    jobPostDetail(jobpost) {
+      this.$router.push({
+        name: 'uJobPostDetailView',
+        params: {
+          jpl_num: jobpost
+        }
+      })
+    },
+    getMainJobInfo() {
+      this.$axios.post('/jobfair/getMainJobInfo')
+          .then((res) => {
+            this.mainJobInfo = res.data;
+            console.log('데이터' + res.data)
+
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
+    // getDate() {
+    //   let sysDate = new Date();
+    //   let endDate = new Date(this.jpl_endDate);
+    //
+    //   let diffTime = Math.trunc(((endDate - sysDate) / (1000) * 60 * 60 * 24));
+    //
+    //   if(diffTime > 0) this.dDay = 'D-' + diffTime;
+    //   else if(diffTime === 0) this.dDay = 'D-Day';
+    //   else if(diffTime < 0) this.dDay = '모집종료';
+    //
+    //   console.log(endDate.getMonth())
+    //   this.endDate = (endDate.getMonth() + 1) + '월' + endDate.getDate() + '일 마감'
+    //
+    // }
+
+
   }
 
 }
@@ -207,7 +221,8 @@ export default {
 <style scoped>
 
 
-html, body {width:100%;
+html, body {
+  width:100%;
   height:100%;}
 
 .left{float: left;}
@@ -291,7 +306,7 @@ h3{
   justify-content: space-between;
   margin-bottom: 30px;
   position: relative;
-  top: 200px;
+  top: 900px;
 }
 
 .qnaBox h3 {

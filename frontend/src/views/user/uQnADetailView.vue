@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <div class="btnBox">
+    <div class="btnBox" >
       <!--답변있을경우 수정하기 버튼 안보이게 설정해야함-->
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
               v-if="cQnADetail.user_id == null && sessionUser_id === uQnADetail.user_id">
@@ -60,7 +60,7 @@
     </div>
 
     <!--수정하기 모달창 설정-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 5000" >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content ">
           <div class="modal-header">

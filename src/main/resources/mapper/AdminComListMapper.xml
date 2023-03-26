@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sungjin.jobfair.service.AdminComListMapper">
-
     <!--참여 업체 목록 가져오기-->
     <select id="getComList" resultType="CompanyVO" >
 
@@ -64,6 +63,7 @@
 
 
     </select>
+
 
 
 </mapper>

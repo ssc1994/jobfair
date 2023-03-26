@@ -4,7 +4,7 @@
       <div class="userInfoFirstLine">
         <div class="userInfo_wrap">
 <!--          이미지 얼굴사진으로 변경해야함-->
-          <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left">
+          <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left" style="z-index: 1; position: relative">
           <div>
             <!--            session에서 가져온 아이디 값 출력 -->
             <h6>{{ userInfo.user_id }}님 환영합니다.</h6>
@@ -20,6 +20,7 @@
             개인정보 수정
           </button>
           <button type="button" class="btn" @click="this.$router.push('uMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
       <div v-if="userInfo.mg_auth === '2'">
@@ -28,6 +29,7 @@
             QnA
           </button>
           <button type="button" class="btn" @click="this.$router.push('cMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
     </div>

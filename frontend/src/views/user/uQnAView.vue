@@ -7,6 +7,7 @@
 
           <div class="qnaBox">
             <h3>Q&A</h3>
+            <button @click.stop="addQnA">+ 질의 등록</button>
           </div>
 
           <table id="qnaTable">
@@ -51,15 +52,15 @@
         <!--        <a @click="goNextPage(page + 1)">next</a>-->
         <!--        <a @click="goLastPage(page + 1)">&gt;</a>      -->
 
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)">First</a></li>
-          <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)">Previous</a></li>
-          <template v-for="(item, index) in pageList" :key="index">
-            <li class="page-item" :class="{'active' : item == currentPage}"><span class="page-link" href="#" @click.prevent="ClickPage()" id="index">{{item}}</span></li>
-          </template>
-          <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)">Next</a></li>
-          <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)">Last</a></li>
-        </ul>
+<!--        <ul class="pagination">-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)">First</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)">Previous</a></li>-->
+<!--          <template v-for="(item, index) in pageList" :key="index">-->
+<!--            <li class="page-item" :class="{'active' : item == currentPage}"><span class="page-link" href="#" @click.prevent="ClickPage()" id="index">{{item}}</span></li>-->
+<!--          </template>-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)">Next</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)">Last</a></li>-->
+<!--        </ul>-->
 
         <div class="paginationWrap">
           <ul class="pagination">
@@ -89,21 +90,11 @@ export default {
     return {
       QnAList: [],
       QnADetailList: [],
-      list: ref([]),
-      cache: ref([]),
-
-      currentPage: ref(0),
-
-      isBtnFirst : ref(true),
-      isBtnPrev : ref(true),
-      isBtnNext : ref(true),
-      isBtnLast : ref(true),
 
       // list: "",
       pages: "", // pageVO
       pageList: "", //pageVO.pageList 배열값
       detailNum: "",
-
 
       //페이지 이동에 필요한 초기값
       page: 1,
@@ -115,27 +106,18 @@ export default {
 
     };
   },
-  props: {
-    listArray: {
-      type: Array,
-      required: true
-    }
-  },
+
   watch: {
     page: function () {
       this.uQnAListAxios();
     },
   },
+
   created() {
     this.getQnAList();
     this.uQnAListAxios();
-    // this.uQnAGetTotal();
   },
-  computed: {
-    paginatedData() {
-      return this.listArray.slice(this.pages.start, this.pages.end);
-    }
-  },
+
   methods: {
     addQnA() {
       this.$router.push({name: "uQnAWriteView", params: {com_num: -1}});
@@ -161,23 +143,25 @@ export default {
       })
     },
 
-    uQnAListAxios() {
-      this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
+    async uQnAListAxios() {
+
+      // let {data} = await this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
+      //     this.amount +
+      //     "&page=" +
+      //     this.page);
+      // this.list = res.data.list;
+
+      let res =  await this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
           this.amount +
           "&page=" +
-          this.page)
-          .then((res) => {
+          this.page);
+      this.list = res.data.list;
+
             this.list = res.data.list;
             this.pages = res.data.pageVO;
             this.pageList = this.pages.pageList;
             this.QnAList = res.data.list;
-            // console.log(this.list)
 
-            // console.log(this.pages.page)
-            // console.log(this.pages.prev)
-            // console.log(this.pages.start)
-            // console.log(this.pages.end)
-            // console.log(this.pages.realEnd)
 
             //페이지 이동에 필요한 데이터 담기
             this.page = this.pages.page;
@@ -186,17 +170,8 @@ export default {
             this.end = this.pages.end;
             this.realEnd = this.pages.realEnd;
 
-          })
-          .catch((error) => console.log(error))
-
     },
-    // uQnAGetTotal() {
-    //   this.$axios.post("/jobfair/uQnAGetTotal")
-    //       .then((res) => {
-    //         console.log(res)
-    //       })
-    //       .catch((error) => console.log(error))
-    // },
+
     goFirstPage() {
       this.page = 1;
       this.uQnAListAxios();
@@ -204,6 +179,7 @@ export default {
     goPrevPage() {
       if(this.page > 1) {
         this.page = this.page - 1;
+        this.uQnAListAxios();
       } else {
         alert("첫 페이지입니다.");
       }
@@ -220,38 +196,12 @@ export default {
       this.page = this.realEnd;
       this.uQnAListAxios();
     },
-    onPageChange(e) {
-      this.$axios.post('/jobfair/uQnAListAxios', {
-        amount: this.amount,
-        page: this.e.target
-      })
-    },
-    // pageArrow(e) {
-    //   let movePage = parseInt(this.pages.page.value)
-    //   if(e == 'first') {
-    //     movePage = this.pages.start.value
-    //   } else if(e == 'last') {
-    //     movePage = this.pages.end.value
-    //   } else if(e == 'prev') {
-    //     movePage = this.pages.prev
-    //   } else if(e == 'next') {
-    //     movePage = this.pages.next
-    //   }
-    // },
-    page(item) {
-      console.log(item.currentTarget.id)
 
-    },
     ClickPage() {
       var clicked = event.target.innerHTML;
-      console.log(clicked)
+      this.page = clicked
     },
-    // paging() {
-    //   this.pageList.value = [];
-    //
-    //
-    //
-    // }
+
   }
 }
 

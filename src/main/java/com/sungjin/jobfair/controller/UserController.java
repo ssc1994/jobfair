@@ -45,25 +45,7 @@ public class UserController {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-    
-    //application.properties에서 경로 가져오기
-//    @Value("${project.uploadpath}")
-//    private String uploadpath;
-//
-//    //**********************************************이력서**********************************************
-//        //파일 생성 시 날짜 별로 폴더 생성 후 저장할 경로 생성
-//    public String makeDir() {
-//        Date date = new Date();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-//        String now = sdf.format(date);
-//
-//        String path = uploadpath + "\\" + now;
-//        File file = new File(path);
-//        if (file.exists() == false) {
-//            file.mkdir();
-//        }
-//        return path;
-//    }
+
 
         //이력서 목록가져오기
     @PostMapping(value = "/resumeInfo")
@@ -363,6 +345,38 @@ public class UserController {
 
         return "success";
     }
+
+    //메인화면에서 채용공고 가져오기
+    @PostMapping(value = "/getMainJobInfo")
+    public ArrayList<EmpListVO> getMainJobInfo() {
+
+        ArrayList<EmpListVO> list = userService.getMainJobInfo();
+
+
+        for (EmpListVO vo : list) {
+            String fileUuid = vo.getJpl_fileUuid();
+            String fileName = vo.getJpl_fileName();
+            String filePath = vo.getJpl_filePath();
+
+            String path = fileUuid + "_" + fileName;
+            String bucket = filePath;
+            String url = amazonS3Client.getUrl(bucket, path).toString();
+            vo.setUrl(url);
+
+//            if(fileName.equals("파일명")) {
+//                vo.setUrl("https://mj-final-bucket.s3.ap-northeast-2.amazonaws.com/image/f9859ee0-80cc-421c-869c-8b1c96ffb736_no-img-icon3.jpg");
+//            } else {
+//                String path = fileUuid + "_" + fileName;
+//                String bucket = filePath;
+//                String url = amazonS3Client.getUrl(bucket, path).toString();
+//                vo.setUrl(url);
+//            }
+        }
+        System.out.println(list.toString());
+        return list;
+    }
+
+
 
     //**********************************************지원현황 관리(유저 마이페이지)**********************************************
     //마이페이지 지원현황 목록 가져오기

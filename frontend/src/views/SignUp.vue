@@ -1,13 +1,13 @@
 <template>
   <!--  <navbar btn-background="bg-gradient-primary"/>-->
   <div
-      class="pt-5 m-3 page-header align-items-start min-vh-50 pb-11 border-radius-lg"
+      class="pt-5 m-3 page-header bg-gradient-dark align-items-start min-vh-50 pb-11 border-radius-lg"
       :style="{
       backgroundImage:
         'url(' + require('@/assets/img/curved-images/sign-up-bg1.jpg') + ')',
     }"
   >
-    <span class="mask bg-gradient-dark opacity-6"></span>
+    <span class="mask opacity-6"></span>
     <div class="container">
       <div class="row justify-content-center">
         <div class="mx-auto text-center col-lg-5">
