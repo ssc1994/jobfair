@@ -46,7 +46,6 @@ export default {
   data () {
     return {
       weInfo: {
-        user_id: '',
         we_company: '',
         we_department: '',
         we_position: '',
