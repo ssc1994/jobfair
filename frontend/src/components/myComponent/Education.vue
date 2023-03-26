@@ -4,7 +4,6 @@
     <div class="empReg">
       <section>
         <div class="mb-3 mt-3">
-          {{this.eduCount}}
           <label for="">학교구분 :</label>
           <select class="form-select" v-model="eduInfo.edu_degree" :disabled="isAble" @change="inputEduData">
             <option selected value="none">선택</option>
@@ -37,7 +36,6 @@
                  @change="inputEduData">
         </div>
       </section>
-      <input type="button" :name="this.eduCount" value="삭제" @click="clickDelete">
     </div>
   </div>
 </template>
@@ -53,15 +51,12 @@ export default {
   data() {
     return {
       eduInfo: {
-        user_id: '',
         edu_degree: 'none',
         edu_schoolName: '',
         edu_major: '',
         edu_entranceDate: '',
         edu_graduationDate: '',
-        edu_state: 'none',
-        edu_grades: '',
-        edu_totalGrades: '',
+        edu_state: 'none'
       }
     }
   },
