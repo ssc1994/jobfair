@@ -59,49 +59,52 @@ public class UserController {
 
         //이력서 삭제하기
     @PostMapping(value = "/deleteResume")
-    public void deleteResume(@RequestBody Map<String, String> map) {
-        String res_num = map.get("res_num");
-
+    public void deleteResume(@RequestBody ResumeVO vo) {
+        //DB에 저장된 데이터 삭제
+        String res_num = String.valueOf(vo.getRes_num());
         userService.deleteEdu(res_num);
         userService.deleteWe(res_num);
         userService.deleteCert(res_num);
         userService.deleteResume(res_num);
+
+        //S3에 저장된 이미지 삭제 (없으면 진행x)
+        if(vo.getRes_picName().length() > 0){
+            String fileName = vo.getRes_picUuid() + "_" + vo.getRes_picName();
+            String bucket = vo.getRes_picPath();
+
+            amazonS3Client.deleteObject(new DeleteObjectRequest(bucket + "/image", bucket + "/image/" + fileName));
+
+            System.out.println("삭제 성공");
+        }
 
     }
         //이력서 등록
     @PostMapping(value = "/regResume",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public String regResume(@RequestPart("res_img") MultipartFile file,
-                            @RequestPart("resData") ObjectNode node,
-                            ResumeVO resumeVO,
-                            ArrayList<EduVO> eduList,
-                            ArrayList<WeVO> weList,
-                            ArrayList<CertVO> certList) throws IOException {
+                            @RequestPart("resData") ObjectNode node) throws IOException {
+
+        ResumeVO resumeVO = new ResumeVO();
+        ArrayList<EduVO> eduList = new ArrayList<>();
+        ArrayList<WeVO> weList = new ArrayList<>();
+        ArrayList<CertVO> certList = new ArrayList<>();
 
         //AWS S3 파일 업로드
-        String tmpName = file.getOriginalFilename();
-        File uploadFile = new File(tmpName); //파일 이름
+        String pic_name = file.getOriginalFilename();
+        File uploadFile = new File(pic_name); //파일 이름
         FileOutputStream fos = new FileOutputStream(uploadFile);
-        String uuid = UUID.randomUUID().toString(); //uuid
-        String fileName = uuid + "_" + tmpName; //uuid + 파일이름
+        String pic_uuid = UUID.randomUUID().toString(); //uuid
+        String fileName = pic_uuid + "_" + pic_name; //uuid + 파일이름
+        String pic_path = bucket + "/image";
         fos.write(file.getBytes());
         fos.close();
 
-        amazonS3Client.putObject(new PutObjectRequest(bucket+"/image", fileName, uploadFile)
+        amazonS3Client.putObject(new PutObjectRequest(pic_path, fileName, uploadFile)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
-
-        //파일 객체 분해 및 경로+이름 지정
-        String pic_name = file.getOriginalFilename();
-        String pic_path = bucket+"/image";
-        String pic_uuid = uuid;
-//        String saveName = pic_path + "/" + pic_uuid + "_" + pic_name;
         ObjectMapper mapper = new ObjectMapper();
+
         try {
-            //넘어온 이미지파일 먼저 생성
-//            File save = new File(saveName);
-//            file.transferTo(save);
-            //Json을 객체로 변환
             resumeVO = mapper.treeToValue(node.get("resInfo"), ResumeVO.class);
             resumeVO.setRes_picName(pic_name);
             resumeVO.setRes_picPath(pic_path);
@@ -119,8 +122,6 @@ public class UserController {
 
         for (EduVO edu : eduList) {
             edu.setRes_num(res_num);
-            edu.setEdu_grades("4.0");
-            edu.setEdu_totalGrades("4.5");
             userService.regResEdu(edu);
         }
         for (WeVO we : weList) {
@@ -148,7 +149,6 @@ public class UserController {
         String bucket = resVO.getRes_picPath();
 
         String url = amazonS3Client.getUrl(bucket, path).toString();
-        System.out.println(url);
 
         map.put("resVO", resVO);
         map.put("eduList", eduList);
@@ -161,24 +161,29 @@ public class UserController {
         //이력서 수정(update)
     @PostMapping(value = "/modiResume",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String regResume(@RequestPart("res_img") MultipartFile file,
-                            @RequestPart("resData") ObjectNode node) throws IOException {
+    public String modiResume(@RequestPart("res_img") MultipartFile file,
+                            @RequestPart("resData") ObjectNode node) throws Exception {
+
         ResumeVO resumeVO = new ResumeVO();
         ArrayList<EduVO> eduList = new ArrayList<>();
         ArrayList<WeVO> weList = new ArrayList<>();
         ArrayList<CertVO> certList = new ArrayList<>();
 
-        //파일 객체 분해 및 경로+이름 지정
+        //AWS S3 파일 업로드
         String pic_name = file.getOriginalFilename();
-        String pic_path = bucket+"/image";
-        String pic_uuid = UUID.randomUUID().toString();
-        String saveName = pic_path + "/" + pic_uuid + "_" + pic_name;
+        File uploadFile = new File(pic_name); //파일 이름
+        FileOutputStream fos = new FileOutputStream(uploadFile);
+        String pic_uuid = UUID.randomUUID().toString(); //uuid
+        String fileName = pic_uuid + "_" + pic_name; //uuid + 파일이름
+        String pic_path = bucket + "/image";
+        fos.write(file.getBytes());
+        fos.close();
+
+        amazonS3Client.putObject(new PutObjectRequest(pic_path, fileName, uploadFile)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
         ObjectMapper mapper = new ObjectMapper();
         try {
-            //넘어온 이미지파일 먼저 생성
-            File save = new File(saveName);
-            file.transferTo(save);
-            //Json을 객체로 변환
             resumeVO = mapper.treeToValue(node.get("resInfo"), ResumeVO.class);
             resumeVO.setRes_picName(pic_name);
             resumeVO.setRes_picPath(pic_path);
@@ -192,25 +197,20 @@ public class UserController {
 
         //인적사항 update
         userService.modiResume(resumeVO);
-        int res_num = resumeVO.getRes_num();
-        String user_id = resumeVO.getUser_id();
 
+        System.out.println("eduList = " + eduList);
+        System.out.println("weList = " + weList);
         for (EduVO edu : eduList) {
-            edu.setRes_num(res_num);
-            edu.setEdu_totalGrades("4.5");
             userService.modiResEdu(edu);
         }
         for (WeVO we : weList) {
-            we.setRes_num(res_num);
             userService.modiResWe(we);
         }
         for (CertVO cert : certList) {
-            cert.setRes_num(res_num);
             userService.modiResCert(cert);
         }
 
-
-        return null;
+        return "success";
     }
 
 
