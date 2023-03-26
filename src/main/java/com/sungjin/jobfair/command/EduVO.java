@@ -20,7 +20,4 @@ public class EduVO {
     private Date edu_entranceDate;          //입학년도
     private Date edu_graduationDate;        //졸업년도
     private String edu_state;           //졸업상태
-    private String edu_grades;          //학점
-    private String edu_totalGrades;     //총점
-
 }
