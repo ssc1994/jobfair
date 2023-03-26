@@ -28,13 +28,11 @@ public class UserServiceImpl implements UserService {
 //            return null;
 //        }
             return userMapper.login(vo);
-
     }
     @Override
     public UserVO info(String id) {
         return userMapper.info(id);
     }
-
 
     //################## QnA 관련 Service #######################
     @Override

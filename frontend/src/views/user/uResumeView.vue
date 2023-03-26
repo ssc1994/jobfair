@@ -206,12 +206,15 @@ export default {
             this.$router.push('/uMypageView')
           })
           .catch(error => {
-            console.log(error)
+            if(error.response.data.message === "Required request part 'res_img' is not present"){
+              alert("사진을 등록해주세요.")
+            }else{
+              alert("이력서 등록에 실패하였습니다.")
+            }
           })
     },
     //*********버튼 클릭 시 input:file 클릭으로 연동시키는 함수
     clickFile() {
-      console.log(this.resInfo.user_id)
       this.$refs.inputImg.click();
     },
     //*********업로드시킬 사진 미리보기 함수
@@ -228,15 +231,12 @@ export default {
     //splice: 첫 번째 인자: 변경시킬 인덱스,  두 번째 인자 : 삭제시킬 개수, 세 번째 인자: 인덱스에 들어갈 값
     //변경 시 기존 인덱스에 들어있는 값을 삭제 후 변경된 데이터를 집어넣는다.
     getEduData(eduData) {
-      eduData.eduInfo.user_id = this.resInfo.user_id
       this.eduInfo.splice(eduData.eduCount, 1, eduData.eduInfo);
     },
     getWeData(weData) {
-      weData.weInfo.user_id = this.resInfo.user_id
       this.weInfo.splice(weData.weCount, 1, weData.weInfo);
     },
     getCertData(certData) {
-      certData.certInfo.user_id = this.resInfo.user_id
       this.certInfo.splice(certData.certCount, 1, certData.certInfo);
     },
     //*********자식 컴포넌트 추가 함수

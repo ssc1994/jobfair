@@ -22,8 +22,10 @@
           </button>
         </div>
       </div>
+
       <hr class="my-1 horizontal dark" />
       <!-- /////////////밑으로 다 필요없는 부분 삭제//////////////// -->
+
       <div class="pt-0 card-body pt-sm-3">
         <!-- Sidebar Backgrounds -->
         <div>
@@ -152,7 +154,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

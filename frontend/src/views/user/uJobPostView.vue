@@ -244,7 +244,7 @@
                 <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.user_id != user_id">
                   지원하기
                 </button>
-              </div>
+              </div>`
 
             </div>
 

@@ -78,9 +78,9 @@
         <!--채용공고 리스트-->
     <select id="getJobPostList" resultType="EmpListVO">
         select *
-        from jobpostinglist j
-        left join applylist a on j.jpl_num = a.jpl_num
-        left join company c on j.com_num = c.com_num
+        from JobPostingList j
+        left join ApplyList a on j.jpl_num = a.jpl_num
+        left join Company c on j.com_num = c.com_num
         <choose>
             <when test = "selSortInt == 1">
             order by j.jpl_num desc
@@ -97,9 +97,9 @@
     </select>
         <!--채용공고 상세검색-->
     <select id="getJobPostSrc" resultType="EmpListVO">
-        select  * from jobpostinglist j
-        left join applylist a on j.jpl_num = a.jpl_num
-        left join company c on j.com_num = c.com_num
+        select * from JobPostingList j
+        left join ApplyList a on j.jpl_num = a.jpl_num
+        left join Company c on j.com_num = c.com_num
                   where 1 = 1
         <if test="jpl_locationSi.length != 0">
             and j.jpl_locationSi in
@@ -194,20 +194,17 @@
             </when>
         </choose>
 
-
-
-
     </select>
 
     <!--채용공고 지원하기-->
     <insert id="EmpApply">
         INSERT INTO
-            applylist (user_id, jpl_num, res_num, al_state, al_regDate)
+            ApplyList (user_id, jpl_num, res_num, al_state, al_regDate)
         VALUES (#{user_id}, #{jpl_num}, #{res_num}, "X", date_format(now(), '%Y-%m-%d'))
     </insert>
     <!--유저가 지원한 공고인지 찾기-->
     <select id="EmpApplied" resultType="int">
-        select EXISTS(select * from applylist where user_id = #{user_id} and jpl_num = #{jpl_num} limit 1) as success;
+        select EXISTS(select * from ApplyList where user_id = #{user_id} and jpl_num = #{jpl_num} limit 1) as success;
     </select>
 
     <!--**************************************************마이페이지 이력서**************************************************-->
@@ -220,22 +217,22 @@
     <!--이력서 지우기-->
     <delete id="deleteResume">
         delete
-        from resumelist
+        from ResumeList
         where res_num = #{res_num}
     </delete>
     <delete id="deleteEdu">
         delete
-        from education
+        from Education
         where res_num = #{res_num}
     </delete>
     <delete id="deleteWe">
         delete
-        from workexperiences
+        from WorkExperiences
         where res_num = #{res_num}
     </delete>
     <delete id="deleteCert">
         delete
-        from certificate
+        from Certificate
         where res_num = #{res_num}
     </delete>
 
@@ -254,10 +251,9 @@
     <!--이력서 학력등록-->
     <insert id="regResEdu" parameterType="EduVO">
         insert into Education (res_num, edu_degree, edu_schoolName, edu_major, edu_entranceDate,
-                               edu_graduationDate,
-                               edu_state, edu_grades, edu_totalGrades)
+                               edu_graduationDate, edu_state)
         values (#{res_num}, #{edu_degree}, #{edu_schoolName}, #{edu_major}, #{edu_entranceDate},
-                #{edu_graduationDate}, #{edu_state}, #{edu_grades}, #{edu_totalGrades})
+                #{edu_graduationDate}, #{edu_state})
     </insert>
     <!--이력서 경력등록-->
     <insert id="regResWe" parameterType="WeVO">
@@ -296,33 +292,41 @@
         where res_num = #{res_num}
     </select>
     
-    <update id="modiResume" parameterType="ResumeVO">
-        update resumelist
-        set (res_title = #{res_title}, res_content = #{res_content}, res_regDate = #{res_picName},
-                res_picName= #{res_picPath}, res_picUuid=#{res_picUuid}, res_name = #{res_name}, res_email = #{res_email},
-                res_phone = {res_phone}, res_address = #{res_address}, res_birth = #{res_birth})
-        where res_num = #{res_num}
-    </update>
+    <insert id="modiResume" parameterType="ResumeVO">
+        insert into ResumeList(res_num, user_id)
+        values(#{res_num}, #{user_id})
+        on duplicate key update res_num=#{res_num}, res_content=#{res_content}, res_regDate=#{res_regDate},
+            res_picName=#{res_picName}, res_picPath=#{res_picPath}, res_picUuid=#{res_picUuid}, res_name=#{res_name},
+            res_email=#{res_email}, res_phone=#{res_phone}, res_address=#{res_address}, res_birth=#{res_birth}
+    </insert>
     
-    <update id="modiResEdu" parameterType="EduVO">
-        update Education
-        set (edu_degree = #{edu_degree}, edu_schoolName = #{edu_schoolName},
-                edu_major = #{edu_major}, edu_entranceDate = #{edu_entranceDate}, edu_graduationDate = #{edu_graduationDate},
-                edu_state = #{edu_state}, edu_grades = #{edu_grades}, edu_totalGrades = #{edu_totalGrades})
-        where res_num = #{res_num}
-    </update>
+    <insert id="modiResEdu" parameterType="EduVO">
+        insert into Education(edu_num, res_num)
+        values(#{edu_num}, #{res_num})
+        on duplicate key update edu_degree = #{edu_degree}, edu_schoolName = #{edu_schoolName},
+            edu_major = #{edu_major}, edu_entranceDate = #{edu_entranceDate}, edu_graduationDate = #{edu_graduationDate},
+            edu_state = #{edu_state}
+    </insert>
     
-    <update id="modiResWe" parameterType="WeVO">
-        update WorkExperiences set (we_company = #{we_company}, we_department = #{we_department}, we_position = #{we_position},
-            we_job = #{we_job}, we_emplDate = #{we_emplDate}, we_departureDate = #{we_departureDate}, we_salary = #{we_salary}) where res_num =
-    </update>
+    <insert id="modiResWe" parameterType="WeVO">
+        insert into WorkExperiences(we_num, res_num)
+        values(#{we_num}, #{res_num})
+        on duplicate key update we_company = #{we_company}, we_department = #{we_department}, we_position = #{we_position},
+            we_job = #{we_job}, we_emplDate = #{we_emplDate}, we_departureDate = #{we_departureDate}, we_salary = #{we_salary}
+    </insert>
+
+    <insert id="modiResCert" parameterType="CertVO">
+        insert into Certificate(cert_num, res_num)
+        values(#{cert_num}, #{res_num})
+        on duplicate key update cert_name = #{cert_name}, cert_gainDate = #{cert_gainDate}, cert_issueInstitute = #{cert_issueInstitute}
+    </insert>
 
     <!--**************************************************지원현황관련**************************************************-->
     <!--지원 현황 전부 가져오기-->
     <select id="getApplyListAll" resultType="EmpApplyVO">
         select *
-        from jobpostinglist j
-                 left join applylist a on a.jpl_num = j.jpl_num
+        from JobPostingList j
+                 left join ApplyList a on a.jpl_num = j.jpl_num
                  left join company c on c.com_num = j.jpl_num
         where user_id = #{user_id}
         order by al_regDate desc
@@ -330,18 +334,18 @@
     <!--지원 현황 열람 가져오기-->
     <select id="getApplyListO" resultType="EmpApplyVO">
         select *
-        from jobpostinglist j
-                 left join applylist a on a.jpl_num = j.jpl_num
-                 left join company c on c.com_num = j.jpl_num
+        from JobPostingList j
+                 left join ApplyList a on a.jpl_num = j.jpl_num
+                 left join Company c on c.com_num = j.jpl_num
         where user_id = #{user_id} and al_state like "%O%"
         order by al_regDate desc
     </select>
     <!--지원 현황 미열람 가져오기-->
     <select id="getApplyListX" resultType="EmpApplyVO">
         select *
-        from jobpostinglist j
-                 left join applylist a on a.jpl_num = j.jpl_num
-                 left join company c on c.com_num = j.jpl_num
+        from JobPostingList j
+                 left join ApplyList a on a.jpl_num = j.jpl_num
+                 left join Company c on c.com_num = j.jpl_num
         where user_id = #{user_id} and al_state like "%X%"
         order by al_regDate desc
     </select>
@@ -355,7 +359,7 @@
 
     <!--페이지네이션-->
     <select id="uQnAGetTotal" resultType="int">
-        select count(*) from qna where qa_type like "%q%"
+        select count(*) from QnA where qa_type like "%q%"
     </select>
 
 

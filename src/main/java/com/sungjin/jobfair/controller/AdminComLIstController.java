@@ -2,13 +2,11 @@ package com.sungjin.jobfair.controller;
 
 import com.sungjin.jobfair.adminComListPagenation.AdminComListCriteria;
 import com.sungjin.jobfair.command.CompanyVO;
-import com.sungjin.jobfair.command.UserVO;
 import com.sungjin.jobfair.service.AdminComListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -20,7 +18,7 @@ public class AdminComLIstController {
     public AdminComListService adminComListService;
 
     @GetMapping("/getComList")
-    public List<CompanyVO> getComList( AdminComListCriteria cri){
+    public List<CompanyVO> getComList(AdminComListCriteria cri){
 
         System.out.println(cri.getPage());
         System.out.println(cri.getAmount());

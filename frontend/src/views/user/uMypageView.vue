@@ -72,8 +72,6 @@
                 </thead>
 
                 <tbody>
-
-
                   <tr v-for="(applyList,i) in applylist" :key=i > <!--@click.prevent="detail(jobpost.com_num)"-->
                     <td ><router-link to="" style="color:black;text-decoration: none;">{{ applyList.com_name }}</router-link></td>
                     <td><router-link to="" style="color:black;text-decoration: none;">{{ applyList.jpl_title }}</router-link></td>

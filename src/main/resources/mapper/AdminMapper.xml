@@ -46,7 +46,7 @@
 
     <!--페이지네이션-->
     <select id="aQnAGetTotal" resultType="int">
-        select count(*) from qna where qa_type like "%q%"
+        select count(*) from QnA where qa_type like "%q%"
     </select>
 
 

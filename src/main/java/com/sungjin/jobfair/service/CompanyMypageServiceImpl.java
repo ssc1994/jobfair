@@ -27,4 +27,5 @@ public class CompanyMypageServiceImpl implements  CompanyMypageService{
     public void modifyComInfo(CompanyVO cv) {
         comMypageMapper.modifyComInfo(cv);
     }
+
 }

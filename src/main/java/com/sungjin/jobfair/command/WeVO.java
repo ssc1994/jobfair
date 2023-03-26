@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @Data
+@Builder
 public class WeVO {
     private int we_num;
     private int res_num;

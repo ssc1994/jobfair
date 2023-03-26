@@ -80,8 +80,6 @@ class CompanyControllerTest {
             evo.setEdu_entranceDate(new Date(2012, 3, 01));
             evo.setEdu_graduationDate(new Date(2017, 07, 18));
             evo.setEdu_state("1");
-            evo.setEdu_grades("4.0");
-            evo.setEdu_state("4.5");
 
             wvo.setWe_num(i);
             wvo.setRes_num(i);

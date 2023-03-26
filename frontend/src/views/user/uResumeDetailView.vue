@@ -122,8 +122,7 @@
           <input type="button" value="삭제" @click="delBtn">
         </div>
         <div v-if="!isAble">
-          <input type="button" value="이력서 저장" @click="modiRes">
-          <input type="button" value="취소" @click="cancelBtn">
+          <input type="button" value="돌아가기" @click="goBack">
         </div>
 
       </main>
@@ -183,7 +182,7 @@ export default {
   },
   created() {
     this.res_num = this.$route.query.res_num
-    this.isAble = this.$route.query.isAble
+    this.isAble = this.$route.query.isAble === 'true' ? true : false;
 
     this.$axios.get('/jobfair/getResumeDetail?res_num=' + this.res_num)
         .then(response => {
@@ -203,7 +202,7 @@ export default {
   methods: {
     delBtn() {
       if (confirm('정말로 삭제하시겠습니까?')) {
-        this.$axios.post('/jobfair/deleteResume', {res_num: this.resInfo.res_num})
+        this.$axios.post('/jobfair/deleteResume', this.resInfo)
             .then((res) => {
               this.$router.push("/uMypageView");
               this.res_num = res.data
@@ -223,18 +222,9 @@ export default {
       window.scrollTo(0, 0);
 
     },
-    modiRes() {
-      this.$axios.post("/modiRes", {res_num: this.resInfo.res_num})
-          .then(response => {
-            console.log(response)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-    },
-    cancelBtn () {
-      this.$router.go(-1);
-    },
+    goBack() {
+      this.$router.go(-1)
+    }
   },
 }
 </script>

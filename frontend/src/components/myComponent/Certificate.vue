@@ -33,7 +33,6 @@ export default {
   data () {
     return {
       certInfo: {
-        user_id: '',
         cert_name: '',
         cert_gainDate: '',
         cert_issueInstitute: '',
