@@ -1,51 +1,9 @@
 <template>
 
   <div class="container" style="max-width:1560px;">
-    <!--이력서 관리-->
-    <div class="resumeBoxCon">
-      <div>
-        <h3>우리 기업 채용공고</h3>
-        <button class="arrDown"><img src="@/assets/icon_arr_down.png"></button>
-      </div>
-      <div class="resumeBoxWrap">
-        <div class="resumeBox">
-          <div class="left">
-            <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
-            <p>2023.03.09</p>
-          </div>
-          <div class="right">
-            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정
-            </button>
-            <button type="button" class="btn btn-outline-primary"
-                    style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="resumeBoxWrap">
-        <div class="resumeBox">
-          <div class="left">
-            <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
-            <p>2023.03.09</p>
-          </div>
-          <div class="right">
-            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정
-            </button>
-            <button type="button" class="btn btn-outline-primary"
-                    style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <hr>
-
-
     <div class="aplBoxCon">
       <div>
-        <h3>기업 정보</h3>
+        <h3>나의 기업 정보</h3>
       </div>
 
       <div class="infoWrapBox">
@@ -512,6 +470,12 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
+}
 
 .left {
   float: left;
@@ -599,10 +563,11 @@ export default {
 /*-------------------------*/
 
 .infoWrapBox {
-  border: 1px solid grey;
+  padding: 20px;
+  border: 1px solid #AAAAAA;
+  border-radius: 15px;
   width: 100%;
   height: 670px;
-  margin: 0 auto;
   margin-bottom: 100px;
 }
 

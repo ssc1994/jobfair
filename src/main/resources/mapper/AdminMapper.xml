@@ -11,11 +11,12 @@
     </select>
 
 
-    <select id="getAllData" resultType="EmpVO">
-        select J.*, C.com_name from JobPostingList J
-            inner join Company C
-            on J.com_num = C.com_num
-            order by jpl_num desc
+    <select id="getAllData" resultType="CompanyVO">
+--         select J.*, C.com_name from JobPostingList J
+--             inner join Company C
+--             on J.com_num = C.com_num
+--             order by jpl_num desc
+           select * from Company where com_num > 0
     </select>
 
     <select id="getEmpList" resultType="EmpVO">
@@ -31,8 +32,12 @@
     </select>
 
 <!--     채용공고의 지원자수 많은거 찾아서 채용공고 제목 가져오기 일단 css먼저하고 나중에할거임 진짜... 박희진..-->
-    <select id="">
-
+    <select id="getPopList" resultType="StatisticVO">
+        select count(*) cnt, jpl.jpl_title from JobPostingList jpl
+        inner join ApplyList al
+        on jpl.jpl_num = al.jpl_num
+        group by jpl.jpl_num
+        order by cnt desc;
     </select>
 
     <!--큐앤에이-->
@@ -46,7 +51,7 @@
 
     <!--페이지네이션-->
     <select id="aQnAGetTotal" resultType="int">
-        select count(*) from qna where qa_type like "%q%"
+        select count(*) from QnA where qa_type like "%q%"
     </select>
 
 

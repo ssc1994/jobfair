@@ -190,9 +190,10 @@ a {
   margin-bottom: 10px;
 }
 .list_titleWrap h1 {
-  font-size: 30px;
-  margin-bottom: 10px;
-  padding: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
 }
 /* select Sort */
 .list_titleWrap .choiceSort {
@@ -217,12 +218,13 @@ select {
 }
 /* 테이블 컬럼명 리스트 */
 .tableMenu {
-  color: black;
+  color: white;
   font-size: 18px;
   font-weight: bolder;
   justify-content: space-around;
   text-align: center;
 }
+
 /*테이블의 각 행에 대한 css*/
 .companyTable_wrap tr {
   text-align: center;
@@ -231,7 +233,7 @@ select {
   justify-content: space-around;
   padding: 10px;
   margin-bottom: 5px;
-  background-color: #A4A4A4;
+  background-color: #0064ff;
 }
 /*각 열 크기(줄) 맞추기*/
 .companyTable_wrap table tr td{

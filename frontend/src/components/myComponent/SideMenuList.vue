@@ -8,9 +8,9 @@
 <!--  <div v-if="menuTitle !='홈' && menuTitle != '마이 페이지' && (menuTitle != '채용 정보' || this.mg_auth != '1')">-->
   <div class="menu_dropdown" @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && this.mg_auth === '3'">
     <div>{{ menuTitle }}</div>
-    <div v-if="isVisible">
+    <div v-if="isVisible" style="border: 1px solid #AAAAAA; border-radius: 6px;">
       <ul v-for="menu in menuGroup">
-        <li>
+        <li class="menu_child">
           <router-link :to="menu.menu_URL">{{ menu.menu_name }}</router-link>
         </li>
       </ul>
@@ -29,7 +29,7 @@ export default {
     'mg_auth'
   ],
   data () {
-    return{
+    return {
       isVisible: false,
       link: '',
       menuGroup: []
@@ -104,10 +104,17 @@ a {
   color: #0064ff;
 }
 
+/* 드롭다운 메뉴 */
 .menu_dropdown {
-  color: #333;
-  font-size: 16px;
-  border: 1px solid #ccc;
+  color: #202632;
+  font-size: 18px;
+  font-weight: 700;
+}
+/* 드롭다운 자식메뉴 */
+.menu_child {
+
+  font-size: 15px;
+  font-weight: 600;
 }
 
 

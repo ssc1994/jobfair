@@ -364,6 +364,16 @@ public class UserController {
         return "success";
     }
 
+    //채용공고 상세페이지에 있는 성별통계구하기
+    @PostMapping(value = "/getGendertotal")
+    public ArrayList<StatisticVO> getGendertotal(){
+
+        ArrayList<StatisticVO> list = userService.getGendertotal();
+        System.out.println(list.toString());
+
+        return list;
+    }
+
     //**********************************************지원현황 관리(유저 마이페이지)**********************************************
     //마이페이지 지원현황 목록 가져오기
     @PostMapping(value="/getApplyList")

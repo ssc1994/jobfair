@@ -13,7 +13,7 @@ const routes = [
   { //메인화면 - 로그인페이지
     path: '/',
     name: 'Main',
-    component: MainView
+    component: SignIn
   },
 //*********************유저 화면*********************
   {//유저 & 기업 회원가입

@@ -1,9 +1,6 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.CompanyVO;
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.UserVO;
-import com.sungjin.jobfair.command.QnAVO;
+import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,8 +22,8 @@ public class AdminServiceImpl implements AdminService{
 
     //전체채용정보 가쟈오기 기업이랑 조인해서 채용정보를 작성한 기업의 정보도 출력하기
     @Override
-    public ArrayList<EmpVO> getAllData(String com_num) {
-        return adminMapper.getAllData(com_num);
+    public ArrayList<CompanyVO> getAllData() {
+        return adminMapper.getAllData();
     }
 
     @Override
@@ -38,6 +35,11 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public ArrayList<UserVO> getUserInfo() {
         return adminMapper.getUserInfo();
+    }
+
+    @Override
+    public ArrayList<StatisticVO> getPopList() {
+        return adminMapper.getPopList();
     }
 
     //큐앤에이

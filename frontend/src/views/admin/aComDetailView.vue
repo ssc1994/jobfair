@@ -4,9 +4,7 @@
     <div>
       <div>
         <div class="aplBoxCon">
-          <div>
             <h3>기업 정보</h3>
-          </div>
 
           <div class="infoWrapBox">
             <div class="infoBox">
@@ -94,25 +92,14 @@
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click.prevent="uQnAModi">
                     반려하기
                   </button>
-
                 </div>
               </div>
-
             </div>
-
-
           </div>
         </div>
       </div>
-
-
     </div>
-
-
   </div>
-
-
-
 </template>
 
 <script>
@@ -122,17 +109,23 @@ export default {
 </script>
 
 <style scoped>
+.aplBoxCon h3{
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
+}
 .infoWrapBox {
-  border: 1px solid grey;
-  width: 100%;
-  height: 600px;
+  border: 1px solid #AAAAAA;
+  border-radius: 15px;
+  padding: 20px;
+  width: 90%;
   margin: 0 auto;
 }
 
 .infoBox {
   width: 80%;
   height: 500px;
-  margin: 0 auto;
   margin-top: 50px;
 }
 
@@ -148,6 +141,12 @@ export default {
   width: 250px;
   border: 1px solid gray;
   margin-right: 15px;
+  background-color: #0064ff;
+  color: white;
+  font-weight: 800;
+}
+.okBtn:hover {
+  background-color: rgb(0,100,255,0.8);
 }
 .noBtn {
   text-align: center;
@@ -156,6 +155,12 @@ export default {
   line-height: 50px;
   width: 250px;
   border: 1px solid gray;
+  background-color: #0064ff;
+  color: white;
+  font-weight: 800;
+}
+.noBtn:hover {
+  background-color: rgb(0,100,255,0.8);
 }
 
 .input-group textarea {

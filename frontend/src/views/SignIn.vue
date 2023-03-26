@@ -1,36 +1,25 @@
 <template>
-  <div class="container top-0 position-sticky z-index-sticky">
-    <div class="row">
-      <div class="col-12">
-        <navbar
-          is-blur="blur blur-rounded my-3 py-2 start-0 end-0 mx-4 shadow"
-          btn-background="bg-gradient-success"
-          :dark-mode="true"
-        />
-      </div>
-    </div>
-  </div>
   <main class="mt-0 main-content main-content-bg" @keydown.enter="logInBtn">
     <section>
       <div class="page-header min-vh-75">
         <div class="container">
           <div class="row">
-            <div class="mx-auto col-xl-4 col-lg-5 col-md-6 d-flex flex-column">
-              <div class="mt-8 card card-plain">
+            <div class="mx-auto col-lg-5 col-md-6 d-flex flex-column">
+              <div class="mt-8 card card-plain shadow p-3 mb-5 bg-body rounded">
                 <div class="pb-0 card-header text-start">
-                  <h3 class="font-weight-bolder text-success text-gradient">
-                    Welcome back
-                  </h3>
+                  <h1 class="font-weight-1000 text-info text-gradient">
+                    Welcome
+                  </h1>
                   <p class="mb-0">Enter your id and password to sign in</p>
                   <br>
-                  <div class="radioBox">
+                  <div class="choiceBox">
                     <input type="radio" name="radioBtn" value="1" v-model="mg_auth"><span>개인회원</span>
                     <input type="radio" name="radioBtn" value="2" v-model="mg_auth"><span>기업회원</span>
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="text-start loginBox">
-                    <label>id</label><br>
+                    <label>ID</label><br>
                     <soft-input
                       id="user_id"
                       type="text"
@@ -52,26 +41,26 @@
                   </div>
                 </div>
                 <button type="submit" id="loginBtn" @click="logInBtn"
-                class="btn mb-0 bg-gradient-success w-80"
+                class="btn w-50"
                 >로그인</button>
 
-                <div class="px-1 pt-0 text-center card-footer px-lg-2">
+                <div class="pt-4 text-center card-footer">
                   <p>좋은 직업을 찾고싶으신가요? <br>가입하시고 다양한 정보를 얻어가세요!<br>
-                    <router-link to="/Sign-Up"  class="text-success text-gradient font-weight-bold">회원가입</router-link>
+                    <router-link to="/Sign-Up" class="joinBtn">회원가입</router-link>
                   </p>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div
-                class="top-0 oblique position-absolute h-100 d-md-block d-none me-n8"
+                class="oblique position-absolute h-100 d-md-block d-none me-n8"
               >
                 <div
-                  class="bg-cover oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
+                  class="bg-cover oblique-image position-absolute fixed-top h-100 z-index-0 ms-n6"
                   :style="{
                     backgroundImage:
                       'url(' +
-                      require('@/assets/img/curved-images/curved9.jpg') +
+                      require('@/assets/img/joinImg.png') +
                       ')',
                   }"
                 ></div>
@@ -187,9 +176,9 @@ export default {
           .finally(() => {
             console.log('로그인시도')
           })
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -201,10 +190,26 @@ export default {
   border-radius: 5px;
   border: 1px solid black;
 }
-.loginBtn{
+.loginBox label {
+  font-weight: bolder;
+  font-size: 16px;
+  color: #0064ff;
+}
+#loginBtn{
   justify-content: center;
   position: relative;
-  left: 25px;
+  left: 120px;
+  background-color: #0064ff;
+  font-weight: bolder;
+  color: white;
+}
+
+/* 회원가입 css */
+.joinBtn {
+  text-decoration: none;
+  color: #0064ff;
+  font-weight: bolder;
+  margin: 30px;
 }
 
 </style>

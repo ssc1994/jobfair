@@ -242,7 +242,7 @@
                 <div class="input-group mb-3">
 
                   <input type="file" style="display: none" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert" accept="image/*">
-                  <input type="button" value="채용공고 이미지선택" @click="clickFile">
+                  <input type="button" value="채용공고 이미지선택" class="okay_Btn" @click="clickFile">
 
                 </div>
 
@@ -255,7 +255,7 @@
             </div>
           </section>
 
-          <button type="submit" class="btn btn-primary" @click="empRegist">등록</button>
+          <button type="submit" class="okay_Btn" @click="empRegist">등록</button>
         </div>
       </div>
 
@@ -511,6 +511,12 @@ body {
   word-break: keep-all;
 }
 
+h5 {
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
+}
 /* 공고 양식 제일 바깥 css*/
 .empReg {
   width: 900px;
@@ -588,6 +594,23 @@ textarea.form-control {
   height: 300px;
   border: 1px solid #A4A4A4;
   /*position: absolute;*/
+}
+
+/* button */
+.okay_Btn {
+  margin: 10px;
+  width: 180px;
+  height: 35px;
+  border: none;
+  border-radius: 10px;
+  background-color: #0064ff;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.okay_Btn:hover {
+  background-color: rgb(0, 100, 255,0.8);
 }
 
 </style>

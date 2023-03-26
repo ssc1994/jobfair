@@ -1,9 +1,6 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.CompanyVO;
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.UserVO;
-import com.sungjin.jobfair.command.QnAVO;
+import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
 
 import java.util.ArrayList;
@@ -16,7 +13,7 @@ public interface AdminService {
     public ArrayList<UserVO> getAuth();
 
     //전체 채용정보가져오기(기업이랑조인)
-    public ArrayList<EmpVO> getAllData(String com_num);
+    public ArrayList<CompanyVO> getAllData();
     //전체채용정보 페이지네이션하기위해 리스트 가져오기
 
     //전체채용정보 페이지네이션하기위해 리스트 가져오기
@@ -26,6 +23,9 @@ public interface AdminService {
     //################## 통계 #######################
     //전체 유저정보 가져와서 통계에 남녀가입성비나타내기
     public ArrayList<UserVO> getUserInfo();
+
+    //통계에 인기많은 채용공고 뿌리기
+    public ArrayList<StatisticVO> getPopList();
 
 
     //큐앤에이

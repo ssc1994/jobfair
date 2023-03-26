@@ -1,10 +1,7 @@
 package com.sungjin.jobfair.controller;
 
 import com.sungjin.jobfair.PageGate;
-import com.sungjin.jobfair.command.CompanyVO;
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
 import com.sungjin.jobfair.pagination.PageVO;
 import com.sungjin.jobfair.service.AdminService;
@@ -37,10 +34,9 @@ public class AdminController {
 
     //전체 가져오기
     @PostMapping(value = "/getAllData")
-    public ArrayList<EmpVO> getAllData(Model model, @RequestBody CompanyVO vo){
+    public ArrayList<CompanyVO> getAllData(Model model){
 
-        String com_num = vo.getCom_num();
-        ArrayList<EmpVO> list = adminService.getAllData(com_num);
+        ArrayList<CompanyVO> list = adminService.getAllData();
         System.out.println(list.toString());
 
         model.addAttribute("list", list);
@@ -70,6 +66,16 @@ public class AdminController {
         return list;
     }
 
+    //통계에 인기많은 채용공고 뿌리기
+    @PostMapping(value = "/getPopList")
+    public ArrayList<StatisticVO> getPopList(Model model){
+
+        ArrayList<StatisticVO> list = adminService.getPopList();
+        model.addAttribute("list", list);
+        System.out.println("list = " + list);
+
+        return list;
+    };
 
     //큐앤에이
     //큐앤에이 목록

@@ -82,7 +82,12 @@ public class UserServiceImpl implements UserService {
     public void EmpApply(String user_id, String jpl_num, String res_num){
         userMapper.EmpApply(user_id, jpl_num, res_num);
     }
-    
+    //통계구하기 (셩별)
+    @Override
+    public ArrayList<StatisticVO> getGendertotal() {
+        return userMapper.getGendertotal();
+    }
+
     //박희진 작성중
 //    @Override
 //    public ArrayList<EmpVO> EmpRegistInfo() {
@@ -94,6 +99,7 @@ public class UserServiceImpl implements UserService {
     public ArrayList<ResumeVO> resumeInfo(String user_id) {
         return userMapper.resumeInfo(user_id);
     }
+
     @Override
     public void deleteResume(String res_num) {
         userMapper.deleteResume(res_num);

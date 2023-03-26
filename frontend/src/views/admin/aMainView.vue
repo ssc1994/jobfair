@@ -1,11 +1,11 @@
 <template>
-
+  <img src="@/assets/mainImg.png" style="width: 1500px">
   <div class="adminBg" >
     <div class="container empBoxWrap">
       <h3>참여 기업 상태</h3>
       <div class="row">
         <div class="col-lg-4 col-sm-4 aBox" >
-          <router-link to="aComListView" style="background-color:rgb(95, 75, 229)">
+          <router-link to="aComListView" style="background-color:rgb(0, 100, 255,0.8)">
             <div class="companyNumImg">
             </div>
             <div class="companyNum_text">
@@ -15,7 +15,7 @@
           </router-link>
         </div>
         <div class="col-lg-4 col-sm-4  aBox" >
-          <router-link to="" style="background-color:rgb(229, 75, 75)">
+          <router-link to="" style="background-color:rgb(0, 100, 255)">
             <div class="companyNumImg">
             </div>
             <div class="companyNum_text">
@@ -26,7 +26,7 @@
           </router-link>
         </div>
         <div class="col-lg-4 col-sm-4  aBox">
-          <router-link to="" style="background-color:rgb(62, 162, 72)">
+          <router-link to="" style="background-color:rgb(0, 100, 255,0.8)">
             <div class="companyNumImg">
             </div>
             <div class="companyNum_text">
@@ -40,24 +40,24 @@
     </div>
   </div>
   <div class="userInfoBox">
-    <h3>채용공고 목록</h3>
-    <router-link to="/aComListView" style="float: right">더보기</router-link>
+    <h3>참여업체 목록</h3>
+    <router-link to="/aComListView" style="float: right; color: #202632">더보기</router-link>
     <div class="userInfoFirstLine">
       <div>
-<!--        기업이 등록한 전체 채용공고를 가져오려하는중, 근데 작성한 채용공고테이블과 기업테이블을 join해서 채용공고를 작성한 기업정보도 가져올 생-->
+        <!--        기업이 등록한 전체 채용공고를 가져오려하는중, 근데 작성한 채용공고테이블과 기업테이블을 join해서 채용공고를 작성한 기업정보도 가져올 생-->
         <table class="tableDesign">
           <thead>
-            <th v-for="tableTitle in items">{{tableTitle}}</th>
+          <th v-for="tableTitle in items">{{tableTitle}}</th>
           </thead>
-                    <tbody>
-                      <tr v-for="(line,i) in jobPostList">
-                        <td>{{i+1}}</td>
-                        <td>{{line.jpl_title}}</td>
-                        <td>{{line.jpl_regDate}}</td>
-                        <td>{{line.jpl_name}}</td>
-                        <td>{{line.com_name}}</td>
-                      </tr>
-                    </tbody>
+          <tbody>
+          <tr v-for="(line,i) in jobPostList" :key="i">
+            <td>{{i+1}}</td>
+            <td>{{line.com_name}}</td>
+            <td>{{line.com_phone}}</td>
+            <td>{{line.com_email}}</td>
+            <td>{{line.com_ceo}}</td>
+          </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -70,11 +70,11 @@ export default {
   name: 'aMainView',
   data() {
     return {
-      items: ['No.','채용공고제목','작성일','등록자명','회사명'],
+      items: ['No.','회사명','연락처','이메일','대표명'],
       jobPostList: [],
       com_num: '',
       com_name: [],
-      number: 1,
+      number: 0,
       auth: [],
       nosuccess: 0,
       ysuccess: 0
@@ -90,9 +90,9 @@ export default {
       this.$axios.post('/jobfair/getAuth')
           .then(res => {
             this.auth = res.data
-            console.log(this.auth)
+            // console.log(this.auth)
             for (let i = 0; i < res.data.length; i++) {
-              console.log('실행됨')
+              // console.log('실행됨')
               if(this.auth[i].mg_auth === '2') {
                 this.nosuccess++
               } else if(this.auth[i].mg_auth === '3') {
@@ -103,15 +103,18 @@ export default {
           .catch(error => { console.log(error)})
     },
     allinfo() {
-      this.$axios.post('/jobfair/getAllData', {com_num: this.com_num})
+      this.$axios.post('/jobfair/getAllData')
           .then(res => {
-            this.com_name = res.data.com_num
             this.jobPostList = res.data
-            var set = new Set()
-            for(let i=0; i<res.data.length; i++){
-              set.add(res.data[i].com_num)
+            console.log(this.jobPostList)
+
+            for(var i = 0; i <= res.data.length; i++){
+              if(res.data[i].com_num > 0){
+                console.log(res.data.com_num)
+                this.number++
+              }
             }
-            this.number=set.size
+
           }).catch(error => {
         console.log(error)
       })
@@ -145,9 +148,10 @@ html, body {width:100%;
 }
 
 .userInfoBox h3 {
-  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 20px;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
 }
 
 .tableDesign {
@@ -172,11 +176,9 @@ html, body {width:100%;
   background-color: #f2f2f2;
 }
 
-/* */
-
 .adminBg {
   background-color: #f7f7f7;
-  padding: 20px 0;
+  padding: 20px;
 }
 
 .empBoxWrap {
@@ -185,9 +187,10 @@ html, body {width:100%;
 }
 
 .empBoxWrap h3 {
-  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 20px;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
 }
 
 .aBox {

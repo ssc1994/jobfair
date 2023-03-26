@@ -1,14 +1,9 @@
 <template>
   <div class="allGroup">
-    <form class="datePerson">
-      <h2>기간별 지원자 통계</h2>
-      <input type="date"/>
-      <button>기간조회</button>
-    </form>
     <div class="personGroup">
       <h2>인기있는 채용공고순위 TOP5</h2>
       <canvas
-          ref="barChart"
+          ref="personGroup"
       />
       <div>
         <div class="genderGroup">
@@ -17,6 +12,11 @@
               ref="genderGroup"
           />
         </div>
+        <!--    <div class="datePerson">-->
+        <!--      <h2>기간별 지원자 통계</h2>-->
+        <!--      <input type="date"/>-->
+        <!--      <button>기간조회</button>-->
+        <!--    </div>-->
       </div>
     </div>
   </div>
@@ -26,32 +26,32 @@
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 let chart
+let chart1
 export default {
   name: 'aStatisticView',
   data: () => ({
     woman: 0,
     man: 0,
+    sList: [],
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: [],
       datasets: [{
         label: 'Date of Join',
-        data: [20, 14, 11, 7, 4, 3],
+        data: [],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
           'rgba(255, 206, 86, 0.2)',
           'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
+          'rgba(153, 102, 255, 0.2)'
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)',
           'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
+          'rgba(153, 102, 255, 1)'
         ],
         borderWidth: 1
       }]
@@ -83,34 +83,48 @@ export default {
     woman () { this.genderChart() },
     man () { this.genderChart() }
   },
-  mounted() {
+  mounted () {
     this.createChart()
     this.genderChart()
   },
-  created() {
+  created () {
+    this.getPopList()
     this.getUserInfo()
   },
   methods: {
-    getUserInfo() {
+    getPopList () {
+      this.$axios.post('/jobfair/getPopList')
+          .then((res) => {
+            this.sList = res.data
+            // console.log(this.sList)
+            // console.log(this.sList[0].cnt)
+            for(var i = 0; i < this.sList.length; i++){
+              chart1.data.datasets[0].data[i] = this.sList[i].cnt
+              chart1.data.labels[i] = this.sList[i].jpl_title
+            }
+            chart1.update()
+          })
+          .catch((error) => console.log(error))
+    },
+    getUserInfo () {
       this.$axios.post('/jobfair/getUserInfo')
           .then((res) => {
             for (var i = 0; i < res.data.length; i++) {
-              if (res.data[i].user_gender === '여자') {
+              if (res.data[i].user_gender === 'F') {
                 this.woman++
-              } else if (res.data[i].user_gender === '남자') {
+              } else if (res.data[i].user_gender === 'M') {
                 this.man++
               }
             }
             chart.data.datasets[0].data[0] = this.woman
             chart.data.datasets[0].data[1] = this.man
             chart.update()
-            console.log(this.woman)
+            chart.destroy()
           })
           .catch((error) => console.log(error))
-
     },
     createChart() {
-      new Chart(this.$refs.barChart, {
+      chart1 = new Chart(this.$refs.personGroup, {
         type: 'bar',
         data: this.data,
         options: this.options
@@ -138,43 +152,34 @@ export default {
 a {
   text-decoration: none;
 }
+/* canvas의 height는 자동으로 조절된다!! 신기하다~ */
+canvas {
+  width: 500px;
+}
+
 .allGroup {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   padding: 20px;
-  background-color: #f2f2f2;
-}
-.personGroup {
-
+  border: 1px solid #AAAAAA;
+  border-radius: 15px;
 }
 
 /* Style for the heading */
 .personGroup h2 {
-  font-size: 26px;
-  font-weight: bolder;
-  margin-bottom: 20px;
-}
-
-/* Style for the canvas element */
-.personGroup canvas {
-  width: 800px;
-  height: 400px;
-  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
 }
 
 /* Style for the gender group heading */
 .genderGroup h2 {
-  font-size: 26px;
-  font-weight: bolder;
-  margin-bottom: 20px;
-}
-
-/* Style for the gender group canvas */
-.genderGroup canvas {
-  width: 300px;
-  height: 300px;
-  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
 }
 
 /* Style for the form */
@@ -188,9 +193,10 @@ a {
 
 /* Style for the form heading */
 .datePerson h2 {
-  font-size: 26px;
-  font-weight: bolder;
-  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+  color: #202632;
 }
 
 /* Style for the form input */

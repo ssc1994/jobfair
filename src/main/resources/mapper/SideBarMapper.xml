@@ -6,7 +6,7 @@
 <mapper namespace="com.sungjin.jobfair.service.SideBarMapper">
 
     <select id="getMenu" resultType="map">
-        select * from MENU where menu_upperId = #{menu_id} and menu_auth = 3 order by menu_order
+        select * from Menu where menu_upperId = #{menu_id} and menu_auth = 3 order by menu_order
     </select>
 
 </mapper>

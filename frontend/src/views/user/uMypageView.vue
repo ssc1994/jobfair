@@ -25,7 +25,7 @@
           </routerLink>
         </div>
 
-        <div class="resumeBoxWrap" key="i" v-for="(resDetail, i) in resumeArray" :key="i">
+        <div class="resumeBoxWrap" key="i" v-for="(resDetail, i) in resumeArray">
           <ResComp :index='i' :resDetail='resDetail' />
         </div>
 

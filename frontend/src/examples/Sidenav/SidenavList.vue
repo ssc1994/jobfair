@@ -1,13 +1,14 @@
 <template>
   <div class="pt-3 mx-3 mt-3 sidenav-footer">
-    <div class="userInfoBox">
+    <div class="userInfoBox" style="z-index: -1">
       <div class="userInfoFirstLine">
         <div class="userInfo_wrap">
 <!--          이미지 얼굴사진으로 변경해야함-->
           <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left">
-          <div>
+          <div style="margin-left: 33px">
             <!--            session에서 가져온 아이디 값 출력 -->
-            <h6>{{ userInfo.user_id }}님 환영합니다.</h6>
+            <h6>{{ userInfo.user_id }}님</h6>
+            <h6>환영합니다.</h6>
           </div>
         </div>
       </div>
@@ -35,7 +36,7 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="uInfoModi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="uInfoModi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 9999999;">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -554,10 +555,6 @@ export default {
   text-align: center;
 }
 
-.profile_img {
-  width: 70px;
-}
-
 .userInfo_wrap {
   margin-bottom: 20px;
   overflow: hidden;
@@ -702,12 +699,5 @@ export default {
 
 .menu01 {
   border: 3px solid;
-}
-
-navbar {
-  z-index: 10;
-}
-.userInfoBox {
-  z-index: 500;
 }
 </style>
