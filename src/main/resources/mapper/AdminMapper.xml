@@ -25,14 +25,18 @@
     </select>
 
     <!-- ######################### 통계 페이지 ######################### -->
-<!--    유저의 전체 정보를 가져와서 통계그래프에 나타내기 -->
+    <!--    유저의 전체 정보를 가져와서 통계그래프에 나타내기 -->
     <select id="getUserInfo" resultType="UserVO">
         select * from User
     </select>
 
-<!--     채용공고의 지원자수 많은거 찾아서 채용공고 제목 가져오기 일단 css먼저하고 나중에할거임 진짜... 박희진..-->
-    <select id="">
-
+    <!--     채용공고의 지원자수 많은거 찾아서 채용공고 제목 가져오기 일단 css먼저하고 나중에할거임 진짜... 박희진..-->
+    <select id="getPopList" resultType="StatisticVO">
+        select count(*) cnt, jpl.jpl_title from JobPostingList jpl
+        inner join ApplyList al
+        on jpl.jpl_num = al.jpl_num
+        group by jpl.jpl_num
+        order by cnt desc limit 0,5
     </select>
 
     <!--큐앤에이-->

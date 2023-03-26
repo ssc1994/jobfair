@@ -3,6 +3,7 @@ package com.sungjin.jobfair.controller;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -376,7 +377,15 @@ public class UserController {
         return list;
     }
 
+    //채용공고 상세페이지에 있는 성별통계구하기
+    @PostMapping(value = "/getGendertotal")
+    public ArrayList<StatisticVO> getGendertotal(){
 
+        ArrayList<StatisticVO> list = userService.getGendertotal();
+        System.out.println(list.toString());
+
+        return list;
+    }
 
     //**********************************************지원현황 관리(유저 마이페이지)**********************************************
     //마이페이지 지원현황 목록 가져오기

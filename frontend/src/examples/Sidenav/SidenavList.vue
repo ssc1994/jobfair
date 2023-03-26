@@ -7,7 +7,8 @@
           <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left" style="z-index: 1; position: relative">
           <div>
             <!--            session에서 가져온 아이디 값 출력 -->
-            <h6>{{ userInfo.user_id }}님 환영합니다.</h6>
+            <h6>{{ userInfo.user_id }}님</h6>
+            <h6>환영합니다.</h6>
           </div>
         </div>
       </div>

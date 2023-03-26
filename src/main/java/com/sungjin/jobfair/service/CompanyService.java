@@ -1,14 +1,12 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.CompanyVO;
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Primary;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public interface CompanyService {

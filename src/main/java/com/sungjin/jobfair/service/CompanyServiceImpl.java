@@ -1,14 +1,12 @@
 package com.sungjin.jobfair.service;
 
-import com.sungjin.jobfair.command.CompanyVO;
-import com.sungjin.jobfair.command.EmpVO;
-import com.sungjin.jobfair.command.QnAVO;
-import com.sungjin.jobfair.command.UserVO;
+import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Service("companyService")
 public class CompanyServiceImpl implements CompanyService{
@@ -61,8 +59,8 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public ArrayList<EmpVO> getComJobPosingList(String com_num) {
-        return companyMapper.getComJobPosingList(com_num);
+    public ArrayList<EmpVO> getComJobPosingList(Map paramMap) {
+        return null;
     }
     
     @Override

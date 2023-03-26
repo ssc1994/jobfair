@@ -88,11 +88,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.getMainJobInfo();
     }
 
-    //박희진 작성중
-//    @Override
-//    public ArrayList<EmpVO> EmpRegistInfo() {
-//        return userMapper.EmpRegistInfo();
-//    }
+    @Override
+    public ArrayList<StatisticVO> getGendertotal() {
+        return userMapper.getGendertotal();
+    }
+
 
     //################## 마이페이지(MyPage) Service #######################
     @Override
