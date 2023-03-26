@@ -64,48 +64,12 @@
 
 
         <div class="btnBox">
-          <button class="okBtn">승인하기</button>
-          <button class="noBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button class="okBtn" @click="OkAlert">승인하기</button>
+          <button class="noBtn" @click="NoAlert">
             반려하기
           </button>
         </div>
       </div>
-    </div>
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">반려하기</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" style="height: 100%">
-            <div class="infoModalBox">
-
-              <div class=" wrapBox3">
-
-                <div class="input-group">
-                  <span class="input-group-text">반려사유</span>
-                  <textarea class="form-control contentBox" aria-label="With textarea"></textarea>
-                </div>
-
-                <div class="btnModalBox">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click.prevent="uQnAModi">
-                    반려하기
-                  </button>
-
-                </div>
-              </div>
-
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
     </div>
 
 
@@ -142,7 +106,6 @@ export default {
     this.getComInfo()
   },
   methods:{
-
     //회사 정보 불러오기
     async getComInfo () {
       const {data} = await this.$axios.post('/jobfair/companyMypage/getComInfo',
@@ -150,12 +113,25 @@ export default {
           .catch( err => console.log(err))
       this.comInfo = data;
     },
+    OkAlert() {
+      alert("승인하시겠습니까?")
+    },
+    NoAlert() {
+      alert("반려하시겠습니까?")
+    }
   }
-
 }
 </script>
 
 <style scoped>
+.aplBoxCon h3{
+  font-weight: bold;
+  font-size: 20px;
+  padding:20px;
+}
+
+
+
 .infoWrapBox {
   border: 1px solid grey;
   width: 100%;

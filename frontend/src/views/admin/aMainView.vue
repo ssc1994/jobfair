@@ -1,6 +1,7 @@
 <template>
 
   <div class="adminBg" >
+      <img src="@/assets/mainImg.png" style="width: 1500px">
     <div class="container empBoxWrap">
       <h3>참여 기업 상태</h3>
       <div class="row">

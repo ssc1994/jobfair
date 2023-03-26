@@ -42,8 +42,8 @@
           <p>
             {{ jpl_content }}
             <br>
-<!--            aws에서 가져오는 이미지를 집어넣을예정-->
-<!--            <br>{{ viewImg }}-->
+            <!--            aws에서 가져오는 이미지를 집어넣을예정-->
+            <!--            <br>{{ viewImg }}-->
           </p>
           <br/>
         </div>
@@ -78,15 +78,15 @@
         <div class="marginTime">
           <span style="color: #0064ff; font-weight: bolder">남은 시간</span>
           <div class="Time">
-<!--            <p>5일 12:59</p>-->
+            <!--            <p>5일 12:59</p>-->
             <input type="text" disabled v-model="diffTime">
-<!--            <button type="button" @click="curcur"></button>-->
+            <!--            <button type="button" @click="curcur"></button>-->
             <span>접수 시작 : {{ jpl_startDate }}</span><br/>
             <span>접수 마감 : {{ jpl_endDate }}</span>
           </div>
-          
+
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                  v-bind:disabled="AppliedResult == 1" @click="postRes">
+                  v-bind:disabled="AppliedResult == 1">
             {{ applyBtnText }}
           </button>
 
@@ -339,7 +339,7 @@ export default {
 
   },
   mounted() {
-setInterval(this.curcur,1000);
+    setInterval(this.curcur,1000);
 
   },
 
@@ -493,11 +493,13 @@ dl {
 
 /* 채용공고 상세내역 정보 */
 .resume {
-  width: 800px;
+  width: 70%;
   height: 1200px;
   color: #1E1E1E;
-  border: 2px solid #efefef;
   padding: 50px 30px;
+  border: 1px solid #AAAAAA;
+  border-radius: 15px;
+  padding: 20px;
 }
 
 .left {

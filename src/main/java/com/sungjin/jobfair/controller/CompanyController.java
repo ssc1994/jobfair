@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -50,14 +51,11 @@ public class CompanyController {
     @Qualifier("companyService")
     private CompanyService companyService;
 
-
     @Autowired
     AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-
-
 
     //######################채용공고##########################
     //(회사정보)com_num을 기준으로 회사테이블에서 정보를 불러오는 메서드
@@ -102,7 +100,6 @@ public class CompanyController {
         String fileName = uuid + "_" + tmpName; //uuid + 파일이름
         fos.write(file.getBytes());
         fos.close();
-
 
         amazonS3Client.putObject(new PutObjectRequest(bucket+"/image", fileName, uploadFile)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
