@@ -36,7 +36,16 @@ public interface CompanyService {
     //채용공고 페이지에서 입력한 값 가져오기??
     public EmpVO getEmpData(int jpl_num);
         //기업이 등록한 채용공고 목록 가져오기
-    ArrayList<EmpVO> getComJobPosingList(String com_num);
+    ArrayList<EmpVO> getComJobPosingList(Map paramMap);
+    ArrayList<Integer> getCountAppList(Map paramMap);
+        //채용공고 목록 total 가져오기
+    int getTotalJpl(String com_num);
+        //지원자 리스트 total 가져오기
+    int getTotalAl(String jpl_num);
+        // 채용공고에 지원한 지원자 리스트 가져오기
+    ArrayList<ApplyVO> getApplicantList(Map map);
+        // 이력서 열람/미열람 상태 변경
+    void chgApplicantState(Map map);
 
 
     //################## Login Service #######################
@@ -48,5 +57,15 @@ public interface CompanyService {
 //    public Map<String, Object> uQnAListAxios(Criteria cri);
 
     public int cQnAGetTotal(Criteria cri, String com_num);
+
+    //####################### 기업 메인 페이지 #######################
+        //현황판( 진행 중, 지원마감, 열람, 미열람) 데이터 가져오기
+    ArrayList<Integer> getStatusPosting(String com_num);
+        //현황판(열람, 미열람 이력서 수) 가져오기
+    ArrayList<Integer> getStatusRes(String com_num);
+        // 내가 등록한 최신공고
+    ArrayList<EmpVO> getRecentPosting(String com_num);
+        // 최근 지원자
+    ArrayList<ApplyVO> getRecentApplicant(String com_num);
 
 }
