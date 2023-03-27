@@ -2,6 +2,7 @@ package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
+import com.sungjin.jobfair.pagination.EmpSrcCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,10 +36,15 @@ public interface UserMapper {
 
 
     //################## 채용공고 Service #######################
-        //채용공고 목록 가져오기
-    public ArrayList<EmpListVO> getJobPostList(String selSortInt);
-        //채용공고 검색 목록 가져오기
-    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo);
+    //채용공고 목록 가져오기
+    public ArrayList<EmpListVO> getJobPostList(@Param("cri") Criteria cri);
+    //채용공고 목록 (페이지 네이션)
+    public int getJobPostTotal(@Param("cri") Criteria cri);
+    //채용공고 검색 목록 가져오기
+    //    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo);
+    public ArrayList<EmpListVO> getJobPostSrc(@Param("cri") EmpSrcCriteria cri);
+    //채용공고 검색 목록 (페이지 네이션)
+    public int getJobPostSrcTotal(@Param("cri") EmpSrcCriteria cri);
     //유저가 지원한 채용공고인지 찾기
     public int EmpApplied(String user_id, String jpl_num);
     //채용공고 지원하기

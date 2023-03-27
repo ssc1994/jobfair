@@ -283,6 +283,12 @@ public class CompanyController {
 
         return pageGate;
     }
+    @PostMapping(value = "/cGetAplCnt")
+    public int cMainAplCnt(@RequestBody QnAVO vo) {
+        companyService.cqnaRegist(vo);
+        return 1;
+    }
+
 
     //아니면,,, com_num을 받는 메서드를 따로 만들어서 companyService. 이런식으로 가져오는건,,,
 //

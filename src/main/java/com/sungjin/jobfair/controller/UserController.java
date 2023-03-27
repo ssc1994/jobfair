@@ -7,8 +7,12 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.sungjin.jobfair.EmpPageGate;
+import com.sungjin.jobfair.EmpSrcPageGate;
 import com.sungjin.jobfair.PageGate;
 import com.sungjin.jobfair.pagination.Criteria;
+import com.sungjin.jobfair.pagination.EmpSrcCriteria;
+import com.sungjin.jobfair.pagination.EmpSrcPageVO;
 import com.sungjin.jobfair.pagination.PageVO;
 import org.springframework.boot.Banner;
 
@@ -285,51 +289,127 @@ public class UserController {
 
 
     //**********************************************채용공고**********************************************
-        //채용공고 목록
-    @PostMapping(value = "/getJobPostList")
-    public ArrayList<EmpListVO> getJobPostList(@RequestBody HashMap<String,String> map,
-                                               String selSortInt
-                                               ) {
-        selSortInt = map.get("selSortInt");
-        ArrayList<EmpListVO> list = userService.getJobPostList(selSortInt);
-//        System.out.println(list.toString());
 
-        return list;
+    //채용공고 목록
+    @GetMapping(value = "/getJobPostList")
+    public Map getJobPostList(Criteria cri) {
+
+        //위에서 지정해준 조건에 따른 참여 기업 목록의 total 값 가져오기
+        int total = userService.getJobPostTotal(cri);
+//        System.out.println(total);
+        //위에서 지정해준 조건에 따른 참여 기업 목록 (1페이지당 몇개) 가져오기
+        ArrayList<EmpListVO> list = userService.getJobPostList(cri);
+//        System.out.println(list);
+//        System.out.println(list.size());
+        List<String> urlList = new ArrayList<>();
+        for(EmpListVO vo : list){
+            String path = vo.getJpl_fileUuid() + "_" + vo.getJpl_fileName();
+            String bucket = vo.getJpl_filePath();
+            String url = amazonS3Client.getUrl(bucket, path).toString();
+            urlList.add(url);
+        }
+
+        //pageVO 생성
+        PageVO pageVO = new PageVO(cri, total);
+//        System.out.println(pageVO);
+
+        //list 와 pageVO 를 담아줄 PageGate 생성, 그리고 객체들 담기
+        EmpPageGate empPageGate = new EmpPageGate(list, pageVO);
+//        System.out.println(empPageGate);
+
+        Map map = new HashMap();
+        map.put("urlList", urlList);
+        map.put("empPageGate", empPageGate);
+
+        return map;
     }
-        //채용공고 검색
-    @PostMapping(value="/getJobPostSrc",
+
+    //채용공고 목록 갯수 (#### 페이지 네이션 ####)
+    @GetMapping(value = "/getJobPostTotal")
+    public int getJobPostTotal(Criteria cri) {
+        int total = userService.getJobPostTotal(cri);
+        System.out.println(total);
+        return total;
+    }
+
+    //채용공고 검색
+//    @PostMapping(value="/getJobPostSrc",
+//            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+//    public ArrayList<EmpListVO> getJobPostSrc(@RequestBody EmpSearchVO vo,
+//                                              String [] jpl_locationSi,
+//                                              String [] jpl_locationGu,
+//                                              String [] jpl_duty,
+//                                              String inputSearch,
+//                                              String[] jpl_workHistory,
+//                                              String[] jpl_education,
+//                                              String[] jpl_salary,
+//                                              String[] jpl_certificate,
+//                                              String[] jpl_conditions,
+//                                              String[] jpl_workForm,
+//                                              String selSortInt
+//    ) {
+//
+//        jpl_locationSi = vo.getJpl_duty();
+//        jpl_locationGu = vo.getJpl_locationGu();
+//        jpl_duty = vo.getJpl_workHistory();
+//        jpl_workHistory = vo.getJpl_workHistory();
+//        jpl_education = vo.getJpl_education();
+//        jpl_salary = vo.getJpl_salary();
+//        jpl_salary = vo.getJpl_salary();
+//        jpl_certificate = vo.getJpl_certificate();
+//        jpl_conditions = vo.getJpl_conditions();
+//        jpl_workForm = vo.getJpl_workForm();
+//        inputSearch = vo.getInputSearch();
+//        selSortInt = vo.getSelSortInt();
+//
+//        ArrayList<EmpListVO> list = userService.getJobPostSrc(vo);
+//
+//        return list;
+//    }
+
+        @RequestMapping(value="/getJobPostSrc",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ArrayList<EmpListVO> getJobPostSrc(@RequestBody EmpSearchVO vo,
-                                          String [] jpl_locationSi,
-                                          String [] jpl_locationGu,
-                                          String [] jpl_duty,
-                                          String inputSearch,
-                                          String[] jpl_workHistory,
-                                          String[] jpl_education,
-                                          String[] jpl_salary,
-                                          String[] jpl_certificate,
-                                          String[] jpl_conditions,
-                                          String[] jpl_workForm,
-                                              String selSortInt
-                                       ) {
+        public Map getJobPostSrc(@RequestBody EmpSrcCriteria cri) {
+            System.out.println(cri);
+            cri.setPage(1);
+            //위에서 지정해준 조건에 따른 참여 기업 목록의 total 값 가져오기
+            int total = userService.getJobPostSrcTotal(cri);
+            //위에서 지정해준 조건에 따른 참여 기업 목록 (1페이지당 몇개) 가져오기
+            System.out.println(total);
+            ArrayList<EmpListVO> list = userService.getJobPostSrc(cri);
+            System.out.println(list);
+            List<String> urlList = new ArrayList<>();
+            for(EmpListVO vo : list){
+                String path = vo.getJpl_fileUuid() + "_" + vo.getJpl_fileName();
+                String bucket = vo.getJpl_filePath();
+                String url = amazonS3Client.getUrl(bucket, path).toString();
+                urlList.add(url);
+            }
+            System.out.println(urlList);
 
-        jpl_locationSi = vo.getJpl_duty();
-        jpl_locationGu = vo.getJpl_locationGu();
-        jpl_duty = vo.getJpl_workHistory();
-        jpl_workHistory = vo.getJpl_workHistory();
-        jpl_education = vo.getJpl_education();
-        jpl_salary = vo.getJpl_salary();
-        jpl_salary = vo.getJpl_salary();
-        jpl_certificate = vo.getJpl_certificate();
-        jpl_conditions = vo.getJpl_conditions();
-        jpl_workForm = vo.getJpl_workForm();
-        inputSearch = vo.getInputSearch();
-        selSortInt = vo.getSelSortInt();
+            //pageVO 생성
+            EmpSrcPageVO pageVO = new EmpSrcPageVO(cri, total);
 
-        ArrayList<EmpListVO> list = userService.getJobPostSrc(vo);
+            //list 와 pageVO 를 담아줄 PageGate 생성, 그리고 객체들 담기
+            EmpSrcPageGate empPageGate = new EmpSrcPageGate(list, pageVO);
 
-        return list;
+            Map map = new HashMap();
+            map.put("urlList", urlList);
+            map.put("empSrcPageGate", empPageGate);
+
+            return map;
+
     }
+
+    //채용공고 검색 목록 갯수 (#### 페이지 네이션 ####)
+    @GetMapping(value="/getJobPostSrcTotal")
+    public int getJobPostSrcTotal(EmpSrcCriteria cri) {
+
+        int total = userService.getJobPostSrcTotal(cri);
+
+        return total;
+    }
+
     // 유저가 지원한 공고인지 찾기
     @PostMapping(value="/EmpApplied")
     public int EmpApplied(

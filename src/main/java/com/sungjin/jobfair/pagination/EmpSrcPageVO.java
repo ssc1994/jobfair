@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-public class PageVO {
+public class EmpSrcPageVO {
 
     private int end; //페이지 끝번호
     private int start; //페이지 시작번호
@@ -16,7 +16,7 @@ public class PageVO {
     private int page; //사용자가 조회하는 페이지 번호
     private int amount; //화면 1페이지에 나타나는 데이터 개수
     private int total; // 전체 게시글 수
-    private Criteria cri; //페이지 기준 -> Criteria 객체에 페이지 번호와 amount값이 있으므로 넣어주고 변수로 사용
+    private EmpSrcCriteria cri; //페이지 기준 -> Criteria 객체에 페이지 번호와 amount값이 있으므로 넣어주고 변수로 사용
 
     private int pageCnt = 5;
 
@@ -25,7 +25,7 @@ public class PageVO {
 
 
     //생성자 - pageVO가 만들어질 때 cri, total을 반드시 받음
-    public PageVO(Criteria cri, int total) {
+    public EmpSrcPageVO(EmpSrcCriteria cri, int total) {
 
         //계산에 필요한 값(페이지번호, 데이터개수, 전체 게시글 수, cri) 를 초기화함
         this.page = cri.getPage();

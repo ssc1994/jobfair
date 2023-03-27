@@ -40,7 +40,7 @@
             <div class="empBoxLabel citySrc1">
               <!--시-->
               <div v-for="city in city" :key="city.cityCode">
-                <input type="checkbox" :id="city.cityCode" name="city" @change="plus" :value="city.cityName">
+                <input type="checkbox" :id="city.cityCode" name="city" @change="plus" :value="city.cityName" v-model="selectedTag[0].tagValue">
                 <label :for="city.cityCode">{{ city.cityName }}</label>
               </div>
             </div>
@@ -226,7 +226,7 @@
           <div class="empBoxCon ">
             <router-link to="" class="left empBoxCompany">
               <p>(주) {{ jobpost.com_name }}</p>
-              <img src="@/assets/kakao.png" >
+              <img :src="urlList[i]" >
             </router-link>
             <div class="left empBoxText">
               <router-link to="">
@@ -235,13 +235,13 @@
                 <p class="empBoxTag">{{ jobpost.jpl_workHistory }} {{ jobpost.jpl_education }} {{ jobpost.jpl_locationSi }} {{ jobpost.jpl_locationGu }} {{ jobpost.jpl_workForm}} {{ jobpost.jpl_salary}}</p>
               </router-link>
               <div style="padding-top:20px;">
-                <span class="left empBoxDday">D-27</span>
+<!--                <span class="left empBoxDday">D-27</span>-->
 <!--                <input type="text" class="left empBoxDday" style="width: 65px" v-model="dDay" disabled>-->
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
-                <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.user_id == user_id">
-                  지원완료 {{jobpost.user_id}}
+                <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.user_id == this.user_id"> <!--jobpost.user_id==`${user_id}`-->
+                  지원완료
                 </button>
-                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.user_id != user_id">
+                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.user_id==null && jobpost.jpl_endDate"> <!--jobpost.user_id==null-->
                   지원하기
                 </button>
               </div>
@@ -251,6 +251,23 @@
           </div>
         </div>
       </div>
+
+      <!--페이지네이션 부분-->
+      <div class="paginationWrap">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link"  @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
+          <li class="page-item"><a class="page-link"  @click="goPrevPage(page - 1)" style="margin-right: 10px">Previous</a></li>
+          <template v-for="(item, index) in pageList" :key="index">
+            <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link"  @click.prevent="ClickPage($event), getJobPostList()" id="index">{{item}}</span></li>
+          </template>
+          <li class="page-item"><a class="page-link"  @click="goNextPage(page + 1)" style="margin-right: 10px">Next</a></li>
+          <li class="page-item"><a class="page-link"  @click="goLastPage(page + 1)" style="margin-right: 10px">Last</a></li>
+        </ul>
+      </div>
+
+
+
+
     </div>
   </div>
 </template>
@@ -264,6 +281,8 @@ export default {
     return {
       //채용공고 데이터
       jobPostList : [],
+      //url
+      urlList : [],
       //검색어 입력한 값
       inputSearch : "",
       //검색 태그
@@ -282,42 +301,42 @@ export default {
       detailGoocode: 'noshow',
       //지역 배열
       city : [
-        { cityCode : 1, cityName : "서울특별시"},
-        { cityCode : 2, cityName : "부산광역시"},
-        { cityCode : 3, cityName : "인천광역시"},
-        { cityCode : 4, cityName : "대구광역시"},
-        { cityCode : 5, cityName : "광주광역시"},
-        { cityCode : 6, cityName : "대전광역시"},
-        { cityCode : 7, cityName : "울산광역시"},
-        { cityCode : 8, cityName : "세종특별자치시"},
-        { cityCode : 9, cityName : "경기도"},
-        { cityCode : 10, cityName : "강원도"},
-        { cityCode : 11, cityName : "충청북도"},
-        { cityCode : 12, cityName : "충청남도"},
-        { cityCode : 13, cityName : "경상북도"},
-        { cityCode : 14, cityName : "경상남도"},
-        { cityCode : 15, cityName : "전라북도"},
-        { cityCode : 16, cityName : "전라남도"},
-        { cityCode : 17, cityName : "제주특별자치도"}
+        {cityCode: 1, cityName: "서울"},
+        {cityCode: 2, cityName: "부산"},
+        {cityCode: 3, cityName: "인천"},
+        {cityCode: 4, cityName: "대구"},
+        {cityCode: 5, cityName: "광주"},
+        {cityCode: 6, cityName: "대전"},
+        {cityCode: 7, cityName: "울산"},
+        {cityCode: 8, cityName: "세종"},
+        {cityCode: 9, cityName: "경기도"},
+        {cityCode: 10, cityName: "강원도"},
+        {cityCode: 11, cityName: "충청북도"},
+        {cityCode: 12, cityName: "충청남도"},
+        {cityCode: 13, cityName: "경상북도"},
+        {cityCode: 14, cityName: "경상남도"},
+        {cityCode: 15, cityName: "전라북도"},
+        {cityCode: 16, cityName: "전라남도"},
+        {cityCode: 17, cityName: "제주도"}
       ],
       cityGoo : [
-        { cityCode: 1, gooName: ["서울", "종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구","강동구"]},
-        { cityCode: 2, gooName: ["부산", "중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"] },
-        { cityCode: 3, gooName: ["인천", "중구", "동구", "남구", "연수구", "남동구", "부평구", "계양구", "서구", "강화군", "옹진군"] },
-        { cityCode: 4, gooName: ["대구", "중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군"] },
-        { cityCode: 5, gooName: ["광주", "동구", "서구", "남구", "북구", "광산구"] },
-        { cityCode: 6, gooName: ["대전", "동구", "중구", "서구", "유성구", "대덕구"] },
-        { cityCode: 7, gooName: ["울산", "중구", "남구", "동구", "북구", "울주군"] },
-        { cityCode: 8, gooName: ["세종"] },
-        { cityCode: 9, gooName: ["경기", "가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"] },
-        { cityCode: 10, gooName: ["강원", "원주시", "춘천시", "강릉시", "동해시", "속초시", "삼척시", "홍천군", "태백시", "철원군", "횡성군", "평창군", "영월군", "정선군", "인제군", "고성군", "양양군", "화천군", "양구군"] },
-        { cityCode: 11, gooName: ["충청북도", "청주시", "충주시", "제천시", "보은군", "옥천군", "영동군", "증평군", "진천군", "괴산군", "음성군", "단양군"] },
-        { cityCode: 12, gooName: ["충청남도", "천안시", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군"] },
-        { cityCode: 13, gooName: ["경상북도", "포항시", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군"] },
-        { cityCode: 14, gooName: ["경상남도", "창원시", "김해시", "진주시", "양산시", "거제시", "통영시", "사천시", "밀양시", "함안군", "거창군", "창녕군", "고성군", "하동군", "합천군", "남해군", "함양군", "산청군", "의령군"] },
-        { cityCode: 15, gooName: ["전라북도", "전주시", "익산시", "군산시", "정읍시", "완주군", "김제시", "남원시", "고창군", "부안군", "임실군", "순창군", "진안군", "장수군", "무주군"] },
-        { cityCode: 16, gooName: ["전라남도", "여수시", "순천시", "목포시", "광양시", "나주시", "무안군", "해남군", "고흥군", "화순군", "영암군", "영광군", "완도군", "담양군", "장성군", "보성군", "신안군", "장흥군", "강진군", "함평군", "진도군", "곡성군", "구례군"] },
-        { cityCode: 17, gooName: ["제주도", "제주시", "서귀포시"]}
+        { cityCode: 1, gooName: ["종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구","강동구"]},
+        { cityCode: 2, gooName: ["중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"] },
+        { cityCode: 3, gooName: ["중구", "동구", "남구", "연수구", "남동구", "부평구", "계양구", "서구", "강화군", "옹진군"] },
+        { cityCode: 4, gooName: ["중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군"] },
+        { cityCode: 5, gooName: ["동구", "서구", "남구", "북구", "광산구"] },
+        { cityCode: 6, gooName: ["동구", "중구", "서구", "유성구", "대덕구"] },
+        { cityCode: 7, gooName: ["중구", "남구", "동구", "북구", "울주군"] },
+        { cityCode: 8, gooName: [] },
+        { cityCode: 9, gooName: ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"] },
+        { cityCode: 10, gooName: ["원주시", "춘천시", "강릉시", "동해시", "속초시", "삼척시", "홍천군", "태백시", "철원군", "횡성군", "평창군", "영월군", "정선군", "인제군", "고성군", "양양군", "화천군", "양구군"] },
+        { cityCode: 11, gooName: ["청주시", "충주시", "제천시", "보은군", "옥천군", "영동군", "증평군", "진천군", "괴산군", "음성군", "단양군"] },
+        { cityCode: 12, gooName: ["천안시", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군"] },
+        { cityCode: 13, gooName: ["포항시", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군"] },
+        { cityCode: 14, gooName: ["창원시", "김해시", "진주시", "양산시", "거제시", "통영시", "사천시", "밀양시", "함안군", "거창군", "창녕군", "고성군", "하동군", "합천군", "남해군", "함양군", "산청군", "의령군"] },
+        { cityCode: 15, gooName: ["전주시", "익산시", "군산시", "정읍시", "완주군", "김제시", "남원시", "고창군", "부안군", "임실군", "순창군", "진안군", "장수군", "무주군"] },
+        { cityCode: 16, gooName: ["여수시", "순천시", "목포시", "광양시", "나주시", "무안군", "해남군", "고흥군", "화순군", "영암군", "영광군", "완도군", "담양군", "장성군", "보성군", "신안군", "장흥군", "강진군", "함평군", "진도군", "곡성군", "구례군"] },
+        { cityCode: 17, gooName: ["제주시", "서귀포시"]}
       ],
       jobArr : [
         "경영ㆍ사무",
@@ -340,7 +359,8 @@ export default {
       arrSrc : "up",
       selSort : '최신등록순',
       selSortInt : 1,
-      user_id: sessionStorage.getItem('sessionId'),
+      user_id: sessionStorage.getItem('sessionId').replaceAll("\"", ""),
+
 
       //엑시오스 테스트
       users : '',
@@ -348,41 +368,205 @@ export default {
       //은영 테스트
       com_num: 3,
 
-      //dday설정
-      // dDay:''
+      // list: "",
+      pages: "", // pageVO
+      pageList: "", //pageVO.pageList 배열값
+      detailNum: "",
+
+      //페이지 이동에 필요한 초기값
+      page: 1,
+      amount: 10,
+      prev: "",
+      start: "",
+      end: "",
+      realEnd: "",
+
 
     }
   },
-  beforeCreate() {
 
-    console.log(this.selSortInt);
+  // watch: {
+  //   page: function () {
+  //     this.uQnAListAxios();
+  //   },
+  // },
+
+  created()  {
+
     console.log("아이디"+this.user_id);
-    this.$axios.post('/jobfair/getJobPostList/',{selSortInt: 1})
-        .then((res) => {
-              this.jobPostList = res.data;
-            }
-        )
-        .catch((error) => {
-          console.log(error);
-        })
+    console.log(this.page);
+    console.log(this.amount);
+    console.log(this.selSortInt);
+    this.getJobPostList();
+
+    // this.$axios.post('/jobfair/getJobPostList/',{selSortInt: 1})
+    //     .then((res) => {
+    //           this.jobPostList = res.data;
+    //         }
+    //     )
+    //     .catch((error) => {
+    //       console.log(error);
+    //     })
   },
   methods: {
     test () {
       console.log(this.selectedTag[0].tagValue)
     },
-    getJobPostList(e) {
 
-      this.$axios.post('/jobfair/getJobPostList/', {selSortInt: this.selSortInt})
-          .then((res) => {
-                this.jobPostList = res.data;
-                console.log(this.selSort);
-              }
-          )
-          .catch((error) => {
-            console.log(error);
-          })
+    //채용공고 가져오기
+    async getJobPostList () {
+
+      let {data} = await this.$axios.get('/jobfair/getJobPostList',
+          {
+            params: {
+              page: this.page,
+              amount: this.amount,
+              selSortInt: this.selSortInt
+            }
+          }).catch(err => console.log(err))
+      console.log(data);
+
+      // console.log(data.list);
+      // console.log(data.pageVO);
+      this.urlList = data.urlList;
+      this.jobPostList = data.empPageGate.list
+      console.log(this.jobPostList);
+      this.pages = data.empPageGate.pageVO;
+      this.pageList = this.pages.pageList;
+
+      //페이지이동에 필요한 데이터 담기
+      this.page = this.pages.page;
+      this.prev = this.pages.prev;
+      this.pageStart = this.pages.pageStart;
+      this.pageEnd = this.pages.pageEnd;
+      this.realEnd = this.pages.realEnd;
+    }
+    ,
+    //채용공고 검색 목록 가져오기
+    async jobPostSearch(){
+      var jpl_locationSi = this.selectedTag[0].tagValue;
+      var jpl_locationGu = this.selectedTag[1].tagValue;
+      var jpl_duty = this.selectedTag[2].tagValue;
+      var jpl_workHistory = this.selectedTag[3].tagValue;
+      var jpl_education = this.selectedTag[4].tagValue;
+      var jpl_salary = this.selectedTag[5].tagValue;
+      var jpl_certificate = this.selectedTag[6].tagValue;
+      var jpl_conditions = this.selectedTag[7].tagValue;
+      var jpl_workForm = this.selectedTag[8].tagValue;
+
+      //검색 태그가 있는지 확인
+      var cnt = 0;
+      for(var i = 0; i < this.selectedTag.length; i++){
+        for(var j = 0; j < this.selectedTag[i].tagValue.length; j++) {
+          cnt++;
+
+        }
+      }
+
+      const vo = {
+        jpl_duty:jpl_duty,
+        jpl_workHistory:jpl_workHistory,
+        jpl_workForm:jpl_workForm,
+        jpl_education:jpl_education,
+        jpl_conditions:jpl_conditions,
+        jpl_certificate:jpl_certificate,
+        jpl_salary:jpl_salary,
+        jpl_locationSi:jpl_locationSi,
+        jpl_locationGu:jpl_locationGu,
+        inputSearch :this.inputSearch,
+        selSortInt : this.selSortInt
+      }
+
+      if(cnt == 0 && this.inputSearch == ""){
+        alert('검색 키워드가 없습니다!')
+      } else {
+        console.log(jpl_workHistory);
+        let {data} = await this.$axios.post('/jobfair/getJobPostSrc',
+            {
+                page: this.page,
+                amount: this.amount,
+                jpl_duty: jpl_duty,
+                jpl_workHistory:jpl_workHistory,
+                jpl_workForm:jpl_workForm,
+                jpl_education:jpl_education,
+                jpl_conditions:jpl_conditions,
+                jpl_certificate:jpl_certificate,
+                jpl_salary:jpl_salary,
+                jpl_locationSi:jpl_locationSi,
+                jpl_locationGu:jpl_locationGu,
+                inputSearch :this.inputSearch,
+                selSortInt :this.selSortInt
+
+            }).catch(err => console.log(err))
+
+            console.log(data);
+
+
+
+            this.urlList = data.urlList;
+            this.jobPostList = data.empSrcPageGate.list
+            this.pages = data.empSrcPageGate.pageVO;
+            this.pageList = this.pages.pageList;
+
+            //페이지이동에 필요한 데이터 담기
+            this.page = this.pages.page;
+            this.prev = this.pages.prev;
+            this.pageStart = this.pages.pageStart;
+            this.pageEnd = this.pages.pageEnd;
+            this.realEnd = this.pages.realEnd;
+
+      }
     },
 
+    //페이지 네이션 부분
+    goFirstPage() {
+      this.page = 1;
+      this.getJobPostList();
+    },
+    goPrevPage() {
+      if(this.page > 1) {
+        this.page = this.page - 1;
+        this.getJobPostList();
+      } else {
+        alert("첫 페이지입니다.");
+      }
+    },
+    goNextPage() {
+      if(this.page < this.realEnd) {
+        this.page = this.page + 1;
+        this.getJobPostList();
+      } else {
+        alert("마지막 페이지입니다.")
+      }
+    },
+    goLastPage() {
+      this.page = this.realEnd;
+      this.getJobPostList();
+    },
+    ClickPage(e) {
+      var clicked = e.target.innerHTML;
+      this.page = clicked;
+    },
+    curcur(){
+      const moment = require('moment')
+      var time = moment();
+      var etime = moment(this.jpl_endDate, 'YYYY-MM-DD');
+      var stime = moment(this.jpl_startDate, 'YYYY-MM-DD');
+
+      if(moment(time).isBetween(stime,etime)){
+        //현재 시간이 접수 시작일과 마감일 사이일경우 동작
+        // this.curTime=moment.duration(etime.diff(time))
+        // this.diffDay=this.curTime.days()
+        // this.diffHour=this.curTime.hours()
+        // this.diffMin=this.curTime.minutes()
+        // this.diffSec=this.curTime.seconds()
+        // this.diffTime= this.diffDay+"일 "+this.diffHour+"시간"+this.diffMin+"분"+this.diffSec+"초"
+      }else {
+        //현재 시간이 접수 시작일과 마감일 사이가 아닐경우 남은시간이 아닌 공고 마감 출력
+        this.diffTime= "공고 마감"
+        clearInterval(this.curcur)
+      }
+    },
     //구 필터
     plus : function(e) {
       this.checkedCity = e.target.id;
@@ -403,57 +587,7 @@ export default {
         }
 
     },
-      jobPostSearch(){
-        var jpl_locationSi = this.selectedTag[0].tagValue;
-        var jpl_locationGu = this.selectedTag[1].tagValue;
-        var jpl_duty = this.selectedTag[2].tagValue;
-        var jpl_workHistory = this.selectedTag[3].tagValue;
-        var jpl_education = this.selectedTag[4].tagValue;
-        var jpl_salary = this.selectedTag[5].tagValue;
-        var jpl_certificate = this.selectedTag[6].tagValue;
-        var jpl_conditions = this.selectedTag[7].tagValue;
-        var jpl_workForm = this.selectedTag[8].tagValue;
 
-        //검색 태그가 있는지 확인
-        var cnt = 0;
-        for(var i = 0; i < this.selectedTag.length; i++){
-          for(var j = 0; j < this.selectedTag[i].tagValue.length; j++) {
-            cnt++;
-
-          }
-        }
-
-        const SearchObj = {
-          jpl_duty:jpl_duty,
-          jpl_workHistory:jpl_workHistory,
-          jpl_workForm:jpl_workForm,
-          jpl_education:jpl_education,
-          jpl_conditions:jpl_conditions,
-          jpl_certificate:jpl_certificate,
-          jpl_salary:jpl_salary,
-          jpl_locationSi:jpl_locationSi,
-          jpl_locationGu:jpl_locationGu,
-          inputSearch :this.inputSearch,
-          selSortInt : this.selSortInt
-        }
-
-        if(cnt == 0 && this.inputSearch == ""){
-          alert('검색 키워드가 없습니다!')
-        } else {
-
-          this.$axios.post('/jobfair/getJobPostSrc/',
-                              SearchObj
-              )
-            .then((res) => {
-                  this.jobPostList = res.data;
-                  console.log(this.jobPostList);
-                }
-            )
-            .catch((error) => {
-              console.log(error);
-            })
-        }
-    },
     detail(jobpost) {
       this.$router.push({
         name: 'uJobPostDetailView',
@@ -836,5 +970,20 @@ h3{font-weight: bold;
 }
 
 .selSort {width:130px;font-weight: bold;border:0;}
+
+/* 페이지네이션 부분 */
+.paginationWrap ul {
+  margin-top: 50px;
+  padding-left: 470px;
+}
+
+.paginationWrap .page-link {
+  background-color: #0064ff;
+}
+
+.paginationWrap li.active span {
+  background-color: #202632;
+  border: none;
+}
 
 </style>
