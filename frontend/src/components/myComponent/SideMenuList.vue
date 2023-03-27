@@ -8,7 +8,7 @@
   <!--  <div v-if="menuTitle !='홈' && menuTitle != '마이 페이지' && (menuTitle != '채용 정보' || this.mg_auth != '1')">-->
   <div class="menu_dropdown" @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && this.mg_auth === '3'">
     <div>{{ menuTitle }}</div>
-    <div v-if="isVisible" style="border: 1px solid #AAAAAA; border-radius: 6px;">
+    <div v-if="isVisible" >
       <ul v-for="menu in menuGroup">
         <li class="menu_child">
           <router-link :to="menu.menu_URL">{{ menu.menu_name }}</router-link>
@@ -115,8 +115,5 @@ a {
   font-size: 15px;
   font-weight: 600;
 }
-
-
-
 
 </style>

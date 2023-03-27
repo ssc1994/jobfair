@@ -53,7 +53,7 @@
                   </div>
                 </li>
               </ul>
-            </div>
+            </div>가
 
             <div v-for="(edu, index) in eduInfo" :key="'key' + index">
               <EDU :eduCount="index" :value="edu" @inputEdu="getEduData" @clickBtn="deleteEdu"/>
@@ -287,6 +287,15 @@ body {
   user-select: none;
   background-color: #fbfbfb;
   word-break: keep-all;
+}
+/* 추가버튼 */
+#btnAddWe {
+  border: none;
+  border-radius: 10px;
+  background-color: #0064ff;
+  color: white;
+  width: 90px;
+  height: 30px;
 }
 
 /* 이력서 제목 입력 css */

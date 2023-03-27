@@ -259,11 +259,11 @@
       <div class="paginationWrap">
         <ul class="pagination">
           <li class="page-item"><a class="page-link"  @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
-          <li class="page-item"><a class="page-link"  @click="goPrevPage(page - 1)" style="margin-right: 10px">Previous</a></li>
+          <li class="page-item"><a class="page-link"  @click="goPrevPage(page - 1)" style="margin-right: 10px" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
           <template v-for="(item, index) in pageList" :key="index">
             <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link important"  @click.prevent="ClickPage($event), getJobPostList()" id="index">{{item}}</span></li>
           </template>
-          <li class="page-item"><a class="page-link"  @click="goNextPage(page + 1)" style="margin-right: 10px">Next</a></li>
+          <li class="page-item"><a class="page-link"  @click="goNextPage(page + 1)" style="margin-right: 10px" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
           <li class="page-item"><a class="page-link"  @click="goLastPage(page + 1)" style="margin-right: 10px">Last</a></li>
         </ul>
       </div>
@@ -670,7 +670,6 @@ export default {
   font-size:15px;
 }
 
-
 a {text-decoration: none;}
 
 select {
@@ -773,7 +772,6 @@ html, body {width:100%;
   width:600px;
 }
 
-
 .empBoxText router-link {text-align: left;border:0;}
 
 .empBoxText p {margin:0; padding:0;}
@@ -791,7 +789,6 @@ h3{font-weight: bold;
   font-size: 20px;
 
 }
-
 
 /*검색 박스*/
 .empSearchBox {border: 1px solid #dedede;
@@ -837,7 +834,6 @@ h3{font-weight: bold;
   font-weight: bold;
 }
 
-
 .empBoxTitle {
   font-weight: bold;
   font-size: 15px;
@@ -846,8 +842,6 @@ h3{font-weight: bold;
   background-color: #efefef;
 
 }
-
-
 
 .empSearchInput input {
   width:100%;
@@ -1037,8 +1031,5 @@ h3{font-weight: bold;
   background-color: #007bff;
   border-color: #007bff;
 }
-
-
-
 
 </style>

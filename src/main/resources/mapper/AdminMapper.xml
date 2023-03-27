@@ -15,7 +15,11 @@
         select J.*, C.com_name from JobPostingList J
             inner join Company C
             on J.com_num = C.com_num
-            order by jpl_num desc
+            order by jpl_num desc limit 0,10
+    </select>
+
+    <select id="getAllCompany" resultType="int">
+        select count(*) from Company where com_num >= 0;
     </select>
 
     <select id="getEmpList" resultType="EmpVO">

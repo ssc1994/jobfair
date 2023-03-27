@@ -57,9 +57,12 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'DosKor';
-  font-weight: normal;
-  font-style: normal;
+@font-face {
+  font-family: 'dream';
+  src: url("../src/assets/fonts/S-Core_Dream_OTF/SCDream5.otf");
 }
+*{
+  font-family: dream;
+}
+
 </style>

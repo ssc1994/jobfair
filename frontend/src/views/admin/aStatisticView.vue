@@ -37,7 +37,7 @@ export default {
     data: {
       labels: [],
       datasets: [{
-        label: 'Date of Join',
+        label: '채용공고의 조회수',
         data: [],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -62,7 +62,7 @@ export default {
         '남성'
       ],
       datasets: [{
-        label: 'Login Gender Total',
+        label: '가입자 성별통계',
         data: [],
         backgroundColor: [
           'rgb(255, 99, 132)',
@@ -96,8 +96,6 @@ export default {
       this.$axios.post('/jobfair/getPopList')
           .then((res) => {
             this.sList = res.data
-            // console.log(this.sList)
-            // console.log(this.sList[0].cnt)
             for(var i = 0; i < this.sList.length; i++){
               chart1.data.datasets[0].data[i] = this.sList[i].cnt
               chart1.data.labels[i] = this.sList[i].jpl_title
@@ -110,9 +108,9 @@ export default {
       this.$axios.post('/jobfair/getUserInfo')
           .then((res) => {
             for (var i = 0; i < res.data.length; i++) {
-              if (res.data[i].user_gender === 'F') {
+              if (res.data[i].user_gender === 'F' || res.data[i].user_gender === '여자') {
                 this.woman++
-              } else if (res.data[i].user_gender === 'M') {
+              } else if (res.data[i].user_gender === 'M' || res.data[i].user_gender === '남자') {
                 this.man++
               }
             }
@@ -155,11 +153,12 @@ a {
 /* canvas의 height는 자동으로 조절된다!! 신기하다~ */
 canvas {
   width: 500px;
+
 }
 
 .allGroup {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
   border: 1px solid #AAAAAA;
