@@ -59,9 +59,9 @@ export default {
   cursor: pointer;
 }
 .HomeLogo {
-  width: 200px;
-  height: 90px;
-  margin-bottom: 20px;
+  width: 130px;
+  height: 130px;
   display: block;
 }
+
 </style>
