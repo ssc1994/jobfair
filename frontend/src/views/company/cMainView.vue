@@ -45,7 +45,7 @@
             </div>
             <div>
               <ul id="listHolder" class="lists" v-for="(jpl, index) in jplArr" :key="jpl.jpl_num">
-                <RecentJobPostingComp :jplInfo="jpl" :imgUrl="this.urlArr[index]" :totalAppArr="totalAppArr[index]"/>
+                <RecentJobPostingComp :jplInfo="jpl" :imgUrl="this.urlArr[index]" :totalAppArr="totalAppArr[index]" />
               </ul>
             </div>
           </div>
@@ -134,6 +134,7 @@ export default {
   created() {
     this.mainFunction()
   }
+
 }
 </script>
 

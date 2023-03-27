@@ -193,25 +193,26 @@
 
   <hr>
 
-  <!-- 아코디언 -->
-  <div>
-    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
-  </div>
-  <div>
-    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
-  </div>
-  <div>
-    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
-  </div>
-  <div>
-    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
-  </div>
+    <div>
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
+    </div>
+    <div v-if="userInfo.mg_auth!=4">
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
+    </div>
+    <div>
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
+    </div>
+    <div>
+      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
+    </div>
+
 
 </template>
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
 import SideMenuList from "@/components/myComponent/SideMenuList";
 import router from "@/router";
+import {mg_auth} from "vuex";
 
 export default {
   name: "SidenavList",
@@ -281,6 +282,9 @@ export default {
     }
   },
   methods: {
+    mg_auth() {
+      return mg_auth
+    },
     getRoute() {
       const routeArr = this.$route.path.split("/");
       return routeArr[1];

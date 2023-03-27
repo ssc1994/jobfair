@@ -4,7 +4,7 @@
     <div class="container empBoxWrap">
       <img src="@/assets/mainImg.png" style="width: 1500px">
         <div>
-          <h3 style="margin-top: 20px">HOT 채용공고</h3>
+          <h3 style="margin-top: 20px">채용공고</h3>
         </div>
 
 

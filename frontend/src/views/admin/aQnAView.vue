@@ -164,6 +164,15 @@ export default {
       var clicked = event.target.innerHTML;
       this.page = clicked
     },
+    detail(idx) {
+      this.$router.push({
+        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
+        name: 'aQnADetailView',
+        params: {
+          qa_num: idx
+        }
+      })
+    },
   }
 }
 </script>
