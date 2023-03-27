@@ -115,7 +115,7 @@ public class CompanyMypageController {
 
         //업로드된 이미지 파일 url 가져와서 CompanyVO에 담기
 
-        if(comInfo.getCom_fileName() == null || comInfo.getCom_fileName().equals("")){
+        if(comInfo.getCom_fileName() == null){
             //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
             comInfo.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/0afa39a2-b46b-4ffc-a7c9-677b3aee751c_no-img-icon3.jpg");
         } else {
