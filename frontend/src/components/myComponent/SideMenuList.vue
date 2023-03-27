@@ -36,14 +36,11 @@ export default {
     }
   },
   created () {
-    console.log(this.menuTitle)
-    console.log(this.mg_auth)
     if(this.mg_auth === '1') {
       if (this.menuTitle === '홈') this.link = '/uMainView'
       else if (this.menuTitle === '마이 페이지') this.link = '/uMypageView'
       else if (this.menuTitle === '채용 정보') this.link = '/uJobPostView'
       else if (this.menuTitle === 'QnA') this.link = '/uQnAView'
-
     }
     else if(this.mg_auth  === '2' || this.mg_auth  === '3') {
       if(this.menuTitle === '홈') this.link = '/cMainView'

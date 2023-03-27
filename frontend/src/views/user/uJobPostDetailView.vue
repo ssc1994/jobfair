@@ -198,9 +198,6 @@ export default {
           hoverOffset: 4
         }]
       },
-      //임의로 jpl_num을 6번 채용공고를 불러오는거로 설정
-      // 공고를 클릭하면 param으로 채용공고번호를 가지고 넘어워야함
-      // user_id: JSON.parse(sessionStorage.getItem('sessionId')),
       // 데이터 정의
       jpl_num: this.$route.params.jpl_num,
       com_num: '',
@@ -306,14 +303,6 @@ export default {
           this.jpl_fileUuid = res.data.jpl_fileUuid,
           this.viewImg = res.data.jpl_filePath + "/" + res.data.jpl_fileUuid + "-" + res.data.jpl_fileName,
 
-          // this.$axios.post('/jobfair/imgDisplay', {
-          //   viewImg: this.viewImg
-          // }).then(res => {
-          //   console.log("img")
-          //   console.log(res)
-          //   this.viewImg = res.data
-          // }).catch(err => console.log(err))
-          //회사정보 불러오는 axios
           this.$axios
               .post('/jobfair/compInfo', {
                 com_num: this.com_num

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sungjin.jobfair.service.AdminMapper">
+<mapper namespace="com.sungjin.jobfair.service.admin.AdminMapper">
     <!-- ######################### 메인 페이지 ######################### -->
 
     <select id="getAuth" resultType="UserVO">
@@ -50,7 +50,7 @@
 
     <!--페이지네이션-->
     <select id="aQnAGetTotal" resultType="int">
-        select count(*) from qna where qa_type like "%q%"
+        select count(*) from QnA where qa_type like "%q%"
     </select>
 
 

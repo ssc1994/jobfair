@@ -13,10 +13,10 @@ signIn
                   </h1>
                   <p class="mb-0">Enter your id and password to sign in</p>
                   <br>
-                  <div class="choiceBox">
-                    <input type="radio" name="radioBtn" value="1" v-model="mg_auth"><span>개인회원</span>
-                    <input type="radio" name="radioBtn" value="2" v-model="mg_auth"><span>기업회원</span>
-                  </div>
+<!--                  <div class="choiceBox">-->
+<!--                    <input type="radio" name="radioBtn" value="1" v-model="mg_auth"><span>개인회원</span>-->
+<!--                    <input type="radio" name="radioBtn" value="2" v-model="mg_auth"><span>기업회원</span>-->
+<!--                  </div>-->
                 </div>
                 <div class="card-body">
                   <div class="text-start loginBox">
@@ -72,7 +72,6 @@ signIn
       </div>
     </section>
   </main>
-  <app-footer />
 </template>
 
 <script>
@@ -97,9 +96,6 @@ export default {
   },
   updated() {
     this.$store.commit("setMg_auth", this.mg_auth)
-    // console.log(this.mg_auth)
-    // console.log(this.user_id)
-    // console.log(this.user_pw)
   },
   components: {
     Navbar,
@@ -142,22 +138,11 @@ export default {
             this.$store.commit('setCom_num', sessionStorage.getItem('sessionComp'));
 
             if(res.data.mg_auth == '1'){
-              //sesionStorage에서 값 가져오는법
-              // let sessionId = sessionStorage.getItem('sessionId')
-              // let sessionAuth = sessionStorage.getItem('sessionAuth')
-              // if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
-              //   let SessionJsonId = JSON.parse(sessionId)
-              //   console.log(SessionJsonId)
-              // }
-              // if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
-              //   let SessionJsonAuth = JSON.parse(sessionAuth)
-              //   console.log(SessionJsonAuth)
-              // }
 
               // //페이지 이동전에 세션에 값을 넣어야함
               this.$router.push("/uMainView")
 
-            }else if(res.data.mg_auth == '2' || res.data.mg_auth == '3' ){
+            }else if( res.data.mg_auth == '3' ){
               //페이지 이동전에 세션에 값을 넣어야함
               this.$router.push("/cMainView")
 
@@ -165,9 +150,13 @@ export default {
               //페이지 이동전에 세션에 값을 넣어야함
               this.$router.push("/aMainView")
 
-            }else{
-              var msg='로그인 실패 / 비밀번호를 확인하세요'
+            }else if(res.data.mg_auth == '2') {
+              var msg='승인이 되지 않은 기업입니다.'
               alert(msg)
+            }else{
+                var msg='로그인 실패 / 비밀번호를 확인하세요'
+                alert(msg)
+
             }
           })
           .catch((error) => {

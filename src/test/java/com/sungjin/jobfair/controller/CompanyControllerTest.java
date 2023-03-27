@@ -2,8 +2,8 @@ package com.sungjin.jobfair.controller;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.sungjin.jobfair.command.*;
-import com.sungjin.jobfair.service.CompanyService;
-import com.sungjin.jobfair.service.UserService;
+import com.sungjin.jobfair.service.company.CompanyService;
+import com.sungjin.jobfair.service.user.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CompanyControllerTest {

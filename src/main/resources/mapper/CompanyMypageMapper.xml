@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sungjin.jobfair.service.CompanyMypageMapper">
+<mapper namespace="com.sungjin.jobfair.service.company.CompanyMypageMapper">
 
     <!--해당기업의 테이블에 새로 업로드된 로고(이미지)파일 정보로 수정하기-->
     <update id="modiLogo" parameterType="CompanyVO" >

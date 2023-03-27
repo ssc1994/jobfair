@@ -111,7 +111,6 @@ export default {
 
       let res = await this.$axios.post("/jobfair/getComJobPosingList",
           jplData) .catch( err => console.log(err))
-      console.log(res)
       this.pageVO = res.data.pageVO;
       this.jplList = res.data.jplList;
       this.countAppList = res.data.countAppList;

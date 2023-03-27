@@ -24,12 +24,20 @@
           <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
-      <div v-if="userInfo.mg_auth === '2'">
+      <div v-if="userInfo.mg_auth === '2'||userInfo.mg_auth === '3'">
         <div class="btnBox">
           <button type="button" class="btn" @click="this.$router.push('cQnAView')">
             QnA
           </button>
           <button type="button" class="btn" @click="this.$router.push('cMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
+        </div>
+      </div>
+      <div v-if="userInfo.mg_auth === '4'">
+        <div class="btnBox">
+          <button type="button" class="btn" @click="this.$router.push('aQnaView')">
+            QnA
+          </button>
           <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
