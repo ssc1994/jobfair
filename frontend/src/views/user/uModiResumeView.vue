@@ -140,6 +140,7 @@ export default {
   created() {
     this.$axios.get('/jobfair/getResumeDetail?res_num=' + this.$route.query.res_num)
         .then(response => {
+          console.log(response.data)
           this.resInfo = response.data.resVO;
           this.eduInfo = response.data.eduList;
           this.eduCount = this.eduInfo.length
@@ -182,7 +183,6 @@ export default {
       weCount: 0,
       //이력서 사진 관련 변수
       res_img: '',
-      viewImg: '',
       imageUrl: ''
     }
   },
@@ -195,8 +195,6 @@ export default {
         weInfo: this.weInfo,
         certInfo: this.certInfo
       }
-      console.log(this.eduInfo);
-      console.log(this.weInfo);
 
       let formData = new FormData();
       let resData = new Blob([JSON.stringify(tmpData)], {type: "application/json"});
@@ -223,7 +221,7 @@ export default {
       this.res_img = e.target.files[0]
       let reader = new FileReader();
       reader.onload = (event) => {
-        this.viewImg = event.target.result;
+        this.imageUrl = event.target.result;
       }
       reader.readAsDataURL(this.res_img);
     },

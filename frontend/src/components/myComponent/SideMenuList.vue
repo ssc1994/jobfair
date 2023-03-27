@@ -1,11 +1,11 @@
 <template>
-<!--  SidenavList.vue 에서 가져온 auth값을 이용해서 사용자마다 다른 메뉴 출력하는 화면 만듦 -->
-<!--  <div v-if="menuTitle === '홈' || menuTitle === '마이 페이지' || (menuTitle === '채용 정보' && this.mg_auth === '1')">-->
+  <!--  SidenavList.vue 에서 가져온 auth값을 이용해서 사용자마다 다른 메뉴 출력하는 화면 만듦 -->
+  <!--  <div v-if="menuTitle === '홈' || menuTitle === '마이 페이지' || (menuTitle === '채용 정보' && this.mg_auth === '1')">-->
   <div v-if="menuTitle != '채용 정보' || this.mg_auth != 3" class="menu_link">
     <div><router-link :to="link">{{ menuTitle }}</router-link></div>
   </div>
 
-<!--  <div v-if="menuTitle !='홈' && menuTitle != '마이 페이지' && (menuTitle != '채용 정보' || this.mg_auth != '1')">-->
+  <!--  <div v-if="menuTitle !='홈' && menuTitle != '마이 페이지' && (menuTitle != '채용 정보' || this.mg_auth != '1')">-->
   <div class="menu_dropdown" @mouseenter="visible" @mouseleave="visible" v-if="menuTitle === '채용 정보' && this.mg_auth === '3'">
     <div>{{ menuTitle }}</div>
     <div v-if="isVisible" style="border: 1px solid #AAAAAA; border-radius: 6px;">
@@ -38,23 +38,23 @@ export default {
   created () {
     console.log(this.menuTitle)
     console.log(this.mg_auth)
-      if(this.mg_auth === '1') {
-        if (this.menuTitle === '홈') this.link = '/uMainView'
-        else if (this.menuTitle === '마이 페이지') this.link = '/uMypageView'
-        else if (this.menuTitle === '채용 정보') this.link = '/uJobPostView'
-        else if (this.menuTitle === 'QnA') this.link = '/uQnAView'
+    if(this.mg_auth === '1') {
+      if (this.menuTitle === '홈') this.link = '/uMainView'
+      else if (this.menuTitle === '마이 페이지') this.link = '/uMypageView'
+      else if (this.menuTitle === '채용 정보') this.link = '/uJobPostView'
+      else if (this.menuTitle === 'QnA') this.link = '/uQnAView'
 
-      }
-      else if(this.mg_auth  === '2' || this.mg_auth  === '3') {
-        if(this.menuTitle === '홈') this.link = '/cMainView'
-        else if(this.menuTitle ==='마이 페이지') this.link = '/cMypageView'
-        else if (this.menuTitle === 'QnA') this.link = '/cQnAView'
-      }
-      else if(this.mg_auth  === '4') {
-        if(this.menuTitle === '홈') this.link = '/aMainView'
-        else if(this.menuTitle ==='마이 페이지') this.link = '/aMypageView'
-        else if (this.menuTitle === 'QnA') this.link = '/aQnAView'
-      }
+    }
+    else if(this.mg_auth  === '2' || this.mg_auth  === '3') {
+      if(this.menuTitle === '홈') this.link = '/cMainView'
+      else if(this.menuTitle ==='마이 페이지') this.link = '/cMypageView'
+      else if (this.menuTitle === 'QnA') this.link = '/cQnAView'
+    }
+    else if(this.mg_auth  === '4') {
+      if(this.menuTitle === '홈') this.link = '/aMainView'
+      else if(this.menuTitle ==='마이 페이지') this.link = '/aMypageView'
+      else if (this.menuTitle === 'QnA') this.link = '/aQnAView'
+    }
 
     if(this.menu_id === 'p3') {
       //하위 메뉴 DB에서 가져오기
