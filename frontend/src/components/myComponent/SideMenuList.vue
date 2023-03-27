@@ -52,7 +52,7 @@ export default {
     }
     else if(this.mg_auth  === '4') {
       if(this.menuTitle === '홈') this.link = '/aMainView'
-      else if(this.menuTitle ==='마이 페이지') this.link = '/aMypageView'
+      else if(this.menuTitle ==='채용 정보') this.link = '/aJobPostMngView'
       else if (this.menuTitle === 'QnA') this.link = '/aQnAView'
     }
 

@@ -67,12 +67,11 @@ public class UserServiceImpl implements UserService {
 
     //################## 채용공고(jobPost) 관련 Service #######################
     @Override
-//    public ArrayList<EmpListVO> getJobPostList(String selSortInt) {
-//        return userMapper.getJobPostList(selSortInt);
-//    }
     public ArrayList<EmpListVO> getJobPostList(Criteria cri){
         return userMapper.getJobPostList(cri);
     }
+    //해당 유저가 지원한 공고 jpl_num 가져오기
+    public ArrayList<EmpApplyVO> appliedList(String user_id){ return userMapper.appliedList(user_id); }
     //채용공고 목록 갯수 (#### 페이지 네이션 ####)
     @Override
     public int getJobPostTotal(Criteria cri){ return userMapper.getJobPostTotal(cri); }
