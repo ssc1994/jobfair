@@ -25,7 +25,7 @@
           <button type="button" class="btn btn-primary aplBtn applied" style="height:50%;">
             현재까지 <br/> {{totalAppArr}}명 지원
           </button>
-          <button type="button" class="btn btn-primary aplBtn" style="background-color: #0064ff;">
+          <button type="button" class="btn btn-primary aplBtn" style="background-color: #0064ff;" @click="modi()">
             수정하기
           </button>
         </div>
@@ -61,6 +61,19 @@ export default {
       endDate: '',
     }
   },
+  methods: {
+    modi(){
+      this.$router.push({
+        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
+        name: 'cEmpModiView',
+        params: {
+          jpl_num: this.jplInfo.jpl_num
+        }
+      })
+
+    }
+
+  }
 }
 </script>
 

@@ -185,7 +185,6 @@ h3{font-weight: bold;
   padding-left:15px;
 }
 
-
 /*채용현황*/
 .aplBtnBox {
   border:1px solid #dedede;
@@ -194,10 +193,8 @@ h3{font-weight: bold;
   background-color: #efefef;
   float: left;
   width:100%;
-
-
-
 }
+
 .aplBtnBox div {
   text-align: center;
   display: inline-block;
@@ -497,7 +494,4 @@ h3{font-weight: bold;
   border-radius:20px;
   margin-right: 5px;
 }
-
-
-
 </style>
