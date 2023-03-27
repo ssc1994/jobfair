@@ -47,7 +47,7 @@
           <p>열람</p>
         </div>
         <div id="X" @click="getApplyList" v-bind:class="{on : Thr}">
-          <p class="aplBtnNum">{{ this.applyCnt.X }}</p>
+          <p class="aplBtnNum" style="color: red">{{ this.applyCnt.X }}</p>
           <p>미열람</p>
         </div>
       </div>
@@ -132,9 +132,7 @@ export default {
     this.$axios.post("/jobfair/getApplyList" , {user_id: this.user_id, applySel : this.applySel})
         .then((res) => {
 
-          console.log(res.data);
           this.applylist = res.data;
-          console.log(this.applylist);
 
         }).catch((error) => {
       console.log(error)
@@ -143,9 +141,7 @@ export default {
         console.log("아이디"+this.user_id);
         this.$axios.post("/jobfair/getApplyListCnt" , {user_id: this.user_id})
             .then((res) => {
-              console.log(res.data);
               this.applyCnt = res.data;
-              console.log(this.applyCnt);
             }).catch((error) => {
           console.log(error)
         })
@@ -188,8 +184,6 @@ export default {
       this.$axios.post("/jobfair/getApplyList" , {user_id: this.user_id, applySel : this.applySel})
           .then((res) => {
             this.applylist = res.data
-            console.log(this.applylist);
-
           }).catch((error) => {
         console.log(error)
       })

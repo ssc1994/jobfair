@@ -73,17 +73,17 @@ export default {
   data() {
     return {
       uQnADetail: {
-        user_id: 'user123',
+        user_id: '',
         qa_title: '',
         qa_content: '',
         com_num: '',
         qa_type: ''
       },
       cQnADetail: {
-        user_id: 'testCom5',
-        com_num: '2',
+        user_id: '',
+        com_num: '',
         qa_content: '',
-        qa_type: 'a'
+        qa_type: ''
       },
     };
   },
@@ -95,30 +95,13 @@ export default {
         .then((res) => {
           console.log('유저시작')
               this.uQnADetail = res.data
-              console.log(res.data);
-          // this.$axios.get('/jobfair/cQnAInfo/' , {params: {qa_num: this.$route.params.qa_num}} )
-          //     .then((res) => {
-          //
-          //         console.log("successsss")
-          //
-          //         }
-          //
-          //     )
-          //     .catch((error) => this.uQnADetail = error.date)
-          //     .finally(()=>{
-          //       console.log('기업완료')
-          //       this.cQnADetail = res.data
-          //       console.log(res.data);
-          //     })
 
           this.$axios.get('/jobfair/getComQnADetail', {params: {qa_num: this.$route.params.qa_num}} )
               .then((response) => {
                 console.log('기업시작')
                 this.cQnADetail = response.data
-                console.log(response.data);
               })
               .catch((err) => console.log(err))
-
             }
         )
         .catch((error) => console.log(error))

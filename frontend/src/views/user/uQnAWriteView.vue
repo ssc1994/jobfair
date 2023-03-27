@@ -84,7 +84,6 @@ export default {
           })
           .then((res) => {
             if (res.status === 200) {
-              console.log(res.data)
               self.$router.push("/uQnAView")
             }
           })

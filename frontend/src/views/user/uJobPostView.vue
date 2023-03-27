@@ -14,17 +14,9 @@
             <div class="empSearchLocal">
               <input type="button" class="topBtn1" value="지역을 선택하세요" @click="upDown1"/>
 
-              <!--                <span><img src="@/assets/icon_city.png"></span>-->
-              <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)"/>-->
-
-
-
             </div>
             <div class="empSearchJob">
               <input type="button" class="topBtn2" value="직무를 선택하세요" @click="upDown2"/>
-              <!--                <span><img src="@/assets/icon_job.png"></span>-->
-              <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>-->
-
             </div>
 
             <div class="empSearchInput">
@@ -145,7 +137,7 @@
                 <div class="empBoxTitle">자격증</div>
                 <div class="empBoxLabel">
                   <div>
-                    <input type="checkbox" id="jpl_certificate1" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="정보처리기사" @change="test"><label for="jpl_certificate1">정보처리기사</label>
+                    <input type="checkbox" id="jpl_certificate1" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="정보처리기사"><label for="jpl_certificate1">정보처리기사</label>
                   </div>
                   <div>
                     <input type="checkbox" id="jpl_certificate2" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="웹디자인기능사"><label for="jpl_certificate2">웹디자인기능사</label>
@@ -200,9 +192,7 @@
                   {{tag}}<input type="button" @click="del" value="X" :id="tagValue.tagCode+i" style="border:0;padding:0 5px;">
                 </span>
               </p>
-<!--              <div style="overflow: hidden;">-->
                 <button type="button" class="btn btn-primary searchBtn" @click.prevent="jobPostSearch">검색</button>
-<!--              </div>-->
 
             </div>
 
@@ -235,15 +225,16 @@
                 <p class="empBoxTag">{{ jobpost.jpl_workHistory }} {{ jobpost.jpl_education }} {{ jobpost.jpl_locationSi }} {{ jobpost.jpl_locationGu }} {{ jobpost.jpl_workForm}} {{ jobpost.jpl_salary}}</p>
               </router-link>
               <div style="padding-top:20px;">
-<!--                <span class="left empBoxDday">D-27</span>-->
-<!--                <input type="text" class="left empBoxDday" style="width: 65px" v-model="dDay" disabled>-->
+
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
-                <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.user_id == this.user_id"> <!--jobpost.user_id==`${user_id}`-->
-                  지원완료
-                </button>
-                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.user_id==null && jobpost.jpl_endDate"> <!--jobpost.user_id==null-->
-                  지원하기
-                </button>
+<!--                <router-link to="" v-for="(appliedList, j) in appliedList" :key=j>-->
+<!--                  <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.jpl_num == appliedList.jpl_num"> &lt;!&ndash;v-if="jobpost.user_id == this.user_id"&ndash;&gt;-->
+<!--                    지원완료-->
+<!--                  </button>-->
+                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;"> <!--v-if="jobpost.user_id==null && jobpost.jpl_endDate"-->
+                    지원하기
+                  </button>
+<!--                </router-link>-->
               </div>
 
             </div>
@@ -256,11 +247,11 @@
       <div class="paginationWrap">
         <ul class="pagination">
           <li class="page-item"><a class="page-link"  @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
-          <li class="page-item"><a class="page-link"  @click="goPrevPage(page - 1)" style="margin-right: 10px">Previous</a></li>
+          <li class="page-item"><a class="page-link"  @click="goPrevPage(page - 1)" style="margin-right: 10px" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
           <template v-for="(item, index) in pageList" :key="index">
-            <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link"  @click.prevent="ClickPage($event), getJobPostList()" id="index">{{item}}</span></li>
+            <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link important"  @click.prevent="ClickPage($event), getJobPostList()" id="index">{{item}}</span></li>
           </template>
-          <li class="page-item"><a class="page-link"  @click="goNextPage(page + 1)" style="margin-right: 10px">Next</a></li>
+          <li class="page-item"><a class="page-link"  @click="goNextPage(page + 1)" style="margin-right: 10px" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
           <li class="page-item"><a class="page-link"  @click="goLastPage(page + 1)" style="margin-right: 10px">Last</a></li>
         </ul>
       </div>
@@ -277,10 +268,17 @@ import axios from 'axios'
 import moment from "moment/moment";
 export default {
   name: "uJobPostView",
+  props : [
+    'jobPost',
+  ],
   data() {
     return {
       //채용공고 데이터
       jobPostList : [],
+      d_day: '',
+      endDate: '',
+      //해당 유저가 지원한 jpl_num
+      appliedList : [],
       //url
       urlList : [],
       //검색어 입력한 값
@@ -359,7 +357,7 @@ export default {
       arrSrc : "up",
       selSort : '최신등록순',
       selSortInt : 1,
-      user_id: sessionStorage.getItem('sessionId').replaceAll("\"", ""),
+     user_id: sessionStorage.getItem('sessionId').replaceAll("\"", ""),
 
 
       //엑시오스 테스트
@@ -385,12 +383,6 @@ export default {
     }
   },
 
-  // watch: {
-  //   page: function () {
-  //     this.uQnAListAxios();
-  //   },
-  // },
-
   created()  {
 
     console.log("아이디"+this.user_id);
@@ -399,19 +391,21 @@ export default {
     console.log(this.selSortInt);
     this.getJobPostList();
 
-    // this.$axios.post('/jobfair/getJobPostList/',{selSortInt: 1})
-    //     .then((res) => {
-    //           this.jobPostList = res.data;
-    //         }
-    //     )
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
+
+    let sysDate = new Date();
+    console.log(sysDate);
+    let endDate = new Date(this.jobPostList.jpl_endDate);
+
+    let calDate = Math.trunc(((endDate - sysDate) / (1000 * 60 * 60 * 24)));
+
+    if(calDate > 0) this.d_day = 'D - ' + calDate;
+    else if(calDate === 0) this.d_day = "금일 마감";
+    else if(calDate < 0) this.d_day = "모집종료"
+
+    this.endDate = (endDate.getMonth() + 1) + '월 ' + endDate.getDate() + '일 마감'
+
   },
   methods: {
-    test () {
-      console.log(this.selectedTag[0].tagValue)
-    },
 
     //채용공고 가져오기
     async getJobPostList () {
@@ -421,15 +415,16 @@ export default {
             params: {
               page: this.page,
               amount: this.amount,
-              selSortInt: this.selSortInt
+              selSortInt: this.selSortInt,
+              user_id : this.user_id
             }
           }).catch(err => console.log(err))
       console.log(data);
 
-      // console.log(data.list);
-      // console.log(data.pageVO);
       this.urlList = data.urlList;
-      this.jobPostList = data.empPageGate.list
+      this.jobPostList = data.empPageGate.list;
+      this.appliedList = data.appliedList.jpl_num;
+      console.log(this.appliedList);
       console.log(this.jobPostList);
       this.pages = data.empPageGate.pageVO;
       this.pageList = this.pages.pageList;
@@ -617,7 +612,6 @@ export default {
       }
 
       var cnt = 0;
-      console.log(this.selectedTag.length);
       for(var i=0; i < this.selectedTag.length; i++){
         for(var j=0; j < this.selectedTag[i].tagValue.length; j++){
           cnt++;
@@ -644,7 +638,6 @@ export default {
   list-style: none;
   font-size:15px;
 }
-
 
 a {text-decoration: none;}
 
@@ -748,7 +741,6 @@ html, body {width:100%;
   width:600px;
 }
 
-
 .empBoxText router-link {text-align: left;border:0;}
 
 .empBoxText p {margin:0; padding:0;}
@@ -766,7 +758,6 @@ h3{font-weight: bold;
   font-size: 20px;
 
 }
-
 
 /*검색 박스*/
 .empSearchBox {border: 1px solid #dedede;
@@ -812,7 +803,6 @@ h3{font-weight: bold;
   font-weight: bold;
 }
 
-
 .empBoxTitle {
   font-weight: bold;
   font-size: 15px;
@@ -821,8 +811,6 @@ h3{font-weight: bold;
   background-color: #efefef;
 
 }
-
-
 
 .empSearchInput input {
   width:100%;
@@ -972,18 +960,45 @@ h3{font-weight: bold;
 .selSort {width:130px;font-weight: bold;border:0;}
 
 /* 페이지네이션 부분 */
-.paginationWrap ul {
-  margin-top: 50px;
-  padding-left: 470px;
-}
 
 .paginationWrap .page-link {
-  background-color: #0064ff;
+  background-color: white;
 }
 
 .paginationWrap li.active span {
   background-color: #202632;
   border: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.page-link {
+  color: #333;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0064ff;
+}
+
+.active .page-link {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
 </style>

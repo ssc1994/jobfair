@@ -178,12 +178,12 @@ const routes = [
     component: () => import('../views/admin/aQnAView.vue')
   },
   {//관리자 큐앤에이 답변 작성
-    path: '/aQnAWriteView',
+    path: '/aQnAWriteView/:qa_num',
     name: 'aQnAWriteView',
     component: () => import('../views/admin/aQnAWriteView.vue')
   },
   {//관리자 큐앤에이 디테일
-    path: '/aQnADetailView',
+    path: '/aQnADetailView/:qa_num',
     name: 'aQnADetailView',
     component: () => import('../views/admin/aQnADetailView.vue')
   },

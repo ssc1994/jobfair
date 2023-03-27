@@ -74,6 +74,14 @@ public class AdminController {
 
 
     //큐앤에이
+
+    //큐앤에이 등록
+    @PostMapping(value = "/aqnaRegist")
+    public String aqnaRegist(@RequestBody QnAVO vo) {
+        adminService.aqnaRegist(vo);
+        return "success";
+    }
+
     //큐앤에이 목록
     @PostMapping(value = "/agetQnAList")
     public ArrayList<QnAVO> agetQnAList(Criteria cri) {
@@ -82,6 +90,28 @@ public class AdminController {
 
         return list;
     }
+    //디테일데이터
+    @GetMapping(value = "/agetQnADetail")
+    public QnAVO agetQnADetail(@RequestParam("qa_num") int qa_num) {
+
+        System.out.println("기업 QnA 디테일데이터");
+        QnAVO vo = adminService.getQnADetail(qa_num);
+        System.out.println(vo);
+        System.out.println("야호");
+
+        return vo;
+    }
+
+    //어드민 정보 보내기
+    @GetMapping(value = "/getAdmQnADetail")
+    public QnAVO getAdmQnADetail(@RequestParam("qa_num") int qa_num) {
+
+        QnAVO vo = adminService.getAdmQnADetail(qa_num);
+
+
+        return vo;
+    }
+
 
     //큐앤에이 페이지네이션
     @GetMapping("/aQnAListAxios")

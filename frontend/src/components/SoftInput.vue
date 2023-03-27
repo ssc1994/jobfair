@@ -5,15 +5,15 @@
         <i :class="getIcon(icon)"></i>
       </span>
       <input
-        :id="id"
-        :type="type"
-        class="form-control"
-        :class="getClasses(size, success, error)"
-        :name="name"
-        :value="model"
-        :placeholder="placeholder"
-        :isRequired="isRequired"
-        @input="$emit('update:model', $event.target.value)"
+          :id="id"
+          :type="type"
+          class="form-control"
+          :class="getClasses(size, success, error)"
+          :name="name"
+          :value="model"
+          :placeholder="placeholder"
+          :isRequired="isRequired"
+          @input="$emit('update:model', $event.target.value)"
       />
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>

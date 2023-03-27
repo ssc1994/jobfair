@@ -2,15 +2,15 @@
   <div class="card">
     <div class="p-3 mx-4 text-center card-header d-flex justify-content-center">
       <div
-        :class="
+          :class="
           typeof icon === 'object' ? icon.background : 'bg-gradient-success'
         "
-        class="icon icon-shape icon-lg shadow text-center border-radius-lg"
+          class="icon icon-shape icon-lg shadow text-center border-radius-lg"
       >
         <i
-          class="opacity-10"
-          :class="typeof icon === 'string' ? icon : icon.component"
-          aria-hidden="true"
+            class="opacity-10"
+            :class="typeof icon === 'string' ? icon : icon.component"
+            aria-hidden="true"
         ></i>
       </div>
     </div>

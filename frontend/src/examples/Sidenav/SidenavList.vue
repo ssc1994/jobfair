@@ -3,11 +3,12 @@
     <div class="userInfoBox">
       <div class="userInfoFirstLine">
         <div class="userInfo_wrap">
-<!--          이미지 얼굴사진으로 변경해야함-->
+          <!--          이미지 얼굴사진으로 변경해야함-->
           <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left" style="z-index: 1; position: relative">
+
           <div>
             <!--            session에서 가져온 아이디 값 출력 -->
-            <h6>{{ userInfo.user_id }}님</h6>
+            <h6 style="font-size: 18px; color: #0064ff; font-weight:800">{{ userInfo.user_id }}님</h6>
             <h6>환영합니다.</h6>
           </div>
         </div>
@@ -195,11 +196,11 @@
 
   <hr>
 
-  <!-- 아코디언 -->
+
     <div>
       <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
     </div>
-    <div>
+    <div v-if="userInfo.mg_auth!=4">
       <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
     </div>
     <div>
@@ -209,11 +210,14 @@
       <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
     </div>
 
+
+
 </template>
 <script>
 import SidenavCollapse from "./SidenavCollapse.vue";
 import SideMenuList from "@/components/myComponent/SideMenuList";
 import router from "@/router";
+import {mg_auth} from "vuex";
 
 export default {
   name: "SidenavList",
@@ -283,6 +287,9 @@ export default {
     }
   },
   methods: {
+    mg_auth() {
+      return mg_auth
+    },
     getRoute() {
       const routeArr = this.$route.path.split("/");
       return routeArr[1];
@@ -468,7 +475,6 @@ export default {
         if (this.modi_type === 'info') { //회원 정보 수정 요청일 때
           this.$axios.post('/jobfair/userInfoModi/modifyInfo', this.userInfo)
               .then(response => {
-                console.log(response)
 
                 //수정이 완료된 후 모달창 닫기2
                 alert('회원정보가 수정되었습니다')
@@ -483,7 +489,6 @@ export default {
 
           this.$axios.post('/jobfair/userInfoModi/modifyPw', this.userInfo)
               .then(response => {
-                console.log(response)
 
                 var msg = response.data
 
@@ -499,8 +504,8 @@ export default {
                   }
                 } else {
                   alert(msg)
-                //수정이 완료된 후 모달창 닫기
-                this.$refs.closeBtn.click()
+                  //수정이 완료된 후 모달창 닫기
+                  this.$refs.closeBtn.click()
                 }
 
               })
@@ -524,7 +529,6 @@ export default {
         e.target.focus();
         e.target.value = e.target.value.replace(' ', ''); // 공백제거
         return false;
-        console.log(this.gender)
       }
     },
     //회원정보 타입 선택시 기본값 변경
@@ -580,6 +584,7 @@ export default {
 .userInfo_wrap {
   margin-bottom: 20px;
   overflow: hidden;
+  justify-content: center;
 }
 
 .userInfo_left {
@@ -609,15 +614,14 @@ export default {
 .modal-body {
   height: 500px;
 }
-
 .modiInfo_type_wrap {
   border-top: 1px solid #1E1E1E;
 }
+
 .userInfo_wrap {
   display: flex;
   align-items: center;
 }
-
 .userInfo_wrap h6 {
   margin-left: 10px;
 }

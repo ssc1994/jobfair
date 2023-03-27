@@ -86,11 +86,17 @@
           </div>
 
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                  v-bind:disabled="AppliedResult == 1">
+                  v-bind:disabled="AppliedResult == 1"
+                  v-if="this.mg_auth < 3">
             {{ applyBtnText }}
           </button>
 
-          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick">
+
+          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="this.mg_auth == 3">
+           지원자 보기
+          </button>
+
+          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" v-if="this.mg_auth < 3">
             Q&A 질문하기
           </button>
 
@@ -114,18 +120,6 @@
                     ref="genderGroup"
                 />
               </div>
-            </ul>
-            <ul>
-              <li>연령</li>
-              <li>
-                <img src="#">
-              </li>
-            </ul>
-            <ul>
-              <li>학력</li>
-              <li>
-                <img src="#">
-              </li>
             </ul>
           </div>
         </div>
@@ -250,6 +244,7 @@ export default {
         com_num: ''
       },
       user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      mg_auth : JSON.parse(sessionStorage.getItem('sessionAuth')),
       res_num: '1',
       //지원한 이력서
       resNum: 0,
@@ -302,7 +297,6 @@ export default {
           this.jpl_filePath = res.data.jpl_filePath,
           this.jpl_fileUuid = res.data.jpl_fileUuid,
           this.viewImg = res.data.jpl_filePath + "/" + res.data.jpl_fileUuid + "-" + res.data.jpl_fileName,
-
           this.$axios
               .post('/jobfair/compInfo', {
                 com_num: this.com_num
@@ -347,8 +341,6 @@ export default {
     console.log(this.AppliedResult)
 
     //모멘트 적용
-
-
 
   },
   mounted() {
@@ -409,38 +401,10 @@ export default {
         console.log(error);
       })
     },
-    // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
-    // supportResume(){
-    //   router.push({path:"/"})
-    // }
-
-    // getJobPostInfo() {
-    //   this.$axios.get('/jobfair/getJobPostInfo/', {params: {com_num: this.com_num}})
-    //       .then((res) => this.CompanyInfo = res.data)
-    //       .catch((error) => console.log(error))
-    // },
-
 
     uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
 
       this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
-
-      // this.$axios
-      //     .post('/jobfair/uQnABtnClick')
-      //     .then((res) => {
-      //       alert("tq")
-      //       this.$router.push({
-      //         name: 'uQnAWriteView',
-      //         params: {
-      //           com_num: this.com_num
-      //         }
-      //       })
-      //       this.$router.push("/uQnAWriteView")
-      //
-      //     })
-      //     .catch((error) => {
-      //       console.log(error)
-      //     })
 
     },
     getGendertotal () {

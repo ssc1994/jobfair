@@ -273,7 +273,15 @@ body {
   background-color: #fbfbfb;
   word-break: keep-all;
 }
-
+/* 추가버튼 */
+#btnAddWe {
+  border: none;
+  border-radius: 10px;
+  background-color: #0064ff;
+  color: white;
+  width: 90px;
+  height: 30px;
+}
 /* 이력서 제목 입력 css */
 .resumeTitle {
   padding: 20px;

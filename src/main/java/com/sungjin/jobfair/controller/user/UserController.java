@@ -261,8 +261,14 @@ public class UserController {
 
         //위에서 지정해준 조건에 따른 참여 기업 목록의 total 값 가져오기
         int total = userService.getJobPostTotal(cri);
+
+        //해당 유저가 지원한 공고 jpl_num 가져오기
+        String user_id = cri.getUser_id();
+        ArrayList<EmpApplyVO> appliedList = userService.appliedList(user_id);
+
         //위에서 지정해준 조건에 따른 참여 기업 목록 (1페이지당 몇개) 가져오기
         ArrayList<EmpListVO> list = userService.getJobPostList(cri);
+
         List<String> urlList = new ArrayList<>();
         for(EmpListVO vo : list){
             String path = vo.getJpl_fileUuid() + "_" + vo.getJpl_fileName();
@@ -273,13 +279,16 @@ public class UserController {
 
         //pageVO 생성
         PageVO pageVO = new PageVO(cri, total);
+//        System.out.println(pageVO);
 
         //list 와 pageVO 를 담아줄 PageGate 생성, 그리고 객체들 담기
         EmpPageGate empPageGate = new EmpPageGate(list, pageVO);
+//        System.out.println(empPageGate);
 
         Map map = new HashMap();
         map.put("urlList", urlList);
         map.put("empPageGate", empPageGate);
+        map.put("appliedList", appliedList);
 
         return map;
     }
@@ -290,8 +299,6 @@ public class UserController {
         int total = userService.getJobPostTotal(cri);
         return total;
     }
-
-
         @RequestMapping(value="/getJobPostSrc",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
         public Map getJobPostSrc(@RequestBody EmpSrcCriteria cri) {

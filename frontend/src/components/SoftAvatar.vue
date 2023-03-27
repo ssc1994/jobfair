@@ -1,9 +1,9 @@
 <template>
   <div class="avatar" :class="getSize(size)">
     <img
-      :src="img"
-      :alt="alt"
-      :class="[getClasses(shadow, circular, borderRadius)]"
+        :src="img"
+        :alt="alt"
+        :class="[getClasses(shadow, circular, borderRadius)]"
     />
   </div>
 </template>

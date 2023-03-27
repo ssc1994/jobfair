@@ -41,11 +41,27 @@ public class AdminServiceImpl implements AdminService{
         return adminMapper.getPopList();
     }
 
+    @Override
+    public void aqnaRegist(QnAVO vo) {
+        System.out.println(vo.toString());
+        adminMapper.aqnaRegist(vo);
+    }
+
     //큐앤에이
 
     @Override
     public ArrayList<QnAVO> agetQnAList(Criteria cri) {
         return adminMapper.agetQnAList(cri);
+    }
+
+    @Override
+    public QnAVO getQnADetail(int qa_num) {
+        return adminMapper.getQnADetail(qa_num);
+    }
+
+    @Override
+    public QnAVO getAdmQnADetail(int qa_num) {
+        return adminMapper.getAdmQnADetail(qa_num);
     }
 
     //큐앤에이 페이지네이션

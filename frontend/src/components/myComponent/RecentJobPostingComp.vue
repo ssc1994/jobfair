@@ -2,8 +2,9 @@
   <li>
     <div class="empBoxConWrap col-6">
 
-      <div class="empBoxCon ">
-        <router-link :to="{name:'uJobPostDetailView', params:{jpl_num : jplInfo.jpl_num },}" class="left empBoxCompany">
+
+      <div class="empBoxCon " @click.prevent="detail(jplInfo.jpl_num)">
+        <router-link to="" class="left empBoxCompany">
           <p>{{ jplInfo.jpl_companyName }} </p>
           <img :src="this.imgUrl" >
         </router-link>
@@ -71,6 +72,14 @@ export default {
         }
       })
 
+    },
+    detail(jpl) {
+      this.$router.push({
+        name: 'uJobPostDetailView',
+        params: {
+          jpl_num: jpl
+        }
+      })
     }
 
   }

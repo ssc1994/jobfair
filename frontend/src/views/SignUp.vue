@@ -30,7 +30,6 @@
               <label for="userType" class="btn mb-0 btn-md w-100"
                      :class="[ mg_auth === '1' ? 'selected_joinType' : 'bg-gradient-dark' ]"
                      style="color: #FFFFFF">개인회원</label>
-              <!--              <label class="btn mb-0 bg-gradient-dark btn-md w-100" for="userType">개인회원</label>-->
             </li>
             <li>
               <input type="radio" name="selectType" style="display: none" id="companyType"
@@ -38,7 +37,6 @@
               <label for="companyType" class="btn mb-0 btn-md w-100"
                      :class="[ mg_auth === '2' ? 'selected_joinType' : 'bg-gradient-dark' ]"
                      style="color: #FFFFFF">기업회원</label>
-              <!--              <label class="btn mb-0 bg-gradient-dark btn-md w-100" for="companyType">기업회원</label>-->
             </li>
           </div>
 
@@ -96,12 +94,12 @@
                              placeholder="비밀번호 재입력" v-model="user_pwCheck"/>
                     </div>
 
-<!--                성별 위치    -->
+                    <!--    성별 위치    -->
                     <div>
                       <div class="data_title_wrap">
                         <span>성별</span>
                         <span :hidden="userGender_errorMsg === ''"
-                                             class="pass_error">
+                              class="pass_error">
                           {{ userGender_errorMsg }}
                         </span>
                       </div>
@@ -120,26 +118,27 @@
 
                     </div>
 
-<!--                    생년월일 위치-->
+                    <!--생년월일 위치-->
                     <div>
                       <div class="data_title_wrap">
                         <span>생년월일</span><span :hidden="userBirth_errorMsg === ''"
-                                                  class="pass_error">
+                                               class="pass_error">
                           {{ userBirth_errorMsg }}
                         </span>
                       </div>
                       <div class="birth_select_wrap">
-                        <select  v-model="birth_yyyy">
+                        <select v-model="birth_yyyy">
                           <option value="">년</option>
-                          <option v-for="(item, key) in yyyyList" :key="key" :value="item.value">{{item.value}}</option>
+                          <option v-for="(item, key) in yyyyList" :key="key" :value="item.value">{{ item.value }}
+                          </option>
                         </select>
-                        <select  v-model="birth_MM">
+                        <select v-model="birth_MM">
                           <option value="">월</option>
-                          <option v-for="(item, key) in mmlist" :key="key" :value="item.value">{{item.value}}</option>
+                          <option v-for="(item, key) in mmlist" :key="key" :value="item.value">{{ item.value }}</option>
                         </select>
-                        <select  v-model="birth_dd">
+                        <select v-model="birth_dd">
                           <option value="">일</option>
-                          <option v-for="(item, key) in ddlist" :key="key" :value="item.value">{{item.value}}</option>
+                          <option v-for="(item, key) in ddlist" :key="key" :value="item.value">{{ item.value }}</option>
                         </select>
                       </div>
                     </div>
@@ -155,25 +154,13 @@
                     <div style="padding-bottom: 0px">
                       <div class="data_title_wrap">
                         <span>핸드폰번호</span><span :hidden="userPh_errorMsg === ''"
-                                               class="pass_error">{{ userPh_errorMsg }}</span>
+                                                class="pass_error">{{ userPh_errorMsg }}</span>
                       </div>
                       <div class="userPh_input_wrap">
                         <input type="text" ref="phNumBox" name="user_phone" placeholder="숫자만 입력 자동 - 추가"
                                v-model="user_phone"
                                @keyup="userAutoHyphen($event)"
                                class="PersonUnder data_insert_box" maxlength="13"/>
-                        <button type="button" class="btn bg-gradient-dark" style="margin: 0">인증번호 전송</button>
-                      </div>
-                    </div>
-                    <div style="padding:5px">
-                      <div class="data_title_wrap">
-                        <span>인증번호</span><span></span>
-                      </div>
-                      <div class=" certif_input_wrap">
-                        <input type="text" ref="certifNumBox" name="" placeholder="인증번호 입력" v-model="certification_num"
-                               class="PersonUnder data_insert_box">
-                        <button type="button" class="btn bg-gradient-dark" id="leftBtn" style="margin: 0">확인</button>
-                        <button type="button" class="btn bg-gradient-dark" id="rightBtn" style="margin: 0">재전송</button>
                       </div>
                     </div>
                   </div>
@@ -193,7 +180,7 @@
                           <div class="data_title_wrap">
                             <span>기업 전화번호</span>
                             <span :hidden="comPh_errorMsg === ''"
-                                                  class="pass_error">{{ comPh_errorMsg }}</span>
+                                  class="pass_error">{{ comPh_errorMsg }}</span>
                           </div>
                           <input type="tel" class="data_insert_box" ref="com_phBox" placeholder="숫자만 입력 자동 - 추가"
                                  maxlength="13" v-model="com_phone" @keyup="comAutoHyphen($event)"/>
@@ -217,7 +204,7 @@
                             <input type="text" id="address" class="data_insert_box" ref="com_addressBox"
                                    placeholder="주소검색을 눌러주세요"
                                    v-model="com_address" readonly @keydown="execDaumPostcode"/>
-                            <button type="button"  class="btn bg-gradient-dark" @click="execDaumPostcode">
+                            <button type="button" class="btn bg-gradient-dark" @click="execDaumPostcode">
                               주소검색
                             </button>
                           </div>
@@ -257,7 +244,8 @@
                             <span :hidden="comBizReg_errorMsg === ''"
                                   class="pass_error">{{ comBizReg_errorMsg }}</span>
                           </div>
-                          <input type="text" class="data_insert_box" ref="com_regBox" placeholder="사업자 등록번호 3글자-2글자-5글자 형식으로 입력"
+                          <input type="text" class="data_insert_box" ref="com_regBox"
+                                 placeholder="사업자 등록번호 3글자-2글자-5글자 형식으로 입력"
                                  v-model="com_businessRegistration" maxlength="12"/>
                         </div>
                         <div class="esDateWrap">
@@ -353,7 +341,7 @@ export default {
       idPassCheck: false, //id 중복확인 통과했는지 여부 체크 , 통과하면 true 로 바꿔줌.
       phCertifPassCheck: false, //핸드폰인증 확인했는지 여부 체크, 통과했으면 true
       //유효성 검사 정규식
-      nameRule:  /^[가-힣]{2,4}$/, //한글만 2~4글자
+      nameRule: /^[가-힣]{2,4}$/, //한글만 2~4글자
       idRule: /^[a-z0-9]{4,12}$/, // 영문 소문자, 숫자만 사용가능 길이는 4~12 글자
       passwordRule: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,  //비밀번호 유효성 검사 정규표현식 -> (8~20자의 영문,숫자,특수기호 포함)
       emailRule: /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/, //이메일 형식 유호성 검사 정규표현식
@@ -398,7 +386,7 @@ export default {
     }
   },
   mounted() {
-    if(this.mg_auth === ''){
+    if (this.mg_auth === '') {
       this.mg_auth = '1'
     }
   },
@@ -414,7 +402,7 @@ export default {
     this.toggleHideConfig();
 
     const nowYear = new Date().getFullYear();
-    for(let i = 0; i <100; i++) {
+    for (let i = 0; i < 100; i++) {
       let date = nowYear - i
       this.yyyyList.push({value: date})
     }
@@ -492,7 +480,7 @@ export default {
         this.userName_errorMsg = '이름을 확인해주세요'
         this.$refs.nameBox.focus()
         return
-      } else{
+      } else {
         this.userName_errorMsg = ''
       }
       //아이디 중복확인 통과했는지 체크
@@ -518,7 +506,7 @@ export default {
       }
       // 비밀번호 확인 검사
       if (this.user_pw !== this.user_pwCheck) {
-        if(this.user_pwCheck === ''){
+        if (this.user_pwCheck === '') {
           this.$refs.pwCheckBox.focus()
           return
         }
@@ -536,13 +524,13 @@ export default {
         this.userGender_errorMsg = ''
       }
       //생년월일 체크
-      if(this.birth_yyyy === ''){
+      if (this.birth_yyyy === '') {
         this.userBirth_errorMsg = '생년월일을 입력해주세요'
         return
-      } else if(this.birth_MM === ''){
+      } else if (this.birth_MM === '') {
         this.userBirth_errorMsg = '생년월일을 입력해주세요'
         return
-      } else if(this.birth_dd === ''){
+      } else if (this.birth_dd === '') {
         this.userBirth_errorMsg = '생년월일을 입력해주세요'
         return
       } else {
@@ -551,7 +539,7 @@ export default {
 
       // user email 형식 유효성 검사
       if (this.emailRule.test(this.user_email.trim()) === false) {
-        if(this.user_email === ''){
+        if (this.user_email === '') {
           this.userEmail_errorMsg = '필수 입력 정보 입니다'
           this.$refs.emailBox.focus()
           return
@@ -564,7 +552,7 @@ export default {
       }
       //휴대폰 번호 유효성 검사 - 숫자만 입력.
       if (this.phoneNumRule.test(this.user_phone.trim()) === false) {
-        if(this.user_phone === ''){
+        if (this.user_phone === '') {
           this.userPh_errorMsg = '필수 입력 정보입니다'
           this.$refs.phNumBox.focus()
           return
@@ -596,7 +584,7 @@ export default {
         }
         //기업 전화번호 체크
         if (this.phoneNumRule.test(this.com_phone.trim()) === false) {
-          if(this.com_phone === ''){
+          if (this.com_phone === '') {
             this.comPh_errorMsg = '필수 입력 정보입니다'
             this.$refs.com_phBox.focus()
             return
@@ -609,7 +597,7 @@ export default {
         }
         //기업 이메일 체크
         if (this.emailRule.test(this.com_email.trim()) === false) {
-          if(this.com_email === ''){
+          if (this.com_email === '') {
             this.comEmail_errorMsg = '필수 입력 정보입니다'
             this.$refs.com_emailBox.focus()
             return
@@ -648,7 +636,7 @@ export default {
         // 기업 대표 체크
         // 한글, 영문만 입력가능
         if (this.nameRule.test(this.com_ceo.trim()) === false) {
-          if(this.com_ceo === ''){
+          if (this.com_ceo === '') {
             this.comCeo_errorMsg = '필수 입력 정보입니다'
             this.$refs.com_ceoBox.focus()
             return
@@ -662,7 +650,7 @@ export default {
         //사업자 등록번호 체크
         //사업자 등록번호 정규식 3글자-2글자-5글자
         if (this.businessRegisRule.test(this.com_businessRegistration.trim()) === false) {
-          if(this.com_businessRegistration === ''){
+          if (this.com_businessRegistration === '') {
             this.comBizReg_errorMsg = '필수 입력 정보입니다'
             this.$refs.com_regBox.focus()
             return
@@ -790,7 +778,7 @@ export default {
         },
       }).open();
     },
-    testBirth () {
+    testBirth() {
       console.log('testBirth 실행')
       console.log('yyyy:', this.birth_yyyy)
       console.log('MM:', this.birth_MM)
