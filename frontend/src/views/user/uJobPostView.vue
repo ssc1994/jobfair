@@ -14,17 +14,9 @@
             <div class="empSearchLocal">
               <input type="button" class="topBtn1" value="지역을 선택하세요" @click="upDown1"/>
 
-              <!--                <span><img src="@/assets/icon_city.png"></span>-->
-              <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)"/>-->
-
-
-
             </div>
             <div class="empSearchJob">
               <input type="button" class="topBtn2" value="직무를 선택하세요" @click="upDown2"/>
-              <!--                <span><img src="@/assets/icon_job.png"></span>-->
-              <!--                <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>-->
-
             </div>
 
             <div class="empSearchInput">
@@ -145,7 +137,7 @@
                 <div class="empBoxTitle">자격증</div>
                 <div class="empBoxLabel">
                   <div>
-                    <input type="checkbox" id="jpl_certificate1" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="정보처리기사" @change="test"><label for="jpl_certificate1">정보처리기사</label>
+                    <input type="checkbox" id="jpl_certificate1" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="정보처리기사"><label for="jpl_certificate1">정보처리기사</label>
                   </div>
                   <div>
                     <input type="checkbox" id="jpl_certificate2" name="jpl_certificate" v-model="selectedTag[6].tagValue" value="웹디자인기능사"><label for="jpl_certificate2">웹디자인기능사</label>
@@ -200,9 +192,7 @@
                   {{tag}}<input type="button" @click="del" value="X" :id="tagValue.tagCode+i" style="border:0;padding:0 5px;">
                 </span>
               </p>
-<!--              <div style="overflow: hidden;">-->
                 <button type="button" class="btn btn-primary searchBtn" @click.prevent="jobPostSearch">검색</button>
-<!--              </div>-->
 
             </div>
 
@@ -235,9 +225,7 @@
                 <p class="empBoxTag">{{ jobpost.jpl_workHistory }} {{ jobpost.jpl_education }} {{ jobpost.jpl_locationSi }} {{ jobpost.jpl_locationGu }} {{ jobpost.jpl_workForm}} {{ jobpost.jpl_salary}}</p>
               </router-link>
               <div style="padding-top:20px;">
-<!--                <span class="left empBoxDday">{{d_day}}</span>-->
-<!--                <span class="left empBoxDday">금일 마감</span>-->
-<!--                <span class="left empBoxDday">모집종료{{this.endDate}}</span>-->
+
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
 <!--                <router-link to="" v-for="(appliedList, j) in appliedList" :key=j>-->
 <!--                  <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.jpl_num == appliedList.jpl_num"> &lt;!&ndash;v-if="jobpost.user_id == this.user_id"&ndash;&gt;-->
@@ -395,12 +383,6 @@ export default {
     }
   },
 
-  // watch: {
-  //   page: function () {
-  //     this.uQnAListAxios();
-  //   },
-  // },
-
   created()  {
 
     console.log("아이디"+this.user_id);
@@ -408,6 +390,7 @@ export default {
     console.log(this.amount);
     console.log(this.selSortInt);
     this.getJobPostList();
+
 
     let sysDate = new Date();
     console.log(sysDate);
@@ -421,19 +404,8 @@ export default {
 
     this.endDate = (endDate.getMonth() + 1) + '월 ' + endDate.getDate() + '일 마감'
 
-    // this.$axios.post('/jobfair/getJobPostList/',{selSortInt: 1})
-    //     .then((res) => {
-    //           this.jobPostList = res.data;
-    //         }
-    //     )
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
   },
   methods: {
-    test () {
-      console.log(this.selectedTag[0].tagValue)
-    },
 
     //채용공고 가져오기
     async getJobPostList () {
@@ -449,8 +421,6 @@ export default {
           }).catch(err => console.log(err))
       console.log(data);
 
-      // console.log(data.list);
-      // console.log(data.pageVO);
       this.urlList = data.urlList;
       this.jobPostList = data.empPageGate.list;
       this.appliedList = data.appliedList.jpl_num;
@@ -642,7 +612,6 @@ export default {
       }
 
       var cnt = 0;
-      console.log(this.selectedTag.length);
       for(var i=0; i < this.selectedTag.length; i++){
         for(var j=0; j < this.selectedTag[i].tagValue.length; j++){
           cnt++;

@@ -301,13 +301,6 @@ export default {
           this.jpl_fileUuid = res.data.jpl_fileUuid,
           this.viewImg = res.data.jpl_filePath + "/" + res.data.jpl_fileUuid + "-" + res.data.jpl_fileName,
 
-          // this.$axios.post('/jobfair/imgDisplay', {
-          //   viewImg: this.viewImg
-          // }).then(res => {
-          //   console.log("img")
-          //   console.log(res)
-          //   this.viewImg = res.data
-          // }).catch(err => console.log(err))
           //회사정보 불러오는 axios
           this.$axios
               .post('/jobfair/compInfo', {
@@ -353,8 +346,6 @@ export default {
     console.log(this.AppliedResult)
 
     //모멘트 적용
-
-
 
   },
   mounted() {
@@ -415,38 +406,10 @@ export default {
         console.log(error);
       })
     },
-    // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
-    // supportResume(){
-    //   router.push({path:"/"})
-    // }
-
-    // getJobPostInfo() {
-    //   this.$axios.get('/jobfair/getJobPostInfo/', {params: {com_num: this.com_num}})
-    //       .then((res) => this.CompanyInfo = res.data)
-    //       .catch((error) => console.log(error))
-    // },
-
 
     uQnABtnClick() { // 채용상세공고 페이지에서 해당 기업 번호 넘기기 위한 메서드
 
       this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
-
-      // this.$axios
-      //     .post('/jobfair/uQnABtnClick')
-      //     .then((res) => {
-      //       alert("tq")
-      //       this.$router.push({
-      //         name: 'uQnAWriteView',
-      //         params: {
-      //           com_num: this.com_num
-      //         }
-      //       })
-      //       this.$router.push("/uQnAWriteView")
-      //
-      //     })
-      //     .catch((error) => {
-      //       console.log(error)
-      //     })
 
     },
     getGendertotal () {

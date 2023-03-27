@@ -6,8 +6,8 @@
           <h6 class="mb-0">{{ card.title }}</h6>
         </div>
         <div
-          v-if="card.date"
-          class="col-md-6 d-flex justify-content-end align-items-center"
+            v-if="card.date"
+            class="col-md-6 d-flex justify-content-end align-items-center"
         >
           <i class="far fa-calendar-alt me-2"></i>
           <small>{{ card.date }}</small>
@@ -16,9 +16,9 @@
     </div>
     <div class="p-3 card-body">
       <ranking-list
-        :title="card.subtitle"
-        :item="item"
-        :horizontal-break="horizontalBreak"
+          :title="card.subtitle"
+          :item="item"
+          :horizontal-break="horizontalBreak"
       />
       <slot />
     </div>

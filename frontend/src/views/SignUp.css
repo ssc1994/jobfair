@@ -103,18 +103,6 @@
     display: inline-block;
     margin: 0;
 }
-/*핸드폰 입력, 인증번호 전송버튼 부분*/
-.userPh_input_wrap{
-    display: flex;
-    justify-content: space-between;
-}
-.userPh_input_wrap input{
-    display: inline-block;
-    width: 72%;
-}
-.userPh_input_wrap button{
-    display: inline-block;
-}
 
 /*성별타입 부분*/
 .gender_type_wrap{

@@ -1,8 +1,8 @@
 <template>
   <div class="wrapBox" style="height: 2000px">
     <div class="wrapBox2">
-    <div class="container empBoxWrap">
-      <img src="@/assets/mainImg.png" style="width: 1500px">
+      <div class="container empBoxWrap">
+        <img src="@/assets/mainImg.png" style="width: 1500px">
         <div>
           <h3 style="margin-top: 20px">채용공고</h3>
         </div>
@@ -10,14 +10,9 @@
 
         <div>
           <div class="row" style="margin-top: 20px">
-            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" v-bind:value="data.value" :key="i" @click.prevent="jobPostDetail(data.jpl_num)">
-
-<!--              <div v-if="data.url == null">-->
-<!--                <img src="@/assets/myImage/noPic.jpg">-->
-<!--              </div>-->
-
+            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" v-bind:value="data.value" :key="i"
+                         @click.prevent="jobPostDetail(data.jpl_num)">
               <div>
-<!--                <img :src=" './assets/myImage/noPic.jpg' " v-if="data.url === '파일명'">-->
                 <img :src="data.url" alt="이미지" style="height: 250px">
               </div>
               <div class="hotText">
@@ -27,22 +22,14 @@
                 </p>
 
                 <span class="hotDday">
-                  마감일 {{data.jpl_endDate}}
+                  마감일 {{ data.jpl_endDate }}
                 </span>
 
               </div>
             </router-link>
-
-
           </div>
         </div>
-
-
-
       </div>
-
-
-
     </div>
 
     <div class="QnAWrap">
@@ -65,22 +52,18 @@
               </thead>
               <tbody>
               <tr v-for="(row, idx) in QnAList" :key=idx @click.prevent="detail(row.qa_num)">
-                <td style="text-align: center">{{idx + 1}}</td>
+                <td style="text-align: center">{{ idx + 1 }}</td>
                 <td>{{ row.user_id }}</td>
-                <td style="text-align: center">{{row.qa_title}}</td>
-                <td style="text-align: center">{{ row.qa_regDate.substring(0,10) }}</td>
+                <td style="text-align: center">{{ row.qa_title }}</td>
+                <td style="text-align: center">{{ row.qa_regDate.substring(0, 10) }}</td>
               </tr>
               </tbody>
             </table>
-
           </div>
-
-
         </div>
       </div>
     </div>
-
-    </div>
+  </div>
 
 
 </template>
@@ -103,13 +86,11 @@ export default {
         com_num: '',
       },
 
-
       dDay: '',
       sysDate: '',
       endDate: '',
       diffTime: '',
     }
-
 
   },
 
@@ -123,21 +104,12 @@ export default {
         .then((res) => {
           this.mainJobInfo = res.data;
 
-          // this.jpl_num = res.data.jpl_num,
-          //     this.jpl_title =  JSON.stringify(res.data.jpl_title),
-          //     this.jpl_endDate = res.data.jpl_endDate,
-          //     this.jpl_fileName = res.data.jpl_fileName,
-          //     this.jpl_fileUuid = res.data.jpl_fileUuid,
-          //     this.jpl_filePath = res.data.jpl_filePath
-
-
-          for(var i = 0; i < res.data.length; i++) {
-            this.jpl_title =  JSON.stringify(res.data[i].jpl_title),
+          for (var i = 0; i < res.data.length; i++) {
+            this.jpl_title = JSON.stringify(res.data[i].jpl_title),
                 this.jpl_endDate = JSON.stringify(res.data[i].jpl_endDate),
                 this.jpl_fileName = JSON.stringify(res.data[i].jpl_fileName),
                 this.jpl_fileUuid = JSON.stringify(res.data[i].jpl_fileUuid),
                 this.jpl_filePath = JSON.stringify(res.data[i].jpl_filePath)
-
 
           }
 
@@ -149,7 +121,6 @@ export default {
         .catch((error) => {
           console.log(error)
         })
-    // this.getDate();
 
   },
 
@@ -190,28 +161,11 @@ export default {
       this.$axios.post('/jobfair/getMainJobInfo')
           .then((res) => {
             this.mainJobInfo = res.data;
-            console.log('데이터' + res.data)
-
           })
           .catch((error) => {
             console.log(error)
           })
     },
-    // getDate() {
-    //   let sysDate = new Date();
-    //   let endDate = new Date(this.jpl_endDate);
-    //
-    //   let diffTime = Math.trunc(((endDate - sysDate) / (1000) * 60 * 60 * 24));
-    //
-    //   if(diffTime > 0) this.dDay = 'D-' + diffTime;
-    //   else if(diffTime === 0) this.dDay = 'D-Day';
-    //   else if(diffTime < 0) this.dDay = '모집종료';
-    //
-    //   console.log(endDate.getMonth())
-    //   this.endDate = (endDate.getMonth() + 1) + '월' + endDate.getDate() + '일 마감'
-    //
-    // }
-
 
   }
 
@@ -222,16 +176,22 @@ export default {
 
 
 html, body {
-  width:100%;
-  height:100%;}
+  width: 100%;
+  height: 100%;
+}
 
-.left{float: left;}
-.right {float:right;}
+.left {
+  float: left;
+}
 
-h3{
+.right {
+  float: right;
+}
+
+h3 {
   font-weight: bold;
   font-size: 20px;
-  padding:20px;
+  padding: 20px;
 }
 
 .wrapBox {
@@ -239,47 +199,51 @@ h3{
 }
 
 .empBoxWrap {
-  max-width:1560px;
-  margin:0 auto;
+  max-width: 1560px;
+  margin: 0 auto;
   height: 100%;
 }
 
 /*hot 채용정보*/
 .hotBoxWrap {
-            border:1px solid #dedede;
-            border-radius: 20px;
-            width:23%;
-            color:black;
-            text-decoration: none;
-            padding:20px;
-            margin-left: 1%;
-            margin-bottom: 1%;
+  border: 1px solid #dedede;
+  border-radius: 20px;
+  width: 23%;
+  color: black;
+  text-decoration: none;
+  padding: 20px;
+  margin-left: 1%;
+  margin-bottom: 1%;
 }
+
 .hotBoxWrap:hover {
-            border:1px solid #0064ff;
+  border: 1px solid #0064ff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 
 }
 
 .hotBoxWrap img {
-            width:100%;
-            padding:40px;
+  width: 100%;
+  padding: 40px;
 }
 
-.hotTitle {font-size: 18px;
-           font-weight: bold;
+.hotTitle {
+  font-size: 18px;
+  font-weight: bold;
 
 }
 
-.hotText {border-top:1px solid #dedede;
-          padding-top:10px;
+.hotText {
+  border-top: 1px solid #dedede;
+  padding-top: 10px;
 }
 
-.hotDday {font-weight: bold;
-          padding:5px 15px;
-          color:rgb(229, 75, 75);
-          border:1px solid rgb(229, 75, 75);
-          border-radius:20px;
+.hotDday {
+  font-weight: bold;
+  padding: 5px 15px;
+  color: rgb(229, 75, 75);
+  border: 1px solid rgb(229, 75, 75);
+  border-radius: 20px;
 }
 
 .wrapBox2 {
@@ -287,19 +251,6 @@ h3{
   justify-content: center;
   height: 500px;
 }
-
-/*큐앤에이*/
-
-/*.qnaBox {*/
-/*  font-family: 'MICEGothic Bold';*/
-/*  display: flex;*/
-/*  text-align: left;*/
-/*  width: 80%;*/
-/*  margin: 0 auto;*/
-/*  margin-top: 300px;*/
-/*  height: 60px;*/
-
-/*}*/
 
 .QnAWrap {
   display: flex;
@@ -312,7 +263,7 @@ h3{
 .qnaBox h3 {
   font-weight: bold;
   font-size: 23px;
-  padding:20px;
+  padding: 20px;
   position: relative;
   right: 130px;
   color: #202632;
@@ -333,9 +284,13 @@ h3{
   padding: 8px;
 }
 
-#qnaTable tr:nth-child(even){background-color: #f2f2f2;}
+#qnaTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-#qnaTable tr:hover {background-color: #ddd;}
+#qnaTable tr:hover {
+  background-color: #ddd;
+}
 
 #qnaTable th {
   padding-top: 12px;

@@ -1,11 +1,11 @@
 <template>
   <div class="form-check">
     <input
-      :id="id"
-      class="form-check-input"
-      type="checkbox"
-      :name="name"
-      :checked="checked"
+        :id="id"
+        class="form-check-input"
+        type="checkbox"
+        :name="name"
+        :checked="checked"
     />
     <label :for="id" class="custom-control-label" :class="$attrs.class">
       <slot />

@@ -124,9 +124,6 @@ export default {
           this.com_num
       )
           .then((res) => {
-            //  console.log(11111111);
-            // console.log(res.data)
-            //  console.log(222222222);
 
             this.list = res.data.list;
             this.pages = res.data.pageVO;
@@ -173,7 +170,6 @@ export default {
     ClickPage() {
       var clicked = event.target.innerHTML;
       this.page = clicked
-      console.log(this.page)
     },
   }
 }

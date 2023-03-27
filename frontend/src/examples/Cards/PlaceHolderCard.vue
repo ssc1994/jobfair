@@ -1,17 +1,17 @@
 <template>
   <div class="border card h-100">
     <div
-      class="text-center card-body d-flex flex-column justify-content-center"
+        class="text-center card-body d-flex flex-column justify-content-center"
     >
       <a href="javascript:;">
         <i
-          class="mb-1 text-sm text-secondary"
-          :class="`fa fa-${icon}`"
-          aria-hidden="true"
+            class="mb-1 text-sm text-secondary"
+            :class="`fa fa-${icon}`"
+            aria-hidden="true"
         ></i>
         <component :is="title.variant" class="text-secondary">{{
-          title.text
-        }}</component>
+            title.text
+          }}</component>
       </a>
     </div>
   </div>

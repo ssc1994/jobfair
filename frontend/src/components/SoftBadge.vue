@@ -1,7 +1,7 @@
 <template>
   <span
-    class="badge"
-    :class="getClasses(variant, color, size, circle, floating)"
+      class="badge"
+      :class="getClasses(variant, color, size, circle, floating)"
   >
     <slot />
   </span>

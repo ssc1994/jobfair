@@ -108,15 +108,11 @@ export default {
           "&page=" +
           this.page)
           .then((res) => {
-            //  console.log(11111111);
-            // console.log(res.data)
-            //  console.log(222222222);
 
             this.list = res.data.list;
             this.pages = res.data.pageVO;
             this.pageList = this.pages.pageList;
             this.QnAList = res.data.list;
-            // console.log(this.list)
 
             //페이지 이동에 필요한 데이터 담기
             this.page = this.pages.page;

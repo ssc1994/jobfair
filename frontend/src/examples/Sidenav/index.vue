@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     clickHome(){
-      // console.log(this.mg_auth)
       if(this.mg_auth === '1'){
         this.$router.push('/uMainView')
       }else if(this.mg_auth === '2' || this.mg_auth === '3'){

@@ -3,6 +3,9 @@
     <div class="userInfoBox">
       <div class="userInfoFirstLine">
         <div class="userInfo_wrap">
+          <!--          이미지 얼굴사진으로 변경해야함-->
+          <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left" style="z-index: 1; position: relative">
+
           <div>
             <!--            session에서 가져온 아이디 값 출력 -->
             <h6 style="font-size: 18px; color: #0064ff; font-weight:800">{{ userInfo.user_id }}님</h6>
@@ -193,6 +196,7 @@
 
   <hr>
 
+
     <div>
       <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
     </div>
@@ -205,6 +209,7 @@
     <div>
       <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
     </div>
+
 
 
 </template>
@@ -470,7 +475,6 @@ export default {
         if (this.modi_type === 'info') { //회원 정보 수정 요청일 때
           this.$axios.post('/jobfair/userInfoModi/modifyInfo', this.userInfo)
               .then(response => {
-                console.log(response)
 
                 //수정이 완료된 후 모달창 닫기2
                 alert('회원정보가 수정되었습니다')
@@ -485,7 +489,6 @@ export default {
 
           this.$axios.post('/jobfair/userInfoModi/modifyPw', this.userInfo)
               .then(response => {
-                console.log(response)
 
                 var msg = response.data
 
@@ -526,7 +529,6 @@ export default {
         e.target.focus();
         e.target.value = e.target.value.replace(' ', ''); // 공백제거
         return false;
-        console.log(this.gender)
       }
     },
     //회원정보 타입 선택시 기본값 변경

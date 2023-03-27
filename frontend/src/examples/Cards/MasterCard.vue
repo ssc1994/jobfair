@@ -1,8 +1,8 @@
 <template>
   <div class="card bg-transparent shadow-xl">
     <div
-      class="overflow-hidden position-relative border-radius-xl"
-      :style="{
+        class="overflow-hidden position-relative border-radius-xl"
+        :style="{
         backgroundImage:
           'url(' + require('@/assets/img/curved-images/curved14.jpg') + ')',
       }"
@@ -29,8 +29,8 @@
             </div>
           </div>
           <div
-            class="w-20 d-flex align-items-end justify-content-end"
-            :class="$store.state.isRTL ? 'me-auto' : 'ms-auto'"
+              class="w-20 d-flex align-items-end justify-content-end"
+              :class="$store.state.isRTL ? 'me-auto' : 'ms-auto'"
           >
             <soft-avatar class="w-60 mt-2" :img="img1" alt="logo" />
           </div>

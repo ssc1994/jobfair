@@ -10,18 +10,19 @@
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">작성자</span>
             <input type="text" class="form-control" aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="uQnADetail.user_id" >
+                   aria-describedby="basic-addon1" v-model="uQnADetail.user_id">
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">문의제목</span>
             <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                   aria-describedby="basic-addon1" v-model="uQnADetail.qa_title" >
+                   aria-describedby="basic-addon1" v-model="uQnADetail.qa_title">
           </div>
 
           <div class="input-group">
             <span class="input-group-text">문의내용</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" v-model="uQnADetail.qa_content" ></textarea>
+            <textarea class="form-control contentBox" aria-label="With textarea"
+                      v-model="uQnADetail.qa_content"></textarea>
           </div>
 
 
@@ -43,7 +44,8 @@
 
           <div class="input-group">
             <span class="input-group-text">답변</span>
-            <textarea class="form-control contentBox" aria-label="With textarea" v-model="cQnADetail.qa_content"></textarea>
+            <textarea class="form-control contentBox" aria-label="With textarea"
+                      v-model="cQnADetail.qa_content"></textarea>
           </div>
 
 
@@ -65,7 +67,8 @@
 import SoftInput from "@/components/SoftInput.vue";
 import SoftButton from "@/components/SoftButton.vue";
 
-export default {components: {SoftInput, SoftButton},
+export default {
+  components: {SoftInput, SoftButton},
 
   data() {
     return {
@@ -88,100 +91,75 @@ export default {components: {SoftInput, SoftButton},
   },
   beforeCreate() {
 
-  // this.cQnADetail.user_id=JSON.parse(sessionStorage.getItem('sessionId'),
-
-
-
-    this.$axios.get('/jobfair/getQnADetail/' , {params:{qa_num: this.$route.params.qa_num}} )
+    this.$axios.get('/jobfair/getQnADetail/', {params: {qa_num: this.$route.params.qa_num}})
         .then((res) => {
-          console.log('유저시작')
+              console.log('유저시작')
               this.uQnADetail = res.data
               console.log(res.data);
-          console.log(this.cQnADetail.user_id)
-          console.log(this.cQnADetail.com_num)
-          console.log(this.cQnADetail.qa_reply)
-
-          // this.$axios.get('/jobfair/cQnAInfo/' , {params:{user_id: JSON.parse(sessionStorage.getItem('sessionId'))}} )
-          //     .then((res) => {
-          //           console.log('기업시작')
-          //
-          // //           this.cQnADetail = res.data
-          //     this.cQnADetail.qa_type = 'a'
-          // this.cQnADetail.user_id = JSON.parse(sessionStorage.getItem('sessionId'))
-          // this.cQnADetail.com_num = JSON.parse(sessionStorage.getItem('sessionComp'))
-          // this.cQnADetail.qa_reply = this.$route.params.qa_num
-          //   //
-            //         console.log(res.data);
-            //       }
-            //   )
-            //   .catch((error) => this.uQnADetail = error.date)
-            //   .finally(()=>{
-            //     console.log('기업완료')
-            //   })
-            //
+              console.log(this.cQnADetail.user_id)
+              console.log(this.cQnADetail.com_num)
+              console.log(this.cQnADetail.qa_reply)
             }
         )
         .catch((error) => console.log(error))
-        .finally(()=>{
+        .finally(() => {
           console.log('유저완료')
         })
 
   },
-    methods: {
-      //기업이 답변 등록하고, 데이터 저장해서 보내기 위한 메서드
-      cqnaRegist() {
-        let myData = {
-          user_id: this.cQnADetail.user_id,
-          com_num: JSON.parse(sessionStorage.getItem('sessionComp')),
-          qa_content: this.cQnADetail.qa_content,
-          qa_type: this.cQnADetail.qa_type,
-          qa_reply: this.$route.params.qa_num
-        }
-        console.log(myData)
+  methods: {
+    //기업이 답변 등록하고, 데이터 저장해서 보내기 위한 메서드
+    cqnaRegist() {
+      let myData = {
+        user_id: this.cQnADetail.user_id,
+        com_num: JSON.parse(sessionStorage.getItem('sessionComp')),
+        qa_content: this.cQnADetail.qa_content,
+        qa_type: this.cQnADetail.qa_type,
+        qa_reply: this.$route.params.qa_num
+      }
 
-        this.$axios
-            .post('/jobfair/cqnaRegist', myData)
-            .then((res) => {
-              if(res.status === 200) {
-                console.log(res.data)
-                this.$router.push({
-                  name: 'cQnADetailView',
-                  params: {
-                    qa_num: this.$route.params.qa_num
-                  }
-                })
-                this.$router.push({
-                  name: 'cQnAView',
-                  params: {
-                    com_num: JSON.parse(sessionStorage.getItem('sessionComp'))
-                  }
-                })
-              }
-            })
-            .catch((error) => {
-              console.log(error)
-              alert('에러: ' + error )
+      this.$axios
+          .post('/jobfair/cqnaRegist', myData)
+          .then((res) => {
+            if (res.status === 200) {
+              console.log(res.data)
+              this.$router.push({
+                name: 'cQnADetailView',
+                params: {
+                  qa_num: this.$route.params.qa_num
+                }
+              })
+              this.$router.push({
+                name: 'cQnAView',
+                params: {
+                  com_num: JSON.parse(sessionStorage.getItem('sessionComp'))
+                }
+              })
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            alert('에러: ' + error)
 
-            })
-            .finally(() => {
-              console.log('기업답변등록')
-            })
-      },
-      // getComQnADetail() {
-      //   this.$axios.get('/jobfair/cQnADetailView')
-      //       .then((res)=> {
-      //         this.cQnADetail = res.data
-      //       })
-      //       .catch((error) => {
-      //         console.log(error)
-      //       })
-      // },
-      goBackToList() {
-        this.$router.push("/cQnAView")
-      },
-
-
+          })
+          .finally(() => {
+            console.log('기업답변등록')
+          })
     },
+    // getComQnADetail() {
+    //   this.$axios.get('/jobfair/cQnADetailView')
+    //       .then((res)=> {
+    //         this.cQnADetail = res.data
+    //       })
+    //       .catch((error) => {
+    //         console.log(error)
+    //       })
+    // },
+    goBackToList() {
+      this.$router.push("/cQnAView")
+    },
+
+  },
 
 
 };

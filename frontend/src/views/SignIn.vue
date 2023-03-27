@@ -142,17 +142,6 @@ export default {
             this.$store.commit('setCom_num', sessionStorage.getItem('sessionComp'));
 
             if(res.data.mg_auth == '1'){
-              //sesionStorage에서 값 가져오는법
-              // let sessionId = sessionStorage.getItem('sessionId')
-              // let sessionAuth = sessionStorage.getItem('sessionAuth')
-              // if(sessionId && typeof sessionId === 'string' && sessionId !== '') {
-              //   let SessionJsonId = JSON.parse(sessionId)
-              //   console.log(SessionJsonId)
-              // }
-              // if(sessionAuth && typeof sessionAuth === 'string' && sessionAuth !== '') {
-              //   let SessionJsonAuth = JSON.parse(sessionAuth)
-              //   console.log(SessionJsonAuth)
-              // }
 
               // //페이지 이동전에 세션에 값을 넣어야함
               this.$router.push("/uMainView")

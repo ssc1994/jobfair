@@ -30,32 +30,6 @@
           </table>
 
         </div>
-        <!--                <a v-for="(paging, index) in pageList" :key="index" @click="onPageChange(paging - 1)" :class="paging - 1 === page ? 'page' : ''">{{paging}}</a>-->
-
-        <!--        <div v-for="(paging, index) in pageList" :key="index">-->
-        <!--          <router-link to="{ path: '/uQnAView'+index }">{{ paging }}</router-link>-->
-        <!--        </div>-->
-
-        <!--        <a v-for="n in pageList" :key="n" :class="[n === ]"></a>-->
-
-        <!--        <a v-for="(paging, index) in pageList" :key="index">{{ paging }}</a>-->
-
-        <!--        <a v-for="(paging, index) in pageList" :key="index" @click="uQnAListAxios">{{paging}}</a>-->
-
-
-
-        <!--        <a @click="goNextPage(page + 1)">next</a>-->
-        <!--        <a @click="goLastPage(page + 1)">&gt;</a>      -->
-
-<!--        <ul class="pagination">-->
-<!--          <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)">First</a></li>-->
-<!--          <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)">Previous</a></li>-->
-<!--          <template v-for="(item, index) in pageList" :key="index">-->
-<!--            <li class="page-item" :class="{'active' : item == currentPage}"><span class="page-link" href="#" @click.prevent="ClickPage()" id="index">{{item}}</span></li>-->
-<!--          </template>-->
-<!--          <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)">Next</a></li>-->
-<!--          <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)">Last</a></li>-->
-<!--        </ul>-->
         <div class="paginationWrap">
           <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
@@ -76,7 +50,6 @@
 </template>
 
 <script>
-import {ref} from "vue";
 
 export default {
 
@@ -137,12 +110,6 @@ export default {
     },
 
     async uQnAListAxios() {
-
-      // let {data} = await this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
-      //     this.amount +
-      //     "&page=" +
-      //     this.page);
-      // this.list = res.data.list;
 
       let res =  await this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
           this.amount +
@@ -229,17 +196,14 @@ body, html {
 }
 
 
-/*.table thead {*/
-/*  background-color: #202632;*/
-/*  color: white;*/
-/*}*/
-
-/*.table tbody tr:last-child td {*/
-/*  border-width: 1px;*/
-/*}*/
+.paginationWrap ul {
+  margin-top: 50px;
+  padding-left: 470px;
+}
 
 
 /* 페이지네이션 부분 */
+
 
 .paginationWrap .page-link {
   background-color: white;

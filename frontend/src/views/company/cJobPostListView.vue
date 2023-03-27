@@ -212,12 +212,14 @@
       </div>
 
 
+
       <b style="padding:10px;color:#0064ff;border:1px solid #0064ff;border-radius: 20px;">분류기준</b>
       <select class="col-2 selSort" v-model="selSort" @change="sortEvent" style="padding:10px;">
         <option>최신등록순</option>
         <option>마감임박순</option>
         <option>연봉순</option>
       </select>
+
 
       <div class="row empListBox">
 
@@ -411,9 +413,6 @@ export default {
     //     })
   },
   methods: {
-    test () {
-      console.log(this.selectedTag[0].tagValue)
-    },
 
     //채용공고 가져오기
     async getJobPostList () {

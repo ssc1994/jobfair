@@ -130,11 +130,6 @@ export default {components: {SoftInput, SoftButton},
         qa_content: '',
         qa_type: 'a',
       },
-      // uQnAModiList: {
-      //   user_id: '',
-      //   qa_title: '',
-      //   qa_content: ''
-      // }
     };
   },
 
