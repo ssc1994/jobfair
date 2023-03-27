@@ -295,7 +295,6 @@
       </div>
     </div>
   </div>
-  <app-footer/>
 </template>
 
 

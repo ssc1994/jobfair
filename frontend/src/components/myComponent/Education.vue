@@ -77,7 +77,6 @@ export default {
       let delData = {
         removeNum: this.eduCount
       };
-      console.log("보내는 값/: " + this.eduCount)
       this.$emit("clickBtn", delData);
       this.$forceUpdate();
       }

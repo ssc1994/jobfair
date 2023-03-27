@@ -2,13 +2,14 @@
   <li>
     <div class="empBoxConWrap col-6">
 
+
       <div class="empBoxCon " @click.prevent="detail(jplInfo.jpl_num)">
         <router-link to="" class="left empBoxCompany">
           <p>{{ jplInfo.jpl_companyName }} </p>
           <img :src="this.imgUrl" >
         </router-link>
         <div class="left empBoxText">
-          <router-link to="">
+          <router-link :to="{name:'uJobPostDetailView', params:{jpl_num : jplInfo.jpl_num },}">
             <p class="empTitle"> {{ jplInfo.jpl_title }} </p>
 
             <p class="empBoxTag"> {{ jplInfo.jpl_locationSi + ' ' + jplInfo.jpl_locationGu }} </p>

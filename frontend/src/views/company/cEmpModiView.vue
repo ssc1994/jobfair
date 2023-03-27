@@ -465,7 +465,7 @@ export default {
               "Content-Type": `multipart/form-data`
             }
           }).then((res) => {
-        console.log(res)
+        this.$router.push('cMainView')
       }).catch(err => {
         console.log(err)
       })

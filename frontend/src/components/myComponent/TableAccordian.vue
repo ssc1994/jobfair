@@ -207,7 +207,6 @@ export default {
       this.page = clicked
     },
     async getApplicantList () {
-      console.log(this.res_num)
       let applicantData = {
         res_num: this.res_num,
         page: this.page,
@@ -216,7 +215,6 @@ export default {
 
       let res = await this.$axios.post("/jobfair/getApplicantList",
           applicantData) .catch( err => console.log(err))
-      console.log(res)
       this.pageVO = res.data.pageVO;
       this.applicantList= res.data.applicantList;
       this.hasApplicant = this.applicantList.length > 0 ? true : false;
