@@ -100,11 +100,11 @@ export default {
     };
   },
 
-  watch: {
-    page: function () {
-      this.uQnAListAxios();
-    },
-  },
+  // watch: {
+  //   page: function () {
+  //     this.uQnAListAxios();
+  //   },
+  // },
 
   created() {
     this.getQnAList();

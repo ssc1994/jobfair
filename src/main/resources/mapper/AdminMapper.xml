@@ -40,6 +40,11 @@
     </select>
 
     <!--큐앤에이-->
+    <insert id="aqnaRegist" parameterType="QnAVO">
+        insert into QnA(user_id, com_num, qa_content, qa_type, qa_reply)
+        values (#{user_id}, #{com_num}, #{qa_content}, #{qa_type}, #{qa_reply})
+    </insert>
+
     <!--큐앤에이 리스트-->
     <select id="agetQnAList" resultType="QnAVO">
         select *
@@ -48,9 +53,17 @@
         order by qa_num desc limit #{cri.pageStart}, #{cri.amount}
     </select>
 
+    <!-- 큐앤에이 어드민 상세 -->
+    <select id="getAdmQnADetail" resultType="QnAVO">
+        select c.* from QnA u
+                            inner join QnA c
+                                       on u.qa_num = c.qa_reply
+        where u.qa_num=#{qa_num}
+    </select>
+
     <!--페이지네이션-->
     <select id="aQnAGetTotal" resultType="int">
-        select count(*) from qna where qa_type like "%q%"
+        select count(*) from QnA where qa_type like "%q%"
     </select>
 
 

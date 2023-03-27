@@ -30,8 +30,17 @@ public interface AdminService {
 
     //큐앤에이
 
+    //큐앤에이 답변 등록
+    public void aqnaRegist(QnAVO vo);
+
     //큐앤에이 목록 가져오기
     public ArrayList<QnAVO> agetQnAList(Criteria cri);
+
+    //큐앤에이 디테일 정보 가져오기
+    public QnAVO getQnADetail(int qa_num);
+
+    //어드민 큐앤에이 디테일 정보 가져오기
+    public QnAVO getAdmQnADetail(int qa_num);
 
     //큐앤에이 페이지네이션
     public int aQnAGetTotal(Criteria cri);
