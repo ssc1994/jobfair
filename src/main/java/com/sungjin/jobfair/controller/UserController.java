@@ -279,11 +279,14 @@ public class UserController {
 
         //위에서 지정해준 조건에 따른 참여 기업 목록의 total 값 가져오기
         int total = userService.getJobPostTotal(cri);
-//        System.out.println(total);
+
+        //해당 유저가 지원한 공고 jpl_num 가져오기
+        String user_id = cri.getUser_id();
+        ArrayList<EmpApplyVO> appliedList = userService.appliedList(user_id);
+
         //위에서 지정해준 조건에 따른 참여 기업 목록 (1페이지당 몇개) 가져오기
         ArrayList<EmpListVO> list = userService.getJobPostList(cri);
-//        System.out.println(list);
-//        System.out.println(list.size());
+
         List<String> urlList = new ArrayList<>();
         for(EmpListVO vo : list){
             String path = vo.getJpl_fileUuid() + "_" + vo.getJpl_fileName();
@@ -303,6 +306,7 @@ public class UserController {
         Map map = new HashMap();
         map.put("urlList", urlList);
         map.put("empPageGate", empPageGate);
+        map.put("appliedList", appliedList);
 
         return map;
     }
@@ -314,41 +318,6 @@ public class UserController {
         System.out.println(total);
         return total;
     }
-
-    //채용공고 검색
-//    @PostMapping(value="/getJobPostSrc",
-//            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-//    public ArrayList<EmpListVO> getJobPostSrc(@RequestBody EmpSearchVO vo,
-//                                              String [] jpl_locationSi,
-//                                              String [] jpl_locationGu,
-//                                              String [] jpl_duty,
-//                                              String inputSearch,
-//                                              String[] jpl_workHistory,
-//                                              String[] jpl_education,
-//                                              String[] jpl_salary,
-//                                              String[] jpl_certificate,
-//                                              String[] jpl_conditions,
-//                                              String[] jpl_workForm,
-//                                              String selSortInt
-//    ) {
-//
-//        jpl_locationSi = vo.getJpl_duty();
-//        jpl_locationGu = vo.getJpl_locationGu();
-//        jpl_duty = vo.getJpl_workHistory();
-//        jpl_workHistory = vo.getJpl_workHistory();
-//        jpl_education = vo.getJpl_education();
-//        jpl_salary = vo.getJpl_salary();
-//        jpl_salary = vo.getJpl_salary();
-//        jpl_certificate = vo.getJpl_certificate();
-//        jpl_conditions = vo.getJpl_conditions();
-//        jpl_workForm = vo.getJpl_workForm();
-//        inputSearch = vo.getInputSearch();
-//        selSortInt = vo.getSelSortInt();
-//
-//        ArrayList<EmpListVO> list = userService.getJobPostSrc(vo);
-//
-//        return list;
-//    }
 
         @RequestMapping(value="/getJobPostSrc",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})

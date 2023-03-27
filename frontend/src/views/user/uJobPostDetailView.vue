@@ -86,11 +86,17 @@
           </div>
 
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                  v-bind:disabled="AppliedResult == 1">
+                  v-bind:disabled="AppliedResult == 1"
+                  v-if="this.mg_auth < 3">
             {{ applyBtnText }}
           </button>
 
-          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick">
+
+          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="this.mg_auth == 3">
+           지원자 보기
+          </button>
+
+          <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" v-if="this.mg_auth < 3">
             Q&A 질문하기
           </button>
 
@@ -114,18 +120,6 @@
                     ref="genderGroup"
                 />
               </div>
-            </ul>
-            <ul>
-              <li>연령</li>
-              <li>
-                <img src="#">
-              </li>
-            </ul>
-            <ul>
-              <li>학력</li>
-              <li>
-                <img src="#">
-              </li>
             </ul>
           </div>
         </div>
@@ -253,6 +247,7 @@ export default {
         com_num: ''
       },
       user_id: JSON.parse(sessionStorage.getItem('sessionId')),
+      mg_auth : JSON.parse(sessionStorage.getItem('sessionAuth')),
       res_num: '1',
       //지원한 이력서
       resNum: 0,

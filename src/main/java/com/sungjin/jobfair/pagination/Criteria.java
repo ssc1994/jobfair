@@ -11,11 +11,11 @@ public class Criteria {
 
     //정렬키워드 (채용공고)
     String selSortInt; //채용공고 정렬옵션 분기할 변수
+    String user_id; //채용공고 지원했는지 확인하는 user_id
     public Criteria() { //초기값 지정 -> 롬복 사용시 초기값 지정이 불가능해서 직접 지정해줌
         this.page = 1;
         this.amount = 10;
     }
-
     public Criteria(int page, int amount) {
         super();
         this.page = page;
