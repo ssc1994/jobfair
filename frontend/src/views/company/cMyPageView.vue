@@ -1,8 +1,8 @@
 <template>
 
   <div class="container" style="max-width:1560px;">
-    <!--이력서 관리-->
-    <div class="resumeBoxCon">
+    <!-- 기업이 승인된 기업일 경우에만 채용공고 등록이 가능하므로 auth조건 줌 , 박희진-->
+    <div class="resumeBoxCon" v-if="this.auth === '3'">
       <div>
         <h3 class="title">우리 기업 채용공고</h3>
         <button class="arrDown"><img src="@/assets/icon_arr_down.png"></button>
@@ -37,11 +37,8 @@
           </div>
         </div>
       </div>
+      <hr>
     </div>
-
-
-    <hr>
-
 
     <div class="aplBoxCon">
       <div>
@@ -300,8 +297,8 @@ export default {
       comBizReg_errorMsg: '', //사업자등록번호 입력 오류 메시지
       comEsDate_errorMsg: '', //회사 설립일 지정 오류 메시지
       //유효성 검사 통과여부 변수
-      check_result: 'success'
-
+      check_result: 'success',
+      auth: JSON.parse(sessionStorage.getItem('sessionAuth'))
     }
 
   },

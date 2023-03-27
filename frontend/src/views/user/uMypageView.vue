@@ -47,7 +47,7 @@
           <p>열람</p>
         </div>
         <div id="X" @click="getApplyList" v-bind:class="{on : Thr}">
-          <p class="aplBtnNum">{{ this.applyCnt.X }}</p>
+          <p class="aplBtnNum" style="color: red">{{ this.applyCnt.X }}</p>
           <p>미열람</p>
         </div>
       </div>

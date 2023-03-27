@@ -35,11 +35,11 @@
         <div class="paginationWrap">
           <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)">First</a></li>
-            <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
             <template v-for="(item, index) in pageList" :key="index">
               <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link" href="#" @click.prevent="ClickPage" id="index">{{item}}</span></li>
             </template>
-            <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)">Next</a></li>
+            <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
             <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)">Last</a></li>
           </ul>
         </div>
@@ -195,18 +195,46 @@ body, html {
   border: none;
 }
 
-.paginationWrap ul {
-  margin-top: 50px;
-  padding-left: 470px;
-}
+/* 페이지네이션 부분 */
 
 .paginationWrap .page-link {
-  background-color: #0064ff;
+  background-color: white;
 }
 
 .paginationWrap li.active span {
   background-color: #202632;
   border: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.page-link {
+  color: #333;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0064ff;
+}
+
+.active .page-link {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
 #qnaTable {
