@@ -9,7 +9,7 @@
           <div class="aplBtnBoxWrap">
             <h3>채용 현황</h3>
             <div class="aplBtnBox">
-              <div @click="getApplyList"> <!---->
+              <div @click="getApplyList">
                 <p class="aplBtnNum">{{ingPosting}}</p>
                 <p>진행중 공고</p>
               </div>
@@ -27,7 +27,8 @@
               </div>
             </div>
           </div>
-          <div class="btnBox">
+<!--          승인된 기업만 큐엔에이와 공고를 등록할 수 있게 버튼생성하기, 박희진-->
+          <div class="btnBox" v-if="this.auth === '3'">
             <button type="button" class="comBtn1 " v-on:click="goQnaView()">  QnA 목록</button>
             <button type="button" class="comBtn2" v-on:click="goRegView()"> 공고 등록하기 </button>
           </div>
@@ -44,7 +45,7 @@
             </div>
             <div>
               <ul id="listHolder" class="lists" v-for="(jpl, index) in jplArr" :key="jpl.jpl_num">
-                <RecentJobPostingComp :jplInfo="jpl" :imgUrl="this.urlArr[index]" :totalAppArr="totalAppArr[index]"/>
+                <RecentJobPostingComp :jplInfo="jpl" :imgUrl="this.urlArr[index]" :totalAppArr="totalAppArr[index]" />
               </ul>
             </div>
           </div>
@@ -94,7 +95,8 @@ export default {
       jplArr: [],
       appArr: [],
       urlArr: [],
-      totalAppArr: []
+      totalAppArr: [],
+      auth: JSON.parse(sessionStorage.getItem('sessionAuth'))
     }
   },
   methods: {
@@ -132,6 +134,7 @@ export default {
   created() {
     this.mainFunction()
   }
+
 }
 </script>
 
@@ -193,6 +196,8 @@ h3{font-weight: bold;
   background-color: #efefef;
   float: left;
   width:100%;
+  left: 15px;
+  position: relative;
 }
 
 .aplBtnBox div {
@@ -203,7 +208,6 @@ h3{font-weight: bold;
   border-left:1px solid #dedede;
   background-color: transparent;
   width:25%;
-
   padding:10px;
 }
 

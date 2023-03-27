@@ -16,6 +16,7 @@ public class EmpApplyVO {
     private String com_name;
     private String jpl_title;
     private String jpl_workPosition;
-    private String al_state;                 //열람, 미열람
+    private String al_state;  //열람, 미열람
+    private String jpl_num;
 
 }

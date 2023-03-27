@@ -73,17 +73,17 @@ export default {
   data() {
     return {
       uQnADetail: {
-        user_id: 'user123',
+        user_id: '',
         qa_title: '',
         qa_content: '',
         com_num: '',
         qa_type: ''
       },
       cQnADetail: {
-        user_id: 'testCom5',
-        com_num: '2',
+        user_id: '',
+        com_num: '',
         qa_content: '',
-        qa_type: 'a'
+        qa_type: ''
       },
     };
   },

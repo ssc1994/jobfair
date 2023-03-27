@@ -242,7 +242,7 @@
                 <div class="input-group mb-3">
 
                   <input type="file" style="display: none" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert" accept="image/*">
-                  <input type="button" value="채용공고 이미지선택" @click="clickFile">
+                  <input type="button" class="btn choiceBtn" value="채용공고 이미지선택" @click="clickFile">
 
                 </div>
 
@@ -586,6 +586,18 @@ textarea.form-control {
   height: 300px;
   border: 1px solid #A4A4A4;
   /*position: absolute;*/
+}
+
+/* 버튼 색깔 통일 */
+.choiceBtn {
+  color: white;
+  background-color: #0064ff;
+  width: 150px;
+  height: 30px;
+}
+.btn-primary {
+  width: 100px;
+  height: 30px;
 }
 
 </style>

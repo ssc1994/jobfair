@@ -37,6 +37,8 @@ public interface UserService {
     //################## 채용공고(jobPost) 관련 Service #######################
         //채용공고 목록 가져오기
         public ArrayList<EmpListVO> getJobPostList(Criteria cri);
+        //해당 유저가 지원한 공고 jpl_num 가져오기
+        public ArrayList<EmpApplyVO> appliedList(String user_id);
         //채용공고 목록 갯수 (#### 페이지 네이션 ####)
         public int getJobPostTotal(Criteria cri);
 

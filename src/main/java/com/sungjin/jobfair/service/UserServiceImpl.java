@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVO login(UserVO vo) {
         //DB에서 암호화 된 비밀번호 가져와서 입력된 비밀번호랑 비교
+
         String rawPw = vo.getUser_pw(); //입력된 pw
         String encodePw = userMapper.getEncodePw(vo); //db에 저장된 암호화된 pw
 
@@ -66,12 +67,11 @@ public class UserServiceImpl implements UserService {
 
     //################## 채용공고(jobPost) 관련 Service #######################
     @Override
-//    public ArrayList<EmpListVO> getJobPostList(String selSortInt) {
-//        return userMapper.getJobPostList(selSortInt);
-//    }
     public ArrayList<EmpListVO> getJobPostList(Criteria cri){
         return userMapper.getJobPostList(cri);
     }
+    //해당 유저가 지원한 공고 jpl_num 가져오기
+    public ArrayList<EmpApplyVO> appliedList(String user_id){ return userMapper.appliedList(user_id); }
     //채용공고 목록 갯수 (#### 페이지 네이션 ####)
     @Override
     public int getJobPostTotal(Criteria cri){ return userMapper.getJobPostTotal(cri); }

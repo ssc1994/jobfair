@@ -1,7 +1,6 @@
 <template>
-
+  <img src="@/assets/mainImg.png" style="width: 1500px">
   <div class="adminBg" >
-      <img src="@/assets/mainImg.png" style="width: 1500px">
     <div class="container empBoxWrap">
       <h3>참여 기업 상태</h3>
       <div class="row">
@@ -11,7 +10,7 @@
             </div>
             <div class="companyNum_text">
               <span>참여 기업 수</span>
-              <p>{{number}}</p>
+              <p>{{jobPostList.length}}</p>
             </div>
           </router-link>
         </div>
@@ -41,7 +40,7 @@
     </div>
   </div>
   <div class="userInfoBox">
-    <h3>채용공고 목록</h3>
+    <h3>참여기업 목록</h3>
     <router-link to="/aComListView" style="float: right">더보기</router-link>
     <div class="userInfoFirstLine">
       <div>
@@ -109,10 +108,10 @@ export default {
             this.com_name = res.data.com_num
             this.jobPostList = res.data
             var set = new Set()
-            for(let i=0; i<res.data.length; i++){
+            for(let i = 0; i < res.data.length; i++) {
               set.add(res.data[i].com_num)
             }
-            this.number=set.size
+            this.number = set.size
           }).catch(error => {
         console.log(error)
       })

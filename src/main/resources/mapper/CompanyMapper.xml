@@ -136,6 +136,14 @@ where jpl_num = #{jpl_num}
         where u.qa_num=#{qa_num}
     </select>
 
+    <!-- 큐앤에이 기업 상세 -->
+    <select id="getComQnADetail" resultType="QnAVO">
+        select c.* from QnA u
+                            inner join QnA c
+                                       on u.qa_num = c.qa_reply
+        where u.qa_num=#{qa_num}
+    </select>
+
 
     <!-- ######################### Session 관련 ######################### -->
         <!-- 기업정보 불러오기-->
@@ -189,13 +197,7 @@ where jpl_num = #{jpl_num}
                  where com_num = #{com_num} limit #{cri.pageStart}, #{cri.amount}
     </select>
         
-        <!-- 큐앤에이 기업 상세 -->
-    <select id="getComQnADetail" resultType="QnAVO">
-        select c.* from QnA u
-                            inner join QnA c
-                                       on u.qa_num = c.qa_reply
-        where u.qa_num=#{qa_num}
-    </select>
+
 
     <!--페이지네이션-->
     <select id="cQnAGetTotal" resultType="int">
