@@ -1,150 +1,136 @@
 <template>
   <div>
-    <img src="@/assets/mainImg.png" style="width: 1500px">
-  <div class="comBoxWrap">
-<!--    <section class="comMiddle col-xl-12">-->
-<!--      공고 등록하기 버튼 클릭시 페이지 이동하는 메서드 추가 + 스크립트 -->
-
-
+    <img src="@/assets/mainImg.png" style="width: 1500px; margin-left: 50px;">
+    <div class="comBoxWrap">
+      <!--    <section class="comMiddle col-xl-12">-->
+      <!--      공고 등록하기 버튼 클릭시 페이지 이동하는 메서드 추가 + 스크립트 -->
       <div class="comList">
         <div class="comTopBox">
-
-          <div>
+          <div class="aplBtnBoxWrap">
             <h3>채용 현황</h3>
-          </div>
-          <div>
-            <div class="aplBtnBoxWrap">
-              <div class="aplBtnBox">
-                <div @click="getApplyList"> <!---->
-                  <p class="aplBtnNum">0</p>
-                  <p>진행중 공고</p>
-                </div>
-                <div id="O" @click="getApplyList">
-                  <p class="aplBtnNum">0</p>
-                  <p>지원마감 공고</p>
-                </div>
-                <div id="X" @click="getApplyList">
-                  <p class="aplBtnNum">0</p>
-                  <p>열람 이력서</p>
-                </div>
-                <div id="X" @click="getApplyList">
-                  <p class="aplBtnNum">0</p>
-                  <p>미열람 이력서</p>
-                </div>
+            <div class="aplBtnBox">
+              <div @click="getApplyList"> <!---->
+                <p class="aplBtnNum">{{ingPosting}}</p>
+                <p>진행중 공고</p>
+              </div>
+              <div id="O" @click="getApplyList">
+                <p class="aplBtnNum">{{totalPosting - ingPosting}}</p>
+                <p>지원마감 공고</p>
+              </div>
+              <div id="X" @click="getApplyList">
+                <p class="aplBtnNum">{{seeRes}}</p>
+                <p>열람 이력서</p>
+              </div>
+              <div id="X" @click="getApplyList">
+                <p class="aplBtnNum">{{totalRes - seeRes}}</p>
+                <p>미열람 이력서</p>
               </div>
             </div>
+          </div>
           <div class="btnBox">
-            <button type="button" class="comBtn1 btn btn-primary" v-on:click="goRegView()">  미답변 질문</button>
+            <button type="button" class="comBtn1 " v-on:click="goQnaView()">  QnA 목록</button>
+            <button type="button" class="comBtn2" v-on:click="goRegView()"> 공고 등록하기 </button>
+          </div>
+        </div>
 
-            <button type="button" class="comBtn1 btn btn-primary" v-on:click="goRegView()"> 공고 등록하기 </button>
-          </div>
-          </div>
-          </div>
         <div class="comBottomBox">
           <div class="comRegList">
             <div>
-                <h3>내가 등록한 최신공고</h3>
-                <button class="comAllBtn">
-                  <img src="@/assets/icon_arrow_right.svg"/>
-                  공고 전체보기
-                </button>
+              <h3>내가 등록한 최신공고</h3>
+              <button class="comAllBtn" @click="this.$router.push({path: 'cApplyMngView'})">
+                <img src="@/assets/icon_arrow_right.svg"/>
+                공고 전체보기
+              </button>
             </div>
-            <div class="slider">
-              <input type="radio" name="slide" id="slide1" checked>
-              <input type="radio" name="slide" id="slide2">
-              <input type="radio" name="slide" id="slide3">
-              <ul id="listHolder" class="lists">
-                <li>
-                  <div class="empBoxConWrap col-6">
-
-                    <div class="empBoxCon ">
-                      <router-link to="" class="left empBoxCompany">
-                        <p>(주)  jobpost.com_name </p>
-                        <img src="@/assets/kakao.png" >
-                      </router-link>
-                      <div class="left empBoxText">
-                        <router-link to="">
-                          <p class="empTitle"> jobpost.jpl_title </p>
-
-                          <p class="empBoxTag"> 서울시 어쩌고 저쩌고 </p>
-                        </router-link>
-                        <div style="padding-top:20px;">
-                          <span class="left empBoxDday">D-27</span>
-                          <span class="left empBoxDday">3월 17일 까지</span>
-                          <button type="button" class="btn btn-primary aplBtn right applied">
-                            지원자 <br/>40명 보기
-                          </button>
-                          <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">
-                            수정하기
-                          </button>
-                        </div>
-
-                      </div>
-
-                    </div>
-                  </div>
-
-                </li>
-                <li>공고2</li>
-                <li>공고3</li>
+            <div>
+              <ul id="listHolder" class="lists" v-for="(jpl, index) in jplArr" :key="jpl.jpl_num">
+                <RecentJobPostingComp :jplInfo="jpl" :imgUrl="this.urlArr[index]" :totalAppArr="totalAppArr[index]"/>
               </ul>
-              <div class="bullets">
-                <label for="slide1">&nbsp;</label>
-                <label for="slide2">&nbsp;</label>
-                <label for="slide3">&nbsp;</label>
-              </div>
             </div>
           </div>
           <div class="comNewComer">
-              <div class="comTopBox">
-                <h3>최근 지원자</h3>
+            <div class="comTopBox">
+              <h3>최근 지원자</h3>
+              <button class="comAllBtn">
+                <img src="@/assets/icon_arrow_right.svg"/>
+                지원자 전체보기
+              </button>
+            </div>
+            <div class="ResentInfo">
+              <div>
+                <ul id="listHolder" class="lists" v-for="(app, index) in appArr" :key="app.al_num">
+                  <RecentApplicantComp :appInfo="app"/>
+                </ul>
               </div>
-              <div class="ResentInfo">
-                <div class="empBoxConWrap col-6">
-
-                  <div class="empBoxCon ">
-                    <router-link to="" class="left empBoxCompany">
-                      <p>(주)  jobpost.com_name </p>
-                      <img src="@/assets/kakao.png" >
-                    </router-link>
-                    <div class="left empBoxText">
-                      <router-link to="">
-                        <p class="empTitle"> jobpost.jpl_title </p>
-
-                        <p class="empBoxTag"> 서울시 어쩌고 저쩌고 </p>
-                      </router-link>
-                      <div style="padding-top:20px;">
-                        <span class="left empBoxDday">D-27</span>
-                        <span class="left empBoxDday">3월 17일 까지</span>
-                        <button type="button" class="btn btn-primary aplBtn right applied">
-                          지원자 <br/>40명 보기
-                        </button>
-                        <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;">
-                          수정하기
-                        </button>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </div>
-              </div>
+            </div>
           </div>
         </div>
       </div>
 
-<!--    </section>-->
-  </div>
+      <!--    </section>-->
+    </div>
   </div>
 </template>
 
 <script>
+import RecentJobPostingComp from "@/components/myComponent/RecentJobPostingComp";
+import RecentApplicantComp from "@/components/myComponent/RecentApplicantComp";
+
 export default {
   name: 'cMainView',
+  components: {
+    RecentJobPostingComp,
+    RecentApplicantComp
+  },
+  data () {
+    return {
+      totalPosting: 0,
+      ingPosting : 0,
+      donPosting: 0,
+      totalRes: 0,
+      seeRes: 0,
+      notSeeRes: 0,
+      com_num: '',
+      jplArr: [],
+      appArr: [],
+      urlArr: [],
+      totalAppArr: []
+    }
+  },
   methods: {
     goRegView() {
       this.$router.push({path: "cEmpRegView"})
+    },
+    goQnaView() {
+      this.$router.push({path: "cQnAView"})
+    },
+    getApplyList(e) {
+      this.$router.push({path:""})
+    },
+    async mainFunction () {
+      let sessionComp = sessionStorage.getItem('sessionComp')
+      if(sessionComp && typeof sessionComp === 'string' && sessionComp !== '') {
+        let SessionJsonComp = JSON.parse(sessionComp)
+        this.com_num = SessionJsonComp;
+      }
+
+      let res = await this.$axios.get("/jobfair/getStatusData", {
+        params: {
+          com_num: this.com_num
+        }}) .catch (arr => console.log(err))
+
+      this.totalPosting = res.data.postingArr[0].totalPosting
+      this.ingPosting = res.data.postingArr[0].ing
+      this.totalRes = res.data.resArr[0].totalRes
+      this.seeRes = res.data.resArr[0].seeRes
+      this.jplArr = res.data.jplArr
+      this.appArr = res.data.appArr
+      this.urlArr = res.data.urlArr
+      this.totalAppArr = res.data.totalAppArr
     }
+  },
+  created() {
+    this.mainFunction()
   }
 }
 </script>
@@ -173,25 +159,41 @@ a {
   text-decoration: none;
 }
 
+.left {float: left;}
+.right {float: right;}
+
 h3{font-weight: bold;
   font-size: 20px;
   padding:20px;
   color:#202632;
 }
 
-.aplBtnBoxWrap {  width: 60%;
-                  display: inline-block;
-                  border:1px solid red;
-                }
+.comTopBox {overflow: hidden;}
 
-/*지원현황*/
+.topWrap {width:100%;}
+
+.aplBtnBoxWrap {  width: 60%;
+  display: inline-block;
+  height:200px;
+}
+
+.btnBox {display: inline-block;
+  width:40%;
+  height:200px;
+  float: right;
+  padding-top:62px;
+  padding-left:15px;
+}
+
+
+/*채용현황*/
 .aplBtnBox {
   border:1px solid #dedede;
-
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   background-color: #efefef;
-
+  float: left;
+  width:100%;
 
 
 
@@ -211,6 +213,7 @@ h3{font-weight: bold;
 .on {color:#0064ff;
   border-radius: 20px;
 }
+
 
 .aplBtnBox div:first-child {border:0;}
 
@@ -241,35 +244,41 @@ h3{font-weight: bold;
   height: 100%;
 }
 
-.btnBox {display: inline-block;
-         width:38%;
-        margin-left: 20px;
-  border: 1px solid red;
-}
+
 
 /* 오른쪽에 위치한 공고등록버튼 */
-.comBtn1{
-  background-image: url("@/assets/icon_regEmp.svg");
-  background-position: 20px 25px;
-  background-repeat: no-repeat;
-  background-size: 35px;
-  /*float: right;*/
-  display: inline-block;
-  width:47%;
-  height: 100px;
+
+.comBtn1, .comBtn2 {display: inline-block;
+  width:45%;
+  height: 88px;
   text-align: center;
   font-size: 18px;
   font-weight: bolder;
   color: white;
-  background-color: #0064ff;
+  background-color: #202632;
   border: none;
   border-radius: 15px;
-  margin-right:10px;
-}
-.comBtn1:hover {
+  margin:0 5px;}
+
+.comBtn1:hover, .comBtn2:hover {
   background-color: #0d6efd;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 9px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
+
+.comBtn1{
+  background-image: url("@/assets/icon_question.svg");
+  background-position: 20px 25px;
+  background-repeat: no-repeat;
+  background-size: 35px;
+}
+
+.comBtn2{
+  background-image: url("@/assets/icon_regEmp.svg");
+  background-position: 20px 25px;
+  background-repeat: no-repeat;
+  background-size: 35px;
+}
+
 /* div박스 모음 */
 .comRightBox {
   display: flex;
@@ -284,7 +293,7 @@ h3{font-weight: bold;
 
 
 .comBottomBox {margin-top:20px;
-               width:80%;
+  width:80%;
 }
 
 .comBottomBox h3{display: inline-block;}
@@ -299,6 +308,10 @@ h3{font-weight: bold;
   border-radius: 10px;
   font-weight: bold;
   font-size: 16px;
+}
+
+.comAllBtn {background-color:transparent;}
+.comAllBtn:hover {box-shadow: rgba(0, 0, 0, 0.14) 0px 9px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .comAllBtn img {width:20px;}
@@ -358,24 +371,17 @@ h3{font-weight: bold;
 .comNewComer p {
   float: left;
 }
-/* 내가 등록한 최신공고를 보여주는 슬라이더 */
-.slider li {
-  position: relative;
-}
-.slider input[type=radio] {
-  display: none;
-}
+
+
 /* 최신공고 슬라이더 안에 표시되는 내용 */
-.lists, .ResentInfo {
+.lists {
   /*height: 400px;*/
   padding: 10px;
   align-items: center;
 }
 .lists li{
   display : block;
-  opacity: 0;
   list-style: none;
-  transition-delay: 0.9s;
   text-align: center;
 }
 
@@ -387,6 +393,8 @@ h3{font-weight: bold;
 
 }
 
+.aplBoxTag {color:black;}
+
 .empBoxCon {
   padding:25px;
   overflow: hidden;
@@ -394,21 +402,50 @@ h3{font-weight: bold;
   border-radius: 20px;
   border: 2px solid #dedede;
   display:inline-block;
-  width:98%;
+  width:100%;
+  overflow: hidden;
   height:200px;
 }
 
+.aplBoxCon {
+  padding:25px;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 20px;
+  border: 2px solid #dedede;
+  display:inline-block;
+  width:100%;
+  overflow: hidden;
+  height:200px;
+}
+
+.aplBoxText p {width:70%;}
+
 .empTitle {font-size: 18px;font-weight: bold;}
+
+.aplTitle {padding-bottom:20px;font-size: 18px;font-weight: bold;color:black;}
 
 .empBoxCon:hover { border: 2px solid #0064ff; }
 
+.aplBoxCompany p {color:black;font-size: 18px;}
+
 .empBoxCompany p {color:black;}
+
+.aplBoxCompany {
+  display: inline-block;
+  /*cursor: pointer;*/
+  float: left;
+  margin-right:10px;
+  height:100%;
+  width:20%;
+}
 
 .empBoxCompany {
   display: inline-block;
   /*cursor: pointer;*/
   float: left;
   margin-right:10px;
+  height:100%;
 }
 .empBoxCon img{
   float: left;
@@ -418,19 +455,33 @@ h3{font-weight: bold;
   object-fit: contain;
 }
 
+.aplBoxCon img{
+  height:80px;
+  width:80%;
+  object-fit: contain;
+}
+
+
+.empBoxBtn {
+  width:18%;
+  height:100%;
+}
+
 .aplBtn {border:none;
   background-color: #0064ff;
-  width:20%;
-  height:40px;
+  width:100%;
+  height:100%;
 
 }
 .applied {background-color: #dedede;
   color:black;
+  height:200px;
 }
 
 .empBoxText {padding-left: 5px;color:black;display: inline-block;
   /*cursor: pointer;*/
-  width:600px;
+  width:60%;
+  height:100%;
 }
 
 
@@ -447,46 +498,6 @@ h3{font-weight: bold;
   margin-right: 5px;
 }
 
-.bullets{
-  position: relative;
-  left: 50%;
-  text-align: center;
-  transform: translateX(-50%);
-  z-index: 2;
-}
-.bullets label{
-  display: inline-block;
-  border-radius: 50%;
-  background-color: rgba(0,0,0,0.55);
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-.slider input[type=radio]:nth-child(1):checked~.bullets>label:nth-child(1){
-  background-color: #0064ff;
-}
-.slider input[type=radio]:nth-child(2):checked~.bullets>label:nth-child(2){
-  background-color: #0064ff;
-}
-.slider input[type=radio]:nth-child(3):checked~.bullets>label:nth-child(3){
-  background-color: #0064ff;
-}
 
-.slider input[type=radio]:nth-child(1):checked~ul.lists>li:nth-child(1){
-  opacity: 1;
-  transition: 1s;
-  z-index: 1;
-}
-.slider input[type=radio]:nth-child(2):checked~ul.lists>li:nth-child(2){
-  opacity: 1;
-  transition: 1s;
-  z-index: 1;
-}
-.slider input[type=radio]:nth-child(3):checked~ul.lists>li:nth-child(3){
-  opacity: 1;
-  transition: 1s;
-  z-index: 1;
-}
 
 </style>
-
