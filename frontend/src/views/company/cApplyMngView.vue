@@ -1,7 +1,7 @@
 <template>
-<div class="">
-  <ApplicantList/>
-</div>
+  <div className="">
+    <ApplicantList/>
+  </div>
 </template>
 
 <script>
@@ -9,10 +9,8 @@ import ApplicantList from "@/components/myComponent/ApplicantList";
 
 export default {
   name: 'cApplyMngView',
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   },
   components: {
     ApplicantList
@@ -21,9 +19,19 @@ export default {
 </script>
 
 <style scoped>
-* {margin: 0 auto; padding: 0;}
-a {text-decoration: none; color: black}
-a:hover {color: grey}
+* {
+  margin: 0 auto;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black
+}
+
+a:hover {
+  color: grey
+}
 
 #dropdown-toggle {
   position: relative;

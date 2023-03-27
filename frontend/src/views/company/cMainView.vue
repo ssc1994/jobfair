@@ -55,7 +55,7 @@
                 <img src="@/assets/icon_arrow_right.svg"/>
                 지원자 전체보기
               </button>
-            </div>`
+            </div>
             <div class="ResentInfo">
               <div>
                 <ul id="listHolder" class="lists" v-for="(app, index) in appArr" :key="app.al_num">
@@ -184,7 +184,6 @@ h3{font-weight: bold;
   padding-top:62px;
   padding-left:15px;
 }
-
 
 /*채용현황*/
 .aplBtnBox {
@@ -497,7 +496,4 @@ h3{font-weight: bold;
   border-radius:20px;
   margin-right: 5px;
 }
-
-
-
 </style>
