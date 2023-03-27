@@ -63,7 +63,6 @@
 
 
     </select>
-
     <update id="handleApplication" parameterType="UserVO">
         update User
         set mg_auth = #{mg_auth}

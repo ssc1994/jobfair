@@ -30,11 +30,6 @@
           </table>
 
         </div>
-
-        <!--페이지네이션 부분-->
-        <!--        <a @click="goFirstPage(page - 1)">&lt;</a>-->
-        <!--        <a @click="goPrevPage(page - 1)">prev</a>-->
-
         <!--                <a v-for="(paging, index) in pageList" :key="index" @click="onPageChange(paging - 1)" :class="paging - 1 === page ? 'page' : ''">{{paging}}</a>-->
 
         <!--        <div v-for="(paging, index) in pageList" :key="index">-->
@@ -61,7 +56,6 @@
 <!--          <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)">Next</a></li>-->
 <!--          <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)">Last</a></li>-->
 <!--        </ul>-->
-
         <div class="paginationWrap">
           <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
@@ -90,7 +84,6 @@ export default {
     return {
       QnAList: [],
       QnADetailList: [],
-
       // list: "",
       pages: "", // pageVO
       pageList: "", //pageVO.pageList 배열값
@@ -199,7 +192,7 @@ export default {
 
     ClickPage() {
       var clicked = event.target.innerHTML;
-      this.page = clicked
+      this.page = clicked;
     },
 
   }

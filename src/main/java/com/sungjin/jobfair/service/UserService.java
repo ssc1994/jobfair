@@ -2,6 +2,7 @@ package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
+import com.sungjin.jobfair.pagination.EmpSrcCriteria;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,9 +36,17 @@ public interface UserService {
 
     //################## 채용공고(jobPost) 관련 Service #######################
         //채용공고 목록 가져오기
-    public ArrayList<EmpListVO> getJobPostList(String selSortInt);
+        public ArrayList<EmpListVO> getJobPostList(Criteria cri);
+        //채용공고 목록 갯수 (#### 페이지 네이션 ####)
+        public int getJobPostTotal(Criteria cri);
+
         //채용공고 검색 목록 가져오기
-    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo);
+//        public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo);
+        public ArrayList<EmpListVO> getJobPostSrc(EmpSrcCriteria cri);
+
+        //채용공고 검색 목록 갯수 (#### 페이지 네이션 ####)
+        public int getJobPostSrcTotal(EmpSrcCriteria cri);
+
         //기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)
 //    public ArrayList<EmpVO> EmpRegistInfo();
         // 유저가 지원한 공고인지 찾기
@@ -55,7 +64,6 @@ public interface UserService {
     //################## 마이페이지(MyPage) Service #######################
         //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo(String user_id);
-
       //지원현황 목록 전체
     public ArrayList<EmpApplyVO> getApplyListAll(String user_id);
       //지원현황 목록 열람
@@ -111,5 +119,7 @@ public interface UserService {
 //    public Map<String, Object> uQnAListAxios(Criteria cri);
 
     public int uQnAGetTotal(Criteria cri);
+
+
 
 }

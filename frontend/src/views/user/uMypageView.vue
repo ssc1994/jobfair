@@ -145,6 +145,7 @@ export default {
             .then((res) => {
               console.log(res.data);
               this.applyCnt = res.data;
+              console.log(this.applyCnt);
             }).catch((error) => {
           console.log(error)
         })

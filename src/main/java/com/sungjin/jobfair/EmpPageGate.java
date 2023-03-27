@@ -1,25 +1,23 @@
 package com.sungjin.jobfair;
 
+import com.sungjin.jobfair.command.EmpListVO;
 import com.sungjin.jobfair.command.QnAVO;
 import com.sungjin.jobfair.pagination.PageVO;
 import lombok.Data;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Data
-public class PageGate {
+public class EmpPageGate {
 
-    private ArrayList<QnAVO> list;
+    private ArrayList<EmpListVO> list;
     private PageVO pageVO;
 
-
-
-    public PageGate() {
+    public EmpPageGate() {
         super();
     }
 
-    public PageGate(ArrayList<QnAVO> list, PageVO pageVO) {
+    public EmpPageGate(ArrayList<EmpListVO> list, PageVO pageVO) {
         this.list = list;
         this.pageVO = pageVO;
     }

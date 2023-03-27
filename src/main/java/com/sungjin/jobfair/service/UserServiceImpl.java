@@ -2,6 +2,7 @@ package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.pagination.Criteria;
+import com.sungjin.jobfair.pagination.EmpSrcCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -66,12 +67,25 @@ public class UserServiceImpl implements UserService {
 
     //################## 채용공고(jobPost) 관련 Service #######################
     @Override
-    public ArrayList<EmpListVO> getJobPostList(String selSortInt) {
-        return userMapper.getJobPostList(selSortInt);
+//    public ArrayList<EmpListVO> getJobPostList(String selSortInt) {
+//        return userMapper.getJobPostList(selSortInt);
+//    }
+    public ArrayList<EmpListVO> getJobPostList(Criteria cri){
+        return userMapper.getJobPostList(cri);
     }
+    //채용공고 목록 갯수 (#### 페이지 네이션 ####)
     @Override
-    public ArrayList<EmpListVO> getJobPostSrc(EmpSearchVO vo) {
-        return userMapper.getJobPostSrc(vo);
+    public int getJobPostTotal(Criteria cri){ return userMapper.getJobPostTotal(cri); }
+
+    @Override
+    public ArrayList<EmpListVO> getJobPostSrc(EmpSrcCriteria cri) {
+        return userMapper.getJobPostSrc(cri);
+    }
+
+    //채용공고 검색 목록 갯수 (#### 페이지 네이션 ####)
+    @Override
+    public int getJobPostSrcTotal(EmpSrcCriteria cri) {
+        return userMapper.getJobPostSrcTotal(cri);
     }
 
     @Override
@@ -192,6 +206,8 @@ public class UserServiceImpl implements UserService {
 //    public Map<String, Object> uQnAListAxios(Criteria cri) {
 //        return userMapper.uQnAListAxios(cri);
 //    }
+
+    //####################### 페이지네이션 #######################
 
     @Override
     public int uQnAGetTotal(Criteria cri) {
