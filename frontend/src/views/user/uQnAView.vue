@@ -7,6 +7,7 @@
 
           <div class="qnaBox">
             <h3>Q&A</h3>
+            <button @click.stop="addQnA">+ 질의 등록</button>
           </div>
 
           <table id="qnaTable">
@@ -29,9 +30,32 @@
           </table>
 
         </div>
+        <!--                <a v-for="(paging, index) in pageList" :key="index" @click="onPageChange(paging - 1)" :class="paging - 1 === page ? 'page' : ''">{{paging}}</a>-->
+
+        <!--        <div v-for="(paging, index) in pageList" :key="index">-->
+        <!--          <router-link to="{ path: '/uQnAView'+index }">{{ paging }}</router-link>-->
+        <!--        </div>-->
+
+        <!--        <a v-for="n in pageList" :key="n" :class="[n === ]"></a>-->
+
+        <!--        <a v-for="(paging, index) in pageList" :key="index">{{ paging }}</a>-->
+
+        <!--        <a v-for="(paging, index) in pageList" :key="index" @click="uQnAListAxios">{{paging}}</a>-->
 
 
 
+        <!--        <a @click="goNextPage(page + 1)">next</a>-->
+        <!--        <a @click="goLastPage(page + 1)">&gt;</a>      -->
+
+<!--        <ul class="pagination">-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)">First</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goPrevPage(page - 1)">Previous</a></li>-->
+<!--          <template v-for="(item, index) in pageList" :key="index">-->
+<!--            <li class="page-item" :class="{'active' : item == currentPage}"><span class="page-link" href="#" @click.prevent="ClickPage()" id="index">{{item}}</span></li>-->
+<!--          </template>-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goNextPage(page + 1)">Next</a></li>-->
+<!--          <li class="page-item"><a class="page-link" href="#" @click="goLastPage(page + 1)">Last</a></li>-->
+<!--        </ul>-->
         <div class="paginationWrap">
           <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#" @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
@@ -60,8 +84,7 @@ export default {
     return {
       QnAList: [],
       QnADetailList: [],
-
-
+      // list: "",
       pages: "", // pageVO
       pageList: "", //pageVO.pageList 배열값
       detailNum: "",
@@ -82,6 +105,7 @@ export default {
       this.uQnAListAxios();
     },
   },
+
   created() {
     this.getQnAList();
     this.uQnAListAxios();
@@ -112,12 +136,20 @@ export default {
       })
     },
 
-    uQnAListAxios() {
-      this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
+    async uQnAListAxios() {
+
+      // let {data} = await this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
+      //     this.amount +
+      //     "&page=" +
+      //     this.page);
+      // this.list = res.data.list;
+
+      let res =  await this.$axios.get("/jobfair/uQnAListAxios/?amount=" +
           this.amount +
           "&page=" +
-          this.page)
-          .then((res) => {
+          this.page);
+      this.list = res.data.list;
+
             this.list = res.data.list;
             this.pages = res.data.pageVO;
             this.pageList = this.pages.pageList;
@@ -131,9 +163,6 @@ export default {
             this.end = this.pages.end;
             this.realEnd = this.pages.realEnd;
 
-          })
-          .catch((error) => console.log(error))
-
     },
 
     goFirstPage() {
@@ -143,6 +172,7 @@ export default {
     goPrevPage() {
       if(this.page > 1) {
         this.page = this.page - 1;
+        this.uQnAListAxios();
       } else {
         alert("첫 페이지입니다.");
       }

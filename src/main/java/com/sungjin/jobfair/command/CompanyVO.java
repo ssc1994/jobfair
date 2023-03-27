@@ -30,5 +30,8 @@ public class CompanyVO {
     private String mg_auth;
     private String user_regDate;
 
+    //업로드된 이미지 url 담기 위한 변수
+    private String img_url;
+
 
 }

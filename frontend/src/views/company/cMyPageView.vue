@@ -4,7 +4,7 @@
     <!--이력서 관리-->
     <div class="resumeBoxCon">
       <div>
-        <h3>우리 기업 채용공고</h3>
+        <h3 class="title">우리 기업 채용공고</h3>
         <button class="arrDown"><img src="@/assets/icon_arr_down.png"></button>
       </div>
       <div class="resumeBoxWrap">
@@ -45,66 +45,76 @@
 
     <div class="aplBoxCon">
       <div>
-        <h3>기업 정보</h3>
+        <h3 class="title">기업 정보</h3>
       </div>
 
-      <div class="infoWrapBox">
+      <div class="infoBoxWrap">
         <div class="infoBox">
-          <div class="logoBox">
-            <img src="#">
-            <h3>{{comInfo.com_name}}</h3>
+
+          <div class="info_head">
+            <div class="comLogoWrap">
+              <img :src="comInfo.img_url" class="comLogo">
+            </div>
+            <div class="com_name_wrap">
+              <div class="com_name">{{ comInfo.com_name }}</div>
+            </div>
           </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
-            <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_businessRegistration">
+          <div class="info_body">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
+              <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_businessRegistration">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">설립일</span>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_establishmentDate">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">업종</span>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_category">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">대표자</span>
+              <input type="text" class="form-control" placeholder="대표자" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_ceo">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">전화번호</span>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_phone">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">이메일</span>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_email">
+            </div>
+
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">주소</span>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_address">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">상세주소</span>
+              <input type="text" class="form-control" placeholder="" aria-label="Username"
+                     aria-describedby="basic-addon1" disabled :value="comInfo.com_detail_address">
+            </div>
           </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">전화번호</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_phone">
-          </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">이메일</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_email">
-          </div>
-
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">업종</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_category">
-          </div>
-
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">대표자</span>
-            <input type="text" class="form-control" placeholder="대표자" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_ceo">
-          </div>
-
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">주소</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_address">
-          </div>
-
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">상세주소</span>
-            <input type="text" class="form-control" placeholder="" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_detail_address">
-          </div>
-
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">설립일</span>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                   aria-describedby="basic-addon1" disabled :value="comInfo.com_establishmentDate">
-          </div>
-
-          <div class="btnBox">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="getComInfo">
+          <div class="btnBox info_footer">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    @click="getComInfo">
               수정하기
             </button>
           </div>
@@ -113,88 +123,91 @@
       </div>
 
       <!--수정하기 모달창 설정-->
-      <!--state 적용해서 데이터 넣어야해유-->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content ">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">기업 정보 수정</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="closeBtn" @click="toDefault"></button>
+              <h1 class="modal-title fs-5, title" id="exampleModalLabel">기업 정보 수정</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="closeBtn"
+                      @click="toDefault"></button>
             </div>
             <div class="modal-body" style="height: 100%">
               <div class="infoModalBox">
-                <div class="logoBox_in_modal">
-                  <img src="#" alt="image"/>
-                  <input type="file" hidden="true" accept="image/*"
-                         ref="image" @change="imgUploaded($event)"
-                         name="image" multiple/>
-                  <button type="button" class="btn btn-primary" @click="runUploadImg">로고수정</button>
+
+                <div class="m_logoPart">
+                  <div class="m_comLogoWrap">
+                    <img :src="comInfo.img_url" alt="image" class="m_comLogo"/>
+                    <input type="file" hidden="true" accept="image/*"
+                           ref="image" @change="imgUploaded($event)"
+                           name="image" multiple/>
+                    <button type="button" style="margin-bottom: 0px" class="btn btn-primary" @click="runUploadImg">로고수정</button>
+                  </div>
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>기업명</span><span :hidden="comName_errorMsg === ''"
-                                         class="pass_error">{{comName_errorMsg}}</span>
+                                          class="pass_error">{{ comName_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box"  placeholder="기업명"
+                  <input type="text" class="data_insert_box" placeholder="기업명"
                          v-model="comInfo.com_name" @keyup="comNameCheck"
-                         />
+                  />
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>사업자 등록번호</span><span :hidden="comBizReg_errorMsg === ''"
-                                         class="pass_error">{{ comBizReg_errorMsg }}</span>
+                                               class="pass_error">{{ comBizReg_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box"  placeholder="사업자 등록번호는 3글자-2글자-5글자 형식으로 입력해주세요"
+                  <input type="text" class="data_insert_box" placeholder="사업자 등록번호는 3글자-2글자-5글자 형식으로 입력해주세요"
                          v-model="comInfo.com_businessRegistration" @keyup="comBizRegNumCheck"/>
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>전화 번호</span><span :hidden="comPh_errorMsg === ''"
-                                               class="pass_error">{{ comPh_errorMsg }}</span>
+                                            class="pass_error">{{ comPh_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box"  placeholder="전화번호 -없이 입력"
-                         v-model="comInfo.com_phone" @keyup="phCheck" maxlength="11"/>
+                  <input type="text" class="data_insert_box" placeholder="숫자만 입력 -자동 추가"
+                         v-model="comInfo.com_phone" @keyup="comAutoHyphen($event), phCheck()" maxlength="13"/>
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>이메일</span><span :hidden="comEmail_errorMsg === ''"
-                                            class="pass_error">{{ comEmail_errorMsg }}</span>
+                                          class="pass_error">{{ comEmail_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box"  placeholder="이메일"
+                  <input type="text" class="data_insert_box" placeholder="이메일"
                          v-model="comInfo.com_email" @keyup="emailCheck"/>
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>업종</span><span :hidden="comCategory_errorMsg === ''"
-                                          class="pass_error">{{ comCategory_errorMsg }}</span>
+                                         class="pass_error">{{ comCategory_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box"  placeholder="업종을 입력해주세요"
+                  <input type="text" class="data_insert_box" placeholder="업종을 입력해주세요"
                          v-model="comInfo.com_category" @keyup="comCategoryCheck"/>
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>대표자</span><span :hidden="comCeo_errorMsg === ''"
-                                         class="pass_error">{{ comCeo_errorMsg }}</span>
+                                          class="pass_error">{{ comCeo_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box"  placeholder="대표자명을 입력해주세요"
+                  <input type="text" class="data_insert_box" placeholder="대표자명을 입력해주세요"
                          v-model="comInfo.com_ceo" @keyup="ceoCheck"/>
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>주소</span><span :hidden="comAddress_errorMsg === ''"
-                                          class="pass_error">{{ comAddress_errorMsg }}</span>
+                                         class="pass_error">{{ comAddress_errorMsg }}</span>
                   </div>
                   <div class="with_btn_wrap">
-                    <input type="text" class="data_insert_box"  placeholder="주소를 입력해주세요"
+                    <input type="text" class="data_insert_box" placeholder="주소를 입력해주세요"
                            v-model="comInfo.com_address" readonly/>
-                    <button type="button"  class="btn btn-primary" @click="execDaumPostcode">
+                    <button type="button" class="btn btn-primary" @click="execDaumPostcode">
                       주소변경
                     </button>
                   </div>
@@ -203,23 +216,23 @@
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>상세주소</span><span :hidden="comDeAddress_errorMsg === ''"
-                                          class="pass_error">{{ comDeAddress_errorMsg }}</span>
+                                           class="pass_error">{{ comDeAddress_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box"  placeholder="상세주소를 입력해주세요"
+                  <input type="text" class="data_insert_box" placeholder="상세주소를 입력해주세요"
                          v-model="comInfo.com_detail_address" @keyup="detailAddCheck"/>
                 </div>
 
                 <div class="data_box">
                   <div class="data_title_wrap">
                     <span>설립일</span><span :hidden="comEsDate_errorMsg === ''"
-                                           class="pass_error">{{ comEsDate_errorMsg }}</span>
+                                          class="pass_error">{{ comEsDate_errorMsg }}</span>
                   </div>
-                  <input type="date" class="data_insert_box"  placeholder="설립일을 지정해주세요"
+                  <input type="date" class="data_insert_box" placeholder="설립일을 지정해주세요"
                          v-model="comInfo.com_establishmentDate"/>
                 </div>
 
-                <div class="btnBox">
-                  <button type="button" class="btn btn-primary"  @click="requestModyInfo" data-bs-target="#exampleModal">
+                <div class="m_footer">
+                  <button type="button" class="btn btn-primary" @click="requestModyInfo" data-bs-target="#exampleModal">
                     수정하기
                   </button>
                 </div>
@@ -249,10 +262,10 @@ export default {
   name: "uMypageView",
   data() {
     return {
-      img_path: '',
-      comInfo:{
+      //기업 정보 한번에 담아 오기 위한 객체
+      comInfo: {
         com_name: '',
-        com_num:  sessionStorage.getItem('sessionComp'),
+        com_num: sessionStorage.getItem('sessionComp'),
         com_phone: '',
         com_email: '',
         com_address: '',
@@ -263,17 +276,18 @@ export default {
         com_establishmentDate: '',
         com_fileName: '',
         com_filePath: '',
-        com_fileUuid: ''
+        com_fileUuid: '',
+        img_url: ''
       },
       //주소 api 관련
       postcode: "",
       address: "",
       //유효성 검사 정규식
-      nameRule:  /^[가-힣]{2,4}$/, //한글만 2~4글자
+      nameRule: /^[가-힣]{2,4}$/, //한글만 2~4글자
       idRule: /^[a-z0-9]{4,12}$/, // 영문 소문자, 숫자만 사용가능 길이는 4~12 글자
       passwordRule: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,  //비밀번호 유효성 검사 정규표현식
       emailRule: /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/, //이메일 형식 유호성 검사 정규표현식
-      phoneNumRule: /^[0-9]{8,13}$/, //휴대폰 번호 숫자만 가능
+      phoneNumRule: /^\d{2,3}-\d{3,4}-\d{4}$/, //전화번호, 핸드폰 번호 형식인지 검사
       businessRegisRule: /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/, //사업자 등록번호 정규식 3글자-2글자-5글자
       //유효성 검사 에러메세지 담을 변수들
       comName_errorMsg: '',
@@ -311,23 +325,27 @@ export default {
       form.append('image', image)
 
       const {data} = await this.$axios.post('/jobfair/companyMypage/modiLogo', form,
-          { headers: {'Content-Type': 'multipart/form-data'} }).catch( err => console.log(err));
+          {headers: {'Content-Type': 'multipart/form-data'}}).catch(err => console.log(err));
 
-      this.img_path = data.filePath
+      this.comInfo.img_url = data // aws s3에 올라간 이미지 파일의 url
 
     },
 
     //로그인한 기업의 정보 받아와서 화면에 뿌려주기
-    async getComInfo () {
+    async getComInfo() {
       const {data} = await this.$axios.post('/jobfair/companyMypage/getComInfo',
-              {com_num: this.comInfo.com_num})
-                   .catch( err => console.log(err))
+          {com_num: this.comInfo.com_num})
+          .catch(err => console.log(err))
+
+      console.log(data.img_url)
+
       this.comInfo = data;
+
     },
 
     //  ------- 유효성 검사 부분 -------
     //기업 이름 유효성 검사
-    comNameCheck () {
+    comNameCheck() {
       if (this.comInfo.com_name === '') {
         this.comName_errorMsg = '필수 입력 정보입니다'
         this.check_result = 'fail'
@@ -363,7 +381,7 @@ export default {
           this.check_result = 'fail'
           return
         }
-        this.comPh_errorMsg = '휴대폰 번호를 확인해주세요'
+        this.comPh_errorMsg = '전화번호를 확인해주세요'
         this.check_result = 'fail'
         return
       } else {
@@ -388,7 +406,7 @@ export default {
       }
     },
     //업종 유효성 검사
-    comCategoryCheck(){
+    comCategoryCheck() {
       if (this.comInfo.com_category === '') {
         this.comCategory_errorMsg = '필수 입력 정보입니다'
         this.check_result = 'fail'
@@ -414,7 +432,7 @@ export default {
       }
     },
     //기업 상세주소 체크
-    detailAddCheck () {
+    detailAddCheck() {
       if (this.comInfo.com_detail_address === '') {
         this.comDeAddress_errorMsg = '필수 입력 정보입니다'
         this.check_result = 'fail'
@@ -423,6 +441,12 @@ export default {
         this.comDeAddress_errorMsg = ''
         this.check_result = 'success'
       }
+    },
+    comAutoHyphen(e) {
+      let value = e.target.value
+      this.comInfo.com_phone = value.replace(/[^0-9]/g, "").replace(
+          /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,
+          "$1-$2-$3")
     },
     // -------------- 유효성 검사 END ----------------
 
@@ -473,18 +497,18 @@ export default {
 
       if (this.check_result === 'success') {
 
-          this.$axios.post('/jobfair/companyMypage/modifyInfo', this.comInfo)
-              .then(response => {
-                console.log(response)
+        this.$axios.post('/jobfair/companyMypage/modifyInfo', this.comInfo)
+            .then(response => {
+              console.log(response)
 
-                //수정이 완료된 후 모달창 닫기2
-                alert('수정되었습니다 ^^!')
-                this.$refs.closeBtn.click()
+              //수정이 완료된 후 모달창 닫기2
+              alert('수정되었습니다 ^^!')
+              this.$refs.closeBtn.click()
 
-              })
-              .catch(error => {
-                console.log(error)
-              })
+            })
+            .catch(error => {
+              console.log(error)
+            })
 
       } else { // check_resutl 가 fail일 때
         alert('입력 정보를 확인해주세요')
@@ -573,37 +597,20 @@ export default {
   font-size: 18px;
 }
 
-/* --- company logo css ---*/
-.logoBox {
-  height: 100px;
-}
-.infoBox h3{
-  display: inline-block;
+/* title  공용 css */
+.title{
+  font-weight: bold;
+  color: #202632;
 }
 
-.logoBox img {
-  margin-right: 30px;
-  width: 50px;
-  height: 50px;
-}
+/*---------- cMypage 기업 정보 부분 ----------*/
 
-.logoBox button {
-}
-
-/*-------------------------*/
-/* ----- 로고 아래에서 수정하기 버튼 사이 부분 ----*/
-.infoPart_wrap {
-  margin-top: 10px;
-}
-
-/*-------------------------*/
-
-.infoWrapBox {
-  border: 1px solid grey;
+.infoBoxWrap {
+  border: 1px solid #AAAAAA;
+  border-radius: 15px;
+  padding: 10px;
   width: 100%;
-  height: 670px;
-  margin: 0 auto;
-  margin-bottom: 100px;
+  height: 800px;
 }
 
 .infoBox {
@@ -613,20 +620,100 @@ export default {
   margin-top: 50px;
 }
 
-.btnBox {
+/*----------------------------------*/
+.info_head {
+  display: block;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+/* cMypage 로고 부분*/
+.info_head .comLogoWrap {
+  overflow: hidden;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  float: left;
+}
+.comLogo {
+  width: 150px;
+  height: 150px;
+  object-fit:cover;
+}
+
+/*기업 이름 부분*/
+.info_head .com_name_wrap{
+  margin-left: 10px;
+  display: inline-block;
+  float: left;
+}
+.info_head .com_name_wrap .com_name{
+  color: #202632;
+  font-weight: bold;
+  font-size: 40px;
+  padding:20px;
+}
+
+
+/*----------------------------------*/
+.info_body{
+  display: block;
+}
+
+.input-group-text{
+  font-weight: bold;
+  color: #202632;
+  font-size: 15px;
+}
+
+/*----------------------------------*/
+.info_footer {
+  /*cMypage 수정하기 버튼 부분*/
   text-align: center;
   margin-top: 30px;
   height: 50px;
   line-height: 50px;
 }
 
-/*모달부분 css*/
+
+/*------------------ 여기서부턴  모달부분 ------------------*/
 .modal {
   --bs-modal-width: 700px
 }
 
-.modal .input-group{
-  width: 60%;
+.modal-header .title{
+  font-weight: bold;
+  font-size: 20px;
+  color: #202632;
+}
+
+/*모달 속 로고부분*/
+.m_logoPart {
+  margin-bottom: 10px;
+}
+.m_comLogoWrap {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+.m_comLogo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+.m_comLogoWrap button{
+  position: absolute;
+  right: -95px;
+  bottom: 0px;
+}
+
+
+/*모달 속 info 부분*/
+.data_title_wrap span:first-child{
+  font-weight: bold;
+  color: #202632;
+  font-size: 15px;
 }
 
 .data_insert_box {
@@ -695,19 +782,27 @@ export default {
 }
 
 /* 주소 변경 버튼 부분*/
-.with_btn_wrap{
-display: flex;
-justify-content: space-between;
+.with_btn_wrap {
+  display: flex;
+  justify-content: space-between;
 }
-.with_btn_wrap input{
+
+.with_btn_wrap input {
   display: inline-block;
-  width: 77%;
+  width: 79%;
 }
+
 .with_btn_wrap button {
   width: 20%;
   display: inline-block;
   margin: 0;
 }
 
+.m_footer{
+text-align: center;
+margin-top: 30px;
+height: 50px;
+line-height: 50px;
+}
 
 </style>

@@ -4,65 +4,69 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sungjin.jobfair.service.AdminComListMapper">
-
     <!--참여 업체 목록 가져오기-->
-<!--    <select id="getComList" resultType="map" parameterType="AdminComListCriteria">-->
+    <select id="getComList" resultType="CompanyVO" >
 
-<!--        select c.*, u.mg_auth, u.user_regDate-->
-<!--        from company c-->
-<!--        left join user u on c.com_num = u.com_num-->
+        select c.*, u.mg_auth, u.user_regDate
+        from Company c
+        left join User u on c.com_num = u.com_num
+        <choose>
+            <when test = 'cri.manageState.equals("2")'>
+                where u.mg_auth = "2"
+            </when>
+            <when test = 'cri.manageState.equals("3")'>
+                where u.mg_auth = "3"
+            </when>
+            <when test = 'cri.manageState.equals("5")'>
+                where u.mg_auth = "5"
+            </when>
+        </choose>
 
-<!--        <choose>-->
-<!--            <when test = "cri.manageState == '2'">-->
-<!--                where u.mg_auth = "2"-->
-<!--            </when>-->
-<!--            <when test = "cri.manageState == '3'">-->
-<!--                where u.mg_auth = "3"-->
-<!--            </when>-->
-<!--            <when test = "cri.manageState == '5'">-->
-<!--                where u.mg_auth = "5"-->
-<!--            </when>-->
-<!--        </choose>-->
+        <choose>
+            <when test = 'cri.dateOption.equals("1")'>
+                order by c.com_num desc limit #{cri.pageStart}, #{cri.amount}
+            </when>
+            <when test = 'cri.dateOption.equals("2")'>
+                order by c.com_num asc limit #{cri.pageStart}, #{cri.amount}
+            </when>
+        </choose>
 
-<!--        <choose>-->
-<!--            <when test = "cri.dateOption == '1'">-->
-<!--                order by c.com_num desc-->
-<!--            </when>-->
-<!--            <when test = "cri.dateOption == '2'">-->
-<!--                order by c.com_num asc-->
-<!--            </when>-->
-<!--        </choose>-->
 
-<!--    </select>-->
+    </select>
 
-<!--    &lt;!&ndash;&ndash;&gt;-->
-<!--    <select id="getComList" resultType="map" parameterType="AdminComListCriteria">-->
+<!--    정렬 조건에 따른 참여 업체 목록 total 값 가져오기-->
+    <select id="getTotal" resultType="int" >
 
-<!--        select c.*, u.mg_auth, u.user_regDate-->
-<!--        from company c-->
-<!--        left join user u on c.com_num = u.com_num-->
+        select count(c.com_num)
+        from Company c
+        left join User u on c.com_num = u.com_num
+        <choose>
+            <when test = 'cri.manageState.equals("2")'>
+                where u.mg_auth = "2"
+            </when>
+            <when test = 'cri.manageState.equals("3")'>
+                where u.mg_auth = "3"
+            </when>
+            <when test = 'cri.manageState.equals("5")'>
+                where u.mg_auth = "5"
+            </when>
+        </choose>
 
-<!--        <choose>-->
-<!--            <when test = "cri.manageState == '2'">-->
-<!--                where u.mg_auth = "2"-->
-<!--            </when>-->
-<!--            <when test = "cri.manageState == '3'">-->
-<!--                where u.mg_auth = "3"-->
-<!--            </when>-->
-<!--            <when test = "cri.manageState == '5'">-->
-<!--                where u.mg_auth = "5"-->
-<!--            </when>-->
-<!--        </choose>-->
+        <choose>
+            <when test = 'cri.dateOption.equals("1")'>
+                order by c.com_num desc
+            </when>
+            <when test = 'cri.dateOption.equals("2")'>
+                order by c.com_num asc
+            </when>
+        </choose>
 
-<!--        <choose>-->
-<!--            <when test = "cri.dateOption == '1'">-->
-<!--                order by c.com_num desc-->
-<!--            </when>-->
-<!--            <when test = "cri.dateOption == '2'">-->
-<!--                order by c.com_num asc-->
-<!--            </when>-->
-<!--        </choose>-->
 
-<!--    </select>-->
+    </select>
+    <update id="handleApplication" parameterType="UserVO">
+        update User
+        set mg_auth = #{mg_auth}
+        where com_num = #{com_num}
+    </update>
 
 </mapper>

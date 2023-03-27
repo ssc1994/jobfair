@@ -52,6 +52,13 @@ public interface UserMapper {
 //    기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)
 //    public ArrayList<EmpVO> EmpRegistInfo();
 
+    //메인에서 채용공고 가져오기
+    public ArrayList<EmpListVO> getMainJobInfo();
+
+    //채용공고 통계관련
+    //지원자의 성별통계 구하기!!
+    public ArrayList<StatisticVO> getGendertotal();
+
 
     //################## MyPage Service #######################
         //이력서 정보 가져오기

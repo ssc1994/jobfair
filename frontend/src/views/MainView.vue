@@ -2,7 +2,7 @@
 <template>
   <div class="wrapBox">
     <div class="miniWrapBox">
-      <div class="logoBox">
+      <div class="info_head">
         <img src="#" alt="HomePage Logo">
       </div>
       <div class="radioBox">
@@ -115,7 +115,7 @@ export default {
 }
 
 /*회사 로고 넣는 곳 높이 넓힘*/
-.logoBox {
+.info_head {
   height: 100px;
 }
 
@@ -143,7 +143,7 @@ export default {
 }
 
 /*회사 로고 넣는 곳 높이 넓힘*/
-.logoBox {
+.info_head {
   height: 100px;
 }
 

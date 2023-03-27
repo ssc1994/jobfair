@@ -1,13 +1,13 @@
 <template>
   <!--  <navbar btn-background="bg-gradient-primary"/>-->
   <div
-      class="pt-5 m-3 page-header align-items-start min-vh-50 pb-11 border-radius-lg"
+      class="pt-5 m-3 page-header bg-gradient-dark align-items-start min-vh-50 pb-11 border-radius-lg"
       :style="{
       backgroundImage:
         'url(' + require('@/assets/img/curved-images/sign-up-bg1.jpg') + ')',
     }"
   >
-    <span class="mask bg-gradient-dark opacity-6"></span>
+    <span class="mask opacity-6"></span>
     <div class="container">
       <div class="row justify-content-center">
         <div class="mx-auto text-center col-lg-5">
@@ -154,13 +154,14 @@
                     </div>
                     <div style="padding-bottom: 0px">
                       <div class="data_title_wrap">
-                        <span>전화번호</span><span :hidden="userPh_errorMsg === ''"
+                        <span>핸드폰번호</span><span :hidden="userPh_errorMsg === ''"
                                                class="pass_error">{{ userPh_errorMsg }}</span>
                       </div>
                       <div class="userPh_input_wrap">
-                        <input type="text" ref="phNumBox" name="user_phone" placeholder="휴대폰번호 -없이 입력"
+                        <input type="text" ref="phNumBox" name="user_phone" placeholder="숫자만 입력 자동 - 추가"
                                v-model="user_phone"
-                               class="PersonUnder data_insert_box" maxlength="11"/>
+                               @keyup="userAutoHyphen($event)"
+                               class="PersonUnder data_insert_box" maxlength="13"/>
                         <button type="button" class="btn bg-gradient-dark" style="margin: 0">인증번호 전송</button>
                       </div>
                     </div>
@@ -194,8 +195,8 @@
                             <span :hidden="comPh_errorMsg === ''"
                                                   class="pass_error">{{ comPh_errorMsg }}</span>
                           </div>
-                          <input type="tel" class="data_insert_box" ref="com_phBox" placeholder="기업전화번호 -없이 입력"
-                                 maxlength="11" v-model="com_phone"/>
+                          <input type="tel" class="data_insert_box" ref="com_phBox" placeholder="숫자만 입력 자동 - 추가"
+                                 maxlength="13" v-model="com_phone" @keyup="comAutoHyphen($event)"/>
                         </div>
                         <div>
                           <div class="data_title_wrap">
@@ -317,7 +318,7 @@ import SoftInput from "@/components/SoftInput.vue";
 import SoftCheckbox from "@/components/SoftCheckbox.vue";
 import SoftButton from "@/components/SoftButton.vue";
 
-import {mapMutations} from "vuex";
+import {mapMutations, mg_auth} from "vuex";
 import axios from "axios";
 
 
@@ -355,9 +356,9 @@ export default {
       //유효성 검사 정규식
       nameRule:  /^[가-힣]{2,4}$/, //한글만 2~4글자
       idRule: /^[a-z0-9]{4,12}$/, // 영문 소문자, 숫자만 사용가능 길이는 4~12 글자
-      passwordRule: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,  //비밀번호 유효성 검사 정규표현식
+      passwordRule: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,  //비밀번호 유효성 검사 정규표현식 -> (8~20자의 영문,숫자,특수기호 포함)
       emailRule: /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/, //이메일 형식 유호성 검사 정규표현식
-      phoneNumRule: /^[0-9]{8,13}$/, //휴대폰 번호 숫자만 가능
+      phoneNumRule: /^\d{2,3}-\d{3,4}-\d{4}$/, //전화번호, 핸드폰 번호 형식인지 검사
       businessRegisRule: /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/, //사업자 등록번호 정규식 3글자-2글자-5글자
       //유효성 검사 후 에러 메세지
       //유저 쪽
@@ -398,7 +399,9 @@ export default {
     }
   },
   mounted() {
-
+    if(this.mg_auth === ''){
+      this.mg_auth = '1'
+    }
   },
   components: {
     Navbar,
@@ -794,7 +797,20 @@ export default {
       console.log('MM:', this.birth_MM)
       console.log('dd:', this.birth_dd)
       console.log('user_rrn:', this.user_rrn)
-    }
+    },
+    // 전화,핸드폰번호 자동 하이푼 추가
+    userAutoHyphen(e) {
+      let value = e.target.value
+      this.user_phone = value.replace(/[^0-9]/g, "").replace(
+          /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,
+          "$1-$2-$3")
+    },
+    comAutoHyphen(e) {
+      let value = e.target.value
+      this.com_phone = value.replace(/[^0-9]/g, "").replace(
+          /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,
+          "$1-$2-$3")
+    },
 
   }
 

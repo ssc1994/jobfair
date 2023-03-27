@@ -1,13 +1,11 @@
 <template>
   <aside
-    class="my-3 overflow-auto border-0 sidenav navbar navbar-vertical navbar-expand-xs border-radius-xl"
-    :class="isRTL ? 'me-3 rotate-caret' : 'ms-3'"
-    id="sidenav-main"
+      class="my-3 sidenav navbar navbar-vertical navbar-expand-xs box"
+      :class="isRTL ? 'me-3 rotate-caret' : 'ms-3'"
+      id="sidenav-main"
   >
-    <div class="sidenav-header">
-      <router-link class="navbar-brand" to="/">
-        <img :src="logo" class="navbar-brand-img" alt="main_logo" />
-      </router-link>
+    <div class="side-header" @click="clickHome">
+      <img :src="logo" class="HomeLogo" alt="main_logo"/>
     </div>
     <hr class="mt-0 horizontal dark" />
     <sidenav-list :cardBg="customClass" />
@@ -26,8 +24,22 @@ export default {
   },
   data() {
     return {
+      mg_auth: JSON.parse(sessionStorage.getItem('sessionAuth')),
       logo
     }
+  },
+  methods: {
+    clickHome(){
+      // console.log(this.mg_auth)
+      if(this.mg_auth === '1'){
+        this.$router.push('/uMainView')
+      }else if(this.mg_auth === '2' || this.mg_auth === '3'){
+        this.$router.push('/cMainView')
+      }else if(this.mg_auth === '4'){
+        this.$router.push('/aMainView')
+      }
+    }
+
   },
   props: {
     customClass: {
@@ -41,12 +53,15 @@ export default {
 }
 </script>
 <style>
-.sidenav .navbar-brand {
-  padding: 0px;
-  margin: 0px;
+.side-header {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
 }
-.navbar-brand-img {
-  max-width: 200px;
-  max-height: 30px;
+.HomeLogo {
+  width: 130px;
+  height: 130px;
+  display: block;
 }
+
 </style>

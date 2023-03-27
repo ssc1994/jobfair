@@ -26,8 +26,7 @@ export default {
   name: "resumeList",
   props: [
     'resDetail',
-    'index',
-    'resDetail'
+    'index'
   ],
   data() {
     return {
@@ -37,7 +36,7 @@ export default {
   methods: {
     delBtn() {
       if (confirm('정말로 삭제하시겠습니까?')) {
-        this.$axios.post('/jobfair/deleteResume', {res_num: this.resDetail.res_num})
+        this.$axios.post('/jobfair/deleteResume', this.resDetail)
             .then((res) => {
               this.$router.go(0);
               this.res_num = res.data

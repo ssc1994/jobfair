@@ -96,12 +96,17 @@ public class UserServiceImpl implements UserService {
     public void EmpApply(String user_id, String jpl_num, String res_num){
         userMapper.EmpApply(user_id, jpl_num, res_num);
     }
-    
-    //박희진 작성중
-//    @Override
-//    public ArrayList<EmpVO> EmpRegistInfo() {
-//        return userMapper.EmpRegistInfo();
-//    }
+
+    @Override
+    public ArrayList<EmpListVO> getMainJobInfo() {
+        return userMapper.getMainJobInfo();
+    }
+
+    @Override
+    public ArrayList<StatisticVO> getGendertotal() {
+        return userMapper.getGendertotal();
+    }
+
 
     //################## 마이페이지(MyPage) Service #######################
     @Override

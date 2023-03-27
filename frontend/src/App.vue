@@ -20,7 +20,6 @@
     />
     <router-view />
     <app-footer v-show="this.$store.state.showFooter" />
-
   </main>
 </template>
 <script>

@@ -46,4 +46,6 @@ public class EmpListVO {
     private String jpl_fileName;
     private String jpl_filePath;
     private String jpl_fileUuid;
+
+    private String url;
 }

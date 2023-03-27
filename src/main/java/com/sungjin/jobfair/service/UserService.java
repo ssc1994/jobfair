@@ -52,22 +52,27 @@ public interface UserService {
         // 유저가 지원한 공고인지 찾기
         public int EmpApplied(String user_id, String jpl_num);
 
-    //채용공고 지원하기
+      //채용공고 지원하기
     public void EmpApply(String user_id, String jpl_num, String res_num);
 
+      //메인에서 채용공고 가져오기
+    public ArrayList<EmpListVO> getMainJobInfo();
 
+    //채용공고 통계관련
+    //지원자의 성별통계 구하기!!
+    public ArrayList<StatisticVO> getGendertotal();
     //################## 마이페이지(MyPage) Service #######################
         //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo(String user_id);
-        //이력서 삭제버튼 누르면 데이터 삭제하기
-
-    //지원현황 목록 전체
+      //지원현황 목록 전체
     public ArrayList<EmpApplyVO> getApplyListAll(String user_id);
-    //지원현황 목록 열람
+      //지원현황 목록 열람
     public ArrayList<EmpApplyVO> getApplyListO(String user_id);
-    //지원현황 목록 미열람
+      //지원현황 목록 미열람
     public ArrayList<EmpApplyVO> getApplyListX(String user_id);
 
+
+      //이력서 삭제버튼 누르면 데이터 삭제하기
     public void deleteResume(String res_num);
 
     public void deleteEdu(String res_num);

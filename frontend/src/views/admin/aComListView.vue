@@ -2,6 +2,11 @@
   <div class="ListBg">
     <div class="list_titleWrap">
       <h1>참여 업체 목록</h1>
+      <div>
+        <span>기업 검색:</span>
+        <input type="text" v-model="com_name" @keyup.enter="searchCom">
+        <img src="#">
+      </div>
       <select class="choiceSort" v-model="dateOption" @change="getComList">
         <option>최신 날짜순</option>
         <option>오래된 날짜순</option>
@@ -24,8 +29,8 @@
               </select>
             </td>
           </tr>
-        <tr class="tableList" v-for="(com, index) in comList" :key="index" @click="goDetail" >
-          <td><img src="" alt="이미지"></td>
+        <tr class="tableList" v-for="(com, index) in comList" :key="index" @click="goDetail(com.com_num)" >
+          <td><img :src="com.img_url" alt="이미지"></td>
           <td>{{com.com_name}}</td>
           <td>{{com.user_regDate}}</td>
           <td>{{com.mg_auth }}</td>
@@ -39,7 +44,7 @@
         <li class="page-item"><a class="page-link"  @click="goFirstPage(page - 1)" style="margin-right: 10px">First</a></li>
         <li class="page-item"><a class="page-link"  @click="goPrevPage(page - 1)" style="margin-right: 10px">Previous</a></li>
         <template v-for="(item, index) in pageList" :key="index">
-          <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link"  @click.prevent="ClickPage($event)" id="index">{{item}}</span></li>
+          <li class="page-item" :class="{'active' : item == this.page}"><span class="page-link"  @click.prevent="ClickPage($event), getComList()" id="index">{{item}}</span></li>
         </template>
         <li class="page-item"><a class="page-link"  @click="goNextPage(page + 1)" style="margin-right: 10px">Next</a></li>
         <li class="page-item"><a class="page-link"  @click="goLastPage(page + 1)" style="margin-right: 10px">Last</a></li>
@@ -54,13 +59,8 @@ export default {
   data() {
     return {
 
-      //기업의 데이터 담을 변수
+      //검색관련
       com_name: '',
-      com_fileName: '',
-      com_filePath: '',
-      com_fileUuid: '',
-      user_regDate: '',
-      mg_auth: '',
 
       //페이지네이션 관련
       comList: '', //받아온 기업리스트 담을 변수
@@ -69,7 +69,7 @@ export default {
       detailNum: "",
       //페이지 이동에 필요한 초기값
       page: 1,
-      amount: 10,
+      amount: 5,
       prev: '',
       start: '',
       end: '',
@@ -93,39 +93,33 @@ export default {
                             manageState : this.manageState}
                   }).catch( err => console.log(err))
 
-       console.log(data)
+       this.comList = data.list
+       this.pages = data.pageVO;
+       this.pageList = this.pages.pageList;
 
-       // //데이터 다시 돌아오는거 보고 변수 매칭되는거 다시한번씩 확인해야됨 아래로 다.
-       // this.comList = data.list
-       // this.pages = data.pageVO;
-       // this.pageList = this.pages.pageList;
-       //
-       // //페이지이동에 필요한 데이터 담기
-       // this.page = this.pages.page;
-       // this.prev = this.pages.prev;
-       // this.pageStart = this.pages.pageStart;
-       // this.pageEnd = this.pages.pageEnd;
-       // this.realEnd = this.pages.realEnd;
-       //
-       // //mg_auth에 따라서 관리상태 값 매칭해주기
-       // for(let i =0; i<this.comList.length; i++){
-       //    if(this.comList[i].mg_auth === '2'){
-       //      this.comList[i].mg_auth = '신청'
-       //    } else if(this.comList[i].mg_auth === '3'){
-       //      this.comList[i].mg_auth = '승인'
-       //    } else {
-       //      // mg_auth 가 5일 경우
-       //      this.comList[i].mg_auth = '반려'
-       //    }
-       // }
+       //페이지이동에 필요한 데이터 담기
+       this.page = this.pages.page;
+       this.prev = this.pages.prev;
+       this.pageStart = this.pages.pageStart;
+       this.pageEnd = this.pages.pageEnd;
+       this.realEnd = this.pages.realEnd;
 
-
-
+       //mg_auth에 따라서 관리상태 값 매칭해주기
+       for(let i =0; i<this.comList.length; i++){
+          if(this.comList[i].mg_auth === '2'){
+            this.comList[i].mg_auth = '신청'
+          } else if(this.comList[i].mg_auth === '3'){
+            this.comList[i].mg_auth = '승인'
+          } else {
+            // mg_auth 가 5일 경우
+            this.comList[i].mg_auth = '반려'
+          }
+       }
 
      },
     //기업리스트 누르면 기업의 상세페이지로 넘어가기
-    goDetail () {
-      this.$router.push('/aComDetailView')
+    goDetail (comNum) {
+      this.$router.push({name:'aComDetailView', params: {com_num : comNum}})
     },
 
     //페이지 네이션 부분
@@ -157,6 +151,13 @@ export default {
       var clicked = e.target.innerHTML;
       this.page = clicked
     },
+
+    //기업이름 검색
+    async searchCom () {
+      let res = await this.$axios.get('/jobfair/aComList/search', {params: {com_name : this.com_name}}).catch(err => console.log(err))
+      console.log(res)
+    }
+
   }
 }
 </script>
@@ -272,6 +273,7 @@ select {
 
 .paginationWrap .page-link {
   background-color: #0064ff;
+  cursor: pointer;
 }
 
 .paginationWrap li.active span {

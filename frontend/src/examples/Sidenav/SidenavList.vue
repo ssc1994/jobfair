@@ -4,10 +4,11 @@
       <div class="userInfoFirstLine">
         <div class="userInfo_wrap">
 <!--          이미지 얼굴사진으로 변경해야함-->
-          <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left" style="z-index: 10">
+          <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left" style="z-index: 1; position: relative">
           <div>
             <!--            session에서 가져온 아이디 값 출력 -->
-            <h6>{{ userInfo.user_id }}님 환영합니다.</h6>
+            <h6>{{ userInfo.user_id }}님</h6>
+            <h6>환영합니다.</h6>
           </div>
         </div>
       </div>
@@ -20,6 +21,7 @@
             개인정보 수정
           </button>
           <button type="button" class="btn" @click="this.$router.push('uMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
       <div v-if="userInfo.mg_auth === '2'">
@@ -28,6 +30,7 @@
             QnA
           </button>
           <button type="button" class="btn" @click="this.$router.push('cMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
     </div>
@@ -111,10 +114,10 @@
                     <span>핸드폰 번호</span><span :hidden="userPh_errorMsg === ''"
                                              class="pass_error">{{ userPh_errorMsg }}</span>
                   </div>
-                  <input type="text" class="data_insert_box" placeholder='phoneNumber - 없이'
-                         @keyup="noSpaceForm($event), phCheck()"
+                  <input type="text" class="data_insert_box" placeholder='phoneNumber 숫자만 입력 -자동추가'
+                         @keyup="userAutoHyphen($event), phCheck()"
                          ref="phNumBox"
-                         v-model="userInfo.user_phone" maxlength="11">
+                         v-model="userInfo.user_phone" maxlength="13">
                 </div>
 
                 <div class="data_box">
@@ -129,8 +132,15 @@
                 </div>
               </div>
 
+              <!--  비밀번호 변경 창  -->
               <div v-if="modi_type === 'pw'">
                 <div class="data_box">
+
+                  <div class="msg_for_pw">
+                    비밀번호는 8~20자로 영문,숫자,특수기호를 포함하여야 합니다. <br>
+                    비밀번호는 보안을 위해서 주기적(최소 6개월)으로 변경해주시면 좋습니다.
+                  </div>
+
                   <div class="data_title_wrap">
                     <span>기존 비밀번호</span><span :hidden="currentPw_errorMsg === ''"
                                               class="pass_error">{{ currentPw_errorMsg }}</span>
@@ -229,10 +239,10 @@ export default {
       woman: 'false',
       gender: '',
       //정규식
-      passwordRule: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,  //비밀번호 유효성 검사 정규표현식
+      passwordRule: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,  //비밀번호 유효성 검사 정규표현식 -> (8~20자의 영문,숫자,특수기호 포함)
       nameRule: /^[가-힣]{2,4}$/, //한글만 2~4글자
       emailRule: /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/, //이메일 형식 유호성 검사 정규표현식
-      phoneNumRule: /^[0-9]{8,13}$/, //휴대폰 번호 숫자만 가능
+      phoneNumRule: /^\d{2,3}-\d{3,4}-\d{4}$/, //전화번호, 핸드폰 번호 형식인지 검사
       //유효성검사 에러 메세지
       userName_errorMsg: '',
       currentPw_errorMsg: '', // pw파트
@@ -424,23 +434,22 @@ export default {
           this.$refs.phNumBox.focus()
           return
         }
-        this.userPh_errorMsg = '휴대폰 번호를 -없이 입력해주세요'
+        this.userPh_errorMsg = '휴대폰 번호를 다시 확인해주세요'
         this.$refs.phNumBox.focus()
         return
       } else {
         this.userPh_errorMsg = ''
       }
 
-      //유효성 검사 통과 후 수정요청 날리기
-      // this.requestModi()
+    },
+    // 전화,핸드폰번호 자동 하이푼 추가
+    userAutoHyphen(e) {
+      let value = e.target.value
+      this.userInfo.user_phone = value.replace(/[^0-9]/g, "").replace(
+          /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,
+          "$1-$2-$3")
+    },
 
-    }
-    ,
-//비밀번호 검사
-    checkPw() {
-
-    }
-    ,
 //수정요청 날리기
     requestModi() {
 
@@ -454,7 +463,7 @@ export default {
                 console.log(response)
 
                 //수정이 완료된 후 모달창 닫기2
-                alert('수정되었습니다 ^^!')
+                alert('회원정보가 수정되었습니다')
                 this.$refs.closeBtn.click()
 
               })
@@ -548,6 +557,8 @@ export default {
 }
 </script>
 
+
+
 <style scoped>
 
 .sidenav-footer {
@@ -606,6 +617,12 @@ export default {
 .profile_img {
   width: 80px;
   height: 80px;
+}
+/* ---- 개인정보 수정 모달부분 -----*/
+.modal-title{
+  /*모달 타이틀: 개인정보 수정 부분*/
+  font-weight: bold;
+  color: #202632;
 }
 
 .changeType_btn_wrap {
@@ -667,6 +684,13 @@ export default {
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+/* 데이터 입력부분 타이틀 */
+.data_title_wrap span:first-child{
+  color: #202632;
+  font-size: 15px;
+  font-weight: bold;
+}
+
 /* 입력된 데이터 에러메세지 띄우는 부분*/
 .data_title_wrap span {
   display: inline-block;
@@ -696,6 +720,12 @@ export default {
 /*유효성 검사 통과 시 글자색 초록색*/
 .pass_color {
   color: green;
+}
+
+/*비밀번호 변경 창 메세지*/
+.msg_for_pw{
+  font-size: 12px;
+  padding: 15px;
 }
 
 /*------------- 개인정보 수정 모달 부분 end ------------------*/

@@ -130,8 +130,8 @@ where jpl_num = #{jpl_num}
     </select>
         <!-- 큐앤에이 답변 가져오기 -->
     <select id="getQnAReply" resultType="QnAVO">
-        select c.* from qna u
-                            inner join qna c
+        select c.* from QnA u
+                            inner join QnA c
                                        on u.qa_num = c.qa_reply
         where u.qa_num=#{qa_num}
     </select>
@@ -151,18 +151,48 @@ where jpl_num = #{jpl_num}
     <select id="getEmpData" resultType="EmpVO">
         select *
         from JobPostingList
-        where jpl_num = #{jpl_num};
-
+        where jpl_num = #{jpl_num}
     </select>
+        
+        <!-- 기업이 등록한 채용공고 total 개수 -->
+    <select id="getTotalJpl" resultType="int">
+        select count(*) from JobPostingList where com_num = #{com_num}
+    </select>
+
+        <!-- 공고에 지원한 지원자 수 total -->
+    <select id="getTotalAl" resultType="int">
+        select count(*) from ApplyList where jpl_num = #{jpl_num}
+    </select>
+
+        <!-- 채용공고에 지원한 지원자들 리스트 가져오기 -->
+    <select id="getApplicantList" resultType="map">
+        select * from ApplyList al
+            left outer join ResumeList r
+            on al.res_num = r.res_num
+            where al.jpl_num = #{jpl_num}
+            limit #{cri.pageStart}, #{cri.amount}
+    </select>
+
+        <!-- 이력서 열람/미열람 상태 변경 -->
+    <update id="chgApplicantState">
+        <if test= 'al_state == "X"'>
+            update ApplyList set al_state = 'O' where res_num = ${res_num}
+        </if>
+        <if test= 'al_state == "O"'>
+            update ApplyList set al_state = 'X' where res_num = ${res_num}
+        </if>
+    </update>
 
         <!-- 기업이 등록한 채용공고 리스트 가져오기 -->
-    <select id="getComJobPosingList" resultType="map">
-        select * from JobPostingList where com_num = #{com_num}
+    <select id="getComJobPosingList" resultType="EmpVO">
+        select * from JobPostingList
+                 where com_num = #{com_num} limit #{cri.pageStart}, #{cri.amount}
     </select>
+        
         <!-- 큐앤에이 기업 상세 -->
     <select id="getComQnADetail" resultType="QnAVO">
-        select c.* from qna u
-                            inner join qna c
+        select c.* from QnA u
+                            inner join QnA c
                                        on u.qa_num = c.qa_reply
         where u.qa_num=#{qa_num}
     </select>
@@ -170,6 +200,45 @@ where jpl_num = #{jpl_num}
     <!--페이지네이션-->
     <select id="cQnAGetTotal" resultType="int">
         select count(*) from QnA where qa_type like "%q%" and com_num =#{com_num}
+    </select>
+
+        
+    <!--####################### 기업 메인 페이지 #######################-->
+        <!--현황판 전체 공고 수, 진행 중 채용공고 수 가져오기-->
+    <select id="getStatusPosting" resultType="map">
+        select count(*) totalPosting, (select count(*) from JobPostingList
+                          where jpl_endDate >= sysdate() and com_num = #{com_num}) ing
+        from JobPostingList
+        where com_num = #{com_num}
+    </select>
+        <!--현황판 전체 이력서 수, 열람한 이력수 수 가져오기-->
+    <select id="getStatusRes" resultType="map">
+        select count(*) totalRes, (select count(*) from ApplyList al
+                          left outer join JobPostingList jpl
+                          on jpl.jpl_num = al.jpl_num
+                          where jpl.com_num = #{com_num} and al_state = 'O') seeRes
+        from ApplyList al
+        left outer join JobPostingList jpl
+                   on jpl.jpl_num = al.jpl_num
+        where jpl.com_num = #{com_num};
+    </select>
+        <!-- 기업이 등록한 최신공고 2개 -->
+    <select id="getRecentPosting" resultType="EmpVO">
+        select * from JobPostingList
+        where com_num = #{com_num}
+        order by jpl_regDate desc
+        limit 2
+    </select>
+
+    <select id="getRecentApplicant" resultType="map">
+        select * from ApplyList al
+                left outer join JobPostingList jpl
+                on al.jpl_num = jpl.jpl_num
+                left outer join ResumeList rl
+                on al.res_num = rl.res_num
+        where com_num = #{com_num}
+        order by al.al_regDate desc
+        limit 2
     </select>
 
 </mapper>

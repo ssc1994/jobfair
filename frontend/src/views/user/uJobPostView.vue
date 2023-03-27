@@ -221,7 +221,7 @@
 
       <div class="row empListBox">
 
-        <div v-for="(jobpost,i) in jobPostList" :key=i @click.prevent="detail(jobpost.jpl_num)" class="empBoxConWrap col-6">
+        <div v-for="(jobpost, i)  in jobPostList" :key=i @click.prevent="detail(jobpost.jpl_num)" class="empBoxConWrap col-6">
 
           <div class="empBoxCon ">
             <router-link to="" class="left empBoxCompany">

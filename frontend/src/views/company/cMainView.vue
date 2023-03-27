@@ -1,198 +1,136 @@
 <template>
   <div>
     <img src="@/assets/mainImg.png" style="width: 1500px; margin-left: 50px;">
-  <div class="comBoxWrap">
-<!--    <section class="comMiddle col-xl-12">-->
-<!--      공고 등록하기 버튼 클릭시 페이지 이동하는 메서드 추가 + 스크립트 -->
-
-
+    <div class="comBoxWrap">
+      <!--    <section class="comMiddle col-xl-12">-->
+      <!--      공고 등록하기 버튼 클릭시 페이지 이동하는 메서드 추가 + 스크립트 -->
       <div class="comList">
         <div class="comTopBox">
-
-
-
-            <div class="aplBtnBoxWrap">
-              <h3>채용 현황</h3>
-              <div class="aplBtnBox">
-                <div @click="getApplyList"> <!---->
-                  <p class="aplBtnNum">0</p>
-                  <p>진행중 공고</p>
-                </div>
-                <div id="O" @click="getApplyList">
-                  <p class="aplBtnNum">0</p>
-                  <p>지원마감 공고</p>
-                </div>
-                <div id="X" @click="getApplyList">
-                  <p class="aplBtnNum">0</p>
-                  <p>열람 이력서</p>
-                </div>
-                <div id="X" @click="getApplyList">
-                  <p class="aplBtnNum">0</p>
-                  <p>미열람 이력서</p>
-                </div>
+          <div class="aplBtnBoxWrap">
+            <h3>채용 현황</h3>
+            <div class="aplBtnBox">
+              <div @click="getApplyList"> <!---->
+                <p class="aplBtnNum">{{ingPosting}}</p>
+                <p>진행중 공고</p>
+              </div>
+              <div id="O" @click="getApplyList">
+                <p class="aplBtnNum">{{totalPosting - ingPosting}}</p>
+                <p>지원마감 공고</p>
+              </div>
+              <div id="X" @click="getApplyList">
+                <p class="aplBtnNum">{{seeRes}}</p>
+                <p>열람 이력서</p>
+              </div>
+              <div id="X" @click="getApplyList">
+                <p class="aplBtnNum">{{totalRes - seeRes}}</p>
+                <p>미열람 이력서</p>
               </div>
             </div>
+          </div>
           <div class="btnBox">
-            <button type="button" class="comBtn1 " v-on:click="goRegView()">  QnA 목록</button>
+            <button type="button" class="comBtn1 " v-on:click="goQnaView()">  QnA 목록</button>
             <button type="button" class="comBtn2" v-on:click="goRegView()"> 공고 등록하기 </button>
           </div>
-          </div>
+        </div>
 
         <div class="comBottomBox">
           <div class="comRegList">
             <div>
-                <h3>내가 등록한 최신공고</h3>
-                <button class="comAllBtn">
-                  <img src="@/assets/icon_arrow_right.svg"/>
-                  공고 전체보기
-                </button>
+              <h3>내가 등록한 최신공고</h3>
+              <button class="comAllBtn" @click="this.$router.push({path: 'cApplyMngView'})">
+                <img src="@/assets/icon_arrow_right.svg"/>
+                공고 전체보기
+              </button>
             </div>
             <div>
-              <ul id="listHolder" class="lists">
-                <li>
-                  <div class="empBoxConWrap col-6">
-
-                    <div class="empBoxCon ">
-                      <router-link to="" class="left empBoxCompany">
-                        <p>(주)  jobpost.com_name </p>
-                        <img src="@/assets/kakao.png" >
-                      </router-link>
-                      <div class="left empBoxText">
-                        <router-link to="">
-                          <p class="empTitle"> jobpost.jpl_title </p>
-
-                          <p class="empBoxTag"> 서울시 어쩌고 저쩌고 </p>
-                        </router-link>
-                        <div style="padding-top:50px;">
-                          <span class="left empBoxDday">D-27</span>
-                          <span class="left empBoxDday">3월 17일 까지</span>
-                        </div>
-
-
-
-                      </div>
-                      <div class="empBoxBtn right">
-                        <button type="button" class="btn btn-primary aplBtn applied" style="height:50%;">
-                          지원자 <br/>40명 보기
-                        </button>
-                        <button type="button" class="btn btn-primary aplBtn" style="background-color: #0064ff;">
-                          수정하기
-                        </button>
-                      </div>
-
-                      </div>
-                  </div>
-
-                </li>
-                <li><div class="empBoxConWrap col-6">
-
-                  <div class="empBoxCon ">
-                    <router-link to="" class="left empBoxCompany">
-                      <p>(주)  jobpost.com_name </p>
-                      <img src="@/assets/kakao.png" >
-                    </router-link>
-                    <div class="left empBoxText">
-                      <router-link to="">
-                        <p class="empTitle"> jobpost.jpl_title </p>
-
-                        <p class="empBoxTag"> 서울시 어쩌고 저쩌고 </p>
-                      </router-link>
-                      <div style="padding-top:50px;">
-                        <span class="left empBoxDday">D-27</span>
-                        <span class="left empBoxDday">3월 17일 까지</span>
-                      </div>
-
-
-
-                    </div>
-                    <div class="empBoxBtn right">
-                      <button type="button" class="btn btn-primary aplBtn applied" style="height:50%;">
-                        지원자 <br/>40명 보기
-                      </button>
-                      <button type="button" class="btn btn-primary aplBtn" style="background-color: #0064ff;">
-                        수정하기
-                      </button>
-                    </div>
-
-                  </div>
-                </div></li>
+              <ul id="listHolder" class="lists" v-for="(jpl, index) in jplArr" :key="jpl.jpl_num">
+                <RecentJobPostingComp :jplInfo="jpl" :imgUrl="this.urlArr[index]" :totalAppArr="totalAppArr[index]"/>
               </ul>
             </div>
           </div>
           <div class="comNewComer">
-              <div class="comTopBox">
-                <h3>최근 지원자</h3>
-                <button class="comAllBtn">
-                  <img src="@/assets/icon_arrow_right.svg"/>
-                  지원자 전체보기
-                </button>
+            <div class="comTopBox">
+              <h3>최근 지원자</h3>
+              <button class="comAllBtn">
+                <img src="@/assets/icon_arrow_right.svg"/>
+                지원자 전체보기
+              </button>
+            </div>
+            <div class="ResentInfo">
+              <div>
+                <ul id="listHolder" class="lists" v-for="(app, index) in appArr" :key="app.al_num">
+                  <RecentApplicantComp :appInfo="app"/>
+                </ul>
               </div>
-              <div class="ResentInfo">
-                <div>
-                  <ul id="listHolder" class="lists">
-                    <li>
-                      <div class="empBoxConWrap col-6">
-
-                        <div class="aplBoxCon ">
-                          <router-link to="" class="left aplBoxCompany">
-                            <p>홍길동님</p>
-                            <img src="@/assets/kakao.png" >
-                          </router-link>
-                          <div class="aplBoxText">
-                            <router-link to="">
-                              <p class="aplTitle"> 모든 코딩 제가 하겠습니다. </p>
-                              <p class="aplBoxTag"> 나이 </p>
-                              <p class="aplBoxTag"> 학력 </p>
-                              <p class="aplBoxTag"> 경력 </p>
-                            </router-link>
-                          </div>
-
-
-                        </div>
-                      </div>
-
-                    </li>
-                    <li>
-
-                      <div class="empBoxConWrap col-6">
-
-                        <div class="aplBoxCon ">
-                          <router-link to="" class="left aplBoxCompany">
-                            <p>홍길동님</p>
-                            <img src="@/assets/kakao.png" >
-                          </router-link>
-                          <div class="aplBoxText">
-                            <router-link to="">
-                              <p class="aplTitle"> 모든 코딩 제가 하겠습니다. </p>
-                              <p class="aplBoxTag"> 나이 </p>
-                              <p class="aplBoxTag"> 학력 </p>
-                              <p class="aplBoxTag"> 경력 </p>
-                            </router-link>
-                          </div>
-
-
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            </div>
           </div>
         </div>
       </div>
 
-<!--    </section>-->
-  </div>
+      <!--    </section>-->
+    </div>
   </div>
 </template>
 
 <script>
+import RecentJobPostingComp from "@/components/myComponent/RecentJobPostingComp";
+import RecentApplicantComp from "@/components/myComponent/RecentApplicantComp";
+
 export default {
   name: 'cMainView',
+  components: {
+    RecentJobPostingComp,
+    RecentApplicantComp
+  },
+  data () {
+    return {
+      totalPosting: 0,
+      ingPosting : 0,
+      donPosting: 0,
+      totalRes: 0,
+      seeRes: 0,
+      notSeeRes: 0,
+      com_num: '',
+      jplArr: [],
+      appArr: [],
+      urlArr: [],
+      totalAppArr: []
+    }
+  },
   methods: {
     goRegView() {
       this.$router.push({path: "cEmpRegView"})
+    },
+    goQnaView() {
+      this.$router.push({path: "cQnAView"})
+    },
+    getApplyList(e) {
+      this.$router.push({path:""})
+    },
+    async mainFunction () {
+      let sessionComp = sessionStorage.getItem('sessionComp')
+      if(sessionComp && typeof sessionComp === 'string' && sessionComp !== '') {
+        let SessionJsonComp = JSON.parse(sessionComp)
+        this.com_num = SessionJsonComp;
+      }
+
+      let res = await this.$axios.get("/jobfair/getStatusData", {
+        params: {
+          com_num: this.com_num
+        }}) .catch (arr => console.log(err))
+
+      this.totalPosting = res.data.postingArr[0].totalPosting
+      this.ingPosting = res.data.postingArr[0].ing
+      this.totalRes = res.data.resArr[0].totalRes
+      this.seeRes = res.data.resArr[0].seeRes
+      this.jplArr = res.data.jplArr
+      this.appArr = res.data.appArr
+      this.urlArr = res.data.urlArr
+      this.totalAppArr = res.data.totalAppArr
     }
+  },
+  created() {
+    this.mainFunction()
   }
 }
 </script>
@@ -235,9 +173,9 @@ h3{font-weight: bold;
 .topWrap {width:100%;}
 
 .aplBtnBoxWrap {  width: 60%;
-                  display: inline-block;
+  display: inline-block;
   height:200px;
-                }
+}
 
 .btnBox {display: inline-block;
   width:40%;
@@ -247,7 +185,6 @@ h3{font-weight: bold;
   padding-left:15px;
 }
 
-
 /*채용현황*/
 .aplBtnBox {
   border:1px solid #dedede;
@@ -256,10 +193,8 @@ h3{font-weight: bold;
   background-color: #efefef;
   float: left;
   width:100%;
-
-
-
 }
+
 .aplBtnBox div {
   text-align: center;
   display: inline-block;
@@ -355,7 +290,7 @@ h3{font-weight: bold;
 
 
 .comBottomBox {margin-top:20px;
-               width:80%;
+  width:80%;
 }
 
 .comBottomBox h3{display: inline-block;}
@@ -525,8 +460,8 @@ h3{font-weight: bold;
 
 
 .empBoxBtn {
-            width:18%;
-            height:100%;
+  width:18%;
+  height:100%;
 }
 
 .aplBtn {border:none;
@@ -559,8 +494,4 @@ h3{font-weight: bold;
   border-radius:20px;
   margin-right: 5px;
 }
-
-
-
 </style>
-
