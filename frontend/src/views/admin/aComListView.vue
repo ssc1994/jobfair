@@ -2,11 +2,11 @@
   <div class="ListBg">
     <div class="list_titleWrap">
       <h1>참여 업체 목록</h1>
-      <div>
-        <span>기업 검색:</span>
-        <input type="text" v-model="com_name" @keyup.enter="searchCom">
-        <img src="#">
-      </div>
+<!--      <div>-->
+<!--        <span>기업 검색:</span>-->
+<!--        <input type="text" v-model="com_name" @keyup.enter="searchCom">-->
+<!--        <img src="#">-->
+<!--      </div>-->
       <select class="choiceSort" v-model="dateOption" @change="getComList">
         <option>최신 날짜순</option>
         <option>오래된 날짜순</option>
@@ -69,7 +69,7 @@ export default {
       detailNum: "",
       //페이지 이동에 필요한 초기값
       page: 1,
-      amount: 5,
+      amount: 10,
       prev: '',
       start: '',
       end: '',

@@ -387,12 +387,10 @@ export default {
           .then(res=>{
             this.jpl_comPanyName=res.data.com_name
             this.jpl_contact=res.data.com_phone
-            console.log("comData")
             console.log(res)
           }).catch(err=>{
         console.log(err)
       })
-      console.log("userData")
       console.log(res)
     }).catch(err=>{
       console.log(err)

@@ -465,14 +465,9 @@ export default {
               "Content-Type": `multipart/form-data`
             }
           }).then((res) => {
-        console.log('성공')
         console.log(res)
-
-
       }).catch(err => {
         console.log(err)
-        console.log('송출에러')
-
       })
 
     },

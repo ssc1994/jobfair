@@ -3,7 +3,7 @@
     <div class="userInfoBox">
       <div class="userInfoFirstLine">
         <div class="userInfo_wrap">
-<!--          이미지 얼굴사진으로 변경해야함-->
+          <!--          이미지 얼굴사진으로 변경해야함-->
           <img src="../../assets/img/myImage/profileImg.png" class="profile_img userInfo_left" style="z-index: 1; position: relative">
           <div>
             <!--            session에서 가져온 아이디 값 출력 -->
@@ -24,12 +24,20 @@
           <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
-      <div v-if="userInfo.mg_auth === '2'">
+      <div v-if="userInfo.mg_auth === '2'||userInfo.mg_auth === '3'">
         <div class="btnBox">
           <button type="button" class="btn" @click="this.$router.push('cQnAView')">
             QnA
           </button>
           <button type="button" class="btn" @click="this.$router.push('cMypageView') ">MyPage</button>
+          <button type="button" class="btn" @click=logOut()>logout</button>
+        </div>
+      </div>
+      <div v-if="userInfo.mg_auth === '4'">
+        <div class="btnBox">
+          <button type="button" class="btn" @click="this.$router.push('aQnaView')">
+            QnA
+          </button>
           <button type="button" class="btn" @click=logOut()>logout</button>
         </div>
       </div>
@@ -188,18 +196,18 @@
   <hr>
 
   <!-- 아코디언 -->
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
-    </div>
+  <div>
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
+  </div>
+  <div>
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
+  </div>
+  <div>
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
+  </div>
+  <div>
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
+  </div>
 
 </template>
 <script>
@@ -460,7 +468,6 @@ export default {
         if (this.modi_type === 'info') { //회원 정보 수정 요청일 때
           this.$axios.post('/jobfair/userInfoModi/modifyInfo', this.userInfo)
               .then(response => {
-                console.log(response)
 
                 //수정이 완료된 후 모달창 닫기2
                 alert('회원정보가 수정되었습니다')
@@ -475,7 +482,6 @@ export default {
 
           this.$axios.post('/jobfair/userInfoModi/modifyPw', this.userInfo)
               .then(response => {
-                console.log(response)
 
                 var msg = response.data
 
@@ -491,8 +497,8 @@ export default {
                   }
                 } else {
                   alert(msg)
-                //수정이 완료된 후 모달창 닫기
-                this.$refs.closeBtn.click()
+                  //수정이 완료된 후 모달창 닫기
+                  this.$refs.closeBtn.click()
                 }
 
               })
@@ -516,7 +522,6 @@ export default {
         e.target.focus();
         e.target.value = e.target.value.replace(' ', ''); // 공백제거
         return false;
-        console.log(this.gender)
       }
     },
     //회원정보 타입 선택시 기본값 변경

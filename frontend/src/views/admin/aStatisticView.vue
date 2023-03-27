@@ -12,11 +12,6 @@
               ref="genderGroup"
           />
         </div>
-        <!--    <div class="datePerson">-->
-        <!--      <h2>기간별 지원자 통계</h2>-->
-        <!--      <input type="date"/>-->
-        <!--      <button>기간조회</button>-->
-        <!--    </div>-->
       </div>
     </div>
   </div>

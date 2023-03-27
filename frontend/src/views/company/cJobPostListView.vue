@@ -124,9 +124,6 @@
         </form>
       </div>
 
-
-
-
       <div class="row empListBox">
         <div class="sortBtn">
           <button class="sortMy" style="border-right:1px solid #dedede;">내가 작성한 공고</button>
@@ -209,7 +206,6 @@ export default {
   methods: {
     plus : function(e){
       this.certi = e.target.value;
-      console.log(e.target.value);
     },
     del : function (e) {
       this.certi = '';

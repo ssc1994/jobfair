@@ -1,9 +1,9 @@
 <template>
   <div class="progress">
     <div
-      class="progress-bar"
-      :class="getClasses(color, variant)"
-      :style="{ width: percentage + '%' }"
+        class="progress-bar"
+        :class="getClasses(color, variant)"
+        :style="{ width: percentage + '%' }"
     ></div>
   </div>
 </template>
