@@ -467,6 +467,8 @@ export default {
           }).then((res) => {
         console.log('성공')
         console.log(res)
+        this.$router.push('cMainView')
+
 
 
       }).catch(err => {
