@@ -5,83 +5,82 @@
       <div>
         <div class="aplBoxCon">
           <div>
-            <h3>기업 정보</h3>
+            <h3 class="title">기업 정보</h3>
           </div>
 
-          <div class="infoWrapBox">
+          <div class="infoBoxWrap">
             <div class="infoBox">
+
               <div class="info_head">
-                <img src="#">
-                <h3>{{comInfo.com_name}}</h3>
-              </div>
-              <div class="input-group mb-3">
-
-                <span class="input-group-text" id="basic-addon1">기업번호</span>
-                <input type="text" class="form-control" placeholder="comNum" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_num">
+                <div class="comLogoWrap">
+                  <img :src="comInfo.img_url" class="comLogo">
+                </div>
+                <div class="com_name_wrap">
+                  <div class="com_name">{{ comInfo.com_name }}</div>
+                </div>
               </div>
 
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
-                <input type="text" class="form-control" placeholder="BusinessRegistrationNum" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_businessRegistration">
-              </div>
+              <div class="info_body">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">사업자등록번호</span>
+                  <input type="text" class="form-control" placeholder="Title" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_businessRegistration">
+                </div>
 
-              <div class="input-group mb-3">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">설립일</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_establishmentDate">
+                </div>
 
-                <span class="input-group-text" id="basic-addon1">전화번호</span>
-                <input type="text" class="form-control" placeholder="Phone" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_phone">
-              </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">업종</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_category">
+                </div>
 
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">이메일</span>
-                <input type="text" class="form-control" placeholder="Email" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_email">
-              </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">대표자</span>
+                  <input type="text" class="form-control" placeholder="대표자" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_ceo">
+                </div>
 
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">업종</span>
-                <input type="text" class="form-control" placeholder="Category" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_category">
-              </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">전화번호</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_phone">
+                </div>
 
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">대표자</span>
-                <input type="text" class="form-control" placeholder="CEO" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_ceo">
-              </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">이메일</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_email">
+                </div>
 
 
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">설립일</span>
-                <input type="text" class="form-control" placeholder="RegDate" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_establishmentDate">
-              </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">주소</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_address">
+                </div>
 
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">상세주소</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Username"
-                       aria-describedby="basic-addon1" disabled :value="comInfo.com_detail_address">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">상세주소</span>
+                  <input type="text" class="form-control" placeholder="" aria-label="Username"
+                         aria-describedby="basic-addon1" disabled :value="comInfo.com_detail_address">
+                </div>
               </div>
 
               <div class="btnBox">
-                <button class="okBtn">승인하기</button>
-                <button class="noBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  반려하기
-                </button>
+                <button class="okBtn" @click="OkHandle">승인하기</button>
+                <button class="noBtn" @click="NoHandle">반려하기</button>
               </div>
 
             </div>
           </div>
         </div>
 
-        <div class="btnBox">
-          <button class="okBtn" @click="OkAlert">승인하기</button>
-          <button class="noBtn" @click="NoAlert">
-            반려하기
-          </button>
-        </div>
+
       </div>
     </div>
 
@@ -110,8 +109,8 @@ export default {
         com_establishmentDate: '',
         com_fileName: '',
         com_filePath: '',
-        com_fileUuid: ''
-
+        com_fileUuid: '',
+        img_url: ''
       },
     }
   },
@@ -125,12 +124,27 @@ export default {
       const {data} = await this.$axios.post('/jobfair/companyMypage/getComInfo',
           {com_num: this.comInfo.com_num})
           .catch( err => console.log(err))
+      this.comInfo = data;
     },
-    OkAlert() {
+    async OkHandle() {
       alert("승인하시겠습니까?")
+      let data = {
+        com_num : this.comInfo.com_num,
+        mg_auth : '3'
+      }
+      let res = await this.$axios.post('/jobfair/aComList/handleApplication', data).catch(err => console(err))
+      console.log(res)
+      this.$router.go(-1)
     },
-    NoAlert() {
+    async NoHandle() {
       alert("반려하시겠습니까?")
+      let data = {
+        com_num : this.comInfo.com_num,
+        mg_auth : '5'
+      }
+      let res = await this.$axios.post('/jobfair/aComList/handleApplication', data).catch(err => console(err))
+      console.log(res)
+      this.$router.go(-1)
     }
   }
 }
@@ -143,13 +157,20 @@ export default {
   padding:20px;
 }
 
+/* title  공용 css */
+.title{
+  font-weight: bold;
+  color: #202632;
+}
 
+/*----------  기업 정보 부분 ----------*/
 
-.infoWrapBox {
-  border: 1px solid grey;
+.infoBoxWrap {
+  border: 1px solid #AAAAAA;
+  border-radius: 15px;
+  padding: 10px;
   width: 100%;
-  height: 600px;
-  margin: 0 auto;
+  height: 800px;
 }
 
 .infoBox {
@@ -159,6 +180,61 @@ export default {
   margin-top: 50px;
 }
 
+/*--------- 정보 머리부분 : 기업 로고, 기업 이름 -------------------------*/
+.info_head {
+  display: block;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+/* 로고 부분*/
+.info_head .comLogoWrap {
+  overflow: hidden;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  float: left;
+}
+.comLogo {
+  width: 150px;
+  height: 150px;
+  object-fit:cover;
+}
+
+/*기업 이름 부분*/
+.info_head .com_name_wrap{
+  margin-left: 10px;
+  display: inline-block;
+  float: left;
+}
+.info_head .com_name_wrap .com_name{
+  color: #202632;
+  font-weight: bold;
+  font-size: 40px;
+  padding:20px;
+}
+
+
+/*-------------- 기업 데이터 부분 --------------------*/
+.info_body{
+  display: block;
+}
+
+.input-group-text{
+  font-weight: bold;
+  color: #202632;
+  font-size: 15px;
+}
+
+
+
+.infoBox {
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+/*----------------------------------*/
 .btnBox {
   text-align: center;
 }

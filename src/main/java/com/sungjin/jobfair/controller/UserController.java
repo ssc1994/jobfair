@@ -351,30 +351,28 @@ public class UserController {
     @PostMapping(value = "/getMainJobInfo")
     public ArrayList<EmpListVO> getMainJobInfo() {
 
-        ArrayList<EmpListVO> list = userService.getMainJobInfo();
+        System.out.println("getMainJobInfo 실행");
 
+        ArrayList<EmpListVO> list = userService.getMainJobInfo();
 
         for (EmpListVO vo : list) {
             String fileUuid = vo.getJpl_fileUuid();
             String fileName = vo.getJpl_fileName();
             String filePath = vo.getJpl_filePath();
 
-            String path = fileUuid + "_" + fileName;
-            String bucket = filePath;
-            String url = amazonS3Client.getUrl(bucket, path).toString();
-            vo.setUrl(url);
-
-//            if(fileName.equals("파일명")) {
-//                vo.setUrl("https://mj-final-bucket.s3.ap-northeast-2.amazonaws.com/image/f9859ee0-80cc-421c-869c-8b1c96ffb736_no-img-icon3.jpg");
-//            } else {
-//                String path = fileUuid + "_" + fileName;
-//                String bucket = filePath;
-//                String url = amazonS3Client.getUrl(bucket, path).toString();
-//                vo.setUrl(url);
-//            }
+            // 업로드된 기업 로고가 있으면 해당 기업로고 url 저장, 기업 로고 없으면 기본으로 보여줄 이미지 주소를 url에 저장
+            if(fileName.equals("파일명") || fileName == null || fileName.equals("")) {
+                vo.setUrl("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/7c1d62f3-7994-4578-a040-5c617af80686_noPic.jpg");
+            } else {
+                String path = fileUuid + "_" + fileName;
+                String bucket = filePath;
+                String url = amazonS3Client.getUrl(bucket, path).toString();
+                vo.setUrl(url);
+            }
         }
-        System.out.println(list.toString());
+
         return list;
+
     }
 
     //채용공고 상세페이지에 있는 성별통계구하기

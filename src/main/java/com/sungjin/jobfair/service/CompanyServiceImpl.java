@@ -60,7 +60,7 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Override
     public ArrayList<EmpVO> getComJobPosingList(Map paramMap) {
-        return null;
+        return companyMapper.getComJobPosingList(paramMap);
     }
     
     @Override

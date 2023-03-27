@@ -5,6 +5,7 @@ import com.sungjin.jobfair.adminComListPagenation.AdminComListCriteria;
 import com.sungjin.jobfair.adminComListPagenation.AdminComListPageVO;
 import com.sungjin.jobfair.adminComListPagenation.AdminComPageGate;
 import com.sungjin.jobfair.command.CompanyVO;
+import com.sungjin.jobfair.command.UserVO;
 import com.sungjin.jobfair.service.AdminComListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -68,7 +69,7 @@ public class AdminComLIstController {
 
             //업로드된 img가 있는지 없는지 따라서 분기처리
             //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
-            if(fileName == null){
+            if(fileName == null || fileName.equals("")){
                 vo.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/4b06db5a-2798-451b-a87a-d9892b249d72_no-img-icon2.jpg");
             } else {
             //업로드된 이미지가 있다면 이미지의 url 구해와서 담아줌
@@ -90,5 +91,12 @@ public class AdminComLIstController {
         return pageGate;
     }
 
+    //aComDetail 화면에서 신청 기업 승인, 반려처리
+    @PostMapping("/handleApplication")
+    public void handleApplication(@RequestBody UserVO uv){
+        //화면에서 com_num, 바꿔줄 mg_auth 가 넘어옴.
+        //넘어온 com_num에 해당하는 user의 mg_auth를 받은 화면에서 받은 mg_auth로 그대로 바꿔주기
+        adminComListService.handleApplication(uv);
+    }
 
 }
