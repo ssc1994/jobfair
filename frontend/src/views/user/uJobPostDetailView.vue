@@ -1,14 +1,14 @@
 <template>
 
-  <div style="overflow: hidden">
+  <div class="empBoxWrap" style="overflow: hidden">
     <main class="resume left">
-      <div class="TopBox">
+      <div class="TopBox" style="overflow: hidden;">
         <div class="left PostImg tbList">
           <img class="tbLogo" :src="com_logo" alt="">
           <p>{{ com_name }}</p>
         </div>
         <div class="left PostText">
-          <span style="font-size: 35px; font-weight: bolder;">{{ jpl_title }}</span> <br/>
+          <span style="font-size: 25px; margin-top:10px;font-weight: bolder;">{{ jpl_title }}</span> <br/>
           <span style="color: #999; font-weight: bold">{{ jpl_workForm }}</span>
           <div class="tdCol">
             <dl class="tbList left">
@@ -38,7 +38,7 @@
       </div>
       <div class="contents">
         <div class="recruitment">
-          <b>업무소개</b> <br/>
+          <b>업무소개</b>
           <p>
             {{ jpl_content }}
             <br>
@@ -57,20 +57,37 @@
         <p>&nbsp;</p>
         <div class="recruitment pro">
           <b>전형절차</b><br/>
-          <p>서류 지원 - 1차 면접 - 2차 면접 - 합격</p><br/>
+          <div>
+            <p>1</p>
+            <span>서류 지원</span>
+          </div>
+          <div>
+            <p>2</p>
+            <span>1차 면접</span>
+          </div>
+          <div>
+            <p>3</p>
+            <span>2차 면접</span>
+          </div>
+          <div>
+            <p>4</p>
+            <span>합격</span>
+          </div>
         </div>
         <p><br></p>
         <p>&nbsp;</p>
         <div class="recruitment">
           <b>기업정보</b><br/>
           <img :src="com_logo">
-          <span>기업명 : {{ com_name }}</span><br/>
-          <span>기업전화번호 : {{ com_phone }}</span><br/>
-          <span>기업이메일 : {{ com_email }}</span><br/>
-          <span>기업주소 : {{ com_address }}</span><br/>
-          <span>업종 : {{ com_category }}</span><br/>
-          <span>대표자 : {{ com_ceo }}</span><br/>
-          <span>사업자등록번호 : {{ com_businessRegistration }}</span><br/>
+          <div class="com_con">
+            <span>기업명 : {{ com_name }}</span><br/>
+            <span>기업전화번호 : {{ com_phone }}</span><br/>
+            <span>기업이메일 : {{ com_email }}</span><br/>
+            <span>기업주소 : {{ com_address }}</span><br/>
+            <span>업종 : {{ com_category }}</span><br/>
+            <span>대표자 : {{ com_ceo }}</span><br/>
+            <span>사업자등록번호 : {{ com_businessRegistration }}</span><br/>
+          </div>
         </div>
         <p><br></p>
         <p>&nbsp;</p>
@@ -79,7 +96,7 @@
       </div>
     </main>
 
-    <div style="position: fixed; right: 50px">
+    <div class="rightBoxWrap" style="position: fixed; right: 100px">
       <div>
         <div class="marginTime">
           <span style="color: #0064ff; font-weight: bolder">남은 시간</span>
@@ -99,7 +116,7 @@
 
 
           <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: #dedede;color:black;" v-if="this.mg_auth == 3 && com_num == this.loginComNum">
-           지원자 보기
+            지원자 보기
           </button>
 
           <button type="button" class="btn btn-primary endBtn" v-if="this.mg_auth == 3 && com_num == this.loginComNum" @click="modi(jpl_num)">
@@ -138,7 +155,7 @@
 
     <!--지원하기 모달창 설정-->
     <!--state 적용해서 데이터 넣어야해유-->
-<!--    유저가 채용공고에 본인의 이력서를 선택해서 지원할 때 모달창 -->
+    <!--    유저가 채용공고에 본인의 이력서를 선택해서 지원할 때 모달창 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="z-index: 10000;" v-if="this.mg_auth < 3">
       <div class="modal-dialog modal-dialog-centered">
@@ -151,7 +168,7 @@
             <div class="contentModalBox">
 
               <div class="miniContentModalBox" v-for="(resumeAll,i) in resumeArray" :key="i">
-                <input type="radio" :id="resumeAll.res_num" name="resumeRadio" :value="i" v-model="resNum">
+                <input type="radio" :id="resumeAll.res_num" name="resumeRadio" :value="i" @click="getResnum(resumeAll.res_num)"> <!--v-model="resNum" -->
                 <label :for="resumeAll.res_num">
                   <h4>{{ resumeAll.res_title }} </h4>
                   <h5>{{ resumeAll.res_regDate }} </h5>
@@ -169,7 +186,7 @@
       </div>
     </div>
 
-<!--    기업이 본인의 채용공고에 지원한 사람들의 목록을 모달에서 확인할 때 -->
+    <!--    기업이 본인의 채용공고에 지원한 사람들의 목록을 모달에서 확인할 때 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="z-index: 10000;" v-if="this.mg_auth == 3">
       <div class="modal-dialog modal-dialog-centered">
@@ -312,41 +329,41 @@ export default {
       console.log(error);
     }),
 
-    this.getGendertotal(),
-    this.getlookPerson(),
+        this.getGendertotal(),
+        this.getlookPerson(),
         this.$axios.get('/jobfair/empData', {
-      params: {jpl_num: this.jpl_num}
-    }).then(res => {
-      this.com_num = res.data.com_num,
-          this.jpl_title = res.data.jpl_title,
-          this.jpl_content = res.data.jpl_content,
-          this.jpl_startDate = res.data.jpl_startDate.substring(0, 10),
-          this.jpl_endDate = res.data.jpl_endDate.substring(0, 10),
-          this.jpl_regDate = res.data.jpl_regDate.substring(0, 10),
-          this.jpl_workPosition = res.data.jpl_workPosition,
-          this.jpl_duty = res.data.jpl_duty,
-          this.jpl_workHistory = res.data.jpl_workHistory,
-          this.jpl_workForm = res.data.jpl_workForm,
-          this.jpl_education = res.data.jpl_education,
-          this.jpl_conditions = res.data.jpl_conditions,
-          this.jpl_certificate = res.data.jpl_certificate,
-          this.jpl_gender = res.data.jpl_gender,
-          this.jpl_salary = res.data.jpl_salary,
-          this.jpl_locationSi = res.data.jpl_locationSi,
-          this.jpl_locationGu = res.data.jpl_locationGu,
-          this.jpl_address = res.data.jpl_address,
-          this.jpl_workDay = res.data.jpl_workDay,
-          this.jpl_workTimeS = res.data.jpl_workTimeS,
-          this.jpl_workTimeE = res.data.jpl_workTimeE,
+          params: {jpl_num: this.jpl_num}
+        }).then(res => {
+          this.com_num = res.data.com_num,
+              this.jpl_title = res.data.jpl_title,
+              this.jpl_content = res.data.jpl_content,
+              this.jpl_startDate = res.data.jpl_startDate.substring(0, 10),
+              this.jpl_endDate = res.data.jpl_endDate.substring(0, 10),
+              this.jpl_regDate = res.data.jpl_regDate.substring(0, 10),
+              this.jpl_workPosition = res.data.jpl_workPosition,
+              this.jpl_duty = res.data.jpl_duty,
+              this.jpl_workHistory = res.data.jpl_workHistory,
+              this.jpl_workForm = res.data.jpl_workForm,
+              this.jpl_education = res.data.jpl_education,
+              this.jpl_conditions = res.data.jpl_conditions,
+              this.jpl_certificate = res.data.jpl_certificate,
+              this.jpl_gender = res.data.jpl_gender,
+              this.jpl_salary = res.data.jpl_salary,
+              this.jpl_locationSi = res.data.jpl_locationSi,
+              this.jpl_locationGu = res.data.jpl_locationGu,
+              this.jpl_address = res.data.jpl_address,
+              this.jpl_workDay = res.data.jpl_workDay,
+              this.jpl_workTimeS = res.data.jpl_workTimeS,
+              this.jpl_workTimeE = res.data.jpl_workTimeE,
 
-          this.jpl_name = res.data.jpl_name,
-          this.jpl_phoneNum = res.data.jpl_phoneNum,
-          this.jpl_email = res.data.jpl_email,
-          this.jpl_companyName = res.data.jpl_comPanyName,
-          this.jpl_contact = res.data.jpl_contact,
-          this.jpl_fileName = res.data.jpl_fileName,
-          this.jpl_filePath = res.data.jpl_filePath,
-          this.jpl_fileUuid = res.data.jpl_fileUuid
+              this.jpl_name = res.data.jpl_name,
+              this.jpl_phoneNum = res.data.jpl_phoneNum,
+              this.jpl_email = res.data.jpl_email,
+              this.jpl_companyName = res.data.jpl_comPanyName,
+              this.jpl_contact = res.data.jpl_contact,
+              this.jpl_fileName = res.data.jpl_fileName,
+              this.jpl_filePath = res.data.jpl_filePath,
+              this.jpl_fileUuid = res.data.jpl_fileUuid
           if(res.data.url!=null){
             this.viewImg=res.data.url
           }
@@ -371,9 +388,9 @@ export default {
             console.log(err)
           })
 
-    }).catch(err => {
-      console.log(err)
-    }),
+        }).catch(err => {
+          console.log(err)
+        }),
         this.resumeinfo();
 
 
@@ -395,6 +412,10 @@ export default {
     this.genderChart()
   },
   methods: {
+    getResnum(e){
+      console.log(e);
+      this.resNum = e;
+    },
     curcur(){
       const moment = require('moment')
       var time = moment();
@@ -427,7 +448,6 @@ export default {
 
     },
     postRes() {
-      this.resNum = this.resNum + 1;
       this.$axios.post("/jobfair/EmpApply", {
         user_id: this.user_id,
         jpl_num: this.jpl_num,
@@ -530,6 +550,11 @@ dl {
   margin-inline-end: 0px;
 }
 
+.empBoxWrap {
+  max-width:1560px;
+  margin:0 auto;
+}
+
 /* 왼쪽 상단에 기업로고 */
 .tbLogo {
   width: 228px;
@@ -564,12 +589,13 @@ dl {
 /* 채용공고 상세내역 정보 */
 .resume {
   width: 70%;
-  height: 2000px;
+  height: auto;
   color: #1E1E1E;
   padding: 50px 30px;
-  border: 1px solid #AAAAAA;
+  border: 1px solid #dedede;
   border-radius: 15px;
-  padding: 20px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .left {
@@ -591,6 +617,9 @@ dl {
   width: 280px;
   border: 1px solid #d2d6da;
   padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .Time {
@@ -602,7 +631,7 @@ dl {
   font-weight: bolder;
 }
 .Time input {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bolder;
   border:none;
   border-right:0px;
@@ -647,12 +676,13 @@ dl {
 /* post 전체 틀 */
 .TopBox {
   height: 15%;
+  margin-top:20px;
 }
 
 /* post 왼쪽 창 */
 .PostImg {
   width: 30%;
-  margin: 20px;
+  margin: 10px;
   text-align: center;
 }
 
@@ -664,14 +694,16 @@ dl {
 
 /* post 오른쪽 창*/
 .PostText {
-  width: 60%;
+  width: 65%;
 }
 
 .PostText span {
   width: 100px;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.3;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 
 /* 채용공고 상세내역 정보 */
@@ -680,34 +712,75 @@ dl {
   height: 60%;
 }
 
+
+
 /* 채용공고 업무소개, 전형절차, 혜택 및 복지란 */
 .recruitment {
-  border: 1px solid rgb(181, 183, 186, 0.5);
   width: 100%;
-  height: 20%;
-  padding: 10px;
-}
-.pic{
-  border: 1px solid rgb(181, 183, 186, 0.5);
-  width: 100%;
-  height: 55%;
-  padding: 10px;
-}
-.pro{
-  border: 1px solid rgb(181, 183, 186, 0.5);
-  width: 100%;
-  height: 15%;
-  padding: 10px;
+  min-height : 20%;
+  height: auto;
 }
 
-.recruitment b {
+.contents b {
+  border-bottom:2px solid #0064ff;
+  color:#0064ff;
+  font-size: 20px;
+  padding:10px;
+  margin-left: 10px;
+
+}
+
+.recruitment p{
+  margin:30px 10px;
+}
+
+.pic{
+  width: 100%;
+  height: auto;
+  display: inline-block;
+  margin:0 auto;
+
+
+}
+.pic p {width:98%;margin:0 auto;}
+
+.pic img {display: inline-block; margin-top:20px;}
+
+.pro{
+  /*border: 1px solid rgb(181, 183, 186, 0.5);*/
+  width: 100%;
+  height: 15%;
   font-size: 20px;
 }
+
+.pro p {
+  font-size: 30px;
+  font-weight: 600;
+  color: #0064ff;
+}
+
+.pro div {width:20%;
+  height: 180px;
+  display: inline-block;
+  border: 1px solid #dedede;
+  margin: 30px 25px;
+  border-radius: 15px;
+  background-color: #efefef;
+  text-align: center;
+  font-weight: 800;
+}
+
+
+
+.pro p span {padding:10px; border-radius: 15px; border:1px solid #0064ff;margin: 0 auto;}
 
 .recruitment p {
   line-height: 1.3;
   white-space: pre-line;
   word-wrap: break-word;
+}
+.recruitment span {
+  line-height: 1.6;
 }
 
 .recruitment img {
@@ -715,7 +788,12 @@ dl {
   width: 30%;
   height: 160px;
   margin-right: 30px;
+  margin-top:20px;
 }
+.com_con {margin-top:20px;
+}
+.com_con span {margin-left: 50px;}
+
 .pic img {
   float: left;
   width: 85%;

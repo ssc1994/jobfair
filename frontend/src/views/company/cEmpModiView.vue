@@ -1,19 +1,20 @@
 <template>
-
   <div>
 
     <div class="empReg">
       <div class=" mt-3 mb-3">
-        <h2>채용공고 수정하기</h2>
+        <h2>채용공고 등록하기</h2>
       </div>
       <section class="title">
         <div class=" wrapBox3">
+
 
           <div class="input-group mt-3 mb-3">
             <span class="input-group-text" id="basic-addon1">공고명</span>
             <input type="text" class="form-control" placeholder="내용을 입력하세요." aria-label="Username"
                    aria-describedby="basic-addon1" v-model="jpl_title" required>
           </div>
+
 
         </div>
       </section>
@@ -22,6 +23,7 @@
       </div>
 
       <section>
+
         <div class=" mt-3">
           <div class=" wrapBox3">
             <div class="input-group mb-3">
@@ -51,10 +53,25 @@
             </div>
             <div class="mb-5 mt-5">
               <label for="">직무 :</label>
-              <input type="text" class="form-control" id="duty" placeholder="직무명을 입력하세요." name="duty"
-                     v-model="jpl_duty">
-
+              <select class="form-select" id="duty" name="duty" v-model="jpl_duty">
+                <option value="경영ㆍ사무">경영ㆍ사무</option>
+                <option value="마케팅ㆍ광고ㆍ홍보(4년제)">마케팅ㆍ광고ㆍ홍보</option>
+                <option value="ITㆍ인터넷">ITㆍ인터넷</option>
+                <option value="디자인">디자인</option>
+                <option value="무역ㆍ유통">무역ㆍ유통</option>
+                <option value="영업ㆍ고객상담">영업ㆍ고객상담</option>
+                <option value="서비스">서비스</option>
+                <option value="연구개발ㆍ설계">연구개발ㆍ설계</option>
+                <option value="교육">교육</option>
+                <option value="건설">건설</option>
+                <option value="의료">의료</option>
+                <option value="미디어">미디어</option>
+                <option value="의료">의료</option>
+              </select>
             </div>
+
+
+
             <div class="mb-5 mt-5">
               <label for="">경력 :</label>
               <div class="form-check">
@@ -129,26 +146,30 @@
             </div>
             <div class="mb-5 mt-5">
               <label for="">자격증 :</label>
-              <input type="text" class="form-control" id="card" placeholder="자격증명을 입력하세요." name="card"
-                     v-model="jpl_certificate">
+              <select class="form-select" v-model="jpl_certificate" id="card" name="card">
+                <option value="없음">없음</option>
+                <option value="정보처리기사">정보처리기사</option>
+                <option value="웹디자인기능사">웹디자인기능사</option>
+                <option value="컴퓨터그래픽스">컴퓨터그래픽스</option>
+                <option value="정보기술자격(ITQ)">정보기술자격(ITQ)</option>
+              </select>
             </div>
 
             <div class="mb-5 mt-3">
               <label for="">성별 :</label>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="genderRadio1" name="genderRadio" value="nah" checked
-                       v-model="jpl_gender">
+
+                <input type="radio" class="form-check-input" id="genderRadio1" name="genderRadio" value="nah" checked v-model="jpl_gender">
                 <label class="form-check-label" for="genderRadio1">성별무관</label>
               </div>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="genderRadio2" name="genderRadio" value="male"
-                       v-model="jpl_gender">
+                <input type="radio" class="form-check-input" id="genderRadio2" name="genderRadio" value="male"  v-model="jpl_gender">
                 <label class="form-check-label" for="genderRadio2">남자</label>
               </div>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="genderRadio3" name="genderRadio" value="female"
-                       v-model="jpl_gender">
+                <input type="radio" class="form-check-input" id="genderRadio3" name="genderRadio" value="female" v-model="jpl_gender">
                 <label class="form-check-label" for="genderRadio3">여자</label>
+
               </div>
             </div>
 
@@ -157,11 +178,13 @@
 
           <section>
             <h5>3.근무조건</h5>
-            <div class="mb-5 mt-5">
+
+            <div class="mb-5 mt-5" id="app">
               <label for="">근무지 :</label>
               <input type="text" class="form-control" id="location" placeholder="지역을 입력하세요." name="location"
                      v-model="jpl_address">
-              <p>{{ jpl_locationSi }} > {{ jpl_locationGu }}</p>
+              <!--              데이터 들어가서 나오는지 테스트해봄, 시각적으로 괜찮아보여서 일단 냅둠 -->
+              <p>{{jpl_locationSi}} > {{jpl_locationGu}}</p>
               <div class="cityBox">
                 <div class="empBoxLabel citySrc1">
                   <!--시-->
@@ -195,7 +218,7 @@
               </select>
             </div>
             <div class="mb-5 mt-5">
-              <div>
+              <div >
                 <label for="appt">근무시간 :</label>
                 <div>
                   <input type="time" id="appt" name="appt" v-model="jpl_workTimeS"> ~
@@ -203,18 +226,18 @@
                 </div>
               </div>
             </div>
-            <div class=" mb-5 mt-4">
+            <div class=" mb-5 mt-5">
               <label for="">급여 :</label>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="salary1" name="salaryRadio" value="undecided"
-                       v-model="salaryType">
-                <label class="form-check-label" for="salary1">면접 후 결정</label>
-              </div>
-              <div class="form-check">
-                <input type="radio" class="form-check-input" id="salary2" name="salaryRadio" value=salary
-                       v-model="salaryType">
-                <label class="form-check-label" for="salary2"><input type="text" class="" placeholder="예상연봉 입력"
-                                                                     v-model="jpl_salary"></label>
+                <select class="form-select" v-model="jpl_salary">
+                  <option value="2500만원 이하">2500만원 이하</option>
+                  <option value="2500~3000만원">2500~3000만원</option>
+                  <option value="3000~4000만원">3000~4000만원</option>
+                  <option value="4000~5000만원">4000~5000만원</option>
+                  <option value="5000~6000만원">5000~6000만원</option>
+                  <option value="6000~7000만원">6000~7000만원</option>
+                  <option value="7000만원 이상">7000만원 이상</option>
+                </select>
               </div>
             </div>
           </section>
@@ -238,19 +261,21 @@
                 </div>
                 <div class="input-group mb-3">
 
-                  <input type="file" style="display: none" class="form-control" id="inputGroupFile02"
-                         v-on:change='fileChange' ref="fileInsert">
-                  <input type="button" value="채용공고 이미지선택" @click="clickFile">
+                  <input type="file" style="display: none" class="form-control" id="inputGroupFile02" v-on:change='fileChange' ref="fileInsert" accept="image/*">
+                  <input type="button" class="btn choiceBtn" value="채용공고 이미지선택" @click="clickFile">
 
                 </div>
+
                 <div>
                   <img class="headline-image" :src="viewImg" alt="이미지 미리보기" ref="previewImg">
 
                 </div>
+
               </div>
             </div>
           </section>
-          <button type="submit" class="btn btn-primary" @click="empRegist">수정</button>
+
+          <button type="submit" class="btn btn-primary" @click="empRegist">등록</button>
         </div>
       </div>
 
@@ -260,6 +285,7 @@
 
 
 </template>
+
 <!--
 실행시키면 서버에있는 파일이름이  아직 안들어옴 수정예정
 
@@ -465,7 +491,7 @@ export default {
               "Content-Type": `multipart/form-data`
             }
           }).then((res) => {
-        this.$router.push('cMainView')
+        this.$router.push('/cMainView')
       }).catch(err => {
         console.log(err)
       })

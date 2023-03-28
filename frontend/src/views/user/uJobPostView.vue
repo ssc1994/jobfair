@@ -192,7 +192,7 @@
                   {{tag}}<input type="button" @click="del" value="X" :id="tagValue.tagCode+i" style="border:0;padding:0 5px;">
                 </span>
               </p>
-                <button type="button" class="btn btn-primary searchBtn" @click.prevent="jobPostSearch">검색</button>
+              <button type="button" class="btn btn-primary searchBtn" @click.prevent="jobPostSearch">검색</button>
 
             </div>
 
@@ -215,7 +215,7 @@
 
           <div class="empBoxCon">
             <router-link to="" class="left empBoxCompany">
-              <p>(주) {{ jobpost.com_name }}</p>
+              <p>{{ jobpost.com_name }}</p>
               <img :src="urlList[i]" >
             </router-link>
             <div class="left empBoxText">
@@ -230,11 +230,11 @@
                 <router-link to="" v-for="(appliedList, j) in appliedList" :key=j>
 
                   <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.jpl_num === appliedList.jpl_num"> <!---->
-                   지원완료
+                    지원완료
                   </button>
-<!--                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.jpl_num != appliedList.jpl_num"> &lt;!&ndash;v-if="jobpost.user_id==null && jobpost.jpl_endDate"&ndash;&gt;-->
-<!--                    지원하기{{jobpost.jpl_num}}-->
-<!--                  </button>-->
+                  <!--                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.jpl_num != appliedList.jpl_num"> &lt;!&ndash;v-if="jobpost.user_id==null && jobpost.jpl_endDate"&ndash;&gt;-->
+                  <!--                    지원하기{{jobpost.jpl_num}}-->
+                  <!--                  </button>-->
                 </router-link>
               </div>
 
@@ -358,7 +358,7 @@ export default {
       arrSrc : "up",
       selSort : '최신등록순',
       selSortInt : 1,
-     user_id: sessionStorage.getItem('sessionId').replaceAll("\"", ""),
+      user_id: sessionStorage.getItem('sessionId').replaceAll("\"", ""),
 
 
       //엑시오스 테스트
@@ -470,36 +470,36 @@ export default {
       } else {
         let {data} = await this.$axios.post('/jobfair/getJobPostSrc',
             {
-                page: this.page,
-                amount: this.amount,
-                jpl_duty: jpl_duty,
-                jpl_workHistory:jpl_workHistory,
-                jpl_workForm:jpl_workForm,
-                jpl_education:jpl_education,
-                jpl_conditions:jpl_conditions,
-                jpl_certificate:jpl_certificate,
-                jpl_salary:jpl_salary,
-                jpl_locationSi:jpl_locationSi,
-                jpl_locationGu:jpl_locationGu,
-                inputSearch :this.inputSearch,
-                selSortInt :this.selSortInt
+              page: this.page,
+              amount: this.amount,
+              jpl_duty: jpl_duty,
+              jpl_workHistory:jpl_workHistory,
+              jpl_workForm:jpl_workForm,
+              jpl_education:jpl_education,
+              jpl_conditions:jpl_conditions,
+              jpl_certificate:jpl_certificate,
+              jpl_salary:jpl_salary,
+              jpl_locationSi:jpl_locationSi,
+              jpl_locationGu:jpl_locationGu,
+              inputSearch :this.inputSearch,
+              selSortInt :this.selSortInt
 
             }).catch(err => console.log(err))
 
 
 
 
-            this.urlList = data.urlList;
-            this.jobPostList = data.empSrcPageGate.list
-            this.pages = data.empSrcPageGate.pageVO;
-            this.pageList = this.pages.pageList;
+        this.urlList = data.urlList;
+        this.jobPostList = data.empSrcPageGate.list
+        this.pages = data.empSrcPageGate.pageVO;
+        this.pageList = this.pages.pageList;
 
-            //페이지이동에 필요한 데이터 담기
-            this.page = this.pages.page;
-            this.prev = this.pages.prev;
-            this.pageStart = this.pages.pageStart;
-            this.pageEnd = this.pages.pageEnd;
-            this.realEnd = this.pages.realEnd;
+        //페이지이동에 필요한 데이터 담기
+        this.page = this.pages.page;
+        this.prev = this.pages.prev;
+        this.pageStart = this.pages.pageStart;
+        this.pageEnd = this.pages.pageEnd;
+        this.realEnd = this.pages.realEnd;
 
       }
     },
@@ -565,12 +565,12 @@ export default {
       var tagName = e.target.id.replace(index, "");
 
       for(var i = 0; i < this.selectedTag.length; i++){
-          if(this.selectedTag[i].tagCode == tagName){
-              for(var j = 0; j < this.selectedTag[i].tagValue.length; j++) {
-                this.selectedTag[i].tagValue.splice(index,1);
-              }
-            }
+        if(this.selectedTag[i].tagCode == tagName){
+          for(var j = 0; j < this.selectedTag[i].tagValue.length; j++) {
+            this.selectedTag[i].tagValue.splice(index,1);
+          }
         }
+      }
 
     },
 
@@ -693,6 +693,7 @@ html, body {width:100%;
   border: 2px solid #dedede;
   display:inline-block;
   width:98%;
+  height: 160px;
   margin-bottom: 10px;
 }
 
@@ -700,13 +701,19 @@ html, body {width:100%;
 
 .empBoxCon:hover { border: 2px solid #0064ff; }
 
-.empBoxCompany p {color:black;}
+.empBoxCompany p {color:black;
+
+  line-height: 1.3;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
 
 .empBoxCompany {
   display: inline-block;
   /*cursor: pointer;*/
   float: left;
   margin-right:10px;
+  width:13%;
 }
 .empBoxCon img{
   float: left;
@@ -852,16 +859,16 @@ h3{font-weight: bold;
 }
 
 .empBoxLabel div label{
-                       padding:5px 10px;
-                       margin: 2px;
-                       font-size: 13px;
+  padding:5px 10px;
+  margin: 2px;
+  font-size: 13px;
 }
 
 .empBoxLabel div input {display: none;}
 
 
 .empBoxLabel div input:checked + label{border:1px solid #0064ff;
-                                border-radius: 20px;}
+  border-radius: 20px;}
 .empBoxLabel .jobSrc1Div input:checked + label {border:1px solid #0064ff; border-radius:20px;width:90%; height:90%;}
 
 .empBoxLabel label {padding-left:8px;}
@@ -916,13 +923,13 @@ h3{font-weight: bold;
 
 
 .jobSrc1 div{display: inline-block;
-            width:16.66%;
-            height:50px;
-            /*border:1px solid #dedede;*/
-            /*background-color: #f2f6ff;*/
-            text-align: center;
-            line-height: 35px;
-            cursor:pointer;
+  width:16.66%;
+  height:50px;
+  /*border:1px solid #dedede;*/
+  /*background-color: #f2f6ff;*/
+  text-align: center;
+  line-height: 35px;
+  cursor:pointer;
 }
 
 .jobSrc1 div input {width:100%;display: none;}
