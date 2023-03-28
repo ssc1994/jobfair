@@ -67,7 +67,6 @@ export default {
 
   },
   created() {
-    console.log('param확인'+ this.uQnADetail.com_num);
   },
 
 
@@ -91,9 +90,6 @@ export default {
             console.log(error)
             alert('에러: ' + error)
 
-          })
-          .finally(() => {
-            console.log('큐앤에이등록')
           })
     },
     goBackToList() {

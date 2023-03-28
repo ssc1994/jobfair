@@ -219,7 +219,6 @@ export default {
     },
     //*********업로드시킬 사진 미리보기 함수
     previewImg(e) {
-      console.log(e.target.files)
       this.res_img = e.target.files[0]
       let reader = new FileReader();
       reader.onload = (event) => {

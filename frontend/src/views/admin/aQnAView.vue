@@ -128,7 +128,6 @@ export default {
     aQnAGetTotal() {
       this.$axios.post("/jobfair/aQnAGetTotal")
           .then((res) => {
-            console.log(res)
           })
           .catch((error) => console.log(error))
     },

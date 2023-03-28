@@ -4,7 +4,7 @@
     <main class="resume left">
       <div class="TopBox">
         <div class="left PostImg tbList">
-          <img class="tbLogo" src="@/assets/noImg.png" alt="">
+          <img class="tbLogo" :src="com_logo" alt="">
           <p>{{ com_name }}</p>
         </div>
         <div class="left PostText">
@@ -43,13 +43,19 @@
             {{ jpl_content }}
             <br>
             <!--            aws에서 가져오는 이미지를 집어넣을예정-->
-            <!--            <br>{{ viewImg }}-->
           </p>
+
           <br/>
         </div>
         <p><br></p>
         <p>&nbsp;</p>
-        <div class="recruitment">
+        <div class="recruitment pic">
+          <b>공고내용</b><br/>
+          <p><img :src="viewImg" alt="No Img"></p><br/>
+        </div>
+        <p><br></p>
+        <p>&nbsp;</p>
+        <div class="recruitment pro">
           <b>전형절차</b><br/>
           <p>서류 지원 - 1차 면접 - 2차 면접 - 합격</p><br/>
         </div>
@@ -57,7 +63,7 @@
         <p>&nbsp;</p>
         <div class="recruitment">
           <b>기업정보</b><br/>
-          <img src="@/assets/noImg.png">
+          <img :src="com_logo">
           <span>기업명 : {{ com_name }}</span><br/>
           <span>기업전화번호 : {{ com_phone }}</span><br/>
           <span>기업이메일 : {{ com_email }}</span><br/>
@@ -295,8 +301,10 @@ export default {
           this.jpl_contact = res.data.jpl_contact,
           this.jpl_fileName = res.data.jpl_fileName,
           this.jpl_filePath = res.data.jpl_filePath,
-          this.jpl_fileUuid = res.data.jpl_fileUuid,
-          this.viewImg = res.data.jpl_filePath + "/" + res.data.jpl_fileUuid + "-" + res.data.jpl_fileName,
+          this.jpl_fileUuid = res.data.jpl_fileUuid
+          if(res.data.url!=null){
+            this.viewImg=res.data.url
+          }
           this.$axios
               .post('/jobfair/compInfo', {
                 com_num: this.com_num
@@ -313,13 +321,10 @@ export default {
                 this.com_ceo = res.data.com_ceo
                 this.com_establishmentDate = res.data.com_establishmentDate
                 this.com_businessRegistration = res.data.com_businessRegistration
-                console.log("comData")
-                console.log(res)
+                this.com_logo=res.data.com_logo
               }).catch(err => {
             console.log(err)
           })
-      this.viewImg = "file:///" + this.viewImg
-      console.log(this.viewImg)
 
     }).catch(err => {
       console.log(err)
@@ -328,7 +333,6 @@ export default {
 
     this.$axios.post("/jobfair/EmpApplied", {user_id: this.user_id, jpl_num: this.jpl_num})
         .then((res) => {
-          console.log("Applied" + res.data);
           this.AppliedResult = res.data;
           if (this.AppliedResult == 1) {
             this.applyBtnText = '지원완료';
@@ -337,10 +341,6 @@ export default {
       console.log(error);
     })
 
-
-    console.log(this.AppliedResult)
-
-    //모멘트 적용
 
   },
   mounted() {
@@ -369,15 +369,10 @@ export default {
         clearInterval(this.curcur)
       }
     },
-    // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
-    // supportResume(){
-    //   router.push({path:"/"})
-    // }
     resumeinfo() {
       this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
           .then((res) => {
             this.resumeArray = res.data
-            console.log(res.data)
           }).catch((error) => {
         console.log(error)
       })
@@ -386,9 +381,7 @@ export default {
 
     },
     postRes() {
-      console.log(this.user_id);
       this.resNum = this.resNum + 1;
-      console.log(this.resNum);
       this.$axios.post("/jobfair/EmpApply", {
         user_id: this.user_id,
         jpl_num: this.jpl_num,
@@ -396,7 +389,6 @@ export default {
       })
           .then((res) => {
             this.apply = res.data;
-            console.log(res.data);
           }).catch((error) => {
         console.log(error);
       })
@@ -501,7 +493,7 @@ dl {
 /* 채용공고 상세내역 정보 */
 .resume {
   width: 70%;
-  height: 1200px;
+  height: 2000px;
   color: #1E1E1E;
   padding: 50px 30px;
   border: 1px solid #AAAAAA;
@@ -583,7 +575,7 @@ dl {
 
 /* post 전체 틀 */
 .TopBox {
-  height: 25%;
+  height: 15%;
 }
 
 /* post 왼쪽 창 */
@@ -621,7 +613,19 @@ dl {
 .recruitment {
   border: 1px solid rgb(181, 183, 186, 0.5);
   width: 100%;
-  height: 35%;
+  height: 20%;
+  padding: 10px;
+}
+.pic{
+  border: 1px solid rgb(181, 183, 186, 0.5);
+  width: 100%;
+  height: 55%;
+  padding: 10px;
+}
+.pro{
+  border: 1px solid rgb(181, 183, 186, 0.5);
+  width: 100%;
+  height: 15%;
   padding: 10px;
 }
 
@@ -637,8 +641,14 @@ dl {
 
 .recruitment img {
   float: left;
-  width: 40%;
+  width: 30%;
   height: 160px;
+  margin-right: 30px;
+}
+.pic img {
+  float: left;
+  width: 85%;
+  height: 80%;
   margin-right: 30px;
 }
 

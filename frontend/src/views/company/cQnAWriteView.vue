@@ -93,17 +93,11 @@ export default {
 
     this.$axios.get('/jobfair/getQnADetail/', {params: {qa_num: this.$route.params.qa_num}})
         .then((res) => {
-              console.log('유저시작')
               this.uQnADetail = res.data
-              console.log(res.data);
-              console.log(this.cQnADetail.user_id)
-              console.log(this.cQnADetail.com_num)
-              console.log(this.cQnADetail.qa_reply)
             }
         )
         .catch((error) => console.log(error))
         .finally(() => {
-          console.log('유저완료')
         })
 
   },
@@ -122,7 +116,6 @@ export default {
           .post('/jobfair/cqnaRegist', myData)
           .then((res) => {
             if (res.status === 200) {
-              console.log(res.data)
               this.$router.push({
                 name: 'cQnADetailView',
                 params: {
@@ -143,18 +136,8 @@ export default {
 
           })
           .finally(() => {
-            console.log('기업답변등록')
           })
     },
-    // getComQnADetail() {
-    //   this.$axios.get('/jobfair/cQnADetailView')
-    //       .then((res)=> {
-    //         this.cQnADetail = res.data
-    //       })
-    //       .catch((error) => {
-    //         console.log(error)
-    //       })
-    // },
     goBackToList() {
       this.$router.push("/cQnAView")
     },
