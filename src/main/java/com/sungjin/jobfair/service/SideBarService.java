@@ -1,6 +1,7 @@
 package com.sungjin.jobfair.service;
 
 import com.sungjin.jobfair.command.MenuVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.Map;

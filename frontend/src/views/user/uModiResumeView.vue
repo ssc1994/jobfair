@@ -119,7 +119,7 @@
           </div>
         </section>
         <input type="submit" value="이력서 저장" @click="doAction">
-        <input type="submit" value="돌아가기" @click="this.$router.go(-1)">
+        <input type="submit" value="돌아가기" @click="this.$router.push('uMypageView')">
       </main>
     </form>
   </div>

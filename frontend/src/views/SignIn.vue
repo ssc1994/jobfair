@@ -72,7 +72,6 @@ signIn
       </div>
     </section>
   </main>
-  <app-footer />
 </template>
 
 <script>
