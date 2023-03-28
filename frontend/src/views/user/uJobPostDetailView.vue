@@ -134,8 +134,9 @@
 
     <!--지원하기 모달창 설정-->
     <!--state 적용해서 데이터 넣어야해유-->
+<!--    유저가 채용공고에 본인의 이력서를 선택해서 지원할 때 모달창 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         style="z-index: 10000;">
+         style="z-index: 10000;" v-if="this.mg_auth < 3">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content ">
           <div class="modal-header">
@@ -157,6 +158,36 @@
             <div class="modal-footer">
               <!-- @click="supportResume" 넣기 -->
               <button type="button" class="btn btn-primary" @click.prevent="postRes" data-bs-dismiss="modal">지원하기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    기업이 본인의 채용공고에 지원한 사람들의 목록을 모달에서 확인할 때 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="z-index: 10000;" v-if="this.mg_auth == 3">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">지원자 목록</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="height: 100%">
+            <div class="contentModalBox">
+
+              <div class="miniContentModalBox" v-for="(personAll,j) in lookPerson" :key="j">
+                <label :for="personAll.res_num">
+                  <h4>{{ personAll.res_title }} </h4>
+                  <h5>{{ personAll.res_regDate }} </h5>
+                </label>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <!-- @click="supportResume" 넣기 -->
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인
               </button>
             </div>
           </div>
@@ -252,6 +283,7 @@ export default {
       user_id: JSON.parse(sessionStorage.getItem('sessionId')),
       mg_auth : JSON.parse(sessionStorage.getItem('sessionAuth')),
       res_num: '1',
+      lookPerson: [],
       //지원한 이력서
       resNum: 0,
       // apply 성공
@@ -268,10 +300,10 @@ export default {
   },
   created() {
     this.getGendertotal(),
+    this.getlookPerson(),
         this.$axios.get('/jobfair/empData', {
       params: {jpl_num: this.jpl_num}
     }).then(res => {
-
       this.com_num = res.data.com_num,
           this.jpl_title = res.data.jpl_title,
           this.jpl_content = res.data.jpl_content,
@@ -347,7 +379,6 @@ export default {
     setInterval(this.curcur,1000);
     this.genderChart()
   },
-
   methods: {
     curcur(){
       const moment = require('moment')
@@ -390,7 +421,7 @@ export default {
           .then((res) => {
             this.apply = res.data;
           }).catch((error) => {
-        console.log(error);
+        console.log(error)
       })
     },
 
@@ -399,26 +430,40 @@ export default {
       this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
 
     },
-    getGendertotal () {
-      this.$axios.post('/jobfair/getGendertotal')
+    getlookPerson() {
+      this.$axios.post('/jobfair/getlookPerson', {jpl_num: this.jpl_num})
           .then((res) => {
-            for(var a = 0; a < res.data.length; a++){
-              this.page_jpl_num = res.data[a].jpl_num
-              if(this.jpl_num === this.page_jpl_num){
-                for (var i = 0; i < this.page_jpl_num.length; i++) {
-                  this.peopleNumber++
-                  if (res.data[i].user_gender === 'F') {
-                    this.woman++
-                  } else if (res.data[i].user_gender === 'M') {
-                    this.man++
-                  }
-                }
+            this.lookPerson = res.data
+            console.log(this.lookPerson)
+            this.peopleNumber = res.data.length
+            for(var i = 0; i < this.lookPerson.length; i++){
+              if (res.data[i].user_gender === 'F' || res.data[i].user_gender === '여자') {
+                this.woman++
+              } else if (res.data[i].user_gender === 'M' || res.data[i].user_gender === '남자') {
+                this.man++
               }
             }
             chart.data.datasets[0].data[0] = this.woman
             chart.data.datasets[0].data[1] = this.man
             chart.update()
             chart.destroy()
+          })
+          .catch((error) => console.log(error))
+    },
+    getGendertotal () {
+      this.$axios.post('/jobfair/getGendertotal')
+          .then((res) => {
+            // console.log(res.data)
+            // for(var b = 0; b < res.data.length; b++) {
+            //       if (res.data[b].jpl_num === this.jpl_num) {
+            //         // console.log('지금페이지' + res.data[b].jpl_num)
+            //       if (res.data[b].user_gender === 'F' || res.data[b].user_gender === '여자') {
+            //         this.woman++
+            //       } else if (res.data[b].user_gender === 'M' || res.data[b].user_gender === '남자') {
+            //         this.man++
+            //       }
+            //     }
+            //   }
           })
           .catch((error) => console.log(error))
     },

@@ -63,6 +63,9 @@ public interface UserMapper {
     //지원자의 성별통계 구하기!!
     public ArrayList<StatisticVO> getGendertotal();
 
+    //지원자의 이력서정보 가져오기
+    public ArrayList<StatisticVO> getlookPerson(String jpl_num);
+
 
     //################## MyPage Service #######################
         //이력서 정보 가져오기

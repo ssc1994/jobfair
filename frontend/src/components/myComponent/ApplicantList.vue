@@ -164,6 +164,8 @@ export default {
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  position: relative;
+  left: 240px;
 }
 
 .page-item {

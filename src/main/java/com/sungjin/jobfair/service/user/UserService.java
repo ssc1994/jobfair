@@ -61,6 +61,10 @@ public interface UserService {
     //채용공고 통계관련
     //지원자의 성별통계 구하기!!
     public ArrayList<StatisticVO> getGendertotal();
+
+    //지원자의 이력서정보 가져오기
+    public ArrayList<StatisticVO> getlookPerson(String jpl_num);
+
     //################## 마이페이지(MyPage) Service #######################
         //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo(String user_id);

@@ -17,7 +17,9 @@ public class StatisticVO {
 
     //    company의 공고 상세보기에 있는 통계
     private String user_gender; //가입자 성별
-    private String user_rrn; //가입자 연령대 구해보기..
+
+    private String user_name; //가입자이름
+    private ResumeVO resumeVO;  // 지원한 사람의 이력서 정보
     private String jpl_num; //각각의 채용공고 번호 가져오기
 
 }
