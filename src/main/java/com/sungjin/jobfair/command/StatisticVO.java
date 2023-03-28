@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +24,10 @@ public class StatisticVO {
     private String user_name; //가입자이름
     private ResumeVO resumeVO;  // 지원한 사람의 이력서 정보
     private String jpl_num; //각각의 채용공고 번호 가져오기
+
+    private int res_num;            //이력서 번호
+    private String res_title;       //자기소개서 제목
+    private Date res_regDate;       //자기소개서 작성일
 
 }
 

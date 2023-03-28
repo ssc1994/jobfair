@@ -73,11 +73,11 @@ export default {
     };
   },
 
-  // watch: {
-  //   page: function () {
-  //     this.uQnAListAxios();
-  //   },
-  // },
+  watch: {
+    page: function () {
+      this.uQnAListAxios();
+    },
+  },
 
   created() {
     this.getQnAList();
@@ -198,7 +198,6 @@ body, html {
 
 .paginationWrap ul {
   margin-top: 50px;
-  padding-left: 470px;
 }
 
 

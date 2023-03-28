@@ -296,7 +296,8 @@ export default {
       // 지원했던 공고면 1 , 아니면 0
       AppliedResult: 0,
       resumeArray: [],
-      loginComNum : ''
+      loginComNum : '',
+      com_logo:''
     }
   },
   watch: {
