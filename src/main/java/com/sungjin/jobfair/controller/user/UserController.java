@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.service.user.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -241,6 +242,16 @@ public class UserController {
 
         return a;
     }
+
+    //큐앤에이 삭제
+
+    @GetMapping(value="/deleteQnA")
+    public String deleteQnA(@RequestParam("qa_num") String qa_num) {
+        userService.deleteQnA(qa_num);
+
+        return "success";
+    }
+
 
 
     //메인페이지에서 큐앤에이 리스트 가져오기
