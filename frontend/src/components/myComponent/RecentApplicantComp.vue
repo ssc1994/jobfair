@@ -39,7 +39,7 @@ export default {
       }
       this.$axios.post("jobfair/getResPic", picInfo)
           .then(res => {
-            this.resPicUrl = res.data.resPicUrl
+            this.resPicUrl = res.data
           })
           .catch(err => {
             console.log(err)

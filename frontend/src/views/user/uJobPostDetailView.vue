@@ -455,6 +455,7 @@ export default {
       })
           .then((res) => {
             this.apply = res.data;
+            this.router.push('/uJobPostView')
           }).catch((error) => {
         console.log(error)
       })
@@ -469,7 +470,6 @@ export default {
       this.$axios.post('/jobfair/getlookPerson', {jpl_num: this.jpl_num})
           .then((res) => {
             this.lookPerson = res.data
-            console.log(this.lookPerson)
             this.peopleNumber = res.data.length
             for(var i = 0; i < this.lookPerson.length; i++){
               if (res.data[i].user_gender === 'F' || res.data[i].user_gender === '여자') {
@@ -510,7 +510,6 @@ export default {
       })
     },
     modi(e){
-      console.log(e);
       this.$router.push({
         //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
         name: 'cEmpModiView',
@@ -561,6 +560,7 @@ dl {
   height: 160px;
   text-align: center;
   margin: auto;
+  object-fit: cover;
 }
 
 .tdCol {
@@ -789,6 +789,7 @@ dl {
   height: 160px;
   margin-right: 30px;
   margin-top:20px;
+  object-fit: cover;
 }
 .com_con {margin-top:20px;
 }

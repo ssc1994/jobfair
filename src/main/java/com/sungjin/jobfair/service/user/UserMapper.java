@@ -52,7 +52,7 @@ public interface UserMapper {
     //채용공고 검색 목록 (페이지 네이션)
     public int getJobPostSrcTotal(@Param("cri") EmpSrcCriteria cri);
     //유저가 지원한 채용공고인지 찾기
-    public int EmpApplied(@Param("user_Id") String user_id, @Param("jpl_num")String jpl_num);
+    public int EmpApplied(@Param("user_id") String user_id, @Param("jpl_num")String jpl_num);
     //채용공고 지원하기
     public void EmpApply(@Param("user_id")String user_id, @Param("jpl_num")String jpl_num, @Param("res_num")String res_num);
 //    기업이 입력한 채용공고 내용 유저의 채용공고 상세페이지에 뿌리기 (박희진 작성중)

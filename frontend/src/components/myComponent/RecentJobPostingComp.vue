@@ -48,7 +48,7 @@ export default {
     let sysDate = new Date();
     let endDate = new Date(this.jplInfo.jpl_endDate);
 
-    let calDate = Math.trunc(((endDate - sysDate) / (1000 * 60 * 60 * 24)));
+    let calDate = endDate.getDate() - sysDate.getDate();
 
     if(calDate > 0) this.d_day = 'D - ' + calDate;
     else if(calDate === 0) this.d_day = "금일 마감";

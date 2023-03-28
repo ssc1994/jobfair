@@ -78,7 +78,7 @@ public class CompanyController {
 
     @PostMapping("/getResPic")
     public String getImgUrl(@RequestBody Map<String, String> map) {
-        String path = map.get("picUuid") + "_" + map.get("pic_name");
+        String path = map.get("picUuid") + "_" + map.get("picName");
         String bucket = map.get("picPath");
         String url = amazonS3Client.getUrl(bucket, path).toString();
         return url;
