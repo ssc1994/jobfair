@@ -213,7 +213,7 @@
 
         <div v-for="(jobpost, i)  in jobPostList" :key=i @click.prevent="detail(jobpost.jpl_num)" class="empBoxConWrap col-6">
 
-          <div class="empBoxCon ">
+          <div class="empBoxCon">
             <router-link to="" class="left empBoxCompany">
               <p>(주) {{ jobpost.com_name }}</p>
               <img :src="urlList[i]" >
@@ -227,14 +227,15 @@
               <div style="padding-top:20px;">
 
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
-<!--                <router-link to="" v-for="(appliedList, j) in appliedList" :key=j>-->
-<!--                  <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.jpl_num == appliedList.jpl_num"> &lt;!&ndash;v-if="jobpost.user_id == this.user_id"&ndash;&gt;-->
-<!--                    지원완료-->
-<!--                  </button>-->
-                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;"> <!--v-if="jobpost.user_id==null && jobpost.jpl_endDate"-->
-                    지원하기
+                <router-link to="" v-for="(appliedList, j) in appliedList" :key=j>
+
+                  <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.jpl_num === appliedList.jpl_num"> <!---->
+                   지원완료
                   </button>
-<!--                </router-link>-->
+<!--                  <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.jpl_num != appliedList.jpl_num"> &lt;!&ndash;v-if="jobpost.user_id==null && jobpost.jpl_endDate"&ndash;&gt;-->
+<!--                    지원하기{{jobpost.jpl_num}}-->
+<!--                  </button>-->
+                </router-link>
               </div>
 
             </div>
@@ -423,8 +424,9 @@ export default {
 
       this.urlList = data.urlList;
       this.jobPostList = data.empPageGate.list;
-      this.appliedList = data.appliedList.jpl_num;
+      this.appliedList = data.appliedList;
       console.log(this.appliedList);
+
       console.log(this.jobPostList);
       this.pages = data.empPageGate.pageVO;
       this.pageList = this.pages.pageList;
@@ -766,12 +768,13 @@ h3{font-weight: bold;
   text-align: left;
   margin-bottom: 20px;
   height:auto;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 
 }
 
 .empSearchBox h3 {padding-bottom: 20px;}
 
-.empSearchBox:hover {box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
+.empSearchBox:hover {}
 
 .empSearchTitle {font-weight:bold;
   /*background-color: #dedede;*/

@@ -44,6 +44,9 @@ public interface CompanyMapper {
     ArrayList<ApplyVO> getApplicantList(Map map);
     // 이력서 열람/미열람 상태 변경
     void chgApplicantState(Map map);
+    //로그인한 기업의 user_id의 com_num 가져오기
+    int getComNum(String user_id);
+
 
 
     //################## Login Service #######################

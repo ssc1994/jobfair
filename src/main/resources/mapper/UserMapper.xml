@@ -100,11 +100,16 @@
     </select>
 
     <!--  해당 유저가 지원한 공고 jpl_num 가져오기  -->
-    <select id="appliedList" resultType="EmpApplyVO">
+    <select id="appliedList" resultType="EmpVO">
         select jpl_num from ApplyList
         where user_id = #{user_id}
     </select>
 
+    <!--  해당 기업의 com_num 가져오기  -->
+    <select id="getComNum" resultType="int">
+        select com_num from User
+        where user_id = #{user_id}
+    </select>
 
     <!--  채용공고 리스트 갯수(페이지 네이션)  -->
     <select id="getJobPostTotal" resultType="int">
@@ -224,9 +229,6 @@
             </when>
         </choose>
         limit #{cri.pageStart}, #{cri.amount}
-
-
-
 
     </select>
 
@@ -481,7 +483,7 @@
         select *
         from JobPostingList j
                  left join ApplyList a on a.jpl_num = j.jpl_num
-                 left join Company c on c.com_num = j.jpl_num
+                 left join Company c on c.com_num = j.com_num
         where user_id = #{user_id}
         order by al_regDate desc
     </select>
@@ -490,7 +492,7 @@
         select *
         from JobPostingList j
                  left join ApplyList a on a.jpl_num = j.jpl_num
-                 left join Company c on c.com_num = j.jpl_num
+                 left join Company c on c.com_num = j.com_num
         where user_id = #{user_id} and al_state like "%O%"
         order by al_regDate desc
     </select>
@@ -499,7 +501,7 @@
         select *
         from JobPostingList j
                  left join ApplyList a on a.jpl_num = j.jpl_num
-                 left join Company c on c.com_num = j.jpl_num
+                 left join Company c on c.com_num = j.com_num
         where user_id = #{user_id} and al_state like "%X%"
         order by al_regDate desc
     </select>

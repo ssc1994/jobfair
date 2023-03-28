@@ -771,12 +771,12 @@ h3{font-weight: bold;
   text-align: left;
   margin-bottom: 20px;
   height:auto;
-
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .empSearchBox h3 {padding-bottom: 20px;}
 
-.empSearchBox:hover {box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
+.empSearchBox:hover {}
 
 .empSearchTitle {font-weight:bold;
   /*background-color: #dedede;*/
@@ -968,13 +968,9 @@ h3{font-weight: bold;
 .selSort {width:130px;font-weight: bold;border:0;}
 
 /* 페이지네이션 부분 */
-.paginationWrap ul {
-  margin-top: 50px;
-  padding-left: 470px;
-}
 
 .paginationWrap .page-link {
-  background-color: #0064ff;
+  background-color: white;
 }
 
 .paginationWrap li.active span {
@@ -982,4 +978,34 @@ h3{font-weight: bold;
   border: none;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.page-link {
+  color: #333;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0064ff;
+}
+
+.active .page-link {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
 </style>

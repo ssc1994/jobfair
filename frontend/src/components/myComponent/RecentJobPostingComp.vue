@@ -72,14 +72,6 @@ export default {
         }
       })
 
-    },
-    detail(jpl) {
-      this.$router.push({
-        name: 'uJobPostDetailView',
-        params: {
-          jpl_num: jpl
-        }
-      })
     }
 
   }
