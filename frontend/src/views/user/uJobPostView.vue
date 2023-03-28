@@ -385,15 +385,10 @@ export default {
 
   created()  {
 
-    console.log("아이디"+this.user_id);
-    console.log(this.page);
-    console.log(this.amount);
-    console.log(this.selSortInt);
     this.getJobPostList();
 
 
     let sysDate = new Date();
-    console.log(sysDate);
     let endDate = new Date(this.jobPostList.jpl_endDate);
 
     let calDate = Math.trunc(((endDate - sysDate) / (1000 * 60 * 60 * 24)));
@@ -419,13 +414,10 @@ export default {
               user_id : this.user_id
             }
           }).catch(err => console.log(err))
-      console.log(data);
 
       this.urlList = data.urlList;
       this.jobPostList = data.empPageGate.list;
       this.appliedList = data.appliedList.jpl_num;
-      console.log(this.appliedList);
-      console.log(this.jobPostList);
       this.pages = data.empPageGate.pageVO;
       this.pageList = this.pages.pageList;
 
@@ -475,7 +467,6 @@ export default {
       if(cnt == 0 && this.inputSearch == ""){
         alert('검색 키워드가 없습니다!')
       } else {
-        console.log(jpl_workHistory);
         let {data} = await this.$axios.post('/jobfair/getJobPostSrc',
             {
                 page: this.page,
@@ -494,7 +485,6 @@ export default {
 
             }).catch(err => console.log(err))
 
-            console.log(data);
 
 
 
@@ -602,7 +592,6 @@ export default {
       this.fold1 = false;
     },
     sortEvent(e){
-      console.log(this.selSort);
       if(this.selSort == "최신등록순"){
         this.selSortInt = '1';
       }else if(this.selSort == "마감임박순"){

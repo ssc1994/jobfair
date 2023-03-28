@@ -139,7 +139,6 @@ export default {components: {SoftInput, SoftButton},
       this.$axios.get('/jobfair/getQnADetail/' , {params:{qa_num: this.$route.params.qa_num}} )
           .then((res) => {
             this.uQnADetail = res.data
-            console.log(res.data);
 
             this.$axios.get('/jobfair/getComQnADetail', {params: {qa_num: this.$route.params.qa_num}} )
                 .then((response) => {

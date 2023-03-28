@@ -133,7 +133,6 @@ export default {
         mg_auth : '3'
       }
       let res = await this.$axios.post('/jobfair/aComList/handleApplication', data).catch(err => console(err))
-      console.log(res)
       this.$router.go(-1)
     },
     async NoHandle() {
@@ -143,7 +142,6 @@ export default {
         mg_auth : '5'
       }
       let res = await this.$axios.post('/jobfair/aComList/handleApplication', data).catch(err => console(err))
-      console.log(res)
       this.$router.go(-1)
     }
   }

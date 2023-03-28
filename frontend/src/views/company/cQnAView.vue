@@ -129,7 +129,6 @@ export default {
             this.pages = res.data.pageVO;
             this.pageList = this.pages.pageList;
             this.QnAList = res.data.list;
-            // console.log(this.list)
 
             //페이지 이동에 필요한 데이터 담기
             this.page = this.pages.page;
