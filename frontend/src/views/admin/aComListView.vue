@@ -2,11 +2,15 @@
   <div class="ListBg">
     <div class="list_titleWrap">
       <h1>참여 업체 목록</h1>
-<!--      <div>-->
-<!--        <span>기업 검색:</span>-->
-<!--        <input type="text" v-model="com_name" @keyup.enter="searchCom">-->
-<!--        <img src="#">-->
-<!--      </div>-->
+      <div class="searchBox">
+        <select class="searchType">
+          <option>기업명 검색</option>
+        </select>
+        <div class="searchForm">
+          <input type="text" v-model="search_keyword" @keyup.enter="searchComName">
+          <button type="button" @click="searchComName" style="border: none"></button>
+        </div>
+      </div>
       <select class="choiceSort" v-model="dateOption" @change="getComList">
         <option>최신 날짜순</option>
         <option>오래된 날짜순</option>
@@ -60,7 +64,8 @@ export default {
     return {
 
       //검색관련
-      com_name: '',
+      search_keyword: '',
+      user_regDate: '',
 
       //페이지네이션 관련
       comList: '', //받아온 기업리스트 담을 변수
@@ -152,10 +157,40 @@ export default {
       this.page = clicked
     },
 
-    //기업이름 검색
-    async searchCom () {
-      let res = await this.$axios.get('/jobfair/aComList/search', {params: {com_name : this.com_name}}).catch(err => console.log(err))
-      console.log(res)
+    //기업명으로 기업검색
+    async searchComName () {
+
+       this.manageState = '모두'
+
+      let {data} = await this.$axios.get('/jobfair/aComList/searchComName', {params: { page : this.page,
+                                                                                          amount : this.amount,
+                                                                                          dateOption : this.dateOption,
+                                                                                          manageState : this.manageState,
+                                                                                          search_keyword : this.search_keyword }}).catch(err => console.log(err))
+      console.log(data)
+      this.comList = data.list
+      this.pages = data.pageVO;
+      this.pageList = this.pages.pageList;
+
+      //페이지이동에 필요한 데이터 담기
+      this.page = this.pages.page;
+      this.prev = this.pages.prev;
+      this.pageStart = this.pages.pageStart;
+      this.pageEnd = this.pages.pageEnd;
+      this.realEnd = this.pages.realEnd;
+
+      //mg_auth에 따라서 관리상태 값 매칭해주기
+      for(let i =0; i<this.comList.length; i++){
+        if(this.comList[i].mg_auth === '2'){
+          this.comList[i].mg_auth = '신청'
+        } else if(this.comList[i].mg_auth === '3'){
+          this.comList[i].mg_auth = '승인'
+        } else {
+          // mg_auth 가 5일 경우
+          this.comList[i].mg_auth = '반려'
+        }
+      }
+
     }
 
   }
@@ -195,8 +230,46 @@ a {
   margin-bottom: 10px;
   padding: 10px;
 }
+/*기업명 검색부분*/
+.searchBox{
+  display: inline-block;
+  overflow: hidden;
+}
+.searchType{
+  display: inline-block;
+  float: left;
+}
+.searchForm{
+  display: inline-block;
+  position: relative;
+}
+.searchForm input{
+  width: 230px;
+  margin-left: 5px;
+  display: inline-block;
+  float: left;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+.searchForm button{
+  background-color: #FFFFFF;
+  position: absolute;
+  right: 2px;
+  top: 1.5px;
+  height: 32px;
+  width: 32px;
+  margin: auto;
+  background-image: url(http://localhost:8081/img/icon_src.0626997e.svg);
+  background-position: 3px 3px;
+  background-repeat: no-repeat;
+  background-size: 27px;
+}
+
 /* select Sort */
 .list_titleWrap .choiceSort {
+  display: inline-block;
   float: right;
 }
 /* select design */

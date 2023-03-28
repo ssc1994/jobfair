@@ -664,14 +664,13 @@ export default {
 }
 
 /*----------------------------------*/
-.info_footer {
+.info_footer{
   /*cMypage 수정하기 버튼 부분*/
   text-align: center;
   margin-top: 30px;
   height: 50px;
   line-height: 50px;
 }
-
 
 /*------------------ 여기서부턴  모달부분 ------------------*/
 .modal {

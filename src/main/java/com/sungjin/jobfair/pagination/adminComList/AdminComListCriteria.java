@@ -12,6 +12,8 @@ public class AdminComListCriteria {
     String dateOption; //날짜순 정렬옵션 분기할 변수
     String manageState; //관리 상태별 정렬옵션 분기할 변수 -> 모두1,신청2,승인3,반려4
 
+    //검색키워드
+    String search_keyword; // 검색 키워드
 
     public AdminComListCriteria() {
         this.page = 1;
