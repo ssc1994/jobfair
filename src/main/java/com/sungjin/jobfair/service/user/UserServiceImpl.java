@@ -59,6 +59,11 @@ public class UserServiceImpl implements UserService {
     public ArrayList<QnAVO> getMainQnAList() {
         return userMapper.getMainQnAList();
     }
+
+    @Override
+    public void deleteQnA(String qa_num) {
+        userMapper.deleteQnA(qa_num);
+    }
 //    @Override
 //    public QnAVO uQnABtnClick() {
 //        return userMapper.uQnABtnClick();

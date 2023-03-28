@@ -33,6 +33,9 @@ public interface UserMapper {
     //메인화면에 큐앤에이 리스트 뽑기
     public ArrayList<QnAVO> getMainQnAList();
 
+    //큐앤에이 삭제
+    public void deleteQnA(String qa_num);
+
 
     //################## 채용공고 Service #######################
     //채용공고 목록 가져오기

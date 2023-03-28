@@ -253,6 +253,10 @@ body, html {
   border-collapse: collapse;
 }
 
+#qnaTable tbody {
+  cursor: pointer;
+}
+
 #qnaTable td, #qnaTable th {
   border: 1px solid #ddd;
   padding: 8px;
