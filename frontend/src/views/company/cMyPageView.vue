@@ -5,9 +5,12 @@
     <div class="resumeBoxCon" v-if="this.auth === '3'">
       <div>
         <h3 class="title">우리 기업 채용공고</h3>
-        <button class="arrDown"><img src="@/assets/icon_arr_down.png"></button>
+        <button class="arrDown">
+          <img :src="require(`@/assets/icon_arr_${arrSrc}.png`)" @click="upDown"/>
+        </button>
       </div>
-      <div class="resumeBoxWrap">
+      <div v-if="fold!=false">
+<!--      <div class="resumeBoxWrap">
         <div class="resumeBox">
           <div class="left">
             <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
@@ -21,25 +24,46 @@
             </button>
           </div>
         </div>
-      </div>
-      <div class="resumeBoxWrap">
-        <div class="resumeBox">
-          <div class="left">
-            <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>
-            <p>2023.03.09</p>
-          </div>
-          <div class="right">
-            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정
-            </button>
-            <button type="button" class="btn btn-outline-primary"
-                    style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제
-            </button>
-          </div>
-        </div>
-      </div>
-      <hr>
-    </div>
+      </div>-->
 
+        <div class="resumeBoxWrap" >
+          <routerLink to="/cempregview">
+            <div class="resumeBox">
+              <div class="left">
+              <span class="newResumeIcon" style="font-size: 40px;">
+                +
+              </span>
+                <p class="newResume" style="display: inline-block;font-size: 19px;margin-left:10px;">채용공고 등록하기</p>
+              </div>
+
+            </div>
+          </routerLink>
+        </div>
+
+        <div class="resumeBoxWrap" key="i" v-for="(empDetail, i) in empArray" :key="i">
+          <EmpComp :index='i' :empDetail='empDetail' />
+        </div>
+
+
+<!--      <div class="resumeBoxWrap">-->
+<!--        <div class="resumeBox">-->
+<!--          <div class="left">-->
+<!--            <p class="resumeTitle">창의적인 개발자가 되겠습니다.</p>-->
+<!--            <p>2023.03.09</p>-->
+<!--          </div>-->
+<!--          <div class="right">-->
+<!--            <button type="button" class="btn btn-outline-primary" style="border-color: #0064ff;color:#0064ff;">수정-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-outline-primary"-->
+<!--                    style="border-color: rgb(229, 75, 75);color:rgb(229, 75, 75);">삭제-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+    </div>
+    </div>
+    <hr>
     <div class="aplBoxCon">
       <div>
         <h3 class="title">기업 정보</h3>
@@ -254,11 +278,15 @@
 <script>
 
 import axios from "axios";
-
+import EmpComp from "@/components/myComponent/EmpComp";
 export default {
   name: "uMypageView",
+  components: {
+    EmpComp
+  },
   data() {
     return {
+
       //기업 정보 한번에 담아 오기 위한 객체
       comInfo: {
         com_name: '',
@@ -298,22 +326,50 @@ export default {
       comEsDate_errorMsg: '', //회사 설립일 지정 오류 메시지
       //유효성 검사 통과여부 변수
       check_result: 'success',
-      auth: JSON.parse(sessionStorage.getItem('sessionAuth'))
+      auth: JSON.parse(sessionStorage.getItem('sessionAuth')),
+
+      //상단 공고 불러오기
+      arrSrc:'up',
+      fold:true,
+      jpl:'',
+      empArray:[],
+      lastArray:''
     }
 
   },
   created() {
-    this.getComInfo()
+    this.getComInfo();
+    this.empinfo();
   },
   methods: {
+    empinfo() {
+      let jplData = {
+        com_num: JSON.parse(sessionStorage.getItem('sessionComp')),
+      }
+      this.$axios.post("/jobfair/getComEmpDesc" , jplData)
+          .then((res) => {
+            this.empArray = res.data
+          }).catch((error) => {
+        console.log(error)
+      })
+    },
+
+    //공고 숨김열림 메서드
+    upDown : function (){
+      this.fold = !this.fold;
+
+      if(this.arrSrc!="up"){
+        this.arrSrc = "up";
+      } else {
+        this.arrSrc = "down";
+      }
+    },
     //로고수정 버튼 클릭시 파일 업로드 버튼 활성화
     runUploadImg() {
       this.$refs.image.click()
     },
     //파일업로드시 실행되는 메서드
     async imgUploaded(e) {
-
-      // console.log(e.target.files) //files는 배열로 들어온다.
 
       let form = new FormData() //form 데이타를 담기위해 form 인스턴스 생성
       let image = e.target.files[0];
@@ -333,8 +389,6 @@ export default {
       const {data} = await this.$axios.post('/jobfair/companyMypage/getComInfo',
           {com_num: this.comInfo.com_num})
           .catch(err => console.log(err))
-
-      console.log(data.img_url)
 
       this.comInfo = data;
 
@@ -496,7 +550,6 @@ export default {
 
         this.$axios.post('/jobfair/companyMypage/modifyInfo', this.comInfo)
             .then(response => {
-              console.log(response)
 
               //수정이 완료된 후 모달창 닫기2
               alert('수정되었습니다 ^^!')

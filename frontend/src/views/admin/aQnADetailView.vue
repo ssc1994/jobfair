@@ -6,7 +6,9 @@
           <h3>Q.</h3>
         </div>
 
-        <div class=" wrapBox3">
+        <div class="wrapBox3">
+
+            <button class="btn btn-custom" @click.prevent="adeleteQnA">삭제하기</button>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">작성자</span>
             <input type="text" v-model="uQnADetail.user_id" class="form-control" placeholder="Username" aria-label="Username"
@@ -94,13 +96,11 @@ export default {
     this.$axios.get('/jobfair/getQnADetail/', {params: {qa_num: this.$route.params.qa_num}})
         .then((res) => {
               this.uQnADetail = res.data
-              console.log(res.data);
 
 
               this.$axios.get('/jobfair/getAdmQnADetail', {params: {qa_num: this.$route.params.qa_num}} )
                   .then((response) => {
                     this.aQnADetail = response.data
-                    console.log(response.data);
                   })
                   .catch((err) => console.log(err))
 
@@ -125,6 +125,18 @@ export default {
     goBackToList() {
       this.$router.push("/aQnAView")
     },
+    adeleteQnA() {
+      if(confirm('정말로 삭제하시겠습니까?')) {
+        this.$axios.get('/jobfair/adeleteQnA?qa_num=' + this.$route.params.qa_num)
+            .then((res) => {
+              this.$router.push("/aQnAView");
+              console.log(res)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+      }
+    }
 
   }
 }
@@ -157,6 +169,10 @@ export default {
   position: relative;
   right: 100px;
   top: 60px;
+}
+
+.wrapBox3 button {
+  float: right;
 }
 
 
@@ -215,6 +231,23 @@ export default {
 
 .modal {
   --bs-modal-width: 800px
+}
+
+.btn-custom {
+  background-color: hsl(0, 92%, 36%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f74444", endColorstr="#b00707");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f74444), to(#b00707));
+  background-image: -moz-linear-gradient(top, #f74444, #b00707);
+  background-image: -ms-linear-gradient(top, #f74444, #b00707);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f74444), color-stop(100%, #b00707));
+  background-image: -webkit-linear-gradient(top, #f74444, #b00707);
+  background-image: -o-linear-gradient(top, #f74444, #b00707);
+  background-image: linear-gradient(#f74444, #b00707);
+  border-color: #b00707 #b00707 hsl(0, 92%, 29.5%);
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.42);
+  -webkit-font-smoothing: antialiased;
 }
 
 </style>

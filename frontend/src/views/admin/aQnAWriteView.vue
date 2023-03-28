@@ -94,16 +94,12 @@ export default {components: {SoftInput, SoftButton},
 
     this.$axios.get('/jobfair/getQnADetail/' , {params:{qa_num: this.$route.params.qa_num}} )
         .then((res) => {
-              console.log('유저시작')
               this.uQnADetail = res.data
 
 
             }
         )
         .catch((error) => console.log(error))
-        .finally(()=>{
-          console.log('유저완료')
-        })
 
   },
   methods: {
@@ -116,13 +112,11 @@ export default {components: {SoftInput, SoftButton},
         qa_type: this.aQnADetail.qa_type,
         qa_reply: this.$route.params.qa_num
       }
-      console.log(myData)
 
       this.$axios
           .post('/jobfair/aqnaRegist', myData)
           .then((res) => {
             if(res.status === 200) {
-              console.log(res.data)
               this.$router.push({
                 name: 'aQnADetailView',
                 params: {
@@ -142,19 +136,7 @@ export default {components: {SoftInput, SoftButton},
             alert('에러: ' + error )
 
           })
-          .finally(() => {
-            console.log('기업답변등록')
-          })
     },
-    // getComQnADetail() {
-    //   this.$axios.get('/jobfair/cQnADetailView')
-    //       .then((res)=> {
-    //         this.cQnADetail = res.data
-    //       })
-    //       .catch((error) => {
-    //         console.log(error)
-    //       })
-    // },
     goBackToList() {
       this.$router.push("/cQnAView")
     },

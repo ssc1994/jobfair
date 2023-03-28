@@ -7,6 +7,7 @@
         </div>
 
         <div class=" wrapBox3">
+          <button class="btn btn-custom" v-if="uQnADetail.user_id == sessionUser_id && cQnADetail.user_id == null" @click.prevent="deleteQnA">삭제하기</button>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">작성자</span>
             <input type="text" v-model="uQnADetail.user_id" class="form-control" aria-label="Username"
@@ -23,7 +24,6 @@
             <span class="input-group-text">문의내용</span>
             <textarea class="form-control contentBox" v-model="uQnADetail.qa_content" aria-label="With textarea" disabled></textarea>
           </div>
-
 
         </div>
       </div>
@@ -57,6 +57,7 @@
         수정하기
       </button>
       <button type="button" class="btn btn-outline-primary" @click.prevent="goBackToList">목록으로</button>
+
     </div>
 
     <!--수정하기 모달창 설정-->
@@ -130,6 +131,8 @@ export default {components: {SoftInput, SoftButton},
         qa_content: '',
         qa_type: 'a',
       },
+
+      qa_num: this.$route.params.qa_num
     };
   },
 
@@ -139,7 +142,6 @@ export default {components: {SoftInput, SoftButton},
       this.$axios.get('/jobfair/getQnADetail/' , {params:{qa_num: this.$route.params.qa_num}} )
           .then((res) => {
             this.uQnADetail = res.data
-            console.log(res.data);
 
             this.$axios.get('/jobfair/getComQnADetail', {params: {qa_num: this.$route.params.qa_num}} )
                 .then((response) => {
@@ -183,6 +185,18 @@ export default {components: {SoftInput, SoftButton},
           .catch((error) => {
             console.log(error)
           })
+    },
+    deleteQnA() {
+      if(confirm('정말로 삭제하시겠습니까?')) {
+        this.$axios.get('/jobfair/deleteQnA?qa_num=' + this.$route.params.qa_num)
+            .then((res) => {
+              this.$router.push("/uQnAView");
+              console.log(res)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+      }
     }
 
   }
@@ -220,6 +234,13 @@ export default {components: {SoftInput, SoftButton},
   top: 60px;
 }
 
+/*.wrapBox3 {*/
+/*  position: ;*/
+/*}*/
+
+.wrapBox3 button {
+  float: right;
+}
 
 .wrapBox3 .writer {
   font-size: 20px;
@@ -276,6 +297,23 @@ export default {components: {SoftInput, SoftButton},
 
 .modal {
   --bs-modal-width: 800px
+}
+
+.btn-custom {
+  background-color: hsl(0, 92%, 36%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f74444", endColorstr="#b00707");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f74444), to(#b00707));
+  background-image: -moz-linear-gradient(top, #f74444, #b00707);
+  background-image: -ms-linear-gradient(top, #f74444, #b00707);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f74444), color-stop(100%, #b00707));
+  background-image: -webkit-linear-gradient(top, #f74444, #b00707);
+  background-image: -o-linear-gradient(top, #f74444, #b00707);
+  background-image: linear-gradient(#f74444, #b00707);
+  border-color: #b00707 #b00707 hsl(0, 92%, 29.5%);
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.42);
+  -webkit-font-smoothing: antialiased;
 }
 
 </style>

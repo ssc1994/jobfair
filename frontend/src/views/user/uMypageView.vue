@@ -138,7 +138,6 @@ export default {
       console.log(error)
     }),
         //지원현황 리스트
-        console.log("아이디"+this.user_id);
         this.$axios.post("/jobfair/getApplyListCnt" , {user_id: this.user_id})
             .then((res) => {
               this.applyCnt = res.data;
