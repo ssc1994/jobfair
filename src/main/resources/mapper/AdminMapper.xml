@@ -65,6 +65,12 @@
         where u.qa_num=#{qa_num}
     </select>
 
+    <!--큐앤에이 삭제-->
+    <delete id="adeleteQnA">
+        delete from QnA
+        where qa_num = #{qa_num}
+    </delete>
+
     <!--페이지네이션-->
     <select id="aQnAGetTotal" resultType="int">
         select count(*) from QnA where qa_type like "%q%"

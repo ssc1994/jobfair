@@ -10,7 +10,7 @@
 
         <div>
           <div class="row" style="margin-top: 20px">
-            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" v-bind:value="data.value" :key="i"
+            <router-link to="" class="hotBoxWrap" v-for="(data, i) in mainJobInfo" :key="i"
                          @click.prevent="jobPostDetail(data.jpl_num)">
               <div>
                 <img :src="data.url" alt="이미지" style="height: 250px">
@@ -268,6 +268,7 @@ h3 {
   right: 130px;
   color: #202632;
   margin-top: 50px;
+  cursor: pointer;
 }
 
 #qnaTable {
@@ -277,6 +278,11 @@ h3 {
   width: 1500px;
   position: relative;
   right: 120px;
+
+}
+
+#qnaTable tbody {
+  cursor: pointer;
 }
 
 #qnaTable td, #qnaTable th {

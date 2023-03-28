@@ -402,20 +402,8 @@ export default {
 
   created()  {
 
-    console.log("아이디"+this.user_id);
-    console.log(this.page);
-    console.log(this.amount);
-    console.log(this.selSortInt);
     this.getJobPostList();
 
-    // this.$axios.post('/jobfair/getJobPostList/',{selSortInt: 1})
-    //     .then((res) => {
-    //           this.jobPostList = res.data;
-    //         }
-    //     )
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
   },
   methods: {
 
@@ -432,18 +420,11 @@ export default {
               myJobPost : e
             }
           }).catch(err => console.log(err))
-      console.log(data);
-
-      // console.log(data.list);
-      // console.log(data.pageVO);
       this.urlList = data.urlList;
       this.jobPostList = data.empPageGate.list;
       this.appliedList = data.appliedList.jpl_num;
+
       this.comNum = data.comNum;
-      console.log("컴넘"+this.comNum);
-      console.log(this.appliedList);
-      console.log(this.jobPostList[0].com_num);
-      console.log(this.jobPostList[0].com_num == this.comNum)
       this.pages = data.empPageGate.pageVO;
       this.pageList = this.pages.pageList;
 
@@ -493,7 +474,6 @@ export default {
       if(cnt == 0 && this.inputSearch == ""){
         alert('검색 키워드가 없습니다!')
       } else {
-        console.log(jpl_workHistory);
         let {data} = await this.$axios.post('/jobfair/getJobPostSrc',
             {
               page: this.page,
@@ -511,8 +491,6 @@ export default {
               selSortInt :this.selSortInt
 
             }).catch(err => console.log(err))
-
-        console.log(data);
 
 
 
@@ -621,7 +599,6 @@ export default {
       this.fold1 = false;
     },
     sortEvent(e){
-      console.log(this.selSort);
       if(this.selSort == "최신등록순"){
         this.selSortInt = '1';
       }else if(this.selSort == "마감임박순"){
@@ -631,7 +608,6 @@ export default {
       }
 
       var cnt = 0;
-      console.log(this.selectedTag.length);
       for(var i=0; i < this.selectedTag.length; i++){
         for(var j=0; j < this.selectedTag[i].tagValue.length; j++){
           cnt++;

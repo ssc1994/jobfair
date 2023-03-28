@@ -28,6 +28,9 @@ public interface UserService {
     //메인화면에 큐앤에이 리스트 뽑기
     public ArrayList<QnAVO> getMainQnAList();
 
+    //큐앤에이 삭제
+    public void deleteQnA(String qa_num);
+
 
     //################## 채용공고(jobPost) 관련 Service #######################
         //채용공고 목록 가져오기
@@ -60,6 +63,10 @@ public interface UserService {
     //채용공고 통계관련
     //지원자의 성별통계 구하기!!
     public ArrayList<StatisticVO> getGendertotal();
+
+    //지원자의 이력서정보 가져오기
+    public ArrayList<StatisticVO> getlookPerson(String jpl_num);
+
     //################## 마이페이지(MyPage) Service #######################
         //이력서 정보 가져오기
     public ArrayList<ResumeVO> resumeInfo(String user_id);

@@ -90,9 +90,7 @@ export default {
       this.$axios.post('/jobfair/getAuth')
           .then(res => {
             this.auth = res.data
-            console.log(this.auth)
             for (let i = 0; i < res.data.length; i++) {
-              console.log('실행됨')
               if(this.auth[i].mg_auth === '2') {
                 this.nosuccess++
               } else if(this.auth[i].mg_auth === '3') {

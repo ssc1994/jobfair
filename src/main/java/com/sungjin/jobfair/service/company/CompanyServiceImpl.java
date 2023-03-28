@@ -62,7 +62,12 @@ public class CompanyServiceImpl implements CompanyService{
     public ArrayList<EmpVO> getComJobPosingList(Map paramMap) {
         return companyMapper.getComJobPosingList(paramMap);
     }
-    
+
+    @Override
+    public ArrayList<EmpVO> getComEmpDesc(String com_num) {
+        return companyMapper.getComEmpDesc(com_num);
+    }
+
     @Override
     public ArrayList<Integer> getCountAppList(Map paramMap) {
         return companyMapper.getCountAppList(paramMap);

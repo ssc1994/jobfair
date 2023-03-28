@@ -128,7 +128,6 @@ export default {
     aQnAGetTotal() {
       this.$axios.post("/jobfair/aQnAGetTotal")
           .then((res) => {
-            console.log(res)
           })
           .catch((error) => console.log(error))
     },
@@ -248,6 +247,10 @@ body, html {
   width: 100%;
   border: 1px solid #444444;
   border-collapse: collapse;
+}
+
+#qnaTable tbody {
+  cursor: pointer;
 }
 
 #qnaTable td, #qnaTable th {

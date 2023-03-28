@@ -33,6 +33,9 @@ public interface UserMapper {
     //메인화면에 큐앤에이 리스트 뽑기
     public ArrayList<QnAVO> getMainQnAList();
 
+    //큐앤에이 삭제
+    public void deleteQnA(String qa_num);
+
 
     //################## 채용공고 Service #######################
     //채용공고 목록 가져오기
@@ -61,6 +64,9 @@ public interface UserMapper {
     //채용공고 통계관련
     //지원자의 성별통계 구하기!!
     public ArrayList<StatisticVO> getGendertotal();
+
+    //지원자의 이력서정보 가져오기
+    public ArrayList<StatisticVO> getlookPerson(String jpl_num);
 
 
     //################## MyPage Service #######################

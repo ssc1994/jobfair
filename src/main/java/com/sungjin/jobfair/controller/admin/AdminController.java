@@ -90,6 +90,16 @@ public class AdminController {
 
         return list;
     }
+
+    //큐앤에이 삭제
+
+    @GetMapping(value="/adeleteQnA")
+    public String adeleteQnA(@RequestParam("qa_num") String qa_num) {
+        adminService.adeleteQnA(qa_num);
+
+        return "success";
+    }
+
     //디테일데이터
     @GetMapping(value = "/agetQnADetail")
     public QnAVO agetQnADetail(@RequestParam("qa_num") int qa_num) {

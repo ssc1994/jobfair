@@ -92,6 +92,20 @@ public class CompanyController {
         String com_num = param.get("com_num");
         CompanyVO vo =  companyService.info(com_num);
 
+        //업로드된 이미지 파일 url 가져와서 CompanyVO에 담기
+
+        if(vo.getCom_fileName() == null){
+            //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
+            vo.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/0afa39a2-b46b-4ffc-a7c9-677b3aee751c_no-img-icon3.jpg");
+        } else {
+            //업로드된 이미지 파일이 있다면 이미지 파일의 url 가져와서 담아줌.
+            String path = vo.getCom_fileUuid() + "_" + vo.getCom_fileName();
+            String bucket = vo.getCom_filePath();
+            String url = amazonS3Client.getUrl(bucket, path).toString();
+            vo.setImg_url(url);
+        }
+
+
         Map<String, String> map = new HashMap<>();
         map.put("com_num",vo.getCom_num());
         map.put("com_name",vo.getCom_name());
@@ -102,6 +116,7 @@ public class CompanyController {
         map.put("com_ceo",vo.getCom_ceo());
         map.put("com_establishmentDate",vo.getCom_establishmentDate());
         map.put("com_businessRegistration",vo.getCom_businessRegistration());
+        map.put("com_logo",vo.getImg_url());
 
         return map;
     }
@@ -234,6 +249,14 @@ public class CompanyController {
         paramMap.put("jplList", jplList);
         paramMap.put("countAppList", countAppList);
         return paramMap; //반환값 변경해야함
+    }
+
+    @PostMapping(value="/getComEmpDesc")
+    public ArrayList getComEmpDesc (@RequestBody Map<String, String> map) {
+        String com_num = map.get("com_num");
+        ArrayList<EmpVO> jpllist = companyService.getComEmpDesc(com_num);
+
+        return jpllist; //반환값 변경해야함
     }
     
         //채용공고에 지원한 지원자 리스트

@@ -59,6 +59,11 @@ public class UserServiceImpl implements UserService {
     public ArrayList<QnAVO> getMainQnAList() {
         return userMapper.getMainQnAList();
     }
+
+    @Override
+    public void deleteQnA(String qa_num) {
+        userMapper.deleteQnA(qa_num);
+    }
 //    @Override
 //    public QnAVO uQnABtnClick() {
 //        return userMapper.uQnABtnClick();
@@ -106,6 +111,9 @@ public class UserServiceImpl implements UserService {
     public ArrayList<StatisticVO> getGendertotal() {
         return userMapper.getGendertotal();
     }
+
+    @Override
+    public ArrayList<StatisticVO> getlookPerson(String jpl_num) { return userMapper.getlookPerson(jpl_num); }
 
 
     //################## 마이페이지(MyPage) Service #######################

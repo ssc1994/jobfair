@@ -140,7 +140,6 @@ export default {
   created() {
     this.$axios.get('/jobfair/getResumeDetail?res_num=' + this.$route.query.res_num)
         .then(response => {
-          console.log(response.data)
           this.resInfo = response.data.resVO;
           this.eduInfo = response.data.eduList;
           this.eduCount = this.eduInfo.length
@@ -212,12 +211,10 @@ export default {
     },
     //*********버튼 클릭 시 input:file 클릭으로 연동시키는 함수
     clickFile() {
-      console.log(this.resInfo.user_id)
       this.$refs.inputImg.click();
     },
     //*********업로드시킬 사진 미리보기 함수
     previewImg(e) {
-      console.log(e.target.files)
       this.res_img = e.target.files[0]
       let reader = new FileReader();
       reader.onload = (event) => {
@@ -249,10 +246,8 @@ export default {
     },
     deleteEdu(delData) {
       var removeNum = delData.removeNum;
-      console.log("삭제할 인덱스" + removeNum)
       this.eduInfo.splice(removeNum, 1);
       this.eduInfo.push();
-      console.log(this.eduInfo)
       this.test();
       this.$forceUpdate
     },

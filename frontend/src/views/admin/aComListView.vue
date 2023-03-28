@@ -155,7 +155,6 @@ export default {
     //기업이름 검색
     async searchCom () {
       let res = await this.$axios.get('/jobfair/aComList/search', {params: {com_name : this.com_name}}).catch(err => console.log(err))
-      console.log(res)
     }
 
   }
