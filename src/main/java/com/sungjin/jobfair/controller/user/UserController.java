@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sungjin.jobfair.command.*;
 import com.sungjin.jobfair.service.user.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -242,6 +243,16 @@ public class UserController {
         return a;
     }
 
+    //큐앤에이 삭제
+
+    @GetMapping(value="/deleteQnA")
+    public String deleteQnA(@RequestParam("qa_num") String qa_num) {
+        userService.deleteQnA(qa_num);
+
+        return "success";
+    }
+
+
 
     //메인페이지에서 큐앤에이 리스트 가져오기
     @PostMapping(value = "/getMainQnAList")
@@ -264,7 +275,11 @@ public class UserController {
 
         //해당 유저가 지원한 공고 jpl_num 가져오기
         String user_id = cri.getUser_id();
-        ArrayList<EmpApplyVO> appliedList = userService.appliedList(user_id);
+
+        ArrayList<EmpVO> appliedList = userService.appliedList(user_id);
+
+        //해당 기업의 com_num 가져오기
+        int com_num = userService.getComNum(user_id);
 
         //위에서 지정해준 조건에 따른 참여 기업 목록 (1페이지당 몇개) 가져오기
         ArrayList<EmpListVO> list = userService.getJobPostList(cri);
@@ -289,6 +304,7 @@ public class UserController {
         map.put("urlList", urlList);
         map.put("empPageGate", empPageGate);
         map.put("appliedList", appliedList);
+        map.put("comNum", com_num);
 
         return map;
     }
@@ -402,6 +418,15 @@ public class UserController {
     public ArrayList<StatisticVO> getGendertotal(){
 
         ArrayList<StatisticVO> list = userService.getGendertotal();
+        return list;
+    }
+
+    //채용공고 상세페이지에 있는 지원자의 이력서 가져오기
+    @PostMapping(value = "/getlookPerson")
+    public ArrayList<StatisticVO> getlookPerson(@RequestBody EmpVO vo){
+
+        String jpl_num = vo.getJpl_num();
+        ArrayList<StatisticVO> list = userService.getlookPerson(jpl_num);
         return list;
     }
 

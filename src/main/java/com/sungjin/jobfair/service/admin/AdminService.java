@@ -45,4 +45,7 @@ public interface AdminService {
     //큐앤에이 페이지네이션
     public int aQnAGetTotal(Criteria cri);
 
+    //큐앤에이 삭제
+    public void adeleteQnA(String qa_num);
+
 }

@@ -59,6 +59,11 @@ public class UserServiceImpl implements UserService {
     public ArrayList<QnAVO> getMainQnAList() {
         return userMapper.getMainQnAList();
     }
+
+    @Override
+    public void deleteQnA(String qa_num) {
+        userMapper.deleteQnA(qa_num);
+    }
 //    @Override
 //    public QnAVO uQnABtnClick() {
 //        return userMapper.uQnABtnClick();
@@ -70,7 +75,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.getJobPostList(cri);
     }
     //해당 유저가 지원한 공고 jpl_num 가져오기
-    public ArrayList<EmpApplyVO> appliedList(String user_id){ return userMapper.appliedList(user_id); }
+    public ArrayList<EmpVO> appliedList(String user_id){ return userMapper.appliedList(user_id); }
+    //해당 기업의 com_num 가져오기
+    public int getComNum(String user_id){return userMapper.getComNum(user_id);}
     //채용공고 목록 갯수 (#### 페이지 네이션 ####)
     @Override
     public int getJobPostTotal(Criteria cri){ return userMapper.getJobPostTotal(cri); }
@@ -104,6 +111,9 @@ public class UserServiceImpl implements UserService {
     public ArrayList<StatisticVO> getGendertotal() {
         return userMapper.getGendertotal();
     }
+
+    @Override
+    public ArrayList<StatisticVO> getlookPerson(String jpl_num) { return userMapper.getlookPerson(jpl_num); }
 
 
     //################## 마이페이지(MyPage) Service #######################

@@ -69,4 +69,9 @@ public class AdminServiceImpl implements AdminService{
     public int aQnAGetTotal(Criteria cri) {
         return adminMapper.aQnAGetTotal(cri);
     }
+
+    @Override
+    public void adeleteQnA(String qa_num) {
+        adminMapper.adeleteQnA(qa_num);
+    }
 }

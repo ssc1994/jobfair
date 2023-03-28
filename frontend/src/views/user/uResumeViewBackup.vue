@@ -252,8 +252,6 @@ export default {
     },
     changeWeInfo (weInfo) {
       this.weInfo = weInfo
-      console.log("부모 컴포넌트")
-      console.log(this.weInfo)
     },
     addWE () {
       this.weCount++;

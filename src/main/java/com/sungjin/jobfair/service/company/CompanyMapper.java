@@ -35,6 +35,9 @@ public interface CompanyMapper {
     public EmpVO getEmpData(int jpl_num);
     //기업이 등록한 채용공고 목록 가져오기
     ArrayList<EmpVO> getComJobPosingList(Map paramMap);
+
+    //기업이 등록한 가장 최근 최용공고 불러오기
+    ArrayList<EmpVO> getComEmpDesc(String com_num);
     ArrayList<Integer> getCountAppList(Map paramMap);
     //채용공고 목록 total 가져오기
     int getTotalJpl(String com_num);
@@ -44,6 +47,9 @@ public interface CompanyMapper {
     ArrayList<ApplyVO> getApplicantList(Map map);
     // 이력서 열람/미열람 상태 변경
     void chgApplicantState(Map map);
+    //로그인한 기업의 user_id의 com_num 가져오기
+    int getComNum(String user_id);
+
 
 
     //################## Login Service #######################

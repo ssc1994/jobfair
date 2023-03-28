@@ -52,10 +52,10 @@
           <div class="comNewComer">
             <div class="comTopBox">
               <h3>최근 지원자</h3>
-              <button class="comAllBtn">
-                <img src="@/assets/icon_arrow_right.svg"/>
-                지원자 전체보기
-              </button>
+<!--              <button class="comAllBtn">-->
+<!--                <img src="@/assets/icon_arrow_right.svg"/>-->
+<!--                지원자 전체보기-->
+<!--              </button>-->
             </div>
             <div class="ResentInfo">
               <div>

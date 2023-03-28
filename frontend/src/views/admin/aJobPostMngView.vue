@@ -387,24 +387,11 @@ export default {
 
   created()  {
 
-    console.log("아이디"+this.user_id);
-    console.log(this.page);
-    console.log(this.amount);
-    console.log(this.selSortInt);
     this.getJobPostList();
 
-    // this.$axios.post('/jobfair/getJobPostList/',{selSortInt: 1})
-    //     .then((res) => {
-    //           this.jobPostList = res.data;
-    //         }
-    //     )
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
   },
   methods: {
     test () {
-      console.log(this.selectedTag[0].tagValue)
     },
 
     //채용공고 가져오기
@@ -419,15 +406,10 @@ export default {
               user_id : this.user_id
             }
           }).catch(err => console.log(err))
-      console.log(data);
 
-      // console.log(data.list);
-      // console.log(data.pageVO);
       this.urlList = data.urlList;
       this.jobPostList = data.empPageGate.list;
       this.appliedList = data.appliedList.jpl_num;
-      console.log(this.appliedList);
-      console.log(this.jobPostList);
       this.pages = data.empPageGate.pageVO;
       this.pageList = this.pages.pageList;
 
@@ -477,7 +459,6 @@ export default {
       if(cnt == 0 && this.inputSearch == ""){
         alert('검색 키워드가 없습니다!')
       } else {
-        console.log(jpl_workHistory);
         let {data} = await this.$axios.post('/jobfair/getJobPostSrc',
             {
               page: this.page,
@@ -496,7 +477,6 @@ export default {
 
             }).catch(err => console.log(err))
 
-        console.log(data);
 
 
 
@@ -604,7 +584,6 @@ export default {
       this.fold1 = false;
     },
     sortEvent(e){
-      console.log(this.selSort);
       if(this.selSort == "최신등록순"){
         this.selSortInt = '1';
       }else if(this.selSort == "마감임박순"){
@@ -614,7 +593,6 @@ export default {
       }
 
       var cnt = 0;
-      console.log(this.selectedTag.length);
       for(var i=0; i < this.selectedTag.length; i++){
         for(var j=0; j < this.selectedTag[i].tagValue.length; j++){
           cnt++;
@@ -771,12 +749,12 @@ h3{font-weight: bold;
   text-align: left;
   margin-bottom: 20px;
   height:auto;
-
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .empSearchBox h3 {padding-bottom: 20px;}
 
-.empSearchBox:hover {box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
+.empSearchBox:hover {}
 
 .empSearchTitle {font-weight:bold;
   /*background-color: #dedede;*/
@@ -968,13 +946,9 @@ h3{font-weight: bold;
 .selSort {width:130px;font-weight: bold;border:0;}
 
 /* 페이지네이션 부분 */
-.paginationWrap ul {
-  margin-top: 50px;
-  padding-left: 470px;
-}
 
 .paginationWrap .page-link {
-  background-color: #0064ff;
+  background-color: white;
 }
 
 .paginationWrap li.active span {
@@ -982,4 +956,34 @@ h3{font-weight: bold;
   border: none;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.page-link {
+  color: #333;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0064ff;
+}
+
+.active .page-link {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
 </style>

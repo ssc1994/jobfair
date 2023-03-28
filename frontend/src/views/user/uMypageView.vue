@@ -78,7 +78,8 @@
                     <td ><router-link to="" style="color:black;text-decoration: none;">{{ applyList.com_name }}</router-link></td>
                     <td><router-link to="" style="color:black;text-decoration: none;">{{ applyList.jpl_title }}</router-link></td>
                     <td>{{ applyList.jpl_workPosition }}</td>
-                    <td class="allPass">{{ applyList.al_state }}</td>
+                    <td class="allPass" v-if = "applyList.al_state === 'O'" >열람</td>
+                    <td class="noPass" v-if = "applyList.al_state === 'X'" >미열람</td>
                   </tr>
                 </tbody>
               </table>
@@ -138,7 +139,6 @@ export default {
       console.log(error)
     }),
         //지원현황 리스트
-        console.log("아이디"+this.user_id);
         this.$axios.post("/jobfair/getApplyListCnt" , {user_id: this.user_id})
             .then((res) => {
               this.applyCnt = res.data;

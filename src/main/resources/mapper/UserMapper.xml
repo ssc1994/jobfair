@@ -73,6 +73,11 @@
         order by qa_num desc
     </select>
 
+    <!--큐앤에이 삭제-->
+    <delete id="deleteQnA">
+        delete from QnA
+            where qa_num = #{qa_num}
+    </delete>
 
     <!--**************************************************채용공고**************************************************-->
         <!--채용공고 리스트-->
@@ -100,11 +105,16 @@
     </select>
 
     <!--  해당 유저가 지원한 공고 jpl_num 가져오기  -->
-    <select id="appliedList" resultType="EmpApplyVO">
+    <select id="appliedList" resultType="EmpVO">
         select jpl_num from ApplyList
         where user_id = #{user_id}
     </select>
 
+    <!--  해당 기업의 com_num 가져오기  -->
+    <select id="getComNum" resultType="int">
+        select com_num from User
+        where user_id = #{user_id}
+    </select>
 
     <!--  채용공고 리스트 갯수(페이지 네이션)  -->
     <select id="getJobPostTotal" resultType="int">
@@ -224,9 +234,6 @@
             </when>
         </choose>
         limit #{cri.pageStart}, #{cri.amount}
-
-
-
 
     </select>
 
@@ -360,6 +367,14 @@
         ON a.user_id = u.user_id
     </select>
 
+<!--    채용공고에 지원한 지원자의 이력서 모달로 띄우기.. -->
+    <select id="getlookPerson" resultType="StatisticVO">
+        select * from ApplyList a
+        INNER JOIN ResumeList r ON a.user_id = r.user_id
+        INNER JOIN User u on a.user_id = u.user_id
+        where a.jpl_num = #{jpl_num}
+    </select>
+
 
     <!--**************************************************마이페이지 이력서**************************************************-->
     <!--이력서정보-->
@@ -481,7 +496,7 @@
         select *
         from JobPostingList j
                  left join ApplyList a on a.jpl_num = j.jpl_num
-                 left join Company c on c.com_num = j.jpl_num
+                 left join Company c on c.com_num = j.com_num
         where user_id = #{user_id}
         order by al_regDate desc
     </select>
@@ -490,7 +505,7 @@
         select *
         from JobPostingList j
                  left join ApplyList a on a.jpl_num = j.jpl_num
-                 left join Company c on c.com_num = j.jpl_num
+                 left join Company c on c.com_num = j.com_num
         where user_id = #{user_id} and al_state like "%O%"
         order by al_regDate desc
     </select>
@@ -499,7 +514,7 @@
         select *
         from JobPostingList j
                  left join ApplyList a on a.jpl_num = j.jpl_num
-                 left join Company c on c.com_num = j.jpl_num
+                 left join Company c on c.com_num = j.com_num
         where user_id = #{user_id} and al_state like "%X%"
         order by al_regDate desc
     </select>

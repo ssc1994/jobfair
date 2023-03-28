@@ -4,7 +4,7 @@
     <main class="resume left">
       <div class="TopBox">
         <div class="left PostImg tbList">
-          <img class="tbLogo" src="@/assets/noImg.png" alt="">
+          <img class="tbLogo" :src="com_logo" alt="">
           <p>{{ com_name }}</p>
         </div>
         <div class="left PostText">
@@ -43,13 +43,19 @@
             {{ jpl_content }}
             <br>
             <!--            aws에서 가져오는 이미지를 집어넣을예정-->
-            <!--            <br>{{ viewImg }}-->
           </p>
+
           <br/>
         </div>
         <p><br></p>
         <p>&nbsp;</p>
-        <div class="recruitment">
+        <div class="recruitment pic">
+          <b>공고내용</b><br/>
+          <p><img :src="viewImg" alt="No Img"></p><br/>
+        </div>
+        <p><br></p>
+        <p>&nbsp;</p>
+        <div class="recruitment pro">
           <b>전형절차</b><br/>
           <p>서류 지원 - 1차 면접 - 2차 면접 - 합격</p><br/>
         </div>
@@ -57,7 +63,7 @@
         <p>&nbsp;</p>
         <div class="recruitment">
           <b>기업정보</b><br/>
-          <img src="@/assets/noImg.png">
+          <img :src="com_logo">
           <span>기업명 : {{ com_name }}</span><br/>
           <span>기업전화번호 : {{ com_phone }}</span><br/>
           <span>기업이메일 : {{ com_email }}</span><br/>
@@ -92,8 +98,12 @@
           </button>
 
 
-          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="this.mg_auth == 3">
+          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: #dedede;color:black;" v-if="this.mg_auth == 3 && com_num == this.loginComNum">
            지원자 보기
+          </button>
+
+          <button type="button" class="btn btn-primary endBtn" v-if="this.mg_auth == 3 && com_num == this.loginComNum" @click="modi(jpl_num)">
+            수정하기
           </button>
 
           <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" v-if="this.mg_auth < 3">
@@ -128,8 +138,9 @@
 
     <!--지원하기 모달창 설정-->
     <!--state 적용해서 데이터 넣어야해유-->
+<!--    유저가 채용공고에 본인의 이력서를 선택해서 지원할 때 모달창 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         style="z-index: 10000;">
+         style="z-index: 10000;" v-if="this.mg_auth < 3">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content ">
           <div class="modal-header">
@@ -151,6 +162,36 @@
             <div class="modal-footer">
               <!-- @click="supportResume" 넣기 -->
               <button type="button" class="btn btn-primary" @click.prevent="postRes" data-bs-dismiss="modal">지원하기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    기업이 본인의 채용공고에 지원한 사람들의 목록을 모달에서 확인할 때 -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="z-index: 10000;" v-if="this.mg_auth == 3">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">지원자 목록</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="height: 100%">
+            <div class="contentModalBox">
+
+              <div class="miniContentModalBox" v-for="(personAll,j) in lookPerson" :key="j">
+                <label :for="personAll.res_num">
+                  <h4>{{ personAll.res_title }} </h4>
+                  <h5>{{ personAll.res_regDate }} </h5>
+                </label>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <!-- @click="supportResume" 넣기 -->
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인
               </button>
             </div>
           </div>
@@ -246,6 +287,7 @@ export default {
       user_id: JSON.parse(sessionStorage.getItem('sessionId')),
       mg_auth : JSON.parse(sessionStorage.getItem('sessionAuth')),
       res_num: '1',
+      lookPerson: [],
       //지원한 이력서
       resNum: 0,
       // apply 성공
@@ -253,7 +295,8 @@ export default {
       applyBtnText: '지원하기',
       // 지원했던 공고면 1 , 아니면 0
       AppliedResult: 0,
-      resumeArray: []
+      resumeArray: [],
+      loginComNum : ''
     }
   },
   watch: {
@@ -261,11 +304,18 @@ export default {
     man () { this.genderChart() }
   },
   created() {
+    this.$axios.post("/jobfair/getComNum", {user_id: this.user_id})
+        .then((res) => {
+          this.loginComNum = res.data;
+        }).catch((error) => {
+      console.log(error);
+    }),
+
     this.getGendertotal(),
+    this.getlookPerson(),
         this.$axios.get('/jobfair/empData', {
       params: {jpl_num: this.jpl_num}
     }).then(res => {
-
       this.com_num = res.data.com_num,
           this.jpl_title = res.data.jpl_title,
           this.jpl_content = res.data.jpl_content,
@@ -295,8 +345,10 @@ export default {
           this.jpl_contact = res.data.jpl_contact,
           this.jpl_fileName = res.data.jpl_fileName,
           this.jpl_filePath = res.data.jpl_filePath,
-          this.jpl_fileUuid = res.data.jpl_fileUuid,
-          this.viewImg = res.data.jpl_filePath + "/" + res.data.jpl_fileUuid + "-" + res.data.jpl_fileName,
+          this.jpl_fileUuid = res.data.jpl_fileUuid
+          if(res.data.url!=null){
+            this.viewImg=res.data.url
+          }
           this.$axios
               .post('/jobfair/compInfo', {
                 com_num: this.com_num
@@ -313,22 +365,20 @@ export default {
                 this.com_ceo = res.data.com_ceo
                 this.com_establishmentDate = res.data.com_establishmentDate
                 this.com_businessRegistration = res.data.com_businessRegistration
-                console.log("comData")
-                console.log(res)
+                this.com_logo=res.data.com_logo
               }).catch(err => {
             console.log(err)
           })
-      this.viewImg = "file:///" + this.viewImg
-      console.log(this.viewImg)
 
     }).catch(err => {
       console.log(err)
     }),
         this.resumeinfo();
 
+
+
     this.$axios.post("/jobfair/EmpApplied", {user_id: this.user_id, jpl_num: this.jpl_num})
         .then((res) => {
-          console.log("Applied" + res.data);
           this.AppliedResult = res.data;
           if (this.AppliedResult == 1) {
             this.applyBtnText = '지원완료';
@@ -338,16 +388,11 @@ export default {
     })
 
 
-    console.log(this.AppliedResult)
-
-    //모멘트 적용
-
   },
   mounted() {
     setInterval(this.curcur,1000);
     this.genderChart()
   },
-
   methods: {
     curcur(){
       const moment = require('moment')
@@ -369,15 +414,10 @@ export default {
         clearInterval(this.curcur)
       }
     },
-    // 지원하기 -> 이력서 선택후 -> 지원하기 버튼 구현중 / 지원하기 누르면 기업Apply페이지에 채용공고 리스트에 이력서가 아래에 뜨게 만들어야함.
-    // supportResume(){
-    //   router.push({path:"/"})
-    // }
     resumeinfo() {
       this.$axios.post("/jobfair/resumeInfo", {user_id: this.user_id})
           .then((res) => {
             this.resumeArray = res.data
-            console.log(res.data)
           }).catch((error) => {
         console.log(error)
       })
@@ -386,9 +426,7 @@ export default {
 
     },
     postRes() {
-      console.log(this.user_id);
       this.resNum = this.resNum + 1;
-      console.log(this.resNum);
       this.$axios.post("/jobfair/EmpApply", {
         user_id: this.user_id,
         jpl_num: this.jpl_num,
@@ -396,9 +434,8 @@ export default {
       })
           .then((res) => {
             this.apply = res.data;
-            console.log(res.data);
           }).catch((error) => {
-        console.log(error);
+        console.log(error)
       })
     },
 
@@ -407,20 +444,17 @@ export default {
       this.$router.push({name: "uQnAWriteView", params: {com_num: this.com_num}});
 
     },
-    getGendertotal () {
-      this.$axios.post('/jobfair/getGendertotal')
+    getlookPerson() {
+      this.$axios.post('/jobfair/getlookPerson', {jpl_num: this.jpl_num})
           .then((res) => {
-            for(var a = 0; a < res.data.length; a++){
-              this.page_jpl_num = res.data[a].jpl_num
-              if(this.jpl_num === this.page_jpl_num){
-                for (var i = 0; i < this.page_jpl_num.length; i++) {
-                  this.peopleNumber++
-                  if (res.data[i].user_gender === 'F') {
-                    this.woman++
-                  } else if (res.data[i].user_gender === 'M') {
-                    this.man++
-                  }
-                }
+            this.lookPerson = res.data
+            console.log(this.lookPerson)
+            this.peopleNumber = res.data.length
+            for(var i = 0; i < this.lookPerson.length; i++){
+              if (res.data[i].user_gender === 'F' || res.data[i].user_gender === '여자') {
+                this.woman++
+              } else if (res.data[i].user_gender === 'M' || res.data[i].user_gender === '남자') {
+                this.man++
               }
             }
             chart.data.datasets[0].data[0] = this.woman
@@ -430,12 +464,40 @@ export default {
           })
           .catch((error) => console.log(error))
     },
+    getGendertotal () {
+      this.$axios.post('/jobfair/getGendertotal')
+          .then((res) => {
+            // console.log(res.data)
+            // for(var b = 0; b < res.data.length; b++) {
+            //       if (res.data[b].jpl_num === this.jpl_num) {
+            //         // console.log('지금페이지' + res.data[b].jpl_num)
+            //       if (res.data[b].user_gender === 'F' || res.data[b].user_gender === '여자') {
+            //         this.woman++
+            //       } else if (res.data[b].user_gender === 'M' || res.data[b].user_gender === '남자') {
+            //         this.man++
+            //       }
+            //     }
+            //   }
+          })
+          .catch((error) => console.log(error))
+    },
     //남녀성비구하는 차트함수
     genderChart() {
       chart = new Chart(this.$refs.genderGroup, {
         type: 'doughnut',
         data: this.data1
       })
+    },
+    modi(e){
+      console.log(e);
+      this.$router.push({
+        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
+        name: 'cEmpModiView',
+        params: {
+          jpl_num: e
+        }
+      })
+
     }
   }
 }
@@ -501,7 +563,7 @@ dl {
 /* 채용공고 상세내역 정보 */
 .resume {
   width: 70%;
-  height: 1200px;
+  height: 2000px;
   color: #1E1E1E;
   padding: 50px 30px;
   border: 1px solid #AAAAAA;
@@ -583,7 +645,7 @@ dl {
 
 /* post 전체 틀 */
 .TopBox {
-  height: 25%;
+  height: 15%;
 }
 
 /* post 왼쪽 창 */
@@ -621,7 +683,19 @@ dl {
 .recruitment {
   border: 1px solid rgb(181, 183, 186, 0.5);
   width: 100%;
-  height: 35%;
+  height: 20%;
+  padding: 10px;
+}
+.pic{
+  border: 1px solid rgb(181, 183, 186, 0.5);
+  width: 100%;
+  height: 55%;
+  padding: 10px;
+}
+.pro{
+  border: 1px solid rgb(181, 183, 186, 0.5);
+  width: 100%;
+  height: 15%;
   padding: 10px;
 }
 
@@ -637,8 +711,14 @@ dl {
 
 .recruitment img {
   float: left;
-  width: 40%;
+  width: 30%;
   height: 160px;
+  margin-right: 30px;
+}
+.pic img {
+  float: left;
+  width: 85%;
+  height: 80%;
   margin-right: 30px;
 }
 

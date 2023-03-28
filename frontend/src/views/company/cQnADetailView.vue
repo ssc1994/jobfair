@@ -93,12 +93,10 @@ export default {
 
     this.$axios.get('/jobfair/getQnADetail/', {params: {qa_num: this.$route.params.qa_num}})
         .then((res) => {
-          console.log('유저시작')
               this.uQnADetail = res.data
 
           this.$axios.get('/jobfair/getComQnADetail', {params: {qa_num: this.$route.params.qa_num}} )
               .then((response) => {
-                console.log('기업시작')
                 this.cQnADetail = response.data
               })
               .catch((err) => console.log(err))
