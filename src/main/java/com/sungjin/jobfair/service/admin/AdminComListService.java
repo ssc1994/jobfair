@@ -16,4 +16,10 @@ public interface AdminComListService {
     //기업가입 승인,반려 처리
     public void handleApplication(UserVO uv);
 
+    //기업명으로 기업검색
+    public List<CompanyVO> searchComName(AdminComListCriteria cri);
+
+    //기업명으로 기업검색, total값
+    public int totalSearchComName(AdminComListCriteria cri);
+
 }

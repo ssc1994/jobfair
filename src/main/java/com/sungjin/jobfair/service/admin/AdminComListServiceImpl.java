@@ -30,5 +30,16 @@ public class AdminComListServiceImpl implements AdminComListService{
     //기업가입 승인,반려 처리
     public void handleApplication(UserVO uv){
         adminComListMapper.handleApplication(uv);
-    };
+    }
+
+    //기업명으로 기업검색
+    @Override
+    public List<CompanyVO> searchComName(AdminComListCriteria cri) {
+        return adminComListMapper.searchComName(cri);
+    }
+
+    //기업명으로 기업검색일 때 total값
+    public int totalSearchComName(AdminComListCriteria cri){
+        return adminComListMapper.totalSearchComName(cri);
+    }
 }

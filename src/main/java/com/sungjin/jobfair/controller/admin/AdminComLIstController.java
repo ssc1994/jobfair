@@ -1,6 +1,7 @@
 package com.sungjin.jobfair.controller.admin;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.sungjin.jobfair.pagination.PageGate;
 import com.sungjin.jobfair.pagination.adminComList.AdminComListCriteria;
 import com.sungjin.jobfair.pagination.adminComList.AdminComListPageVO;
 import com.sungjin.jobfair.pagination.adminComList.AdminComPageGate;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -88,6 +90,70 @@ public class AdminComLIstController {
         //화면에서 com_num, 바꿔줄 mg_auth 가 넘어옴.
         //넘어온 com_num에 해당하는 user의 mg_auth를 받은 화면에서 받은 mg_auth로 그대로 바꿔주기
         adminComListService.handleApplication(uv);
+    }
+
+    //기업명으로 기업검색
+    @GetMapping("/searchComName")
+    public AdminComPageGate searchComName(AdminComListCriteria cri){
+
+        if( cri.getManageState().equals("모두")){
+            cri.setManageState("1");
+        } else if (cri.getManageState().equals("신청")) {
+            cri.setManageState("2");
+        } else if (cri.getManageState().equals("승인")) {
+            cri.setManageState("3");
+        } else if (cri.getManageState().equals("반려")) {
+            cri.setManageState("5");
+        }
+
+        if(cri.getSearch_keyword().equals("")){
+            //검색어가 없는 경우
+            List<CompanyVO> list = new ArrayList();
+            int total = 0;
+            //pageVO 생성
+            AdminComListPageVO pageVO = new AdminComListPageVO(cri, total);
+            //list, pageVO 를 pageGate에 담아주기
+            AdminComPageGate pageGate = new AdminComPageGate(list, pageVO);
+            //pageGate 화면단으로 보내기
+            return pageGate;
+        } else {
+            //검색어가 있는 경우
+            List<CompanyVO> list = adminComListService.searchComName(cri);
+            System.out.println(list.toString());
+
+           int total = adminComListService.totalSearchComName(cri);
+           System.out.println(total);
+
+            //참여 기업들 리스트에서 각 기업의 로고정보를 통해 이미지 url 생성뒤 companyVO의 img_url 변수에 url 담아주기
+            for(CompanyVO vo : list){
+                //기업 테이블에 업로드된 이미지 파일 정보 가져와서 url 얻은뒤 각 기업의 url 변수란에 url 담아주기
+
+                String fileUuid = vo.getCom_fileUuid();
+                String fileName = vo.getCom_fileName();
+                String filePath = vo.getCom_filePath();
+
+                //업로드된 img가 있는지 없는지 따라서 분기처리
+                //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
+                if(fileName == null || fileName.equals("")){
+                    vo.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/4b06db5a-2798-451b-a87a-d9892b249d72_no-img-icon2.jpg");
+                } else {
+                    //업로드된 이미지가 있다면 이미지의 url 구해와서 담아줌
+                    String path = fileUuid + "_" + fileName;
+                    String bucket = filePath;
+                    String url = amazonS3Client.getUrl(bucket, path).toString();
+
+                    vo.setImg_url(url);
+                }
+            }
+
+           //pageVO 생성
+           AdminComListPageVO pageVO = new AdminComListPageVO(cri, total);
+           //list, pageVO 를 pageGate에 담아주기
+           AdminComPageGate pageGate = new AdminComPageGate(list, pageVO);
+           //pageGate 화면단으로 보내기
+           return pageGate;
+        }
+
     }
 
 }

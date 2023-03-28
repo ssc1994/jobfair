@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sungjin.jobfair.service.admin.AdminComListMapper">
+
     <!--참여 업체 목록 가져오기-->
     <select id="getComList" resultType="CompanyVO" >
-
         select c.*, u.mg_auth, u.user_regDate
         from Company c
         left join User u on c.com_num = u.com_num
@@ -21,7 +21,6 @@
                 where u.mg_auth = "5"
             </when>
         </choose>
-
         <choose>
             <when test = 'cri.dateOption.equals("1")'>
                 order by c.com_num desc limit #{cri.pageStart}, #{cri.amount}
@@ -30,13 +29,10 @@
                 order by c.com_num asc limit #{cri.pageStart}, #{cri.amount}
             </when>
         </choose>
-
-
     </select>
 
 <!--    정렬 조건에 따른 참여 업체 목록 total 값 가져오기-->
     <select id="getTotal" resultType="int" >
-
         select count(c.com_num)
         from Company c
         left join User u on c.com_num = u.com_num
@@ -51,7 +47,6 @@
                 where u.mg_auth = "5"
             </when>
         </choose>
-
         <choose>
             <when test = 'cri.dateOption.equals("1")'>
                 order by c.com_num desc
@@ -60,13 +55,46 @@
                 order by c.com_num asc
             </when>
         </choose>
-
-
     </select>
+
+    <!-- 기업가입 승인,반려 처리 -->
     <update id="handleApplication" parameterType="UserVO">
         update User
         set mg_auth = #{mg_auth}
         where com_num = #{com_num}
     </update>
+
+    <!-- 기업명으로 기업검색 -->
+    <select id="searchComName" resultType="CompanyVO">
+        select c.*, u.mg_auth, u.user_regDate
+        from Company c
+        left join User u on c.com_num = u.com_num
+        where c.com_name like concat('%',#{search_keyword},'%')
+        <choose>
+            <when test = 'dateOption.equals("1")'>
+                order by c.com_num desc
+            </when>
+            <when test = 'dateOption.equals("2")'>
+                order by c.com_num asc
+            </when>
+        </choose>
+        limit #{pageStart}, #{amount}
+    </select>
+
+    <!-- 기업명으로 기업검색 total -->
+    <select id="totalSearchComName" resultType="int">
+        select count(c.com_num)
+        from Company c
+        left join User u on c.com_num = u.com_num
+        where c.com_name like concat('%',#{search_keyword},'%')
+        <choose>
+            <when test = 'dateOption.equals("1")'>
+                order by c.com_num desc
+            </when>
+            <when test = 'dateOption.equals("2")'>
+                order by c.com_num asc
+            </when>
+        </choose>
+    </select>
 
 </mapper>

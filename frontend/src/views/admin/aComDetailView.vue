@@ -72,8 +72,8 @@
               </div>
 
               <div class="btnBox">
-                <button class="okBtn" @click="OkHandle">승인하기</button>
-                <button class="noBtn" @click="NoHandle">반려하기</button>
+                <button class="okBtn btn btn-primary" @click="OkHandle">승인하기</button>
+                <button class="noBtn btn btn-primary" @click="NoHandle">반려하기</button>
               </div>
 
             </div>
@@ -237,22 +237,11 @@ export default {
   text-align: center;
 }
 
-.okBtn {
+.btnBox button {
   text-align: center;
-  margin-top: 30px;
-  height: 50px;
-  line-height: 50px;
-  width: 250px;
-  border: 1px solid gray;
-  margin-right: 15px;
-}
-.noBtn {
-  text-align: center;
-  margin-top: 30px;
-  height: 50px;
-  line-height: 50px;
-  width: 250px;
-  border: 1px solid gray;
+  width: 10%;
+  margin-top: 25px;
+  margin-right: 35px;
 }
 
 .input-group textarea {
