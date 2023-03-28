@@ -53,10 +53,25 @@
             </div>
             <div class="mb-5 mt-5">
               <label for="">직무 :</label>
-              <input type="text" class="form-control" id="duty" placeholder="직무명을 입력하세요." name="duty"
-                     v-model="jpl_duty">
-
+              <select class="form-select" id="duty" name="duty" v-model="jpl_duty">
+                <option value="경영ㆍ사무">경영ㆍ사무</option>
+                <option value="마케팅ㆍ광고ㆍ홍보(4년제)">마케팅ㆍ광고ㆍ홍보</option>
+                <option value="ITㆍ인터넷">ITㆍ인터넷</option>
+                <option value="디자인">디자인</option>
+                <option value="무역ㆍ유통">무역ㆍ유통</option>
+                <option value="영업ㆍ고객상담">영업ㆍ고객상담</option>
+                <option value="서비스">서비스</option>
+                <option value="연구개발ㆍ설계">연구개발ㆍ설계</option>
+                <option value="교육">교육</option>
+                <option value="건설">건설</option>
+                <option value="의료">의료</option>
+                <option value="미디어">미디어</option>
+                <option value="의료">의료</option>
+              </select>
             </div>
+
+
+
             <div class="mb-5 mt-5">
               <label for="">경력 :</label>
               <div class="form-check">
@@ -131,8 +146,13 @@
             </div>
             <div class="mb-5 mt-5">
               <label for="">자격증 :</label>
-              <input type="text" class="form-control" id="card" placeholder="자격증명을 입력하세요." name="card"
-                     v-model="jpl_certificate">
+              <select class="form-select" v-model="jpl_certificate" id="card" name="card">
+                <option value="없음">없음</option>
+                <option value="정보처리기사">정보처리기사</option>
+                <option value="웹디자인기능사">웹디자인기능사</option>
+                <option value="컴퓨터그래픽스">컴퓨터그래픽스</option>
+                <option value="정보기술자격(ITQ)">정보기술자격(ITQ)</option>
+              </select>
             </div>
 
             <div class="mb-5 mt-3">
@@ -206,18 +226,18 @@
                 </div>
               </div>
             </div>
-            <div class=" mb-5 mt-4">
+            <div class=" mb-5 mt-5">
               <label for="">급여 :</label>
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="salary1" name="salaryRadio" value="undecided"
-                       v-model="salaryType">
-                <label class="form-check-label" for="salary1">면접 후 결정</label>
-              </div>
-              <div class="form-check">
-                <input type="radio" class="form-check-input" id="salary2" name="salaryRadio" value=salary
-                       v-model="salaryType">
-                <label class="form-check-label" for="salary2"><input type="text" class="" placeholder="예상연봉 입력"
-                                                                     v-model="jpl_salary"></label>
+                <select class="form-select" v-model="jpl_salary">
+                  <option value="2500만원 이하">2500만원 이하</option>
+                  <option value="2500~3000만원">2500~3000만원</option>
+                  <option value="3000~4000만원">3000~4000만원</option>
+                  <option value="4000~5000만원">4000~5000만원</option>
+                  <option value="5000~6000만원">5000~6000만원</option>
+                  <option value="6000~7000만원">6000~7000만원</option>
+                  <option value="7000만원 이상">7000만원 이상</option>
+                </select>
               </div>
             </div>
           </section>
@@ -279,14 +299,14 @@ export default {
       jpl_endDate:'',
       jpl_regDate:'',
       jpl_workPosition:'',
-      jpl_duty:'',
+      jpl_duty:'경영ㆍ사무',
       jpl_workHistory:'신입',
       jpl_workForm:'정규직',
       jpl_education:'학력무관',
       jpl_conditions:'없음',
-      jpl_certificate:'',
+      jpl_certificate:'없음',
       jpl_gender:'성별무관',
-      jpl_salary:'0',
+      jpl_salary:'2500만원 이하',
       jpl_locationSi:'',
       jpl_locationGu:'',
       jpl_address:'',

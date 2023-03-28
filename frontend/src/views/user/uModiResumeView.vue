@@ -53,7 +53,7 @@
                   </div>
                 </li>
               </ul>
-            </div>가
+            </div>
 
             <div v-for="(edu, index) in eduInfo" :key="'key' + index">
               <EDU :eduCount="index" :value="edu" @inputEdu="getEduData" @clickBtn="deleteEdu"/>
@@ -118,7 +118,7 @@
             </div>
           </div>
         </section>
-        <input type="submit" value="이력서 저장" @click="doAction">
+        <input type="submit" value="이력서 저장" @click.prevent="doAction">
         <input type="submit" value="돌아가기" @click="this.$router.push('uMypageView')">
       </main>
     </form>
