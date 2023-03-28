@@ -464,7 +464,7 @@
     <insert id="modiResume" parameterType="ResumeVO">
         insert into ResumeList(res_num, user_id)
         values(#{res_num}, #{user_id})
-        on duplicate key update res_num=#{res_num}, res_content=#{res_content}, res_regDate=#{res_regDate},
+        on duplicate key update res_num=#{res_num},res_title=#{res_title}, res_content=#{res_content}, res_regDate=#{res_regDate},
             res_picName=#{res_picName}, res_picPath=#{res_picPath}, res_picUuid=#{res_picUuid}, res_name=#{res_name},
             res_email=#{res_email}, res_phone=#{res_phone}, res_address=#{res_address}, res_birth=#{res_birth}
     </insert>
