@@ -360,6 +360,14 @@
         ON a.user_id = u.user_id
     </select>
 
+<!--    채용공고에 지원한 지원자의 이력서 모달로 띄우기.. -->
+    <select id="getlookPerson" resultType="StatisticVO">
+        select * from ApplyList a
+        INNER JOIN ResumeList r ON a.user_id = r.user_id
+        INNER JOIN User u on a.user_id = u.user_id
+        where a.jpl_num = #{jpl_num}
+    </select>
+
 
     <!--**************************************************마이페이지 이력서**************************************************-->
     <!--이력서정보-->

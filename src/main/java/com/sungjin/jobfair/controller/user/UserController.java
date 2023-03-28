@@ -405,6 +405,15 @@ public class UserController {
         return list;
     }
 
+    //채용공고 상세페이지에 있는 지원자의 이력서 가져오기
+    @PostMapping(value = "/getlookPerson")
+    public ArrayList<StatisticVO> getlookPerson(@RequestBody EmpVO vo){
+
+        String jpl_num = vo.getJpl_num();
+        ArrayList<StatisticVO> list = userService.getlookPerson(jpl_num);
+        return list;
+    }
+
     //**********************************************지원현황 관리(유저 마이페이지)**********************************************
     //마이페이지 지원현황 목록 가져오기
     @PostMapping(value="/getApplyList")

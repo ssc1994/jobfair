@@ -105,6 +105,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.getGendertotal();
     }
 
+    @Override
+    public ArrayList<StatisticVO> getlookPerson(String jpl_num) { return userMapper.getlookPerson(jpl_num); }
+
 
     //################## 마이페이지(MyPage) Service #######################
     @Override
