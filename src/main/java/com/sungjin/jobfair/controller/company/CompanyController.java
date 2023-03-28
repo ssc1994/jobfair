@@ -194,11 +194,20 @@ public class CompanyController {
         
         return "수정완료"+result;
     }
+    //로그인한 기업의 user_id의 com_num 가져오기
+    @PostMapping(value="/getComNum")
+    public int getComNum(@RequestBody Map<String, String> map){
+
+        String user_id = map.get("user_id");
+        int com_num = companyService.getComNum(user_id);
+        return com_num;
+    }
 
 
     //(채용공고정보) jpl번호를 기준으로 jpl테이블에서 데이터를 불러오는 메서드
     @GetMapping(value="/empData")
-    public EmpVO getEmpData(@RequestParam("jpl_num") int jpl_num){
+    public EmpVO getEmpData(@RequestParam("jpl_num") int jpl_num
+                            ){
         EmpVO vo = companyService.getEmpData(jpl_num);
 
         //aws에 분해해서 등록해둔 사진 데이터를 불러옴

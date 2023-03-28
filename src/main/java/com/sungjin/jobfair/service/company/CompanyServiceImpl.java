@@ -92,6 +92,9 @@ public class CompanyServiceImpl implements CompanyService{
     public void chgApplicantState(Map map) {
         companyMapper.chgApplicantState(map);
     }
+    //로그인한 기업의 user_id의 com_num 가져오기
+    @Override
+    public int getComNum(String user_id) { return companyMapper.getComNum(user_id);}
 
     //################## Login Service #######################
         //회사 번호를 가지고 회사정보 가져오기

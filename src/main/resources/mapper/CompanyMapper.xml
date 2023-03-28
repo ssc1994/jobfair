@@ -196,6 +196,12 @@ where jpl_num = #{jpl_num}
         select * from JobPostingList
                  where com_num = #{com_num} limit #{cri.pageStart}, #{cri.amount}
     </select>
+        
+    <!-- 로그인한 기업의 user_id의 com_num 가져오기   -->
+    <select id="getComNum" resultType="int">
+        select com_num from User
+        where user_id = #{user_id}
+    </select>
 
     <!-- 기업이 등록한 채용공고 최신순으로 가져오기 -->
     <select id="getComEmpDesc" resultType="EmpVO">

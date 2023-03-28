@@ -98,8 +98,12 @@
           </button>
 
 
-          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="this.mg_auth == 3">
+          <button type="button" class="btn btn-primary endBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: #dedede;color:black;" v-if="this.mg_auth == 3 && com_num == this.loginComNum">
            지원자 보기
+          </button>
+
+          <button type="button" class="btn btn-primary endBtn" v-if="this.mg_auth == 3 && com_num == this.loginComNum" @click="modi(jpl_num)">
+            수정하기
           </button>
 
           <button type="button" class="btn btn-primary" @click.prevent="uQnABtnClick" v-if="this.mg_auth < 3">
@@ -291,7 +295,8 @@ export default {
       applyBtnText: '지원하기',
       // 지원했던 공고면 1 , 아니면 0
       AppliedResult: 0,
-      resumeArray: []
+      resumeArray: [],
+      loginComNum : ''
     }
   },
   watch: {
@@ -299,6 +304,13 @@ export default {
     man () { this.genderChart() }
   },
   created() {
+    this.$axios.post("/jobfair/getComNum", {user_id: this.user_id})
+        .then((res) => {
+          this.loginComNum = res.data;
+        }).catch((error) => {
+      console.log(error);
+    }),
+
     this.getGendertotal(),
     this.getlookPerson(),
         this.$axios.get('/jobfair/empData', {
@@ -362,6 +374,8 @@ export default {
       console.log(err)
     }),
         this.resumeinfo();
+
+
 
     this.$axios.post("/jobfair/EmpApplied", {user_id: this.user_id, jpl_num: this.jpl_num})
         .then((res) => {
@@ -473,6 +487,17 @@ export default {
         type: 'doughnut',
         data: this.data1
       })
+    },
+    modi(e){
+      console.log(e);
+      this.$router.push({
+        //params를 넘겨줄 때엔 push할 때 path보단 name을 사용함
+        name: 'cEmpModiView',
+        params: {
+          jpl_num: e
+        }
+      })
+
     }
   }
 }

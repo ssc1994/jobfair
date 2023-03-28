@@ -214,11 +214,17 @@
 
 
       <b style="padding:10px;color:#0064ff;border:1px solid #0064ff;border-radius: 20px;">분류기준</b>
+
+
+
       <select class="col-2 selSort" v-model="selSort" @change="sortEvent" style="padding:10px;">
         <option>최신등록순</option>
         <option>마감임박순</option>
         <option>연봉순</option>
       </select>
+<!--      <b class="myJobPost" style="cursor:pointer;padding:10px;color:dedede;border:1px solid gray;border-radius: 20px;margin-left:10px;color:gray;" @click="getJobPostList('my')">내가 등록한 공고 보기</b>-->
+
+
 
 
       <div class="row empListBox">
@@ -238,12 +244,11 @@
               </router-link>
               <div style="padding-top:20px;">
                 <span class="left empBoxDday">{{jobpost.jpl_endDate}}까지</span>
-                <!--                <router-link to="" v-for="(appliedList, j) in appliedList" :key=j>-->
-                <!--                  <button type="button" class="btn btn-primary aplBtn right applied" v-if="jobpost.jpl_num == appliedList.jpl_num"> &lt;!&ndash;v-if="jobpost.user_id == this.user_id"&ndash;&gt;-->
-                <!--                    지원완료-->
-                <!--                  </button>-->
-                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;"> <!--v-if="jobpost.user_id==null && jobpost.jpl_endDate"-->
+                <button type="button" class="btn btn-primary aplBtn right applied" style="background-color: #dedede;" v-if="jobpost.com_num == comNum">
                   지원자보기
+                </button>
+                <button type="button" class="btn btn-primary aplBtn right" style="background-color: #0064ff;" v-if="jobpost.com_num == comNum">
+                  수정하기
                 </button>
                 <!--                </router-link>-->
               </div>
@@ -364,7 +369,7 @@ export default {
       selSort : '최신등록순',
       selSortInt : 1,
       user_id: sessionStorage.getItem('sessionId').replaceAll("\"", ""),
-
+      comNum : '',
 
       //엑시오스 테스트
       users : '',
@@ -403,7 +408,7 @@ export default {
   methods: {
 
     //채용공고 가져오기
-    async getJobPostList () {
+    async getJobPostList (e) {
 
       let {data} = await this.$axios.get('/jobfair/getJobPostList',
           {
@@ -411,12 +416,15 @@ export default {
               page: this.page,
               amount: this.amount,
               selSortInt: this.selSortInt,
-              user_id : this.user_id
+              user_id : this.user_id,
+              myJobPost : e
             }
           }).catch(err => console.log(err))
       this.urlList = data.urlList;
       this.jobPostList = data.empPageGate.list;
       this.appliedList = data.appliedList.jpl_num;
+
+      this.comNum = data.comNum;
       this.pages = data.empPageGate.pageVO;
       this.pageList = this.pages.pageList;
 
@@ -571,6 +579,7 @@ export default {
 
     },
 
+
     detail(jobpost) {
       this.$router.push({
         name: 'uJobPostDetailView',
@@ -659,6 +668,8 @@ html, body {width:100%;
   max-width:1560px;
   margin:0 auto;
 }
+
+
 
 /*채용리스트*/
 
@@ -755,12 +766,12 @@ h3{font-weight: bold;
   text-align: left;
   margin-bottom: 20px;
   height:auto;
-
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .empSearchBox h3 {padding-bottom: 20px;}
 
-.empSearchBox:hover {box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;}
+.empSearchBox:hover {}
 
 .empSearchTitle {font-weight:bold;
   /*background-color: #dedede;*/
@@ -952,18 +963,44 @@ h3{font-weight: bold;
 .selSort {width:130px;font-weight: bold;border:0;}
 
 /* 페이지네이션 부분 */
-.paginationWrap ul {
-  margin-top: 50px;
-  padding-left: 470px;
-}
-
 .paginationWrap .page-link {
-  background-color: #0064ff;
+  background-color: white;
 }
 
 .paginationWrap li.active span {
   background-color: #202632;
   border: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.page-link {
+  color: #333;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  color: #0064ff;
+}
+
+.active .page-link {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
 </style>
