@@ -77,9 +77,6 @@
         left join User u on c.com_num = u.com_num
         where c.com_name like concat('%',#{search_keyword},'%')
         <choose>
-            <when test = 'cri.manageState.equals("1")'>
-                where u.com_num != "-1"
-            </when>
             <when test = 'dateOption.equals("1")'>
                 order by c.com_num desc
             </when>
@@ -97,9 +94,6 @@
         left join User u on c.com_num = u.com_num
         where c.com_name like concat('%',#{search_keyword},'%')
         <choose>
-            <when test = 'cri.manageState.equals("1")'>
-                where u.com_num != "-1"
-            </when>
             <when test = 'dateOption.equals("1")'>
                 order by c.com_num desc
             </when>
