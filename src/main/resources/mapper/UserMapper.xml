@@ -352,7 +352,7 @@
 
     <!--유저 메인화면에 채용공고 데이터 뿌리기-->
     <select id="getMainJobInfo" resultType="EmpListVO">
-        select j.jpl_num, j.jpl_title, j.jpl_endDate, j.jpl_fileName, j.jpl_filePath, j.jpl_fileUuid, c.com_name
+        select j.jpl_num, j.jpl_title, j.jpl_endDate, j.jpl_fileName, j.jpl_filePath, j.jpl_fileUuid, c.com_name, c.com_num
         from JobPostingList j
         left join Company c on j.com_num = c.com_num
         order by j.jpl_num desc

@@ -16,6 +16,7 @@ import com.sungjin.jobfair.pagination.PageVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sungjin.jobfair.command.*;
+import com.sungjin.jobfair.service.company.CompanyService;
 import com.sungjin.jobfair.service.user.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ import java.util.*;
 @RequestMapping("/jobfair")
 public class UserController {
 
+    @Autowired
+    @Qualifier("companyService")
+    private CompanyService companyService;
     //인터페이스 타입 선언
     @Autowired
     @Qualifier("userService")
@@ -286,10 +290,23 @@ public class UserController {
 
         List<String> urlList = new ArrayList<>();
         for(EmpListVO vo : list){
-            String path = vo.getJpl_fileUuid() + "_" + vo.getJpl_fileName();
-            String bucket = vo.getJpl_filePath();
-            String url = amazonS3Client.getUrl(bucket, path).toString();
-            urlList.add(url);
+            //로고 테스트
+            CompanyVO vo2 =  companyService.info(vo.getCom_num());
+
+            //업로드된 이미지 파일 url 가져와서 CompanyVO에 담기
+
+            if(vo2.getCom_fileName() == null){
+                //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
+                vo2.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/0afa39a2-b46b-4ffc-a7c9-677b3aee751c_no-img-icon3.jpg");
+            } else {
+                //업로드된 이미지 파일이 있다면 이미지 파일의 url 가져와서 담아줌.
+                String path = vo2.getCom_fileUuid() + "_" + vo2.getCom_fileName();
+                String bucket = vo2.getCom_filePath();
+                String url = amazonS3Client.getUrl(bucket, path).toString();
+                vo2.setImg_url(url);
+            }
+            urlList.add(vo2.getImg_url());
+
         }
 
         //pageVO 생성
@@ -395,20 +412,22 @@ public class UserController {
         ArrayList<EmpListVO> list = userService.getMainJobInfo();
 
         for (EmpListVO vo : list) {
-            String fileUuid = vo.getJpl_fileUuid();
-            String fileName = vo.getJpl_fileName();
-            String filePath = vo.getJpl_filePath();
+            //로고 테스트
+            CompanyVO vo2 =  companyService.info(vo.getCom_num());
 
-            String path = fileUuid + "_" + fileName;
-            String bucket = filePath;
-            String url = amazonS3Client.getUrl(bucket, path).toString();
+            //업로드된 이미지 파일 url 가져와서 CompanyVO에 담기
 
-            // 업로드된 기업 로고가 있으면 해당 기업로고 url 저장, 기업 로고 없으면 기본으로 보여줄 이미지 주소를 url에 저장
-            if(filePath.equals("_") || fileName == null || fileName.equals("")) {
-                vo.setUrl("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/7c1d62f3-7994-4578-a040-5c617af80686_noPic.jpg");
+            if(vo2.getCom_fileName() == null){
+                //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
+                vo2.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/0afa39a2-b46b-4ffc-a7c9-677b3aee751c_no-img-icon3.jpg");
             } else {
-                vo.setUrl(url);
+                //업로드된 이미지 파일이 있다면 이미지 파일의 url 가져와서 담아줌.
+                String path = vo2.getCom_fileUuid() + "_" + vo2.getCom_fileName();
+                String bucket = vo2.getCom_filePath();
+                String url = amazonS3Client.getUrl(bucket, path).toString();
+                vo2.setImg_url(url);
             }
+            vo.setUrl(vo2.getImg_url());
         }
         return list;
     }
