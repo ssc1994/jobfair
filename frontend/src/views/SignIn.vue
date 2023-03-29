@@ -36,9 +36,6 @@ signIn
                         name="password"
                         v-model:model="user_pw"
                     />
-                    <soft-switch id="rememberMe" name="rememberMe" checked>
-                      Remember me
-                    </soft-switch>
                   </div>
                 </div>
                 <button type="submit" id="loginBtn" @click="logInBtn"

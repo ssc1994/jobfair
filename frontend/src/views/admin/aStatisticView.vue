@@ -7,7 +7,7 @@
       />
       <div>
         <div class="genderGroup">
-          <h2>성비 통계</h2>
+          <h2>전체 가입자 성비 통계</h2>
           <canvas
               ref="genderGroup"
           />

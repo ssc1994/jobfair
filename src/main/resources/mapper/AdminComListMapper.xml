@@ -11,6 +11,9 @@
         from Company c
         left join User u on c.com_num = u.com_num
         <choose>
+            <when test = 'cri.manageState.equals("1")'>
+                where u.com_num != "-1"
+            </when>
             <when test = 'cri.manageState.equals("2")'>
                 where u.mg_auth = "2"
             </when>
@@ -31,12 +34,15 @@
         </choose>
     </select>
 
-<!--    정렬 조건에 따른 참여 업체 목록 total 값 가져오기-->
+    <!--    정렬 조건에 따른 참여 업체 목록 total 값 가져오기-->
     <select id="getTotal" resultType="int" >
         select count(c.com_num)
         from Company c
         left join User u on c.com_num = u.com_num
         <choose>
+            <when test = 'cri.manageState.equals("1")'>
+                where u.com_num != "-1"
+            </when>
             <when test = 'cri.manageState.equals("2")'>
                 where u.mg_auth = "2"
             </when>
@@ -71,6 +77,9 @@
         left join User u on c.com_num = u.com_num
         where c.com_name like concat('%',#{search_keyword},'%')
         <choose>
+            <when test = 'cri.manageState.equals("1")'>
+                where u.com_num != "-1"
+            </when>
             <when test = 'dateOption.equals("1")'>
                 order by c.com_num desc
             </when>
@@ -88,6 +97,9 @@
         left join User u on c.com_num = u.com_num
         where c.com_name like concat('%',#{search_keyword},'%')
         <choose>
+            <when test = 'cri.manageState.equals("1")'>
+                where u.com_num != "-1"
+            </when>
             <when test = 'dateOption.equals("1")'>
                 order by c.com_num desc
             </when>

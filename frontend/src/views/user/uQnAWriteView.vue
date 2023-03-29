@@ -73,24 +73,29 @@ export default {
   methods: {
     qnaRegist() {
       let self = this;
-      this.$axios
-          .post('/jobfair/qnaRegist', {
-            user_id: this.uQnADetail.user_id,
-            qa_title: this.uQnADetail.qa_title,
-            qa_content: this.uQnADetail.qa_content,
-            qa_type: 'q',
-            com_num: this.uQnADetail.com_num
-          })
-          .then((res) => {
-            if (res.status === 200) {
-              self.$router.push("/uQnAView")
-            }
-          })
-          .catch((error) => {
-            console.log(error)
-            alert('에러: ' + error)
 
-          })
+      if(this.uQnADetail.qa_title == '' || this.uQnADetail.qa_content == '') {
+        alert("제목과 내용은 필수입니다.")
+      } else {
+        this.$axios
+            .post('/jobfair/qnaRegist', {
+              user_id: this.uQnADetail.user_id,
+              qa_title: this.uQnADetail.qa_title,
+              qa_content: this.uQnADetail.qa_content,
+              qa_type: 'q',
+              com_num: this.uQnADetail.com_num
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                self.$router.push("/uQnAView")
+              }
+            })
+            .catch((error) => {
+              console.log(error)
+              alert('에러: ' + error)
+
+            })
+      }
     },
     goBackToList() {
       this.$router.push("/uQnAView")

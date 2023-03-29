@@ -342,10 +342,22 @@ public class UserController {
             ArrayList<EmpListVO> list = userService.getJobPostSrc(cri);
             List<String> urlList = new ArrayList<>();
             for(EmpListVO vo : list){
-                String path = vo.getJpl_fileUuid() + "_" + vo.getJpl_fileName();
-                String bucket = vo.getJpl_filePath();
-                String url = amazonS3Client.getUrl(bucket, path).toString();
-                urlList.add(url);
+                //로고 테스트
+                CompanyVO vo2 =  companyService.info(vo.getCom_num());
+
+                //업로드된 이미지 파일 url 가져와서 CompanyVO에 담기
+
+                if(vo2.getCom_fileName() == null){
+                    //업로드된 이미지 파일이 없다면 no img 파일의 url 을 담아줌
+                    vo2.setImg_url("https://s3.ap-northeast-2.amazonaws.com/mj-final-bucket/image/0afa39a2-b46b-4ffc-a7c9-677b3aee751c_no-img-icon3.jpg");
+                } else {
+                    //업로드된 이미지 파일이 있다면 이미지 파일의 url 가져와서 담아줌.
+                    String path = vo2.getCom_fileUuid() + "_" + vo2.getCom_fileName();
+                    String bucket = vo2.getCom_filePath();
+                    String url = amazonS3Client.getUrl(bucket, path).toString();
+                    vo2.setImg_url(url);
+                }
+                urlList.add(vo2.getImg_url());
             }
 
             //pageVO 생성

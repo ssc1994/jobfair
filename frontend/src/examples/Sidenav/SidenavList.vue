@@ -36,6 +36,9 @@
       </div>
       <div v-if="userInfo.mg_auth === '4'">
         <div class="btnBox">
+          <button type="button" class="btn" @click="this.$router.push('aStatisticView')">
+            통계
+          </button>
           <button type="button" class="btn" @click="this.$router.push('aQnaView')">
             QnA
           </button>
@@ -197,18 +200,18 @@
   <hr>
 
 
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
-    </div>
-    <div v-if="userInfo.mg_auth!=4">
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
-    </div>
-    <div>
-      <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
-    </div>
+  <div>
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p1" menuTitle='홈'/>
+  </div>
+  <div v-if="userInfo.mg_auth!=4">
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p2" menuTitle='마이 페이지'/>
+  </div>
+  <div>
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p3" menuTitle='채용 정보'/>
+  </div>
+  <div>
+    <SideMenuList :mg_auth=userInfo.mg_auth menu_id="p4" menuTitle='QnA'/>
+  </div>
 
 
 
@@ -740,7 +743,7 @@ export default {
   padding: 15px;
 }
 
-/*------------- 개인정보 수정 모달 부분 end ------------------*/
+/*—————— 개인정보 수정 모달 부분 end —————————*/
 
 .menu01 {
   border: 3px solid;
