@@ -634,7 +634,6 @@ export default {
   font-size:15px;
 }
 
-
 a {text-decoration: none;}
 
 select {
@@ -657,7 +656,6 @@ select:disabled {
   opacity: 0.5;
 }
 
-
 html, body {width:100%;
   height:100%;}
 
@@ -668,8 +666,6 @@ html, body {width:100%;
   max-width:1560px;
   margin:0 auto;
 }
-
-
 
 /*채용리스트*/
 
@@ -701,6 +697,7 @@ html, body {width:100%;
   border: 2px solid #dedede;
   display:inline-block;
   width:98%;
+  height: 160px;
   margin-bottom: 10px;
 }
 
@@ -708,13 +705,19 @@ html, body {width:100%;
 
 .empBoxCon:hover { border: 2px solid #0064ff; }
 
-.empBoxCompany p {color:black;}
+.empBoxCompany p {color:black;
+
+  line-height: 1.3;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
 
 .empBoxCompany {
   display: inline-block;
   /*cursor: pointer;*/
   float: left;
   margin-right:10px;
+  width:13%;
 }
 .empBoxCon img{
   float: left;
@@ -739,7 +742,6 @@ html, body {width:100%;
   width:600px;
 }
 
-
 .empBoxText router-link {text-align: left;border:0;}
 
 .empBoxText p {margin:0; padding:0;}
@@ -758,7 +760,6 @@ h3{font-weight: bold;
 
 }
 
-
 /*검색 박스*/
 .empSearchBox {border: 1px solid #dedede;
   padding:30px 60px;
@@ -767,6 +768,7 @@ h3{font-weight: bold;
   margin-bottom: 20px;
   height:auto;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
 }
 
 .empSearchBox h3 {padding-bottom: 20px;}
@@ -803,7 +805,6 @@ h3{font-weight: bold;
   font-weight: bold;
 }
 
-
 .empBoxTitle {
   font-weight: bold;
   font-size: 15px;
@@ -812,8 +813,6 @@ h3{font-weight: bold;
   background-color: #efefef;
 
 }
-
-
 
 .empSearchInput input {
   width:100%;
@@ -963,6 +962,7 @@ h3{font-weight: bold;
 .selSort {width:130px;font-weight: bold;border:0;}
 
 /* 페이지네이션 부분 */
+
 .paginationWrap .page-link {
   background-color: white;
 }

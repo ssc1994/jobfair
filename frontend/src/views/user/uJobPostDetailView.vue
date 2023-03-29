@@ -329,7 +329,6 @@ export default {
       console.log(error);
     }),
 
-        this.getGendertotal(),
         this.getlookPerson(),
         this.$axios.get('/jobfair/empData', {
           params: {jpl_num: this.jpl_num}
@@ -395,6 +394,12 @@ export default {
 
 
 
+
+
+
+  },
+
+  updated() {
     this.$axios.post("/jobfair/EmpApplied", {user_id: this.user_id, jpl_num: this.jpl_num})
         .then((res) => {
           this.AppliedResult = res.data;
@@ -404,6 +409,7 @@ export default {
         }).catch((error) => {
       console.log(error);
     })
+
 
 
   },
@@ -455,6 +461,9 @@ export default {
       })
           .then((res) => {
             this.apply = res.data;
+            this.getlookPerson()
+            alert('지원완료 되었습니다')
+
             this.router.push('/uJobPostView')
           }).catch((error) => {
         console.log(error)
@@ -482,23 +491,6 @@ export default {
             chart.data.datasets[0].data[1] = this.man
             chart.update()
             chart.destroy()
-          })
-          .catch((error) => console.log(error))
-    },
-    getGendertotal () {
-      this.$axios.post('/jobfair/getGendertotal')
-          .then((res) => {
-            // console.log(res.data)
-            // for(var b = 0; b < res.data.length; b++) {
-            //       if (res.data[b].jpl_num === this.jpl_num) {
-            //         // console.log('지금페이지' + res.data[b].jpl_num)
-            //       if (res.data[b].user_gender === 'F' || res.data[b].user_gender === '여자') {
-            //         this.woman++
-            //       } else if (res.data[b].user_gender === 'M' || res.data[b].user_gender === '남자') {
-            //         this.man++
-            //       }
-            //     }
-            //   }
           })
           .catch((error) => console.log(error))
     },

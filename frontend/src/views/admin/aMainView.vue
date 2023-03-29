@@ -10,7 +10,7 @@
             </div>
             <div class="companyNum_text">
               <span>참여 기업 수</span>
-              <p>{{jobPostList.length}}</p>
+              <p>{{allsuccess}}</p>
             </div>
           </router-link>
         </div>
@@ -77,7 +77,9 @@ export default {
       number: 1,
       auth: [],
       nosuccess: 0,
-      ysuccess: 0
+      ysuccess: 0,
+      allsuccess:0
+
       // auth: JSON.parse(sessionStorage.getItem('sessionAuth'))
     }
   },
@@ -96,7 +98,9 @@ export default {
               } else if(this.auth[i].mg_auth === '3') {
                 this.ysuccess++
               }
+
             }
+            this.allsuccess=this.nosuccess+this.ysuccess
           })
           .catch(error => { console.log(error)})
     },
